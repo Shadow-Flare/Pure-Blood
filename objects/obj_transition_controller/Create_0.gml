@@ -8,7 +8,7 @@ roomTo = global.roomTrans.roomTo;
 global.paused = 1;
 
 instance_deactivate_all(1);
-instance_activate_object(obj_combo_cache);
+instance_activate_object(obj_comboCache);
 //instance_activate_object(obj_controller);
 
 new = 0;

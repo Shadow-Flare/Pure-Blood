@@ -2,7 +2,7 @@
     "id": "97e76f82-2a22-45a3-813e-fb4f1677bcd5",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_combo_cache",
+    "name": "obj_comboCache",
     "eventList": [
         {
             "id": "dda54b61-ba22-4563-9c3a-b4f385b22603",

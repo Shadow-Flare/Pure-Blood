@@ -15,28 +15,6 @@
     "coltolerance": 0,
     "frames": [
         {
-            "id": "3a4bf1e7-943d-4033-a561-286d40231a55",
-            "modelName": "GMSpriteFrame",
-            "mvc": "1.0",
-            "SpriteId": "5a4b3140-2340-4a67-ac48-1aee0495e507",
-            "compositeImage": {
-                "id": "3347dc2e-5fa6-4bef-9ce3-5fba0d9cde82",
-                "modelName": "GMSpriteImage",
-                "mvc": "1.0",
-                "FrameId": "3a4bf1e7-943d-4033-a561-286d40231a55",
-                "LayerId": "00000000-0000-0000-0000-000000000000"
-            },
-            "images": [
-                {
-                    "id": "0520137e-85bb-4ba8-b254-a828b9ffbd2b",
-                    "modelName": "GMSpriteImage",
-                    "mvc": "1.0",
-                    "FrameId": "3a4bf1e7-943d-4033-a561-286d40231a55",
-                    "LayerId": "ef2d3650-9510-41e0-96f7-c53b9ce17800"
-                }
-            ]
-        },
-        {
             "id": "ef0a56f7-0820-4f8d-b6a9-c7831f25ccfa",
             "modelName": "GMSpriteFrame",
             "mvc": "1.0",
@@ -122,6 +100,7 @@
     "origin": 9,
     "playbackSpeed": 0,
     "playbackSpeedType": 0,
+    "premultiplyAlpha": false,
     "sepmasks": false,
     "swatchColours": null,
     "swfPrecision": 2.525,
