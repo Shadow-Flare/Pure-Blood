@@ -77,7 +77,7 @@ if global.spawning == 1
 		x = obj_player.x;
 		y = obj_player.y;
 	}
-	obj_player.phase = "idle"
+	obj_player.phase = state.base
 }
 
 if timer == room_speed

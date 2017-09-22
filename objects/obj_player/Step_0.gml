@@ -1,3 +1,35 @@
+//Initialize enums (MOVE TO CONTROLLER CREATE)
+enum state {base, attacking, aerialAttacking, offhand, aerialOffhand, ability, dying, blocking, dodging};
+enum vState {grounded, midAir};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post};
+
+#region State mechanisms
+switch vPhase
+{
+	case vState.grounded:
+		if !((!place_free(x,y+1)||(place_meeting(x,y+1,obj_platform_parent)&&!place_meeting(x,y,obj_platform_parent))) && place_free(x,y)) vPhase = vState.midAir;
+		break;
+	case vState.midAir:
+		if ((!place_free(x,y+1)||(place_meeting(x,y+1,obj_platform_parent)&&!place_meeting(x,y,obj_platform_parent))) && place_free(x,y)) vPhase = vState.grounded;
+		break;
+}
+
+switch phase
+{
+	case state.base:
+		scr_player_base();
+		break;
+	case state.attacking:
+		scr_player_attacking();
+		break;
+}
+#endregion
+
+scr_move_with_collisions();
+
+#region old stuff
+if global.g = "im a nerd" //just so i can utilize the #regions
+{
 #region step startup
 //on ground check
 onGround = (!place_free(x,y+1)||(place_meeting(x,y+1,obj_platform_parent)&&!place_meeting(x,y,obj_platform_parent))) && place_free(x,y);
@@ -1226,7 +1258,7 @@ if place_meeting(x,y,obj_enemy_attack_effect) && (!(phase == "dying" && subPhase
 					switch reaction
 					{
 						case "nothing":
-							/* do not change phase */
+							 //do not change phase
 							break;
 						case "stagger":
 							if subPhase != "flung" && subPhase != "prone"
@@ -1620,7 +1652,7 @@ else if phase == "staggered" || phase == "dying"
 	if subPhase == "" {xSpd -= xSpd/4}
 	else if subPhase == "deflected" {xSpd -= xSpd/5;}
 	else if subPhase == "stagger" {xSpd -= xSpd/5;}
-	else if subPhase == "flung" {/*xSpd = dirNum * 10;*/} //determined elsewhere
+	else if subPhase == "flung" {} //determined elsewhere
 	else if subPhase == "prone" {xSpd -= xSpd/5;}
 	else if subPhase == "recover" {if imPrev != image_index xSpd = 8*facing; else xSpd = 0;}
 }
@@ -1688,7 +1720,7 @@ scr_move_with_collisions();
 //determine sprite
 image_xscale = facing;
 image_blend = c_white;
-image_speed = defaultImageSpeed;
+image_speed = 1;
 imPrev = image_index;
 if phase != phasePrev 
 {
@@ -1859,5 +1891,7 @@ for (var i = 0; i < instance_number(obj_item_parent); i++)
 				break;
 		}
 	}
+}
+#endregion
 }
 #endregion
