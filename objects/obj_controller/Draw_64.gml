@@ -27,9 +27,9 @@ if !global.paused
 
 	//equipment
 		//Offhand && Subtype
-	activeAbilityName = global.offhandActivatableNames[global.activeOffhandActivatableID];
-	offhandName = global.offhandNames[global.activeOffhandID];
-	offhandSubtypeName = global.offhandSubtypeNames[global.activeOffhandSubtypeID];
+	activeAbilityName = obj_comboCache.offhandActivatableNames[obj_comboCache.activeOffhandActivatableID];
+	offhandName = obj_comboCache.offhandNames[obj_comboCache.activeOffhandID];
+	offhandSubtypeName = obj_comboCache.offhandSubtypeNames[obj_comboCache.activeOffhandSubtypeID];
 	draw_set_font(fnt_menu);
 	draw_set_colour(c_orange);
 	draw_set_valign(fa_bottom);

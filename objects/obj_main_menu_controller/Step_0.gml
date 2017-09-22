@@ -71,7 +71,7 @@ if aInput == 1
 				roomFrom = room;
 				roomTo = rm_room1;
 			}
-			instance_create_layer(0,0,"lay_technicals",obj_combo_cache);
+			instance_create_layer(0,0,"lay_technicals",obj_comboCache);
 			instance_create_layer(0,0,"lay_player",obj_player);
 			instance_create_layer(0,0,"lay_technicals",obj_controller);
 			instance_create_depth(0,0,-10000,obj_transition_controller);
@@ -84,7 +84,7 @@ if aInput == 1
 				roomFrom = room;
 				roomTo = rm_arena1;
 			}
-			instance_create_layer(0,0,"lay_technicals",obj_combo_cache);
+			instance_create_layer(0,0,"lay_technicals",obj_comboCache);
 			instance_create_layer(0,0,"lay_player",obj_player);
 			instance_create_layer(-10,-10,"lay_technicals",obj_controller);
 			instance_create_layer(0,0,"lay_technicals",obj_arena_controller);

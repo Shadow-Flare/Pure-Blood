@@ -1,7 +1,9 @@
 global.g = 2;
 phase = state.base;
-vPhase = vState.grounded;
+phaseTimer = 0;
 subPhase = subState.idle;
+subPhaseTimer = 0;
+vPhase = vState.grounded;
 
 //savedata
 global.xp = 0;

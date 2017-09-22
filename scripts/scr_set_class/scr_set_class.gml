@@ -1,14 +1,14 @@
 switch argument0
 {
 case "Sword":
-	global.activeCounterId = obj_combo_cache.swordCounterId;
-	global.activeUpwardsId = obj_combo_cache.swordUpwardsId;
-	global.activeDownwardsId = obj_combo_cache.swordDownwardsId;
-	global.activeForwardsId = obj_combo_cache.swordForwardsId;
-	global.activeBackwardsId = obj_combo_cache.swordBackwardsId;
-	global.activeClassIDs = obj_combo_cache.classSwordAttackIDs;
-	global.activeClassNum = obj_combo_cache.swordClassId;
-	global.activeAerialID = obj_combo_cache.aerialSwordId;
-	global.activeComboSlotNumbers = [[1,2],[1,3],[1,3],[1,4]]; // GOTTA CHANGE
+	obj_comboCache.activeCounterId = obj_comboCache.swordCounterId;
+	obj_comboCache.activeUpwardsId = obj_comboCache.swordUpwardsId;
+	obj_comboCache.activeDownwardsId = obj_comboCache.swordDownwardsId;
+	obj_comboCache.activeForwardsId = obj_comboCache.swordForwardsId;
+	obj_comboCache.activeBackwardsId = obj_comboCache.swordBackwardsId;
+	obj_comboCache.activeClassIDs = obj_comboCache.classSwordAttackIDs;
+	obj_comboCache.activeClassNum = obj_comboCache.swordClassId;
+	obj_comboCache.activeAerialID = obj_comboCache.aerialSwordId;
+	obj_comboCache.activeComboSlotNumbers = [[1,2],[1,3],[1,3],[1,4]]; // GOTTA CHANGE
 	break;
 }

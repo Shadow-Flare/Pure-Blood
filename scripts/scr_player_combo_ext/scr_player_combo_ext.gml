@@ -4,61 +4,58 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	switch argument0
 	{
 		case 0:
-			attackNum = global.activeCounterId;
+			attackNum = obj_comboCache.activeCounterId;
 			break;
 		case 1:
-			attackNum = global.activeUpwardsId;
+			attackNum = obj_comboCache.activeUpwardsId;
 			break;
 		case 2:
-			attackNum = global.activeDownwardsId;
+			attackNum = obj_comboCache.activeDownwardsId;
 			break;
 		case 3:
-			attackNum = global.activeForwardsId;
+			attackNum = obj_comboCache.activeForwardsId;
 			break;
 		case 4:
-			attackNum = global.activeBackwardsId;
+			attackNum = obj_comboCache.activeBackwardsId;
 			break;
 	}
 	caster = pl;
 	caster.effect = id;
 	//get effect properties/collisions
-	attackName = global.attackNames[attackNum];
-	attackDuration = global.attackDurations[attackNum];
-	attackCooldown = global.attackCooldowns[attackNum];
+	attackName = obj_comboCache.attackNames[attackNum];
+	attackDuration = obj_comboCache.attackDurations[attackNum];
+	attackCooldown = obj_comboCache.attackCooldowns[attackNum];
 	pl.attackDuration = attackDuration;
-	pl.attackAnimation = global.attackAnimations[attackNum];
-	pl.attackAnimationWep = global.attackAnimationWeps[attackNum];
-	pl.attackAnimationEffect = global.attackAnimationEffects[attackNum];
+	pl.attackAnimation = obj_comboCache.attackAnimations[attackNum];
+	pl.attackAnimationWep = obj_comboCache.attackAnimationWeps[attackNum];
+	pl.attackAnimationEffect = obj_comboCache.attackAnimationEffects[attackNum];
 	pl.attackCooldown = attackCooldown;
-	pl.attackMoveDistanceY = global.attackMoveDistancesY[attackNum];
-	pl.attackMoveDistanceX = global.attackMoveDistancesX[attackNum];
-	pl.attackMoveStart = global.attackMoveStart[attackNum];
-	pl.attackMoveDuration = global.attackMoveDuration[attackNum];
-	for(var i = 0; i < array_length_2d(global.attackHitStart,attackNum); i++)
+	pl.attackMoveDistanceY = obj_comboCache.attackMoveDistancesY[attackNum];
+	pl.attackMoveDistanceX = obj_comboCache.attackMoveDistancesX[attackNum];
+	pl.attackMoveStart = obj_comboCache.attackMoveStart[attackNum];
+	pl.attackMoveDuration = obj_comboCache.attackMoveDuration[attackNum];
+	for(var i = 0; i < array_length_2d(obj_comboCache.attackHitStart,attackNum); i++)
 	{
 		//Hit box numbs
-		attackHitStart[i] = global.attackHitStart[attackNum,i];
-		attackHitDuration[i] = global.attackHitDuration[attackNum,i];
+		attackHitStart[i] = obj_comboCache.attackHitStart[attackNum,i];
+		attackHitDuration[i] = obj_comboCache.attackHitDuration[attackNum,i];
 		//STATS
-		attackDamageType[i] = global.attackDamageTypes[attackNum,i];
-		attackDamageModifier[i] = global.attackDamageModifiers[attackNum,i];
-		attackStaggerModifier[i] = global.attackStaggerModifiers[attackNum,i];
-		attackKnockback[i] = global.attackKnockbacks[attackNum,i];
-		attackStatusType[i] = global.attackStatusTypes[attackNum,i];
-		attackStatusValue[i] = global.attackStatusValues[attackNum,i];
+		attackDamageType[i] = obj_comboCache.attackDamageTypes[attackNum,i];
+		attackDamageModifier[i] = obj_comboCache.attackDamageModifiers[attackNum,i];
+		attackStaggerModifier[i] = obj_comboCache.attackStaggerModifiers[attackNum,i];
+		attackKnockback[i] = obj_comboCache.attackKnockbacks[attackNum,i];
+		attackStatusType[i] = obj_comboCache.attackStatusTypes[attackNum,i];
+		attackStatusValue[i] = obj_comboCache.attackStatusValues[attackNum,i];
 	}
-	attackXOffset = global.attackXOffsets[attackNum];
-	attackYOffset = global.attackYOffsets[attackNum];
+	attackXOffset = obj_comboCache.attackXOffsets[attackNum];
+	attackYOffset = obj_comboCache.attackYOffsets[attackNum];
 
 	
 	//Set
 	timer = 0;
 	facing = pl.facing;
 	x=pl.x+facing*attackXOffset;
-	image_xscale = facing*global.attackWidths[attackNum]/8;
+	image_xscale = facing*obj_comboCache.attackWidths[attackNum]/8;
 	y=pl.y+attackYOffset;
-	image_yscale = global.attackHeights[attackNum]/8;
-	
-	//pl move set 0
-	pl.xSpd = 0;
+	image_yscale = obj_comboCache.attackHeights[attackNum]/8;
 }

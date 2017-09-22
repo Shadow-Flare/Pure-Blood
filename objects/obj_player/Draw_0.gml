@@ -1,3 +1,13 @@
+//draw self
+draw_self();
+
+if weaponSpriteIndex != noone draw_sprite_ext(weaponSpriteIndex,image_index,x,y,facing,1,0,c_white,1);
+
+if effectSpriteIndex != noone draw_sprite_ext(effectSpriteIndex,image_index,x,y,facing,1,0,c_white,1);
+
+#region OLD CODE
+if global.g = "im a nerd"
+{
 #region draw crossbow
 if phase == "offhand"
 {
@@ -26,9 +36,6 @@ else if subPhase == "hookedOffhandHolster" {}//draw_sprite_ext(spr_player_crossb
 else if subPhase == "hookedHoldingDrawn" {}//draw_sprite_ext(spr_player_crossbow_,image_index,x,y,facing,1,0,c_white,1);
 }
 #endregion
-
-//draw self
-draw_self();
 
 #region draw weapons
 //weapons
@@ -171,4 +178,6 @@ else if softLockOn
 else lockImageTimer = 0;
 
 if lockImageTimer >= room_speed lockImageTimer = 0;
+#endregion
+}
 #endregion

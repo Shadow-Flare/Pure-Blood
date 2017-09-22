@@ -935,6 +935,14 @@
             }
         },
         {
+            "Key": "4c33e021-9ff9-42cf-8709-8cfde3fececa",
+            "Value": {
+                "id": "572acd87-63ed-4129-8784-a7b9f03462d5",
+                "resourcePath": "sprites\\spr_player_walkingBackwards_weapon\\spr_player_walkingBackwards_weapon.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "4cafb196-8968-40bd-a7f2-b5e1a08f149b",
             "Value": {
                 "id": "c484ff00-03f0-4f95-b230-449fcb3d8f31",
@@ -1271,11 +1279,11 @@
             }
         },
         {
-            "Key": "6728807d-5692-4961-aee7-5a0409d5850d",
+            "Key": "66c6226c-6573-4582-8616-17322e63b13c",
             "Value": {
-                "id": "3570263f-8d12-41c9-abde-b56e15b41a6c",
-                "resourcePath": "scripts\\scr_combo_cache_create\\scr_combo_cache_create.yy",
-                "resourceType": "GMScript"
+                "id": "257fe842-feb6-4790-977c-444c805daa99",
+                "resourcePath": "sprites\\spr_player_walking_weapon\\spr_player_walking_weapon.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -1962,7 +1970,7 @@
             "Key": "97e76f82-2a22-45a3-813e-fb4f1677bcd5",
             "Value": {
                 "id": "fe70addd-5d88-46d3-bb24-1f7e2bdf3051",
-                "resourcePath": "objects\\obj_combo_cache\\obj_combo_cache.yy",
+                "resourcePath": "objects\\obj_comboCache\\obj_comboCache.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -3344,7 +3352,6 @@
         "6ab66633-80f8-4b21-bfcb-2bca0a2e55b5",
         "60fca022-1107-4306-880b-c2e3d9d60281",
         "5c2e97a0-cc52-473b-b56c-2a72967ee304",
-        "6728807d-5692-4961-aee7-5a0409d5850d",
         "065b7846-c43d-483b-90a3-282ee1dd696e",
         "fbedfc80-17cb-42f7-9129-99e6531c1a68",
         "9b4f53b0-f643-435b-b61f-0ed9eb8bc3bf",
