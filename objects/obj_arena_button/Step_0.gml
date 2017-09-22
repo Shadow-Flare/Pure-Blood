@@ -2,7 +2,7 @@ if place_meeting(x,y,obj_player)
 {
 	lightUp = 1;
 	timer++;
-	if global.bInput
+	if instance_exists(obj_inputManager) && obj_inputManager.bInput
 	{
 			pausing = 1;
 	}
