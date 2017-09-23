@@ -1,7 +1,7 @@
-var IE = instance_exists(obj_inputManager)
-if IE var moveH = obj_inputManager.moveInputH;
+var IE = instance_exists(inputManager)
+if IE var moveH = inputManager.moveInputH;
 else var moveH = 0;
-if IE var moveV = obj_inputManager.moveInputV;
+if IE var moveV = inputManager.moveInputV;
 else var moveV = 0;
 
 switch vPhase
@@ -48,6 +48,7 @@ switch vPhase
 		}
 		break;
 	case vState.midAir:
+	case vState.jumping:
 		subPhase = subState.airborne;
 		subPhaseTimer = 0;
 		break;

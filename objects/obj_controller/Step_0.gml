@@ -1,6 +1,7 @@
 global.time++;
 
-if !instance_exists(obj_inputManager) instance_create_depth(0,0,0,obj_inputManager)
+if !instance_exists(inputManager) instance_create_depth(0,0,0,inputManager);
+if !instance_exists(playerData) instance_create_depth(0,0,0,playerData);
 
 ////item tester
 //if mouse_check_button_pressed(mb_left) with instance_create_layer(mouse_x,mouse_y,layer_get_id("lay_entities"),obj_item_test)
@@ -98,9 +99,9 @@ scr_console_step();
 if !global.paused
 {
 	//Up input change
-	if instance_exists(obj_inputManager)
+	if instance_exists(inputManager)
 	{
-		if obj_inputManager.dUInput
+		if inputManager.dUInput
 		{
 			dU = 0;
 		}
@@ -109,7 +110,7 @@ if !global.paused
 	if dU != -1
 	{
 		dU++;
-		if !obj_inputManager.dUInputHeld
+		if !inputManager.dUInputHeld
 		{
 			if player.phase != "offhand" && player.phase != "ability"
 			{
@@ -166,9 +167,9 @@ if !global.paused
 	}
 
 	//Right input change
-	if instance_exists(obj_inputManager)
+	if instance_exists(inputManager)
 	{
-		if obj_inputManager.dRInput
+		if inputManager.dRInput
 		{
 			dR = 0;
 		}
@@ -177,7 +178,7 @@ if !global.paused
 	if dR != -1
 	{
 		dR++;
-		if !obj_inputManager.dRInputHeld
+		if !inputManager.dRInputHeld
 		{
 			if player.phase != "ability" && player.phase != "hooked"
 			{

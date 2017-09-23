@@ -1,0 +1,36 @@
+///@arg baseSprite
+
+if baseSpriteIndex != argument0
+{
+	var weaponCatStr = "Sword"			//CHANGE, make dependent on current cat.
+	var weaponStr = "Gladius"			//CHANGE, make dependent on current wep.
+
+	//baseSprite update
+	baseSpriteIndex = argument0;
+	image_index = 0;
+	image_speed = 1;
+
+	//get strings
+		//body sprite
+	var bodySpriteName = string_replace(sprite_get_name(baseSpriteIndex),"Sword",weaponCatStr);
+	
+		//weapon sprite
+	var weaponSpriteName = string_replace(bodySpriteName,"Body","Weapon");
+	weaponSpriteName = string_replace(weaponSpriteName,weaponCatStr,weaponStr);
+	
+		//effect sprite
+	var effectSpriteName = string_replace(bodySpriteName,"Body","Effect");
+
+	//roundup
+		//body sprite
+	if asset_get_type(bodySpriteName) != asset_unknown sprite_index = asset_get_index(bodySpriteName);
+	else sprite_index = sprPlayerBodySpriteMissing;
+	
+		//weapon sprite
+	if asset_get_type(weaponSpriteName) != asset_unknown weaponSpriteIndex = asset_get_index(weaponSpriteName);
+	else weaponSpriteIndex = noone;
+	
+		//effect sprite
+	if asset_get_type(effectSpriteName) != asset_unknown effectSpriteIndex = asset_get_index(effectSpriteName);
+	else effectSpriteIndex = noone;
+}

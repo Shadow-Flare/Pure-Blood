@@ -1,16 +1,146 @@
 //Initialize enums (MOVE TO CONTROLLER CREATE)
-enum state {base, attacking, aerialAttacking, offhand, aerialOffhand, ability, dying, blocking, dodging};
-enum vState {grounded, midAir};
-enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post};
+enum state {base, attacking, offhand, ability, dying, blocking, dodging};
+enum vState {grounded, midAir, jumping};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding};
+
+//Initials
+IE = instance_exists(inputManager)
+
+#region lock-ons
+//soft lockon
+if (softLockOn||hardLockOn) && !instance_exists(lockOnTarget)
+{
+	softLockOn = 0;
+	hardLockOn = 0;
+	lockOnTarget = noone;
+}
+
+if IE
+{
+	if inputManager.rsInput && softLockOn {softLockOn = 0 hardLockOn = 1;}
+	else if inputManager.rsInput && hardLockOn {hardLockOn = 0;}
+}
+
+if !hardLockOn
+{
+	var minDist = -1;
+	lockOnTarget = noone;
+	for (var i = 0; i < instance_number(obj_enemy_parent); i++)
+	{
+		var posTarget = instance_find(obj_enemy_parent,i);
+		var tmpDist = distance_to_object(posTarget)
+		if (tmpDist < minDist || minDist == -1) && tmpDist < softLockRange && posTarget.phase != "dying"
+		{
+			minDist = tmpDist;
+			lockOnTarget = posTarget;
+		}
+	}
+	if minDist != -1 softLockOn = 1;
+	else softLockOn = 0;
+}
+else
+{
+	if distance_to_object(lockOnTarget) > hardLockRange || lockOnTarget.phase == "dying"
+	{
+		lockOnTarget = noone;
+		hardLockOn = 0;
+	}
+}
+
+if hardLockOn || softLockOn
+{
+	lockOnDir = sign(lockOnTarget.x-x);
+	if lockOnDir == 0 lockOnDir = 1;
+}
+
+if gamepad_is_connected(0)
+{
+	//target switch
+	if hardLockOn
+	{
+		if IE
+		{
+			var h = inputManager.targetInputH;
+			var v = inputManager.targetInputV;
+		}
+		else
+		{
+			h = 0;
+			v = 0;
+		}
+		if canChangeTarget && !(h==0&&v==0)
+		{
+			var minDist = -1;
+			if h <= 0 && abs(h)>=abs(v) {var maxAngle = 225; var minAngle = 135;}
+			else if h > 0 && abs(h)>=abs(v) {var maxAngle = 45; var minAngle = 315;}
+			else if v < 0 && abs(v)>=abs(h) {var maxAngle = 135; var minAngle = 45;}
+			else if v >= 0 && abs(v)>= abs(h) {var maxAngle = 315; var minAngle = 225;}
+			with obj_enemy_parent
+			{
+				var searchAngle = point_direction(other.lockOnTarget.x,other.lockOnTarget.y,x,y)
+				if other.lockOnTarget != id && ((searchAngle > minAngle && searchAngle < maxAngle)||(minAngle == 315 && (searchAngle < 45 || minAngle > 315))) && (distance_to_object(other.lockOnTarget)<minDist||minDist==-1) && distance_to_object(other) < other.hardLockRange
+				{
+					minDist = distance_to_object(other.lockOnTarget);
+					other.potentialId = id;
+				}
+			}
+			if minDist != -1
+			{
+				lockOnTarget = potentialId;
+				canChangeTarget = 0;
+			}
+		}
+	}
+	if !canChangeTarget
+	{
+		if !IE || (inputManager.targetInput==0&&inputManager.targetInputV==0) canChangeTarget = 1;
+	}
+}
+else
+{
+	if hardLockOn && IE && inputManager.keyboardTargetChangeInput
+	{
+		var stopIt = 0;
+		if !variable_instance_exists(id,"targetList") targetList = [];
+		with obj_enemy_parent
+		{
+			if distance_to_object(other) <= other.hardLockRange
+			{
+				for (var i = 0; i < array_length_1d(other.targetList); i++)
+				{
+					if other.targetList[i] == id
+					{
+						if id == other.lockOnTarget other.lockOnIndex = i
+						stopIt = 1;
+					}
+				}
+				if !stopIt
+				{
+					var newIndex = array_length_1d(other.targetList);
+					other.targetList[newIndex] = id;		
+					if id == other.lockOnTarget other.lockOnIndex = newIndex;
+				}
+			}
+		}
+		lockOnIndex++;
+		if lockOnIndex >= array_length_1d(other.targetList)lockOnIndex = 0;
+		lockOnTarget = targetList[lockOnIndex]
+	}
+}
+#endregion
 
 #region State mechanisms
 switch vPhase
 {
 	case vState.grounded:
-		if !((!place_free(x,y+1)||(place_meeting(x,y+1,obj_platform_parent)&&!place_meeting(x,y,obj_platform_parent))) && place_free(x,y)) vPhase = vState.midAir;
+		if !(place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) && phase != state.attacking vPhase = vState.midAir;
 		break;
 	case vState.midAir:
-		if ((!place_free(x,y+1)||(place_meeting(x,y+1,obj_platform_parent)&&!place_meeting(x,y,obj_platform_parent))) && place_free(x,y)) vPhase = vState.grounded;
+		if (place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) && phase != state.attacking vPhase = vState.grounded;
+		break;
+	case vState.jumping:
+		if (place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) vPhase = vState.grounded;
+		if ySpd >= 0 vPhase = vState.midAir;
 		break;
 }
 
@@ -21,6 +151,9 @@ switch phase
 		break;
 	case state.attacking:
 		scr_player_attacking();
+		break;
+	case state.offhand:
+		scr_player_offhand();
 		break;
 }
 #endregion
@@ -703,7 +836,6 @@ else
 			else if subPhase == "ground" && yInputQueue && attackNum != array_length_1d(global.activeComboIDs)
 			{
 				with obj_player_attack_effect instance_destroy();
-				scr_player_uppercut();
 				attackTimer = 0;
 				timerState = 0;
 				yInputQueue = 0;

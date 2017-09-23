@@ -1,5 +1,9 @@
 //get needed data
-var IE = instance_exists(obj_inputManager)
+var IE = instance_exists(inputManager)
+if IE && inputManager.xInput xInputQueue = 1;
+if IE && inputManager.yInput yInputQueue = 1;
+if IE && inputManager.aInput aInputQueue = 1;
+if IE && inputManager.bInput bInputQueue = 1;
 
 #region do things
 phaseTimer++;
@@ -7,33 +11,52 @@ subPhaseTimer++;
 
 	//properties
 image_xscale = facing;
-if comboSize%2 == attackNum%2 && attackNum != comboSize && attackAnimation == spr_player_slice_body 
+if comboSize%2 == attackNum%2 && attackNum != comboSize && attackAnimation == sprPlayerBodySwordSlice 
 {
-	attackAnimation = spr_player_slice2_body;
-	attackAnimationWep = spr_player_slice2_weapon;
-	attackAnimationEffect = spr_player_slice2_effect;
+	attackAnimation = sprPlayerBodySwordSlice2;
 }
-if sprite_index != attackAnimation
+else if comboSize%2 == attackNum%2 && attackNum != comboSize && attackAnimation == sprPlayerBodySwordAerialSlash
 {
-	sprite_index = attackAnimation;
-	weaponSpriteIndex = attackAnimationWep;
-	effectSpriteIndex = attackAnimationEffect;
-	image_index = 0
-	image_speed = sprite_get_number(sprite_index)/(attackDuration+attackCooldown);
+	attackAnimation = sprPlayerBodySwordAerialSlash2;
 }
-	//xspd
-if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
+update_sprite(attackAnimation);
+image_speed = sprite_get_number(sprite_index)/(attackDuration+attackCooldown);
+
+switch vPhase
 {
-	xSpd = facing*(attackMoveDistanceX/((attackMoveDuration)*room_speed));
+	case vState.grounded:
+			//xspd
+		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
+		{
+			xSpd = facing*(attackMoveDistanceX/((attackMoveDuration)*room_speed));
+		}
+		else xSpd -= xSpd/4;
+			//ySpd
+		ySpd += global.g;
+		break;
+
+	case vState.jumping:
+	case vState.midAir:
+			//xspd
+		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
+		{
+			if aerialTargetX != -4 && aerialTargetY != -4 xSpd = (aerialTargetX-x)/8;
+			else xSpd = facing*(attackMoveDistanceX/((attackMoveDuration)*room_speed));
+		}
+		else xSpd -= xSpd/4;
+			//ySpd
+		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
+		{
+			if aerialTargetX != -4 && aerialTargetY != -4 ySpd = (aerialTargetY-y)/8;
+			else ySpd = attackMoveDistanceY/((attackMoveDuration)*room_speed);
+		}
+		else ySpd += global.g/4;
+		break;
 }
-else xSpd -= xSpd/4;
-	//ySpd
-ySpd += global.g;
 
 #endregion
 
 #region change states & substates
-	if IE && obj_inputManager.xInput xInputQueue = 1;
 	switch subPhase
 	{
 		case subState.performing:
@@ -44,29 +67,104 @@ ySpd += global.g;
 			}
 			break;
 		case subState.post:
-				//keep attacking? (ground combo)
-			if xInputQueue && attackNum != array_length_1d(obj_comboCache.activeComboIDs)-1 && effect.hasHit
+			switch vPhase
 			{
-				with obj_player_attack_effect instance_destroy();
-				attackNum++;
-				aInputQueue = 0;
-				xInputQueue = 0;
-				yInputQueue = 0;
-				bInputQueue = 0;
-				scr_player_combo();
-				phaseTimer = 0;							//reset for properties
-				subPhase = subState.performing;
-				subPhaseTimer = 0;
+				case vState.grounded:
+					#region ground attack
+						//keep attacking? (ground combo)
+					if xInputQueue && attackNum != comboSize-1 && effect.hasHit
+					{
+						with obj_player_attack_effect instance_destroy();
+						attackNum++;
+						aInputQueue = 0;
+						xInputQueue = 0;
+						yInputQueue = 0;
+						bInputQueue = 0;
+						scr_player_combo();
+						phaseTimer = 0;							//reset for properties
+						subPhase = subState.performing;
+						subPhaseTimer = 0;
+					}
+						//perform uppercut? (mid ground combo using weapon)
+					else if yInputQueue && attackNum < comboSize-2 && effect.hasHit
+					{
+						with obj_player_attack_effect instance_destroy();
+						attackNum++;
+						aInputQueue = 0;
+						xInputQueue = 0;
+						yInputQueue = 0;
+						bInputQueue = 0;
+						scr_player_combo_ext(obj_comboCache.activeUppercutId);
+						phaseTimer = 0;							//reset for properties
+						subPhase = subState.performing;
+						subPhaseTimer = 0;
+					}
+						//jump? (mid ground combo/subsequent jump)
+					else if aInputQueue
+					{
+						with obj_player_attack_effect instance_destroy();		
+						ySpd = -jumpPow;
+						jumpNum++;
+						phase = state.base;
+						phaseTimer = 0;
+						attackNum = 0;
+						scr_player_base_subPhaseDeterminer();
+					}
+						//end
+					else if subPhaseTimer >= round(attackCooldown*room_speed)
+					{
+						with obj_player_attack_effect instance_destroy();
+						phase = state.base;
+						phaseTimer = 0;
+						attackNum = 0;
+						scr_player_base_subPhaseDeterminer();
+					}
+					#endregion
+					break;
+			
+				case vState.jumping:
+				case vState.midAir:
+					#region air attack
+					if xInputQueue && attackNum != aerialComboSize-1 && effect.hasHit
+					{
+						with obj_player_attack_effect instance_destroy();
+						if lockOnTarget != noone && distance_to_object(lockOnTarget) <= aerialTrackDistance && lockOnTarget.phase != "dying" //this will get changed as enemy code gets changed
+						{
+							aerialTargetX = lockOnTarget.x;
+							aerialTargetY = lockOnTarget.y;
+						}
+						else
+						{
+							aerialTargetX = -4;
+							aerialTargetY = -4;	
+						}
+						attackNum++;
+						aInputQueue = 0;
+						xInputQueue = 0;
+						yInputQueue = 0;
+						bInputQueue = 0;
+						if attackNum == aerialComboSize-1 var aerialAttackId = obj_comboCache.activeAerialID + 1; // + 0
+						else var aerialAttackId = obj_comboCache.activeAerialID;
+						scr_player_combo_ext(aerialAttackId);
+						phaseTimer = 0;							//reset for properties
+						subPhase = subState.performing;
+						subPhaseTimer = 0;
+						if aerialTargetX == -4 && aerialTargetY == -4 ySpd = aerialAttackVertBoost;
+						else facing = lockOnDir
+					}
+						//end
+					else if subPhaseTimer >= round(attackCooldown*room_speed)
+					{
+						with obj_player_attack_effect instance_destroy();
+						phase = state.base;
+						phaseTimer = 0;
+						attackNum = 0;
+						if (place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) vPhase = vState.grounded;
+						scr_player_base_subPhaseDeterminer();
+					}
+					#endregion
+					break;
 			}
-				//end
-			else if subPhaseTimer >= round(attackCooldown*room_speed)
-			{
-				with obj_player_attack_effect instance_destroy();
-				phase = state.base;
-				phaseTimer = 0;
-				attackNum = 0;
-				scr_player_base_subPhaseDeterminer();
-			}
-			break
+			break;
 	}
 #endregion
