@@ -11,8 +11,6 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	attackCooldown = obj_comboCache.activeComboCooldowns[attackNum];
 	pl.attackDuration = attackDuration;
 	pl.attackAnimation = obj_comboCache.activeComboAnimations[attackNum];
-	pl.attackAnimationWep = obj_comboCache.activeComboAnimationWeps[attackNum];
-	pl.attackAnimationEffect = obj_comboCache.activeComboAnimationEffects[attackNum];
 	pl.attackCooldown = obj_comboCache.activeComboCooldowns[attackNum];
 	pl.attackMoveDistanceY = obj_comboCache.activeComboMoceDistancesY[attackNum];
 	pl.attackMoveDistanceX = obj_comboCache.activeComboMoveDistancesX[attackNum];

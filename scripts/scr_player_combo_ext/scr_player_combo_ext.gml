@@ -1,24 +1,7 @@
 var pl = id;
 with instance_create_depth(x,y,-100,obj_player_attack_effect)
 {
-	switch argument0
-	{
-		case 0:
-			attackNum = obj_comboCache.activeCounterId;
-			break;
-		case 1:
-			attackNum = obj_comboCache.activeUpwardsId;
-			break;
-		case 2:
-			attackNum = obj_comboCache.activeDownwardsId;
-			break;
-		case 3:
-			attackNum = obj_comboCache.activeForwardsId;
-			break;
-		case 4:
-			attackNum = obj_comboCache.activeBackwardsId;
-			break;
-	}
+	attackNum = argument0;
 	caster = pl;
 	caster.effect = id;
 	//get effect properties/collisions
@@ -27,8 +10,6 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	attackCooldown = obj_comboCache.attackCooldowns[attackNum];
 	pl.attackDuration = attackDuration;
 	pl.attackAnimation = obj_comboCache.attackAnimations[attackNum];
-	pl.attackAnimationWep = obj_comboCache.attackAnimationWeps[attackNum];
-	pl.attackAnimationEffect = obj_comboCache.attackAnimationEffects[attackNum];
 	pl.attackCooldown = attackCooldown;
 	pl.attackMoveDistanceY = obj_comboCache.attackMoveDistancesY[attackNum];
 	pl.attackMoveDistanceX = obj_comboCache.attackMoveDistancesX[attackNum];
@@ -49,7 +30,6 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	}
 	attackXOffset = obj_comboCache.attackXOffsets[attackNum];
 	attackYOffset = obj_comboCache.attackYOffsets[attackNum];
-
 	
 	//Set
 	timer = 0;

@@ -79,14 +79,6 @@
             }
         },
         {
-            "Key": "03a23ac3-65d0-46cf-bf80-df9ea65e976d",
-            "Value": {
-                "id": "f75efc02-d850-43db-aa02-2ee273d85944",
-                "resourcePath": "sprites\\spr_player_crossbow_aerial_body\\spr_player_crossbow_aerial_body.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "04573690-5d9a-49f9-aac5-09b87659bf98",
             "Value": {
                 "id": "a71dcd4a-2f3a-468e-8a00-aeb1e1f83c86",
@@ -100,6 +92,14 @@
                 "id": "d089b585-243c-4298-a819-dc027c51cf7c",
                 "resourcePath": "views\\05a3db7d-6fe5-4587-b1da-1ad7ed171c90.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "0604c642-d897-4ab2-a00f-4700f381cad2",
+            "Value": {
+                "id": "e3e9e3f3-eba9-4726-ab9e-44412f7c6f10",
+                "resourcePath": "sprites\\sprPlayerBodySwordUppercut\\sprPlayerBodySwordUppercut.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -122,7 +122,7 @@
             "Key": "08d00883-4df1-42cf-b2e5-e29697950798",
             "Value": {
                 "id": "6c7c53e3-dbe6-4cef-bf7a-5caaa99b3677",
-                "resourcePath": "sprites\\spr_player_gut_weapon\\spr_player_gut_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusGut\\sprPlayerWeaponGladiusGut.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -154,7 +154,7 @@
             "Key": "0cb01e97-d220-4187-aaeb-dc0a71035a3e",
             "Value": {
                 "id": "550ae25b-1e91-4762-b98a-e78c6150e9a1",
-                "resourcePath": "sprites\\spr_player_deflected_body\\spr_player_deflected_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordDeflected\\sprPlayerBodySwordDeflected.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -220,6 +220,14 @@
                 "id": "df8bf8bd-6780-4519-b61f-838e321a7a9f",
                 "resourcePath": "sprites\\spr_player_crossbow_drawn_crossbow\\spr_player_crossbow_drawn_crossbow.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "10b55418-9689-4611-b58c-2911bb7540b6",
+            "Value": {
+                "id": "85a62128-8b43-4459-a72d-47e1bba0b061",
+                "resourcePath": "scripts\\scr_player_offhand\\scr_player_offhand.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -314,7 +322,7 @@
             "Key": "198a98d1-57a0-440b-b2c3-acba2eaad89c",
             "Value": {
                 "id": "b65877dd-4121-4fa1-ad76-953b044ca037",
-                "resourcePath": "sprites\\spr_player_crossbow_offhandHolster_body\\spr_player_crossbow_offhandHolster_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowPost\\sprPlayerBodySwordCrossbowPost.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -339,14 +347,6 @@
             "Value": {
                 "id": "0e6b2160-30cc-4eb2-a61d-f7e83257b3a6",
                 "resourcePath": "sprites\\spr_bloodHound_idle\\spr_bloodHound_idle.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "1d10f523-4329-495d-8dd2-1189a672b3ae",
-            "Value": {
-                "id": "120b1df7-d9ad-46bf-b1a1-9aa3900c3db4",
-                "resourcePath": "sprites\\spr_player_crossbow_hookedOffhandHolster_body1\\spr_player_crossbow_hookedOffhandHolster_body1.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -490,7 +490,7 @@
             "Key": "2d0a79a5-0677-4f39-af97-b92474365495",
             "Value": {
                 "id": "84662142-2b31-4b5d-88f3-c0fa320edb65",
-                "resourcePath": "sprites\\spr_player_slice_body\\spr_player_slice_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordSlice\\sprPlayerBodySwordSlice.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -506,7 +506,7 @@
             "Key": "2d412bbc-c944-4153-9444-c645ae8ce6a3",
             "Value": {
                 "id": "530f5b47-c28d-4bce-8b0a-41f69209acd1",
-                "resourcePath": "sprites\\spr_player_walkingBackwards_body\\spr_player_walkingBackwards_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordWalkingBackwards\\sprPlayerBodySwordWalkingBackwards.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -570,15 +570,7 @@
             "Key": "315b0338-c7c2-4060-bcd4-f17d9b88e01a",
             "Value": {
                 "id": "4b10b2cd-1c15-4b75-91e9-b3a29cbd2a23",
-                "resourcePath": "sprites\\spr_player_airborne_body\\spr_player_airborne_body.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "3225c3b5-545d-4cb7-888b-6a173795ed02",
-            "Value": {
-                "id": "3ba45aae-5c9c-4279-a050-389aa27e2bfc",
-                "resourcePath": "sprites\\spr_player_dodgeEnd_body\\spr_player_dodgeEnd_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordAirborne\\sprPlayerBodySwordAirborne.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -586,7 +578,7 @@
             "Key": "32b66033-c3df-4853-9c13-a91937cdf4a0",
             "Value": {
                 "id": "4b4e9214-b4aa-42a1-86ad-68553e4bb189",
-                "resourcePath": "sprites\\spr_player_slice_weapon\\spr_player_slice_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusSlice\\sprPlayerWeaponGladiusSlice.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -650,7 +642,7 @@
             "Key": "38863124-c0ce-46a3-a3e6-3fa4b63591ca",
             "Value": {
                 "id": "d5db6b22-1d14-4ada-983d-d6ef8f27d454",
-                "resourcePath": "sprites\\spr_player_dodging_weapon\\spr_player_dodging_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusDodging\\sprPlayerWeaponGladiusDodging.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -674,7 +666,7 @@
             "Key": "393dc140-deef-4614-9aea-ccd0106ef8c0",
             "Value": {
                 "id": "8c93ae7f-d1ab-401b-99d5-00f79e62bdeb",
-                "resourcePath": "sprites\\spr_player_aerialFinish_body\\spr_player_aerialFinish_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordAerialSlam\\sprPlayerBodySwordAerialSlam.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -711,6 +703,14 @@
             }
         },
         {
+            "Key": "3e985499-439b-4eea-b0da-42a4ccda5b73",
+            "Value": {
+                "id": "9a593590-6323-4d0f-8d7d-fa5c604c5933",
+                "resourcePath": "scripts\\update_sprite\\update_sprite.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "3fb4eb2f-e479-4c56-abd7-4282a56a6d09",
             "Value": {
                 "id": "6b74adda-4ef8-4b6d-8206-240e8e06c1fd",
@@ -738,7 +738,7 @@
             "Key": "408c70ed-284b-49f8-8b00-1dfbfde4d952",
             "Value": {
                 "id": "e3d508b4-0021-4530-be93-90f5a784a71a",
-                "resourcePath": "sprites\\spr_player_skywardSlice_body\\spr_player_skywardSlice_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordSkywardSlice\\sprPlayerBodySwordSkywardSlice.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -794,7 +794,7 @@
             "Key": "41ef230a-2d88-4919-896d-14e41a6e5f62",
             "Value": {
                 "id": "d8b670b3-7b7a-432f-885c-cab26d3a80f6",
-                "resourcePath": "sprites\\spr_player_aerialSlash_weapon\\spr_player_aerialSlash_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusAerialSlash\\sprPlayerWeaponGladiusAerialSlash.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -812,14 +812,6 @@
                 "id": "1b09e6b5-1c7f-4615-a29f-c4873f500a59",
                 "resourcePath": "objects\\obj_light_parent\\obj_light_parent.yy",
                 "resourceType": "GMObject"
-            }
-        },
-        {
-            "Key": "42ee3e66-1733-484c-acea-9287240656c8",
-            "Value": {
-                "id": "2b80781e-2010-4ec3-bdeb-eced823341c6",
-                "resourcePath": "sprites\\spr_player_proneDying_body\\spr_player_proneDying_body.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -890,7 +882,7 @@
             "Key": "4968f93b-caff-41be-9e53-b3339a721f9a",
             "Value": {
                 "id": "33792516-ef73-45de-8ce1-2cf2f91d4689",
-                "resourcePath": "sprites\\spr_player_burst_weapon\\spr_player_burst_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusBurst\\sprPlayerWeaponGladiusBurst.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -906,7 +898,7 @@
             "Key": "4a53ff57-058a-475f-81c0-fcf983a87aab",
             "Value": {
                 "id": "1bd4bbbe-06b1-4bc0-a8c8-f659fdf04b64",
-                "resourcePath": "sprites\\spr_player_shove_body\\spr_player_shove_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordShove\\sprPlayerBodySwordShove.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -914,7 +906,7 @@
             "Key": "4a5886cd-974b-4fef-a047-20fa0f5c40c8",
             "Value": {
                 "id": "8aa1176d-3e75-43b0-9af1-c1b98ba8040c",
-                "resourcePath": "sprites\\spr_player_counter_body\\spr_player_counter_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordCounter\\sprPlayerBodySwordCounter.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -938,7 +930,7 @@
             "Key": "4c33e021-9ff9-42cf-8709-8cfde3fececa",
             "Value": {
                 "id": "572acd87-63ed-4129-8784-a7b9f03462d5",
-                "resourcePath": "sprites\\spr_player_walkingBackwards_weapon\\spr_player_walkingBackwards_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusWalkingBackwards\\sprPlayerWeaponGladiusWalkingBackwards.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -994,7 +986,7 @@
             "Key": "4e66ba5b-918e-4b31-a60d-7b28c194a607",
             "Value": {
                 "id": "b09071b4-21eb-4fcc-8c7d-95d9902cfa4e",
-                "resourcePath": "sprites\\spr_player_aerialSlash_body\\spr_player_aerialSlash_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordAerialSlash\\sprPlayerBodySwordAerialSlash.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1034,16 +1026,8 @@
             "Key": "54685794-a339-45e7-bb34-33b5985a47f1",
             "Value": {
                 "id": "ced3752e-90a0-4a1c-9bb3-11ad1398f311",
-                "resourcePath": "sprites\\spr_player_slice2_weapon\\spr_player_slice2_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusSlice2\\sprPlayerWeaponGladiusSlice2.yy",
                 "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "549bc7db-2475-41a5-9bcc-d2aa354a8ea5",
-            "Value": {
-                "id": "0eeff64c-0316-4ce6-96f9-7e3bd4b02eaf",
-                "resourcePath": "scripts\\scr_player_uppercut\\scr_player_uppercut.yy",
-                "resourceType": "GMScript"
             }
         },
         {
@@ -1058,7 +1042,7 @@
             "Key": "563bd8e7-dae6-4842-86ca-e076f842da5a",
             "Value": {
                 "id": "ac0a9ab0-3180-4867-800d-4576f334a28d",
-                "resourcePath": "sprites\\spr_player_crossbow_holding_body\\spr_player_crossbow_holding_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowAim\\sprPlayerBodySwordCrossbowAim.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1074,7 +1058,7 @@
             "Key": "571ccba4-91c0-4a75-87cc-e3729338afef",
             "Value": {
                 "id": "5e69fabc-9b6d-44ac-9f40-33046b0d4330",
-                "resourcePath": "sprites\\spr_player_smash_weapon\\spr_player_smash_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusSmash\\sprPlayerWeaponGladiusSmash.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1106,7 +1090,7 @@
             "Key": "5a4b3140-2340-4a67-ac48-1aee0495e507",
             "Value": {
                 "id": "27ab7045-7fcf-43a1-925e-998b6a61933e",
-                "resourcePath": "sprites\\spr_player_landing_weapon\\spr_player_landing_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusLanding\\sprPlayerWeaponGladiusLanding.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1154,7 +1138,7 @@
             "Key": "5cfa0f37-55b4-4f5b-8984-bb0c9121fcbc",
             "Value": {
                 "id": "5745518b-b105-450f-a76e-035d8b5665d0",
-                "resourcePath": "sprites\\spr_player_run_weapon\\spr_player_run_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusRunning\\sprPlayerWeaponGladiusRunning.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1282,7 +1266,7 @@
             "Key": "66c6226c-6573-4582-8616-17322e63b13c",
             "Value": {
                 "id": "257fe842-feb6-4790-977c-444c805daa99",
-                "resourcePath": "sprites\\spr_player_walking_weapon\\spr_player_walking_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusWalking\\sprPlayerWeaponGladiusWalking.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1391,14 +1375,6 @@
             }
         },
         {
-            "Key": "6de7f186-fd0c-47de-b835-e1f329108dc6",
-            "Value": {
-                "id": "b36645c0-70e4-4679-80ea-d76592ec20ee",
-                "resourcePath": "sprites\\spr_player_crossbow_hookedOffhandDrawnFire_body\\spr_player_crossbow_hookedOffhandDrawnFire_body.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "6e5a191c-22bc-4b70-91c3-054e7b95fb59",
             "Value": {
                 "id": "22141ff5-ca42-4813-aec9-cfaaee677fb3",
@@ -1418,7 +1394,7 @@
             "Key": "712bc778-a106-485a-a228-0e5833d37f99",
             "Value": {
                 "id": "e1cd1594-6a13-4141-99a1-681bcfbac298",
-                "resourcePath": "sprites\\spr_player_dying_body\\spr_player_dying_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordDying\\sprPlayerBodySwordDying.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1426,7 +1402,7 @@
             "Key": "7142fcda-01fc-4f05-a8d0-584beeac3345",
             "Value": {
                 "id": "de9a8f8f-abef-4a2e-a7fd-5b5996ad1353",
-                "resourcePath": "sprites\\spr_player_blockingReaction_weapon\\spr_player_blockingReaction_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusBlockingReaction\\sprPlayerWeaponGladiusBlockingReaction.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1466,7 +1442,7 @@
             "Key": "73bd7839-2cf3-4c7f-9005-715ad8b6e389",
             "Value": {
                 "id": "e1e20b53-96d1-41c7-8c99-8a09f7d9b7ff",
-                "resourcePath": "sprites\\spr_player_prone_weapon\\spr_player_prone_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusProne\\sprPlayerWeaponGladiusProne.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1522,7 +1498,7 @@
             "Key": "7717abf6-4d29-4f84-be3b-88e077511154",
             "Value": {
                 "id": "4bf40a5d-ac1f-4095-9509-d88cf3362ab7",
-                "resourcePath": "sprites\\spr_player_blocking_weapon\\spr_player_blocking_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusBlocking\\sprPlayerWeaponGladiusBlocking.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1530,7 +1506,7 @@
             "Key": "77203516-7b1a-4fed-b05f-2bcd54144ff1",
             "Value": {
                 "id": "2c607185-5a49-4406-b78f-72201ddf6238",
-                "resourcePath": "sprites\\spr_player_walking_body\\spr_player_walking_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordWalking\\sprPlayerBodySwordWalking.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1602,7 +1578,7 @@
             "Key": "7bdd56cf-7f4c-4113-8ff1-848204d3a0b2",
             "Value": {
                 "id": "fa5328bf-a779-4731-a697-4925005efb9b",
-                "resourcePath": "sprites\\spr_player_flung_body\\spr_player_flung_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordFlung\\sprPlayerBodySwordFlung.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1618,7 +1594,7 @@
             "Key": "7c594235-8931-480a-8b06-ec40a50f8602",
             "Value": {
                 "id": "666c6235-533b-46ae-998b-450f503ad8cd",
-                "resourcePath": "sprites\\spr_player_idle_weapon\\spr_player_idle_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusIdle\\sprPlayerWeaponGladiusIdle.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1652,14 +1628,6 @@
                 "id": "566727be-0ff9-4664-a784-3433d87ee714",
                 "resourcePath": "objects\\obj_player_attack_effect\\obj_player_attack_effect.yy",
                 "resourceType": "GMObject"
-            }
-        },
-        {
-            "Key": "7e38b25b-1f8f-44c0-a0fd-88a624f2c649",
-            "Value": {
-                "id": "6349a130-1a63-4b68-9568-9a21a49eba4e",
-                "resourcePath": "sprites\\spr_player_crossbow_hookedOffhandDrawn_body\\spr_player_crossbow_hookedOffhandDrawn_body.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -1722,7 +1690,7 @@
             "Key": "83b9e862-ba3a-4cd1-8c74-ac19a01c9cd9",
             "Value": {
                 "id": "076f3582-89f6-423a-bba5-af24b046d518",
-                "resourcePath": "sprites\\spr_player_hookedStop_body\\spr_player_hookedStop_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordHookedStop\\sprPlayerBodySwordHookedStop.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1738,7 +1706,7 @@
             "Key": "8432423b-68d5-4ed8-9175-6b4f973774ea",
             "Value": {
                 "id": "445adcc9-0de7-47bc-8635-854d0e81e51b",
-                "resourcePath": "sprites\\spr_player_crossbow_offhandDrawnFire_body\\spr_player_crossbow_offhandDrawnFire_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowFire\\sprPlayerBodySwordCrossbowFire.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1858,7 +1826,7 @@
             "Key": "8bc35983-a5bb-4004-9e18-a21c114040fd",
             "Value": {
                 "id": "28f7eae8-520a-448f-b1f2-4027c17810e6",
-                "resourcePath": "sprites\\spr_player_blockingReaction_body\\spr_player_blockingReaction_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordBlockingReaction\\sprPlayerBodySwordBlockingReaction.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1930,7 +1898,7 @@
             "Key": "960cf26d-02fc-4fcb-8f96-7fe25174b9a1",
             "Value": {
                 "id": "933bd458-4bd5-48a2-8d54-518638e9670c",
-                "resourcePath": "sprites\\spr_player_prone_body\\spr_player_prone_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordProne\\sprPlayerBodySwordProne.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1986,7 +1954,7 @@
             "Key": "98ffb7d4-5390-4fab-bafc-b880ded0cc8a",
             "Value": {
                 "id": "c086dd82-8b44-4234-817a-3d1a797cd827",
-                "resourcePath": "sprites\\spr_player_aerialDodging_body\\spr_player_aerialDodging_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordAerialDodging\\sprPlayerBodySwordAerialDodging.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2018,7 +1986,7 @@
             "Key": "9ab5612d-1c0c-4203-b8f5-a774ae74a163",
             "Value": {
                 "id": "5b0ba061-8114-45ed-b68a-30f1e6022794",
-                "resourcePath": "sprites\\spr_player_dodging_body\\spr_player_dodging_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordDodging\\sprPlayerBodySwordDodging.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2036,14 +2004,6 @@
                 "id": "a1c99cae-af62-4bef-88e6-9a780c9e33fb",
                 "resourcePath": "scripts\\scr_layer_draw_to\\scr_layer_draw_to.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "9ba24823-6111-426b-8e1e-8cdcb74b70b0",
-            "Value": {
-                "id": "7a245934-faae-4e37-89d7-764ca7ff7f7f",
-                "resourcePath": "sprites\\spr_player_crossbow_uppercut_body\\spr_player_crossbow_uppercut_body.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -2074,7 +2034,7 @@
             "Key": "9e0ab4c2-a9db-427f-b1c2-e237828fbf6b",
             "Value": {
                 "id": "6bc388fa-3f77-4667-8418-b214d1d2c8da",
-                "resourcePath": "sprites\\spr_player_aerialSlash2_body\\spr_player_aerialSlash2_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordAerialSlash2\\sprPlayerBodySwordAerialSlash2.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2090,7 +2050,7 @@
             "Key": "9f298592-18a4-4972-adca-16db83b78423",
             "Value": {
                 "id": "379cb7e7-9ced-4c63-b7a6-39093e728b6e",
-                "resourcePath": "sprites\\spr_player_earthenRelease_body\\spr_player_earthenRelease_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordEarthenRelease\\sprPlayerBodySwordEarthenRelease.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2151,18 +2111,10 @@
             }
         },
         {
-            "Key": "a14616bf-5578-4df3-8628-0ce394f534d5",
-            "Value": {
-                "id": "1b63590a-1aa0-4d66-8d8b-ddd17f20ea42",
-                "resourcePath": "sprites\\spr_player_gutReturn_body\\spr_player_gutReturn_body.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "a1566fdc-d4bc-4696-b282-3d927db43ffb",
             "Value": {
                 "id": "72271643-1f67-40dd-beda-4a7f6f505651",
-                "resourcePath": "sprites\\spr_player_slice2_body\\spr_player_slice2_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordSlice2\\sprPlayerBodySwordSlice2.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2242,7 +2194,7 @@
             "Key": "a670a366-747e-49aa-8cd4-ba54edc6fa8e",
             "Value": {
                 "id": "a5614de7-68c6-47f3-988d-d2449dc4503d",
-                "resourcePath": "sprites\\spr_player_idle_body\\spr_player_idle_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordIdle\\sprPlayerBodySwordIdle.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2319,6 +2271,14 @@
             }
         },
         {
+            "Key": "a98a0c14-5945-4135-a1ba-2a89682d3de3",
+            "Value": {
+                "id": "e37944c4-7cda-4acc-97f1-75370b3928fd",
+                "resourcePath": "objects\\playerData\\playerData.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "aa8a6d26-066a-4509-8109-cec72048a8b5",
             "Value": {
                 "id": "3c64b7ff-2970-48cb-8b38-36790c0001bc",
@@ -2346,7 +2306,7 @@
             "Key": "add8cd45-dc19-44e6-b89e-148316e31247",
             "Value": {
                 "id": "c7f79c55-a26b-48ea-a59e-13299b5573b2",
-                "resourcePath": "sprites\\spr_player_aerialFinish_weapon\\spr_player_aerialFinish_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusAerialFinish\\sprPlayerWeaponGladiusAerialFinish.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2410,7 +2370,7 @@
             "Key": "b4a34868-c1dd-4fa2-8438-4de6efdd4896",
             "Value": {
                 "id": "04ff6781-6b83-4c7c-bd07-a05c1cb868d0",
-                "resourcePath": "sprites\\spr_player_blocking_body\\spr_player_blocking_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordBlocking\\sprPlayerBodySwordBlocking.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2420,6 +2380,14 @@
                 "id": "44ce4e97-796b-463f-ba6b-489c9b5c5013",
                 "resourcePath": "scripts\\scr_pause_controller_step\\scr_pause_controller_step.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "b5e453a7-6f7a-430a-a0fc-b4151d8e4af8",
+            "Value": {
+                "id": "9428c57a-ad79-4323-bc47-102a2fe67124",
+                "resourcePath": "sprites\\sprPlayerBodySpriteMissing\\sprPlayerBodySpriteMissing.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -2442,7 +2410,7 @@
             "Key": "b8672d08-3e8c-479e-909e-59243a686763",
             "Value": {
                 "id": "4dd8a090-821d-44fa-9c50-b1009c3ac731",
-                "resourcePath": "sprites\\spr_player_burst_body\\spr_player_burst_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordBurst\\sprPlayerBodySwordBurst.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2458,7 +2426,7 @@
             "Key": "b9da2e3f-6a86-486e-84ba-029f30e639fd",
             "Value": {
                 "id": "c29cce23-4d75-4ae7-a0ca-9259cc97415a",
-                "resourcePath": "sprites\\spr_player_gut_body\\spr_player_gut_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordGut\\sprPlayerBodySwordGut.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2475,6 +2443,14 @@
             "Value": {
                 "id": "d5985b81-25e9-46e6-a724-4a0ef9aa1d44",
                 "resourcePath": "scripts\\scr_hit_effect_general\\scr_hit_effect_general.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "bd3d50dd-87dd-4a28-a465-33e9c4503206",
+            "Value": {
+                "id": "a7696db9-eab5-4929-9c3d-1105c1251907",
+                "resourcePath": "scripts\\scr_player_fireCrossbow\\scr_player_fireCrossbow.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -2498,7 +2474,7 @@
             "Key": "bdba61cf-b240-4de2-8569-5aa6db15457d",
             "Value": {
                 "id": "92f33551-8821-4703-9e13-e0c1c81f075c",
-                "resourcePath": "objects\\obj_inputManager\\obj_inputManager.yy",
+                "resourcePath": "objects\\inputManager\\inputManager.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -2610,7 +2586,7 @@
             "Key": "c58bc0d2-e3c1-4714-a46c-70aad301d5cd",
             "Value": {
                 "id": "7a35c7a5-1710-4fba-aaf1-16a59106ae1c",
-                "resourcePath": "sprites\\spr_player_stagger_weapon\\spr_player_stagger_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusStagger\\sprPlayerWeaponGladiusStagger.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2634,7 +2610,7 @@
             "Key": "c73f2f2f-a9d3-45b5-97e8-e00326391a48",
             "Value": {
                 "id": "01dcf970-c19c-455f-8ea0-94ef4d5eaf0f",
-                "resourcePath": "sprites\\spr_player_run_body\\spr_player_run_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordRunning\\sprPlayerBodySwordRunning.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2650,7 +2626,7 @@
             "Key": "c7acca66-88ec-4254-b330-5df606c1aaae",
             "Value": {
                 "id": "b7bba932-80c9-4b9b-9bea-8dc97f6d355b",
-                "resourcePath": "sprites\\spr_player_crossbow_offhandDrawing_body\\spr_player_crossbow_offhandDrawing_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowPre\\sprPlayerBodySwordCrossbowPre.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2658,7 +2634,7 @@
             "Key": "c8416a37-11f0-42eb-be6f-08cd0432947a",
             "Value": {
                 "id": "257cf15e-315b-4bbb-bdc2-a7f3bff89e85",
-                "resourcePath": "sprites\\spr_player_stagger_body\\spr_player_stagger_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordStagger\\sprPlayerBodySwordStagger.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2706,7 +2682,7 @@
             "Key": "c9f44528-59c7-4bfc-9ddc-ef88d0a04a0e",
             "Value": {
                 "id": "e35be0a5-1a89-4c4e-acc2-ae454d10c2b6",
-                "resourcePath": "sprites\\spr_player_airborne_weapon\\spr_player_airborne_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusAirborne\\sprPlayerWeaponGladiusAirborne.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2770,7 +2746,7 @@
             "Key": "cea10411-f3f3-47bb-873e-9a847f4ab639",
             "Value": {
                 "id": "7a4d90aa-8383-45d6-b882-db0629a2c375",
-                "resourcePath": "sprites\\spr_player_crossbow_offhandDrawn_body\\spr_player_crossbow_offhandDrawn_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowHolding\\sprPlayerBodySwordCrossbowHolding.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2786,7 +2762,7 @@
             "Key": "d07b5772-13f7-4e80-b8cc-ab368c724a19",
             "Value": {
                 "id": "447082d6-eafb-4ade-8ee1-186e1c32b9c1",
-                "resourcePath": "sprites\\spr_player_dyingProne_body\\spr_player_dyingProne_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordDyingProne\\sprPlayerBodySwordDyingProne.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2826,7 +2802,7 @@
             "Key": "d5617fce-6116-4ec5-b266-ce55015bd813",
             "Value": {
                 "id": "112a1a89-57ce-4b2d-8c08-0752faa1b863",
-                "resourcePath": "sprites\\spr_player_landing_body\\spr_player_landing_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordLanding\\sprPlayerBodySwordLanding.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2834,7 +2810,7 @@
             "Key": "d562c6ba-4cce-4f57-932f-2b39a3bbe0c3",
             "Value": {
                 "id": "d568dad9-1c50-44f2-8102-6e20e4d55b2f",
-                "resourcePath": "sprites\\spr_player_blockingEnd_body\\spr_player_blockingEnd_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordBlockingEnd\\sprPlayerBodySwordBlockingEnd.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2858,7 +2834,7 @@
             "Key": "d856030c-2311-4b33-916b-a9b1ec7f4678",
             "Value": {
                 "id": "970887c4-94a8-4bb4-8acc-dee6d94d2c66",
-                "resourcePath": "sprites\\spr_player_smash_body\\spr_player_smash_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordSmash\\sprPlayerBodySwordSmash.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2919,6 +2895,14 @@
             }
         },
         {
+            "Key": "deaa8272-b47a-493b-b157-5c3c97f01bf0",
+            "Value": {
+                "id": "eb64485e-ad7d-47d3-8a33-dac15b601d40",
+                "resourcePath": "objects\\obj_block_parent\\obj_block_parent.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "df360e09-0d25-4da5-9aec-c190611e68e0",
             "Value": {
                 "id": "5ceb7db9-2b01-40ed-be98-cb1406ea4d73",
@@ -2938,7 +2922,7 @@
             "Key": "e005cf39-2c12-4002-831d-aaf00bc53215",
             "Value": {
                 "id": "194489c3-4555-4d30-802d-29bab73a7a19",
-                "resourcePath": "sprites\\spr_player_aerialSlash2_weapon\\spr_player_aerialSlash2_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusAerialSlash2\\sprPlayerWeaponGladiusAerialSlash2.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -3002,7 +2986,7 @@
             "Key": "e3199604-2487-47cc-9a76-66409f79c53c",
             "Value": {
                 "id": "8d6cf096-7c64-4cec-bb9c-cad0be70892e",
-                "resourcePath": "sprites\\spr_player_flung_weapon\\spr_player_flung_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusFlung\\sprPlayerWeaponGladiusFlung.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -3010,7 +2994,7 @@
             "Key": "e36cd115-3eb0-413d-b5bc-d4df7afaeccb",
             "Value": {
                 "id": "8cb2297f-f62d-4cec-a037-a0596fe64a19",
-                "resourcePath": "sprites\\spr_player_hookedStop_weapon\\spr_player_hookedStop_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusHookedStop\\sprPlayerWeaponGladiusHookedStop.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -3071,14 +3055,6 @@
             }
         },
         {
-            "Key": "e9728146-e7bd-48c2-bc10-39e2a2451774",
-            "Value": {
-                "id": "37573ff5-985d-400a-8bc1-e61dcebb190d",
-                "resourcePath": "sprites\\spr_player_crossbow_hookedOffhandDrawing_body\\spr_player_crossbow_hookedOffhandDrawing_body.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "ea3423bd-647f-4fe1-8bff-2011be6dfdf0",
             "Value": {
                 "id": "e3b9cc62-06ad-454c-9ede-2d3847b8e890",
@@ -3098,7 +3074,7 @@
             "Key": "eac97d21-ddea-4ea6-86ed-f75a318ed49e",
             "Value": {
                 "id": "b30320e4-7bc9-4840-97f8-0c16585217ba",
-                "resourcePath": "sprites\\spr_player_hooked_body\\spr_player_hooked_body.yy",
+                "resourcePath": "sprites\\sprPlayerBodySwordHooked\\sprPlayerBodySwordHooked.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -3130,7 +3106,7 @@
             "Key": "ecb57c8f-2fcc-4408-8760-95acad61dc79",
             "Value": {
                 "id": "bfbbce84-980d-48d5-a089-c59ba0360c70",
-                "resourcePath": "sprites\\spr_player_aerialDodging_weapon\\spr_player_aerialDodging_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusAerialDodging\\sprPlayerWeaponGladiusAerialDodging.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -3343,12 +3319,14 @@
         "fc99f58e-4f77-4886-98e2-64ba92dcff3a",
         "b81ec859-93f0-4c51-9014-d4a450740b7b",
         "02ea556d-6d26-46ed-9f9e-dcc57d181691",
-        "00e70f51-07a4-4a2b-a845-a910e93a8bdd",
+        "10b55418-9689-4611-b58c-2911bb7540b6",
         "624cbb7e-e176-4452-a5a6-fae44d3a9de7",
+        "00e70f51-07a4-4a2b-a845-a910e93a8bdd",
         "0e28d23f-95eb-4628-bc26-5668cf32f57d",
         "60527a22-336a-4d46-a708-074e9ec321b1",
-        "549bc7db-2475-41a5-9bcc-d2aa354a8ea5",
         "78a60a3b-b481-439e-b28d-00f69500dc3b",
+        "bd3d50dd-87dd-4a28-a465-33e9c4503206",
+        "3e985499-439b-4eea-b0da-42a4ccda5b73",
         "6ab66633-80f8-4b21-bfcb-2bca0a2e55b5",
         "60fca022-1107-4306-880b-c2e3d9d60281",
         "5c2e97a0-cc52-473b-b56c-2a72967ee304",

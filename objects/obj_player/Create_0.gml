@@ -5,6 +5,15 @@ subPhase = subState.idle;
 subPhaseTimer = 0;
 vPhase = vState.grounded;
 
+baseSpriteIndex = noone;
+weaponSpriteIndex = noone;
+effectSpriteIndex = noone;
+ausSpriteIndex = noone
+
+aerialTrackDistance = 126;
+aerialAttackVertBoost = -6;
+crossbowBoltInitialSpeed = 80;
+
 //savedata
 global.xp = 0;
 global.gold = 0;
@@ -62,7 +71,7 @@ landingDuration = 1.2;
 deflectedDuration = 0.5;
 proneDuration = 1.6;
 proneRecoverDuration = 0.4;
-aerialTrackDistance = 192;
+
 aerialAttackDelay = 1;
 hitEffectType = "blood";
 hitEffectColour = "dark red";

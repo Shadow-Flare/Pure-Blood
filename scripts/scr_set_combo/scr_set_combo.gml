@@ -2,8 +2,6 @@
 activeComboIDs[argument0] = argument1;
 activeComboNames[argument0] = attackNames[argument1];
 activeComboAnimations[argument0] = attackAnimations[argument1];
-activeComboAnimationWeps[argument0] = attackAnimationWeps[argument1];
-activeComboAnimationEffects[argument0] = attackAnimationEffects[argument1];
 activeComboDurations[argument0] = attackDurations[argument1];
 activeComboCooldowns[argument0] = attackCooldowns[argument1];
 activeComboMoveStarts[argument0] = attackMoveStart[argument1];

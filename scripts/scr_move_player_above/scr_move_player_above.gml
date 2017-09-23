@@ -1,6 +1,6 @@
 with obj_actor_parent
 {
-	if ((object_index != obj_player && !flying && !dropThroughPlatforms) || (object_index == obj_player && instance_exists(obj_inputManager) && !(sign(obj_inputManager.moveInputV) == 1 && obj_inputManager.aInput)) && phase != "hooked")
+	if ((object_index != obj_player && !flying && !dropThroughPlatforms) || (object_index == obj_player && instance_exists(inputManager) && !(sign(inputManager.moveInputV) == 1 && inputManager.aInput)) && phase != "hooked")
 	{
 		boxHeight = bbox_bottom-bbox_top;
 		boxWidth = bbox_right-bbox_left;

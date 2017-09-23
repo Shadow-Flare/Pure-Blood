@@ -9,7 +9,7 @@ var caster = argument5;
 hpPrev = hp;
 if variable_instance_exists(source,"subId")
 {
-	if global.offhandSubtypeNames[source.subId] != "Osmose"
+	if obj_comboCache.offhandSubtypeNames[source.subId] != "Osmose"
 	{
 		if attackType != -1 hp -= (100/resistances[attackType])*attackPower;
 	}
@@ -65,7 +65,7 @@ if source.type == "proj"
 	}
 	if (source.object_index == obj_spells_projectile)
 	{
-		if global.offhandSubtypeNames[source.subId] == "Leech"
+		if obj_comboCache.offhandSubtypeNames[source.subId] == "Leech"
 		{
 			if hitEffectType == "blood"
 			{
@@ -94,7 +94,7 @@ if source.type == "proj"
 				}
 			}
 		}
-		else if global.offhandSubtypeNames[source.subId] == "Osmose"
+		else if obj_comboCache.offhandSubtypeNames[source.subId] == "Osmose"
 		{
 			if statHit = "mp" var statLost = mpPrev-mp;
 			else if statHit = "hp" var statLost = hpPrev-hp;
