@@ -20,7 +20,6 @@ if facing == 0 facing = 1;
 
 	//addional properties
 image_xscale = facing;
-effectSpriteIndex = noone;
 
 	//Sub states
 #region sub States
@@ -133,24 +132,24 @@ switch subPhase
 		jumpNum++;
 	}
 
-	//to blocking
-	else if (IE && inputManager.bInput) && vPhase == vState.grounded
-	{
-		if moveH == 0
-		{
-			phase = state.blocking;
-			phaseTimer = 0;
-			subPhase = subState.none;
-			subPhaseTimer = 0;
-		}
-		else
-		{
-			phase = state.dodging;
-			phaseTimer = 0;
-			subPhase = subState.none;
-			subPhaseTimer = 0;
-		}
-	}
+	////to blocking
+	//else if (IE && inputManager.bInput) && vPhase == vState.grounded
+	//{
+	//	if moveH == 0
+	//	{
+	//		phase = state.blocking;
+	//		phaseTimer = 0;
+	//		subPhase = subState.none;
+	//		subPhaseTimer = 0;
+	//	}
+	//	else
+	//	{
+	//		phase = state.dodging;
+	//		phaseTimer = 0;
+	//		subPhase = subState.none;
+	//		subPhaseTimer = 0;
+	//	}
+	//}
 	
 	//to attacking
 	else if IE && inputManager.xInput
@@ -220,12 +219,12 @@ switch subPhase
 		bInputQueue = 0;
 	}
 	
-	//to Ability
-	else if IE && inputManager.rbInput
-	{
-		phase = state.ability;
-		phaseTimer = 0;
-		subPhase = subState.none;
-		subPhaseTimer = 0;
-	}
+	////to Ability
+	//else if IE && inputManager.rbInput
+	//{
+	//	phase = state.ability;
+	//	phaseTimer = 0;
+	//	subPhase = subState.none;
+	//	subPhaseTimer = 0;
+	//}
 #endregion

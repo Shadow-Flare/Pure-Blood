@@ -1,8 +1,8 @@
 {
-    "id": "12e77de6-4fc5-4d05-9871-88ee499e1184",
+    "id": "10a9f5b2-8a3a-4e6b-acce-cd4e4568496a",
     "modelName": "GMSprite",
     "mvc": "1.12",
-    "name": "spr_player_crossbow_drawing_crossbow",
+    "name": "sprPlayerAuxSwordCrossbowHolding",
     "For3D": false,
     "HTile": false,
     "VTile": false,
@@ -15,24 +15,24 @@
     "coltolerance": 0,
     "frames": [
         {
-            "id": "5b80bc61-30ec-4099-a720-7f9aaf0bd75e",
+            "id": "0bdfd5a7-508b-488d-8a64-4c7f3697afb2",
             "modelName": "GMSpriteFrame",
             "mvc": "1.0",
-            "SpriteId": "12e77de6-4fc5-4d05-9871-88ee499e1184",
+            "SpriteId": "10a9f5b2-8a3a-4e6b-acce-cd4e4568496a",
             "compositeImage": {
-                "id": "5de8fb5b-1cb2-49c7-964f-9a286d23fd0d",
+                "id": "412a91d7-b09a-41a1-9bab-9beb24f8151f",
                 "modelName": "GMSpriteImage",
                 "mvc": "1.0",
-                "FrameId": "5b80bc61-30ec-4099-a720-7f9aaf0bd75e",
+                "FrameId": "0bdfd5a7-508b-488d-8a64-4c7f3697afb2",
                 "LayerId": "00000000-0000-0000-0000-000000000000"
             },
             "images": [
                 {
-                    "id": "b0f960fd-45b6-4990-96e6-5c90e128a736",
+                    "id": "f5d12be6-ae0e-4378-a903-89409921b2a4",
                     "modelName": "GMSpriteImage",
                     "mvc": "1.0",
-                    "FrameId": "5b80bc61-30ec-4099-a720-7f9aaf0bd75e",
-                    "LayerId": "2c3fc0e0-db0d-454d-af03-92620d066e32"
+                    "FrameId": "0bdfd5a7-508b-488d-8a64-4c7f3697afb2",
+                    "LayerId": "cad1a9f0-8770-49a6-b6d4-d913dcbb03fe"
                 }
             ]
         }
@@ -42,10 +42,10 @@
     "height": 448,
     "layers": [
         {
-            "id": "2c3fc0e0-db0d-454d-af03-92620d066e32",
+            "id": "cad1a9f0-8770-49a6-b6d4-d913dcbb03fe",
             "modelName": "GMImageLayer",
             "mvc": "1.0",
-            "SpriteId": "12e77de6-4fc5-4d05-9871-88ee499e1184",
+            "SpriteId": "10a9f5b2-8a3a-4e6b-acce-cd4e4568496a",
             "blendMode": 0,
             "isLocked": false,
             "name": "default",
@@ -56,12 +56,13 @@
     "origin": 9,
     "playbackSpeed": 0,
     "playbackSpeedType": 0,
+    "premultiplyAlpha": false,
     "sepmasks": false,
     "swatchColours": null,
     "swfPrecision": 2.525,
     "textureGroupId": "1225f6b0-ac20-43bd-a82e-be73fa0b6f4f",
     "type": 0,
     "width": 448,
-    "xorig": 199,
-    "yorig": 327
+    "xorig": 240,
+    "yorig": 304
 }

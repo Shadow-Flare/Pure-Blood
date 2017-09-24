@@ -1,5 +1,4 @@
 ///@arg Angle
-if softLockOn||hardLockOn facing = lockOnDir;
 
 if mp >= obj_comboCache.offhandSubtypeManaCosts[obj_comboCache.activeOffhandSubtypeID]
 {
@@ -11,8 +10,8 @@ else var w = 1;
 var SUBID = obj_comboCache.activeOffhandSubtypeID;
 var qD = argument0+random_range(-2,2);
 var spd = crossbowBoltInitialSpeed;
-var projectileXStrt = x+facing*41+(8*8*dcos(qD));
-var projectileYStrt = y-23-(8*8*dsin(qD));
+var projectileXStrt = x+facing*41+(8*16*dcos(qD)+facing*(8*2.5*dcos(qD+90)));
+var projectileYStrt = y-23-(8*16*dsin(qD)+facing*(8*2.5*dsin(qD+90)));
 
 with instance_create_depth(projectileXStrt,projectileYStrt,depth,obj_comboCache.offhandBaseProjectiles[obj_comboCache.activeOffhandID])
 {

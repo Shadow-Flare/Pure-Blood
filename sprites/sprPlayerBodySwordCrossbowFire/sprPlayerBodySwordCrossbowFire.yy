@@ -142,7 +142,7 @@
         }
     ],
     "origin": 9,
-    "playbackSpeed": 16,
+    "playbackSpeed": 1,
     "playbackSpeedType": 0,
     "premultiplyAlpha": false,
     "sepmasks": false,

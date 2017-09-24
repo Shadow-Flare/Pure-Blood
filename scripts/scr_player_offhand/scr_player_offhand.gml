@@ -12,64 +12,74 @@ subPhaseTimer++;
 	//Sub states
 #region sub States
 
-//to idle/walking/running
-switch subPhase
-{
-	case subState.pre:
-			//Sprite
-		update_sprite(sprPlayerBodySwordCrossbowPre);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
-			//xSpd
-		xSpd = 0
-			//ySpd
-		ySpd += global.g;
-		break;
+switch obj_comboCache.activeOffhandID
+{	
+	case 0:	
+		switch subPhase
+		{
+			case subState.pre:
+					//Sprite
+				update_sprite(sprPlayerBodySwordCrossbowPre);
+					//this is commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
+				//auxSpriteIndex = sprPlayerAuxSwordCrossbowPre;
+				image_speed = sprite_get_number(sprite_index)/(crossbowDurationPre);
+					//xSpd
+				xSpd = 0
+					//ySpd
+				ySpd += global.g;
+				break;
 		
-	case subState.fire:
-			//Sprite
-		update_sprite(sprPlayerBodySwordCrossbowFire);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
-			//xSpd
-		xSpd = 0
-			//ySpd
-		ySpd += global.g;
-		break;
+			case subState.fire:
+					//Sprite
+				update_sprite(sprPlayerBodySwordCrossbowFire);
+				auxSpriteIndex = sprPlayerAuxSwordCrossbowFire;
+				image_speed = sprite_get_number(sprite_index)/(crossbowDurationFire);
+					//xSpd
+				xSpd = 0
+					//ySpd
+				ySpd += global.g;
+				break;
 		
-	case subState.aim:
-				//Sprite
-		update_sprite(sprPlayerBodySwordCrossbowAim);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
-			//xSpd
-		xSpd = 0
-			//ySpd
-		ySpd += global.g;
-		break;
+			case subState.aim:
+						//Sprite
+				update_sprite(sprPlayerBodySwordCrossbowAim);
+				auxSpriteIndex = sprPlayerAuxSwordCrossbowAim;
+					//xSpd
+				xSpd = 0
+					//ySpd
+				ySpd += global.g;
+				break;
 		
-	case subState.holding:
-			//Sprite
-		update_sprite(sprPlayerBodySwordCrossbowHolding);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
-			//xSpd
-		xSpd = 0
-			//ySpd
-		ySpd += global.g;
-		break;
+			case subState.holding:
+					//Sprite
+				update_sprite(sprPlayerBodySwordCrossbowHolding);
+				auxSpriteIndex = sprPlayerAuxSwordCrossbowHolding;
+				image_speed = sprite_get_number(sprite_index)/(crossbowDurationHolding);
+					//xSpd
+				xSpd = 0
+					//ySpd
+				ySpd += global.g;
+				break;
 		
-	case subState.post:
-			//Sprite
-		update_sprite(sprPlayerBodySwordCrossbowPost);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
-			//xSpd
-		xSpd = 0
-			//ySpd
-		ySpd += global.g;
+			case subState.post:
+					//Sprite
+				update_sprite(sprPlayerBodySwordCrossbowPost);
+					//these are commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
+				//auxSpriteIndex = sprPlayerAuxSwordCrossbowPost;
+				image_speed = sprite_get_number(sprite_index)/(crossbowDurationPost);
+					//xSpd
+				xSpd = 0
+					//ySpd
+				ySpd += global.g;
+				break;
+		}
 		break;
 }
+		
+#endregion
+
+#endregion
 	
-#endregion
-
-#endregion
-
 #region change states & substates
 
 switch obj_comboCache.activeOffhandID
@@ -78,14 +88,28 @@ switch obj_comboCache.activeOffhandID
 		switch subPhase
 		{
 			case subState.pre:
-				if subPhaseTimer >= round(0.3*room_speed)
+				if subPhaseTimer >= round(crossbowDurationPre*room_speed)
 				{
-					subPhase = subState.holding;
-					subPhaseTimer = 0;
+					if !IE || !inputManager.yInputHeld yInputQueue = 0;
+					if yInputQueue
+					{
+						yInputQueue = 0;
+						if !hardLockOn && !softLockOn offhandFireAngle = (facing==1)? 0:180;
+						else {offhandFireAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y); facing = lockOnDir;}
+						scr_player_fireCrossbow(offhandFireAngle);
+						subPhase = subState.fire;
+						subPhaseTimer = 0;
+					}
+					else
+					{
+						yInputQueue = 0;
+						subPhase = subState.aim;
+						subPhaseTimer = 0;
+					}
 				}
 				break;
 			case subState.fire:
-				if subPhaseTimer >= round(0.3*room_speed)
+				if subPhaseTimer >= round(crossbowDurationFire*room_speed)
 				{
 					subPhase = subState.holding;
 					subPhaseTimer = 0;
@@ -94,10 +118,11 @@ switch obj_comboCache.activeOffhandID
 			case subState.aim:
 				var h = inputManager.moveInputH;
 				var v = inputManager.moveInputV;
-				fireAngle = point_direction(0,0,h,v);
+				offhandFireAngle = point_direction(0,0,h,v);
+				facing = (offhandFireAngle<90||offhandFireAngle>270)? 1:-1;
 				if !IE || !inputManager.yInputHeld
 				{
-					scr_player_fireCrossbow(fireAngle);
+					scr_player_fireCrossbow(offhandFireAngle);
 					subPhase = subState.fire
 					subPhaseTimer = 0;
 				}
@@ -105,26 +130,24 @@ switch obj_comboCache.activeOffhandID
 			case subState.holding:
 				if yInputQueue
 				{
-					yInputQueue = 0;
 					if !IE || !inputManager.yInputHeld
 					{
-						if !hardLockOn && !softLockOn
-						{
-							if facing == 1 fireAngle = 0;
-							else fireAngle = 180
-						}
-						else fireAngle = darctan((lockOnTarget.y-y)/(lockOnTarget.x-x))
-						scr_player_fireCrossbow(fireAngle);
+						yInputQueue = 0;
+						if hardLockOn||softLockOn facing = lockOnDir
+						if !hardLockOn && !softLockOn offhandFireAngle = (facing==1)? 0:180;
+						else {offhandFireAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y); facing = lockOnDir;}
+						scr_player_fireCrossbow(offhandFireAngle);
 						subPhase = subState.fire;
 						subPhaseTimer = 0;
 					}
-					else if subPhaseTimer == round(0.3*room_speed)
+					else if subPhaseTimer == round(crossbowDurationHolding*room_speed)
 					{
+						yInputQueue = 0;
 						subPhase = subState.aim;
 						subPhaseTimer = 0;
 					}
 				}
-				else if subPhaseTimer == round(0.3*room_speed)
+				else if subPhaseTimer == round(crossbowDurationPost*room_speed)
 				{
 					subPhase = subState.post;
 					subPhaseTimer = 0;
@@ -144,3 +167,19 @@ switch obj_comboCache.activeOffhandID
 }
 	
 #endregion
+
+	//addional properties
+image_xscale = facing;
+
+	//aux sprite data
+auxSpriteXOffset = 41;
+auxSpriteYOffset = -23;
+auxSpriteXScale = 1;
+//auxSpriteYScale = 1;			//base
+auxSpriteRotation = offhandFireAngle;
+
+if facing == -1
+{
+	auxSpriteRotation -= 180;
+	auxSpriteXScale = -1;
+}
