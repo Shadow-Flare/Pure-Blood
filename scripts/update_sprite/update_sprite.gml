@@ -33,4 +33,12 @@ if baseSpriteIndex != argument0
 		//effect sprite
 	if asset_get_type(effectSpriteName) != asset_unknown effectSpriteIndex = asset_get_index(effectSpriteName);
 	else effectSpriteIndex = noone;
+		
+		//Auxiliary sprite; just a reset, if used, code for it is added AFTER this script
+	auxSpriteIndex = noone;
+	auxSpriteXOffset = 0;
+	auxSpriteYOffset = 0;
+	auxSpriteXScale = 1;
+	auxSpriteYScale = 1;
+	auxSpriteRotation = 0;
 }

@@ -1,6 +1,6 @@
 //shut down all object in room save technicals
 instance_deactivate_all(1);
-instance_activate_object(obj_combo_cache);
+instance_activate_object(obj_comboCache);
 instance_activate_object(obj_arena_controller);
 	
 //reset start input

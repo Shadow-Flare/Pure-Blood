@@ -54,6 +54,9 @@ switch vPhase
 		break;
 }
 
+	//addional properties
+image_xscale = facing;
+
 #endregion
 
 #region change states & substates

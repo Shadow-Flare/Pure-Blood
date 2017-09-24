@@ -8,7 +8,20 @@ vPhase = vState.grounded;
 baseSpriteIndex = noone;
 weaponSpriteIndex = noone;
 effectSpriteIndex = noone;
-ausSpriteIndex = noone
+
+auxSpriteIndex = noone;
+auxSpriteXOffset = 0;
+auxSpriteYOffset = 0;
+auxSpriteXScale = 0;
+auxSpriteYScale = 0;
+auxSpriteRotation = 0;
+
+offhandFireAngle = 0;
+
+crossbowDurationPre = 0.5;
+crossbowDurationFire = 0.3;
+crossbowDurationHolding = 0.3;
+crossbowDurationPost = 0.5;
 
 aerialTrackDistance = 126;
 aerialAttackVertBoost = -6;
