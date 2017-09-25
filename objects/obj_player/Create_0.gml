@@ -22,10 +22,31 @@ crossbowDurationPre = 0.5;
 crossbowDurationFire = 0.3;
 crossbowDurationHolding = 0.3;
 crossbowDurationPost = 0.5;
+crossbowBoltInitialSpeed = 80;
+
+attackName = noone;
+attackHardCooldown = 0.2;
+attackHardCooldownTimer = -1;
 
 aerialTrackDistance = 126;
 aerialAttackVertBoost = -6;
-crossbowBoltInitialSpeed = 80;
+
+blockingDurationPre = 0.2;
+blockingDurationBlocking = 0.5;
+blockingDurationPost = 0.2;
+blockingDurationReaction = 0.3
+
+dodgeDistance = 16*8*3.5;				//16*8*<number of blocks>		//(before "xSpd-=xSpd/4" slowdown)
+dodgeDurationPerforming = 0.2;
+dodgeDurationPost = 0.2;
+
+ropeShotTargetRange = 1024;
+
+hasBlocked = 0;
+
+reset_queue();
+
+// ALL PAST HERE ARE UNUSED AT THE MOMENT
 
 //savedata
 global.xp = 0;
@@ -73,10 +94,10 @@ global.ownedOffhands[1] = 1;
 //mechanical related definitions
 jumpHeightVar = 3.5;			//total jump height in blocks (16x16px or 128x128)
 maxFallSpeed = 40;
-dodgeDistance = 80*8			//16*8*<number of blocks>
-dodgeDuration = 0.4;
-dodgeDelay = 1;
-dodgeCooldown = 0;
+//dodgeDistance = 80*8			//16*8*<number of blocks>
+//dodgeDuration = 0.4;
+//dodgeDelay = 1;
+//dodgeCooldown = 0;
 blockDuration = 0.6;
 blockCooldown = 0.2;
 staggerDuration = 0.6;
@@ -148,7 +169,7 @@ ySpd = 0;
 xPrev = 0;
 yPrev = 0;
 
-//timers $ checkers
+//timers & checkers
 timerState = 0;
 attackNum = 0;
 jumpNum = 0;

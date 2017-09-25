@@ -95,14 +95,6 @@
             }
         },
         {
-            "Key": "0604c642-d897-4ab2-a00f-4700f381cad2",
-            "Value": {
-                "id": "e3e9e3f3-eba9-4726-ab9e-44412f7c6f10",
-                "resourcePath": "sprites\\sprPlayerBodySwordUppercut\\sprPlayerBodySwordUppercut.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "065b7846-c43d-483b-90a3-282ee1dd696e",
             "Value": {
                 "id": "78461465-57d8-4757-bda3-a4851b8f3aa2",
@@ -210,7 +202,7 @@
             "Key": "105787fd-bcb6-4506-8bd4-094c7c3571b5",
             "Value": {
                 "id": "ce444d08-bdce-4981-b02a-0cf6c0b2ddee",
-                "resourcePath": "sprites\\spr_player_aerialSlash_effect\\spr_player_aerialSlash_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusAerialSlash\\sprPlayerEffectGladiusAerialSlash.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -271,11 +263,27 @@
             }
         },
         {
+            "Key": "143462e5-2382-431d-988b-88936b747d8a",
+            "Value": {
+                "id": "639b9a8d-343f-425d-b78f-93fe61962af2",
+                "resourcePath": "scripts\\can_use_ability\\can_use_ability.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "158fa48b-ccd7-4c36-b205-a024dba3153d",
             "Value": {
                 "id": "e922d88f-87ce-4994-b20f-b996ed27d042",
                 "resourcePath": "objects\\obj_item_test\\obj_item_test.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "161b0094-997a-4a06-bb7f-ffe0b394781e",
+            "Value": {
+                "id": "4a872a04-7fc0-405a-a4b2-018a56aafc54",
+                "resourcePath": "views\\161b0094-997a-4a06-bb7f-ffe0b394781e.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -367,6 +375,14 @@
             }
         },
         {
+            "Key": "2006ef80-d03b-4247-aa5b-3116276b9053",
+            "Value": {
+                "id": "3278688f-0de6-42b1-bef8-cd21b476138a",
+                "resourcePath": "views\\2006ef80-d03b-4247-aa5b-3116276b9053.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "206ca1ac-621e-4106-9351-5f3afe8dde32",
             "Value": {
                 "id": "efc1d54b-3e4e-4ecb-a750-304cc207ebfc",
@@ -394,7 +410,7 @@
             "Key": "21eeb2c8-4290-447a-8b28-4380c53de6fd",
             "Value": {
                 "id": "01ef241f-8bf4-4a64-85b2-b0ea750503f8",
-                "resourcePath": "sprites\\spr_player_crossbow_drawn_weapon\\spr_player_crossbow_drawn_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusCrossbowHolding\\sprPlayerWeaponGladiusCrossbowHolding.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -418,7 +434,7 @@
             "Key": "2392707b-5ded-46db-98a3-850140bd7eba",
             "Value": {
                 "id": "2658b009-dbd6-4bfc-b8e6-bb51b86ea754",
-                "resourcePath": "sprites\\spr_player_aerialSlash2_effect\\spr_player_aerialSlash2_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusAerialSlash2\\sprPlayerEffectGladiusAerialSlash2.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -634,7 +650,7 @@
             "Key": "373d2533-79ae-4e17-b8fd-9a82c2a92345",
             "Value": {
                 "id": "47ae1b3d-6afe-4f6b-bd03-3107dc4f7896",
-                "resourcePath": "sprites\\spr_player_crossbow_drawnFire_weapon\\spr_player_crossbow_drawnFire_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusCrossbowFire\\sprPlayerWeaponGladiusCrossbowFire.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -879,6 +895,14 @@
             }
         },
         {
+            "Key": "49219d72-b7ea-4d01-a0cc-cabcc297891d",
+            "Value": {
+                "id": "ac2c94d6-8754-4b45-9f21-7cee9e51b064",
+                "resourcePath": "scripts\\scr_player_ability_ropeShot_fire\\scr_player_ability_ropeShot_fire.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "4968f93b-caff-41be-9e53-b3339a721f9a",
             "Value": {
                 "id": "33792516-ef73-45de-8ce1-2cf2f91d4689",
@@ -972,6 +996,14 @@
                 "id": "51c42494-3d33-45f2-953d-3bc1b71618a9",
                 "resourcePath": "objects\\obj_platform_stationary\\obj_platform_stationary.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "4d68cfd5-baa2-4b69-a640-83484e0a9a9b",
+            "Value": {
+                "id": "2c83283e-5f36-4c7a-8dff-28cdecc1d71f",
+                "resourcePath": "scripts\\scr_player_ability\\scr_player_ability.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -1083,6 +1115,14 @@
             "Value": {
                 "id": "27ab7045-7fcf-43a1-925e-998b6a61933e",
                 "resourcePath": "sprites\\sprPlayerWeaponGladiusLanding\\sprPlayerWeaponGladiusLanding.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "5a794516-a9a8-4fd2-9495-cfb9ba463a06",
+            "Value": {
+                "id": "ad398095-00b7-4586-87ca-af8069bbc9e9",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusCrossbowAim\\sprPlayerWeaponGladiusCrossbowAim.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1218,7 +1258,7 @@
             "Key": "628cc95a-bcd0-4e8a-9f07-eab997cbc7e0",
             "Value": {
                 "id": "d336353f-693d-44fd-96b0-9abc63e3abfd",
-                "resourcePath": "sprites\\spr_player_slice2_effect\\spr_player_slice2_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusSlice2\\sprPlayerEffectGladiusSlice2.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1274,7 +1314,7 @@
             "Key": "68f3d9d1-f508-4311-b1af-729aa13f793b",
             "Value": {
                 "id": "4a39f16e-58ce-43c4-8364-d7decb9c34e1",
-                "resourcePath": "sprites\\spr_player_burst_effect\\spr_player_burst_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusBurst\\sprPlayerEffectGladiusBurst.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1543,6 +1583,14 @@
             }
         },
         {
+            "Key": "78aa2583-2f5f-470a-b9c6-b6e668d4b186",
+            "Value": {
+                "id": "92f01b35-a8b1-4f94-b82a-d06374adc30a",
+                "resourcePath": "views\\78aa2583-2f5f-470a-b9c6-b6e668d4b186.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "7a03d682-ce58-4438-a565-cbe53c1ba809",
             "Value": {
                 "id": "abc0999c-9144-4570-8f50-0ebe32a7114b",
@@ -1700,6 +1748,14 @@
                 "id": "445adcc9-0de7-47bc-8635-854d0e81e51b",
                 "resourcePath": "sprites\\sprPlayerBodySwordCrossbowFire\\sprPlayerBodySwordCrossbowFire.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "8440066a-df3f-45aa-8f46-6b4f91b7132c",
+            "Value": {
+                "id": "d90ab57c-9941-416a-8d6b-6d856231b1f5",
+                "resourcePath": "scripts\\scr_player_dodging\\scr_player_dodging.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -1863,6 +1919,14 @@
             }
         },
         {
+            "Key": "8f2479fa-d936-455b-9290-dcfb453f24d0",
+            "Value": {
+                "id": "5e2e5e2e-64ca-4c13-a063-e55ec4d62e20",
+                "resourcePath": "scripts\\scr_player_combo_uppercut\\scr_player_combo_uppercut.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "902a1a18-8b12-4f59-b725-e3c78906a516",
             "Value": {
                 "id": "e4931790-8a9e-48ee-96af-ac4d15ccdfef",
@@ -2010,7 +2074,7 @@
             "Key": "9d708219-fffc-477d-b5cf-0bc59e7485e9",
             "Value": {
                 "id": "e2556835-2d78-4d55-87c4-673659838167",
-                "resourcePath": "sprites\\spr_player_slice_effect\\spr_player_slice_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusSlice\\sprPlayerEffectGladiusSlice.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2298,7 +2362,7 @@
             "Key": "add8cd45-dc19-44e6-b89e-148316e31247",
             "Value": {
                 "id": "c7f79c55-a26b-48ea-a59e-13299b5573b2",
-                "resourcePath": "sprites\\sprPlayerWeaponGladiusAerialFinish\\sprPlayerWeaponGladiusAerialFinish.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusAerialSlam\\sprPlayerWeaponGladiusAerialSlam.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2314,7 +2378,7 @@
             "Key": "b018bb2b-3954-4c48-add0-1d53c27c2b33",
             "Value": {
                 "id": "ed299f82-eeff-4463-bc39-22c6aa36cab5",
-                "resourcePath": "sprites\\spr_player_crossbow_holster_weapon\\spr_player_crossbow_holster_weapon.yy",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusCrossbowPost\\sprPlayerWeaponGladiusCrossbowPost.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2338,7 +2402,7 @@
             "Key": "b2c46740-398f-4153-8051-9d12beab4532",
             "Value": {
                 "id": "0e05174f-cbda-4400-8839-e3e2830403d1",
-                "resourcePath": "sprites\\spr_player_smash_effect\\spr_player_smash_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusSmash\\sprPlayerEffectGladiusSmash.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2455,6 +2519,14 @@
             }
         },
         {
+            "Key": "bd66f6b7-d7b5-40d0-ad21-70501792d543",
+            "Value": {
+                "id": "9ac69e8f-ee6e-4bd0-ad0d-4e24c2652693",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowUppercut\\sprPlayerBodySwordCrossbowUppercut.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "bd93e42a-4da8-4452-be02-e1e008a64ffb",
             "Value": {
                 "id": "f1f56543-83f2-44b4-9e4f-240618d2e7e5",
@@ -2514,7 +2586,7 @@
             "Key": "c030958f-6770-4872-b6a1-1da0b3958781",
             "Value": {
                 "id": "1bd3ec4c-e4fb-4590-a018-6bf27899fbaf",
-                "resourcePath": "sprites\\spr_player_gut_effect\\spr_player_gut_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusGut\\sprPlayerEffectGladiusGut.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2540,6 +2612,14 @@
                 "id": "594a6fea-b3fb-4733-b067-d9114891c8e1",
                 "resourcePath": "views\\c1386188-af3a-496a-9c16-cfdb4447a978.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "c152ccd1-0bc5-4ce6-b294-814c6a6c4e5b",
+            "Value": {
+                "id": "4d85bacc-9326-4e41-9de6-d6dd78ba9882",
+                "resourcePath": "scripts\\scr_player_ability_ropeShot\\scr_player_ability_ropeShot.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -2751,6 +2831,14 @@
             }
         },
         {
+            "Key": "cf6d1886-1dfe-494a-9869-94c2ec036b13",
+            "Value": {
+                "id": "402ed90a-cabb-42e9-9098-f26b24890457",
+                "resourcePath": "scripts\\scr_player_blocking\\scr_player_blocking.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "cfcff936-c716-4edc-8be3-19657dd5bc81",
             "Value": {
                 "id": "1d720887-da79-4f68-816d-073f130b3076",
@@ -2803,14 +2891,6 @@
             "Value": {
                 "id": "112a1a89-57ce-4b2d-8c08-0752faa1b863",
                 "resourcePath": "sprites\\sprPlayerBodySwordLanding\\sprPlayerBodySwordLanding.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "d562c6ba-4cce-4f57-932f-2b39a3bbe0c3",
-            "Value": {
-                "id": "d568dad9-1c50-44f2-8102-6e20e4d55b2f",
-                "resourcePath": "sprites\\sprPlayerBodySwordBlockingEnd\\sprPlayerBodySwordBlockingEnd.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -3018,7 +3098,7 @@
             "Key": "e53f09f9-e0b6-4cbf-ae68-bbf6394062d2",
             "Value": {
                 "id": "64df0471-5774-4ec8-a079-b7034f054173",
-                "resourcePath": "sprites\\spr_player_aerialFinish_effect\\spr_player_aerialFinish_effect.yy",
+                "resourcePath": "sprites\\sprPlayerEffectGladiusAerialSlam\\sprPlayerEffectGladiusAerialSlam.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -3052,6 +3132,14 @@
                 "id": "7320f987-f8d0-478e-a073-99197c942261",
                 "resourcePath": "fonts\\fnt_arena_menu\\fnt_arena_menu.yy",
                 "resourceType": "GMFont"
+            }
+        },
+        {
+            "Key": "e9ae9fe4-fe86-4841-9fea-d954d895b84e",
+            "Value": {
+                "id": "e40769ca-5480-48d9-8d54-ee20dec213b2",
+                "resourcePath": "sprites\\sprPlayerEffectCrossbowUppercut\\sprPlayerEffectCrossbowUppercut.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -3159,6 +3247,14 @@
             }
         },
         {
+            "Key": "f1369b37-e427-4673-a840-5636e7320419",
+            "Value": {
+                "id": "1aafc516-a12a-4962-a064-07297231da89",
+                "resourcePath": "sprites\\sprPlayerWeaponGladiusCrossbowUppercut\\sprPlayerWeaponGladiusCrossbowUppercut.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "f21b098b-12e3-41c5-9755-5c3711ed3f54",
             "Value": {
                 "id": "a53885ed-cb2f-406d-ac95-f9f0d25ba9e9",
@@ -3172,6 +3268,14 @@
                 "id": "6411b30a-3ec4-43cb-9911-56426b67d28b",
                 "resourcePath": "views\\f23fb1be-845d-48e7-84d6-b26c80ebd483.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "f2d58720-e714-4a12-b6bf-db2fdc43e2bc",
+            "Value": {
+                "id": "1e23f01f-684e-43ff-b4df-55634e3d6afe",
+                "resourcePath": "scripts\\reset_queue\\reset_queue.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -3320,13 +3424,21 @@
         "b81ec859-93f0-4c51-9014-d4a450740b7b",
         "02ea556d-6d26-46ed-9f9e-dcc57d181691",
         "10b55418-9689-4611-b58c-2911bb7540b6",
+        "cf6d1886-1dfe-494a-9869-94c2ec036b13",
+        "8440066a-df3f-45aa-8f46-6b4f91b7132c",
+        "4d68cfd5-baa2-4b69-a640-83484e0a9a9b",
+        "c152ccd1-0bc5-4ce6-b294-814c6a6c4e5b",
         "624cbb7e-e176-4452-a5a6-fae44d3a9de7",
         "00e70f51-07a4-4a2b-a845-a910e93a8bdd",
         "0e28d23f-95eb-4628-bc26-5668cf32f57d",
+        "8f2479fa-d936-455b-9290-dcfb453f24d0",
         "60527a22-336a-4d46-a708-074e9ec321b1",
         "78a60a3b-b481-439e-b28d-00f69500dc3b",
         "bd3d50dd-87dd-4a28-a465-33e9c4503206",
+        "49219d72-b7ea-4d01-a0cc-cabcc297891d",
         "3e985499-439b-4eea-b0da-42a4ccda5b73",
+        "f2d58720-e714-4a12-b6bf-db2fdc43e2bc",
+        "143462e5-2382-431d-988b-88936b747d8a",
         "6ab66633-80f8-4b21-bfcb-2bca0a2e55b5",
         "60fca022-1107-4306-880b-c2e3d9d60281",
         "5c2e97a0-cc52-473b-b56c-2a72967ee304",

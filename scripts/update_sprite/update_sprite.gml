@@ -8,7 +8,7 @@ if baseSpriteIndex != argument0
 	//baseSprite update
 	baseSpriteIndex = argument0;
 	image_index = 0;
-	image_speed = 1;
+	image_speed = argument1;
 
 	//get strings
 		//body sprite
@@ -19,7 +19,11 @@ if baseSpriteIndex != argument0
 	weaponSpriteName = string_replace(weaponSpriteName,weaponCatStr,weaponStr);
 	
 		//effect sprite
-	var effectSpriteName = string_replace(bodySpriteName,"Body","Effect");
+	var effectSpriteName = string_replace(weaponSpriteName,"Weapon","Effect");
+	if attackName == "Uppercut" 
+	{
+		effectSpriteName = string_replace(effectSpriteName,weaponStr,"");
+	}
 
 	//roundup
 		//body sprite

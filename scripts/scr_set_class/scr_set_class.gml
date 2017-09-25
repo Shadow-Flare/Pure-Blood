@@ -6,7 +6,6 @@ case "Sword":
 	obj_comboCache.activeDownwardsId = obj_comboCache.swordDownwardsId;
 	obj_comboCache.activeForwardsId = obj_comboCache.swordForwardsId;
 	obj_comboCache.activeBackwardsId = obj_comboCache.swordBackwardsId;
-	obj_comboCache.activeUppercutId = obj_comboCache.swordUppercutId;
 	obj_comboCache.activeClassIDs = obj_comboCache.classSwordAttackIDs;
 	obj_comboCache.activeClassNum = obj_comboCache.swordClassId;
 	obj_comboCache.activeAerialID = obj_comboCache.aerialSwordId;

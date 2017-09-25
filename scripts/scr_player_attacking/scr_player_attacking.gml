@@ -10,7 +10,6 @@ phaseTimer++;
 subPhaseTimer++;
 
 	//properties
-image_xscale = facing;
 if comboSize%2 == attackNum%2 && attackNum != comboSize && attackAnimation == sprPlayerBodySwordSlice 
 {
 	attackAnimation = sprPlayerBodySwordSlice2;
@@ -19,8 +18,8 @@ else if comboSize%2 == attackNum%2 && attackNum != comboSize && attackAnimation 
 {
 	attackAnimation = sprPlayerBodySwordAerialSlash2;
 }
-update_sprite(attackAnimation);
-image_speed = sprite_get_number(sprite_index)/(attackDuration+attackCooldown);
+var newImageSpeed = sprite_get_number(attackAnimation)/(attackDuration+attackCooldown)
+update_sprite(attackAnimation,newImageSpeed);
 
 switch vPhase
 {
@@ -54,9 +53,6 @@ switch vPhase
 		break;
 }
 
-	//addional properties
-image_xscale = facing;
-
 #endregion
 
 #region change states & substates
@@ -79,10 +75,7 @@ image_xscale = facing;
 					{
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;
-						aInputQueue = 0;
-						xInputQueue = 0;
-						yInputQueue = 0;
-						bInputQueue = 0;
+						reset_queue();
 						scr_player_combo();
 						phaseTimer = 0;							//reset for properties
 						subPhase = subState.performing;
@@ -93,11 +86,8 @@ image_xscale = facing;
 					{
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;
-						aInputQueue = 0;
-						xInputQueue = 0;
-						yInputQueue = 0;
-						bInputQueue = 0;
-						scr_player_combo_ext(obj_comboCache.activeUppercutId);
+						reset_queue();
+						scr_player_combo_uppercut();
 						phaseTimer = 0;							//reset for properties
 						subPhase = subState.performing;
 						subPhaseTimer = 0;
@@ -119,6 +109,8 @@ image_xscale = facing;
 						with obj_player_attack_effect instance_destroy();
 						phase = state.base;
 						phaseTimer = 0;
+						if attackName != "Uppercut" attackHardCooldownTimer = 0; //switch on
+						attackName = noone;
 						attackNum = 0;
 						scr_player_base_subPhaseDeterminer();
 					}
@@ -161,7 +153,9 @@ image_xscale = facing;
 						with obj_player_attack_effect instance_destroy();
 						phase = state.base;
 						phaseTimer = 0;
+						attackName = noone;
 						attackNum = 0;
+						attackHardCooldownTimer = 0; //switch on
 						if (place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) vPhase = vState.grounded;
 						scr_player_base_subPhaseDeterminer();
 					}
@@ -171,3 +165,6 @@ image_xscale = facing;
 			break;
 	}
 #endregion
+
+	//addional properties
+image_xscale = facing;

@@ -9,9 +9,10 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	attackName = obj_comboCache.activeComboNames[attackNum];
 	attackDuration = obj_comboCache.activeComboDurations[attackNum];
 	attackCooldown = obj_comboCache.activeComboCooldowns[attackNum];
+	pl.attackName = attackName
 	pl.attackDuration = attackDuration;
 	pl.attackAnimation = obj_comboCache.activeComboAnimations[attackNum];
-	pl.attackCooldown = obj_comboCache.activeComboCooldowns[attackNum];
+	pl.attackCooldown = attackCooldown
 	pl.attackMoveDistanceY = obj_comboCache.activeComboMoceDistancesY[attackNum];
 	pl.attackMoveDistanceX = obj_comboCache.activeComboMoveDistancesX[attackNum];
 	pl.attackMoveStart = obj_comboCache.activeComboMoveStarts[attackNum];
@@ -32,7 +33,6 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	attackXOffset = obj_comboCache.activeComboXOffsets[attackNum];
 	attackYOffset = obj_comboCache.activeComboYOffsets[attackNum];
 
-	
 	//Set
 	timer = 0;
 	facing = pl.facing;

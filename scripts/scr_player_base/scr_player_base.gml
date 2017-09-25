@@ -4,6 +4,10 @@ if IE var moveH = inputManager.moveInputH;
 else var moveH = 0;
 if IE var moveV = inputManager.moveInputV;
 else var moveV = 0;
+if IE && inputManager.xInput xInputQueue = 1;
+if IE && inputManager.yInput yInputQueue = 1;
+if IE && inputManager.aInput aInputQueue = 1;
+if IE && inputManager.bInput bInputQueue = 1;
 
 #region do things
 phaseTimer++;
@@ -18,9 +22,6 @@ else if sign(moveH) != 0 facing = sign(moveH)
 
 if facing == 0 facing = 1;
 
-	//addional properties
-image_xscale = facing;
-
 	//Sub states
 #region sub States
 
@@ -29,7 +30,7 @@ switch subPhase
 {
 	case subState.idle:
 			//Sprite
-		update_sprite(sprPlayerBodySwordIdle);
+		update_sprite(sprPlayerBodySwordIdle,1);
 			//xSpd
 		xSpd -= xSpd/4;
 			//ySpd
@@ -39,8 +40,8 @@ switch subPhase
 		
 	case subState.walking:
 			//Sprite
-		update_sprite(sprPlayerBodySwordWalking);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
+		var newImageSpeed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
+		update_sprite(sprPlayerBodySwordWalking,newImageSpeed);
 			//xSpd
 		xSpd = facing*moveSpeed/2;
 			//ySpd
@@ -50,8 +51,8 @@ switch subPhase
 		
 	case subState.walkingBackwards:
 			//Sprite
-		update_sprite(sprPlayerBodySwordWalkingBackwards);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
+		var newImageSpeed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
+		update_sprite(sprPlayerBodySwordWalkingBackwards,newImageSpeed);
 			//xSpd
 		xSpd = -facing*moveSpeed/2;
 			//ySpd
@@ -61,8 +62,8 @@ switch subPhase
 		
 	case subState.running:
 			//Sprite
-		update_sprite(sprPlayerBodySwordRunning);
-		image_speed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
+		var newImageSpeed = (moveSpeed/defaultMoveSpeed)*defaultImageSpeed;
+		update_sprite(sprPlayerBodySwordRunning,newImageSpeed);
 			//xSpd
 		xSpd = facing*moveSpeed;
 			//ySpd
@@ -79,7 +80,7 @@ switch subPhase
 			if moveH != 0 scr_player_base_subPhaseDeterminer();
 		}
 			//Sprite
-		update_sprite(sprPlayerBodySwordAirborne);
+		update_sprite(sprPlayerBodySwordAirborne,0);
 		if ySpd < 0 image_index = 0;
 		else image_index = 1;
 			//xSpd
@@ -98,8 +99,8 @@ switch subPhase
 		}
 		if moveH != 0 || vPhase != vState.grounded scr_player_base_subPhaseDeterminer();
 			//Sprite
-		update_sprite(sprPlayerBodySwordLanding);
-		image_speed = sprite_get_number(sprite_index)/landingDuration;
+		var newImageSpeed = sprite_get_number(sprPlayerBodySwordLanding)/landingDuration;
+		update_sprite(sprPlayerBodySwordLanding,newImageSpeed);
 			//xSpd
 		xSpd -= xSpd/4;
 			//ySpd
@@ -125,84 +126,88 @@ switch subPhase
 	}
 	
 	//Jumping
-	else if (IE && inputManager.aInput) && vPhase == vState.grounded
+	else if aInputQueue
 	{
-		vPhase = vState.jumping;
-		ySpd = -jumpPow;
-		jumpNum++;
+		reset_queue();
+		if vPhase == vState.grounded
+		{
+			vPhase = vState.jumping;
+			ySpd = -jumpPow;
+			jumpNum++;
+		}
 	}
 
-	////to blocking
-	//else if (IE && inputManager.bInput) && vPhase == vState.grounded
-	//{
-	//	if moveH == 0
-	//	{
-	//		phase = state.blocking;
-	//		phaseTimer = 0;
-	//		subPhase = subState.none;
-	//		subPhaseTimer = 0;
-	//	}
-	//	else
-	//	{
-	//		phase = state.dodging;
-	//		phaseTimer = 0;
-	//		subPhase = subState.none;
-	//		subPhaseTimer = 0;
-	//	}
-	//}
+	//to blocking
+	else if bInputQueue && vPhase == vState.grounded
+	{
+		reset_queue();
+		if moveH == 0
+		{
+			phase = state.blocking;
+			phaseTimer = 0;
+			subPhase = subState.pre;
+			subPhaseTimer = 0;
+		}
+		else
+		{
+			phase = state.dodging;
+			phaseTimer = 0;
+			subPhase = subState.performing;
+			subPhaseTimer = 0;
+		}
+	}
 	
 	//to attacking
-	else if IE && inputManager.xInput
+	else if xInputQueue
 	{
-		attackNum = 0;
-		aInputQueue = 0;
-		xInputQueue = 0;
-		yInputQueue = 0;
-		bInputQueue = 0;
-
-		//initial data & tranistion
-		phase = state.attacking;
-		phaseTimer = 0;
-		subPhase = subState.performing;
-		subPhaseTimer = 0;
-		switch vPhase
+		reset_queue();
+		if attackHardCooldownTimer == -1
 		{
-			case vState.grounded:
-				//perform attack based on directional inputs
-					//standing
-				if moveH == 0 && moveV == 0 scr_player_combo();
-				else if abs(moveV) >= abs(moveH)
-				{	
-					//Upwards
-					if sign(moveV) == -1 scr_player_combo_ext(obj_comboCache.activeUpwardsId);
-					//Downwards
-					else scr_player_combo_ext(obj_comboCache.activeDownwardsId);
-				}
-				else
-				{
-					//Forwards/horizontal
-					if !hardLockOn || sign(moveH) == lockOnDir scr_player_combo_ext(obj_comboCache.activeForwardsId);
-					//Backwards
-					else scr_player_combo_ext(obj_comboCache.activeBackwardsId);
-				}
-				break;
-			case vState.midAir:
-			case vState.jumping:
-				if lockOnTarget != noone && distance_to_object(lockOnTarget) <= aerialTrackDistance
-				{
-					aerialTargetX = lockOnTarget.x;
-					aerialTargetY = lockOnTarget.y;
-				}
-				else
-				{
-					aerialTargetX = -4;
-					aerialTargetY = -4;	
-				}
-				var aerialAttackId = obj_comboCache.activeAerialID // + 0
-				scr_player_combo_ext(aerialAttackId);
-				if aerialTargetX == -4 && aerialTargetY == -4 ySpd = aerialAttackVertBoost;
-				else facing = lockOnDir;
-				break;
+			attackNum = 0;
+			//initial data & tranistion
+			phase = state.attacking;
+			phaseTimer = 0;
+			subPhase = subState.performing;
+			subPhaseTimer = 0;
+			switch vPhase
+			{
+				case vState.grounded:
+					//perform attack based on directional inputs
+						//standing
+					if moveH == 0 && moveV == 0 scr_player_combo();
+					else if abs(moveV) >= abs(moveH)
+					{	
+						//Upwards
+						if sign(moveV) == -1 scr_player_combo_ext(obj_comboCache.activeUpwardsId);
+						//Downwards
+						else scr_player_combo_ext(obj_comboCache.activeDownwardsId);
+					}
+					else
+					{
+						//Forwards/horizontal
+						if !hardLockOn || sign(moveH) == lockOnDir scr_player_combo_ext(obj_comboCache.activeForwardsId);
+						//Backwards
+						else scr_player_combo_ext(obj_comboCache.activeBackwardsId);
+					}
+					break;
+				case vState.midAir:
+				case vState.jumping:
+					if lockOnTarget != noone && distance_to_object(lockOnTarget) <= aerialTrackDistance
+					{
+						aerialTargetX = lockOnTarget.x;
+						aerialTargetY = lockOnTarget.y;
+					}
+					else
+					{
+						aerialTargetX = -4;
+						aerialTargetY = -4;	
+					}
+					var aerialAttackId = obj_comboCache.activeAerialID // + 0
+					scr_player_combo_ext(aerialAttackId);
+					if aerialTargetX == -4 && aerialTargetY == -4 ySpd = aerialAttackVertBoost;
+					else facing = lockOnDir;
+					break;
+			}
 		}
 	}
 	
@@ -213,18 +218,18 @@ switch subPhase
 		phaseTimer = 0;
 		subPhase = subState.pre;
 		subPhaseTimer = 0;
-		aInputQueue = 0;
-		xInputQueue = 0;
-		yInputQueue = 0;
-		bInputQueue = 0;
+		reset_queue();
 	}
 	
-	////to Ability
-	//else if IE && inputManager.rbInput
-	//{
-	//	phase = state.ability;
-	//	phaseTimer = 0;
-	//	subPhase = subState.none;
-	//	subPhaseTimer = 0;
-	//}
+	//to Ability
+	else if IE && inputManager.rbInput && can_use_ability()
+	{
+		phase = state.ability;
+		phaseTimer = 0;
+		subPhase = subState.none;
+		subPhaseTimer = 0;
+	}
 #endregion
+
+	//addional properties
+image_xscale = facing;
