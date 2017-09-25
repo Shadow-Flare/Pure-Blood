@@ -1,7 +1,7 @@
 //Initialize enums (MOVE TO CONTROLLER CREATE)
 enum state {base, attacking, offhand, ability, dying, blocking, dodging};
 enum vState {grounded, midAir, jumping};
-enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, blocking, reaction};
 
 //Initials
 IE = instance_exists(inputManager)
@@ -129,6 +129,33 @@ else
 }
 #endregion
 
+#region passives
+//this section will change somewhat to reflect the 
+//needed code. Though at times multiple passive
+//codes may be needed.
+
+	//targets (only ropeshot atm, stuff will probably be added)
+ropeShotTarget = noone;
+switch obj_comboCache.activeOffhandActivatableID
+{
+		//rope shot
+	case 0:
+		var nearestRopeShotTarget = instance_nearest(x,y,obj_grapple_parent);
+		if distance_to_object(nearestRopeShotTarget) <= ropeShotTargetRange	ropeShotTarget = nearestRopeShotTarget;
+		break
+}
+
+if attackHardCooldownTimer != -1
+{
+	attackHardCooldownTimer++
+	if attackHardCooldownTimer >= round(attackHardCooldown*room_speed)
+	{
+		attackHardCooldownTimer = -1; //switch off
+	}
+}
+
+#endregion
+
 #region State mechanisms
 switch vPhase
 {
@@ -154,6 +181,15 @@ switch phase
 		break;
 	case state.offhand:
 		scr_player_offhand();
+		break;
+	case state.blocking:
+		scr_player_blocking();
+		break;
+	case state.dodging:
+		scr_player_dodging();
+		break;
+	case state.ability:
+		scr_player_ability();
 		break;
 }
 #endregion

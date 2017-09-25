@@ -137,31 +137,7 @@ attackKnockbacks[tmpId,0] = 30;
 attackStatusTypes[tmpId,0] = -1;
 attackStatusValues[tmpId,0] = 0;
 #endregion
-#region #005 Uppercut:				Near stationary attack launching enemy upwards.
-tmpId++;
-attackNames[tmpId] = "Uppercut";
-attackTypes[tmpId] = 0;
-attackAnimations[tmpId] = sprPlayerBodySwordUppercut;
-attackDurations[tmpId] = 0.6;
-attackCooldowns[tmpId] = 0.2;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;
-attackMoveDistancesX[tmpId] = 8*6;
-attackXOffsets[tmpId] = 8*24;
-attackYOffsets[tmpId] = 8*2;
-attackWidths[tmpId] = 8*26;
-attackHeights[tmpId] = 8*26;
-attackDamageTypes[tmpId,0] = 1;
-attackDamageModifiers[tmpId,0] = 0.3;
-attackStaggerModifiers[tmpId,0] = 1.3;
-attackKnockbacks[tmpId,0] = -1;
-attackStatusTypes[tmpId,0] = -1;
-attackStatusValues[tmpId,0] = 0;
-#endregion
-#region #006 Slice:					Fast basic strike.
+#region #005 Slice:					Fast basic strike.
 tmpId++;
 attackNames[tmpId] = "Slice";
 attackTypes[tmpId] = 1;
@@ -185,7 +161,7 @@ attackKnockbacks[tmpId,0] = 0;
 attackStatusTypes[tmpId,0] = -1;
 attackStatusValues[tmpId,0] = 0;				
 #endregion
-#region #007 Smash:					Heavy knockback attack.
+#region #006 Smash:					Heavy knockback attack.
 tmpId++;
 attackNames[tmpId] = "Smash"
 attackTypes[tmpId] = 4;
@@ -209,7 +185,7 @@ attackKnockbacks[tmpId,0] = 80;
 attackStatusTypes[tmpId,0] = -1;					
 attackStatusValues[tmpId,0] = 0;		
 #endregion
-#region #008 Gut:					Bleed inducing finisher, attemps to knock down opponent on second hit.
+#region #007 Gut:					Bleed inducing finisher, attemps to knock down opponent on second hit.
 tmpId++;
 attackNames[tmpId] = "Gut"
 attackTypes[tmpId] = 4;
@@ -251,7 +227,6 @@ swordUpwardsId = 1;
 swordDownwardsId = 2;
 swordForwardsId = 3;
 swordBackwardsId = 4;
-swordUppercutId = 5;
 
 swordSize = tmpId
 for(var i = 0; i < tmpId+1; i++)
@@ -269,7 +244,7 @@ for(var i = 0; i < tmpId+1; i++)
 //Sword: (0)Basic (1)Slam
 aerialSwordId = tmpId+1;
 
-#region #009 Slash:					Fast basic strike.
+#region #008 Slash:					Fast basic strike.
 tmpId++;
 attackNames[tmpId] = "Slash";								//Name to be displayed in combo editor
 attackAnimations[tmpId] = sprPlayerBodySwordAerialSlash;	//body sprite
@@ -288,12 +263,12 @@ attackWidths[tmpId] = 8*30;									//width of hit box about box center (8*<widt
 attackHeights[tmpId] = 8*18;									//height of hit box about box center (8*<height in pixels>)
 attackDamageTypes[tmpId,0] = 0;								//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
 attackDamageModifiers[tmpId,0] = 1;							//Damage modifier (multiplicative)
-attackStaggerModifiers[tmpId,0] = 1.2;							//Stagger modifier (multiplicative)
-attackKnockbacks[tmpId,0] = 0;								//Physics knockback on a heavy stagger attack
+attackStaggerModifiers[tmpId,0] = 1.25;							//Stagger modifier (multiplicative)
+attackKnockbacks[tmpId,0] = 12;								//Physics knockback on a heavy stagger attack
 attackStatusTypes[tmpId,0] = -1;								//Status Type (-1:None|0:Bleed)
 attackStatusValues[tmpId,0] = 0;								//Status Value (NEED BASED ON PLAYER STAT IMPLEMENTATION)
 #endregion
-#region #010 Slam:					Heavy knockback attack.
+#region #009 Slam:					Heavy knockback attack.
 tmpId++;
 attackNames[tmpId] = "Slam"
 attackTypes[tmpId] = 2;
@@ -325,12 +300,35 @@ attackStatusValues[tmpId,0] = 0;
 	//active class: Fists
 
 	//active combo properties
-scr_set_combo(0,6);			//slice
-scr_set_combo(1,6);			//slice
-scr_set_combo(2,6);			//slice
-scr_set_combo(3,7);			//smash
+scr_set_combo(0,5);			//slice
+scr_set_combo(1,5);			//slice
+scr_set_combo(2,5);			//slice
+scr_set_combo(3,6);			//smash
 
 scr_set_class("Sword");
+
+//General uppercut data
+uppercutName = "Uppercut";
+uppercutType = 1;
+uppercutAnimation = sprPlayerBodySwordSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+uppercutDuration = 0.3;
+uppercutCooldown = 0.1;
+uppercutHitStart[0] = (uppercutDuration+uppercutCooldown)*(/**/3/**//sprite_get_number(uppercutAnimation));
+uppercutHitDuration[0] = (uppercutDuration+uppercutCooldown)*(/**/2/**//sprite_get_number(uppercutAnimation));
+uppercutMoveStart = (uppercutDuration+uppercutCooldown)*(/**/2/**//sprite_get_number(uppercutAnimation));
+uppercutMoveDuration = (uppercutDuration+uppercutCooldown)*(/**/1/**//sprite_get_number(uppercutAnimation));
+uppercutMoveDistanceY = 8*0;
+uppercutMoveDistanceX = 8*6;
+uppercutXOffset = 8*16;
+uppercutYOffset = 8*-6;
+uppercutWidth = 8*30;
+uppercutHeight = 8*18;
+//uppercutDamageType[0] = 0;						//dictated in scr_player_combo_uppercut()
+uppercutDamageModifier[0] = 1;
+uppercutStaggerModifier[0] = 1.25;
+uppercutKnockback[0] = -1;
+uppercutStatusType[0] = -1;
+uppercutStatusValue[0] = 0;
 
 //EQUIPMENT & SPELLS
 	//Equipments:
@@ -362,7 +360,7 @@ scr_set_class("Sword");
 tmpId = 0;
 offhandNames[tmpId] = "Crossbow";
 offhandQuickfireSprites[tmpId] = noone;
-//offhandUppercutSprites[tmpId] = spr_player_crossbow_uppercut_body;
+offhandUppercutSprites[tmpId] = sprPlayerBodySwordCrossbowUppercut;
 offhandHoldingSprites[tmpId] = noone;
 //offhandAerialSprites[tmpId] = spr_player_crossbow_aerial_body;
 offhandBaseProjectiles[tmpId] = obj_crossbow_projectile;

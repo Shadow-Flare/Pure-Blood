@@ -1,3 +1,4 @@
+//
 var pl = id;
 with instance_create_depth(x,y,-100,obj_player_attack_effect)
 {
@@ -8,6 +9,7 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	attackName = obj_comboCache.attackNames[attackNum];
 	attackDuration = obj_comboCache.attackDurations[attackNum];
 	attackCooldown = obj_comboCache.attackCooldowns[attackNum];
+	pl.attackName = attackName;
 	pl.attackDuration = attackDuration;
 	pl.attackAnimation = obj_comboCache.attackAnimations[attackNum];
 	pl.attackCooldown = attackCooldown;
