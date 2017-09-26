@@ -157,7 +157,7 @@ attackHeights[tmpId] = 8*18;
 attackDamageTypes[tmpId,0] = 0;
 attackDamageModifiers[tmpId,0] = 1;
 attackStaggerModifiers[tmpId,0] = 1.25;
-attackKnockbacks[tmpId,0] = 0;
+attackKnockbacks[tmpId,0] = 16;
 attackStatusTypes[tmpId,0] = -1;
 attackStatusValues[tmpId,0] = 0;				
 #endregion

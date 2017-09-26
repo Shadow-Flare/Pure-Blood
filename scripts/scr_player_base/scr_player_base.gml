@@ -33,8 +33,6 @@ switch subPhase
 		update_sprite(sprPlayerBodySwordIdle,1);
 			//xSpd
 		xSpd -= xSpd/4;
-			//ySpd
-		ySpd += global.g;
 		scr_player_base_subPhaseDeterminer();
 		break;
 		
@@ -44,8 +42,6 @@ switch subPhase
 		update_sprite(sprPlayerBodySwordWalking,newImageSpeed);
 			//xSpd
 		xSpd = facing*moveSpeed/2;
-			//ySpd
-		ySpd += global.g;
 		scr_player_base_subPhaseDeterminer();
 		break;
 		
@@ -55,8 +51,6 @@ switch subPhase
 		update_sprite(sprPlayerBodySwordWalkingBackwards,newImageSpeed);
 			//xSpd
 		xSpd = -facing*moveSpeed/2;
-			//ySpd
-		ySpd += global.g;
 		scr_player_base_subPhaseDeterminer();
 		break;
 		
@@ -66,8 +60,6 @@ switch subPhase
 		update_sprite(sprPlayerBodySwordRunning,newImageSpeed);
 			//xSpd
 		xSpd = facing*moveSpeed;
-			//ySpd
-		ySpd += global.g;
 		scr_player_base_subPhaseDeterminer();
 		break;
 		
@@ -88,8 +80,6 @@ switch subPhase
 		else xSpd -= xSpd/20;
 			//ySpd
 		if vPhase = vState.jumping && !inputManager.aInputHeld ySpd -= ySpd/8;
-		if ySpd < maxFallSpeed ySpd+=global.g;
-		if ySpd > maxFallSpeed ySpd = maxFallSpeed;
 		break;
 		
 	case subState.landing:
@@ -103,8 +93,6 @@ switch subPhase
 		update_sprite(sprPlayerBodySwordLanding,newImageSpeed);
 			//xSpd
 		xSpd -= xSpd/4;
-			//ySpd
-		ySpd += global.g;
 		break;
 }
 	
@@ -150,6 +138,7 @@ switch subPhase
 		}
 		else
 		{
+			if !place_meeting(x+dodgeDistance,y,obj_actor_parent) phased = 1;
 			phase = state.dodging;
 			phaseTimer = 0;
 			subPhase = subState.performing;
@@ -165,6 +154,8 @@ switch subPhase
 		{
 			attackNum = 0;
 			//initial data & tranistion
+			if hardLockOn || softLockOn && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
+			else if moveH != 0 facing = sign(moveH);
 			phase = state.attacking;
 			phaseTimer = 0;
 			subPhase = subState.performing;
@@ -185,14 +176,18 @@ switch subPhase
 					else
 					{
 						//Forwards/horizontal
-						if !hardLockOn || sign(moveH) == lockOnDir scr_player_combo_ext(obj_comboCache.activeForwardsId);
+						if !hardLockOn || sign(moveH) == lockOnDir
+						{
+							if !place_meeting(x+dodgeDistance,y,obj_actor_parent) phased = 1;
+							scr_player_combo_ext(obj_comboCache.activeForwardsId);
+						}
 						//Backwards
 						else scr_player_combo_ext(obj_comboCache.activeBackwardsId);
 					}
 					break;
 				case vState.midAir:
 				case vState.jumping:
-					if lockOnTarget != noone && distance_to_object(lockOnTarget) <= aerialTrackDistance
+					if lockOnTarget != noone && distance_to_object(lockOnTarget) <= attackTrackDistance 
 					{
 						aerialTargetX = lockOnTarget.x;
 						aerialTargetY = lockOnTarget.y;
@@ -212,8 +207,9 @@ switch subPhase
 	}
 	
 	//to Offhand
-	else if IE && inputManager.yInput
+	else if yInputQueue && offhandHardCooldownTimer == -1
 	{
+		offhandCooldownTimer = 0; //switch on
 		phase = state.offhand;
 		phaseTimer = 0;
 		subPhase = subState.pre;

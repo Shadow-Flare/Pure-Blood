@@ -21,6 +21,8 @@ else if comboSize%2 == attackNum%2 && attackNum != comboSize && attackAnimation 
 var newImageSpeed = sprite_get_number(attackAnimation)/(attackDuration+attackCooldown)
 update_sprite(attackAnimation,newImageSpeed);
 
+if hardLockOn || softLockOn && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
+
 switch vPhase
 {
 	case vState.grounded:
@@ -30,8 +32,6 @@ switch vPhase
 			xSpd = facing*(attackMoveDistanceX/((attackMoveDuration)*room_speed));
 		}
 		else xSpd -= xSpd/4;
-			//ySpd
-		ySpd += global.g;
 		break;
 
 	case vState.jumping:
@@ -49,7 +49,7 @@ switch vPhase
 			if aerialTargetX != -4 && aerialTargetY != -4 ySpd = (aerialTargetY-y)/8;
 			else ySpd = attackMoveDistanceY/((attackMoveDuration)*room_speed);
 		}
-		else ySpd += global.g/4;
+		else ySpd -= global.g*(3/4); //quarter G
 		break;
 }
 
@@ -71,8 +71,9 @@ switch vPhase
 				case vState.grounded:
 					#region ground attack
 						//keep attacking? (ground combo)
-					if xInputQueue && attackNum != comboSize-1 && effect.hasHit
+					if xInputQueue && attackNum != comboSize-1 //&& effect.hasHit
 					{
+						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;
 						reset_queue();
@@ -82,8 +83,9 @@ switch vPhase
 						subPhaseTimer = 0;
 					}
 						//perform uppercut? (mid ground combo using weapon)
-					else if yInputQueue && attackNum < comboSize-2 && effect.hasHit
+					else if yInputQueue && attackNum < comboSize-2 //&& effect.hasHit
 					{
+						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;
 						reset_queue();
@@ -95,6 +97,7 @@ switch vPhase
 						//jump? (mid ground combo/subsequent jump)
 					else if aInputQueue
 					{
+						phased = 0;
 						with obj_player_attack_effect instance_destroy();		
 						ySpd = -jumpPow;
 						jumpNum++;
@@ -106,6 +109,7 @@ switch vPhase
 						//end
 					else if subPhaseTimer >= round(attackCooldown*room_speed)
 					{
+						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						phase = state.base;
 						phaseTimer = 0;
@@ -120,10 +124,10 @@ switch vPhase
 				case vState.jumping:
 				case vState.midAir:
 					#region air attack
-					if xInputQueue && attackNum != aerialComboSize-1 && effect.hasHit
+					if xInputQueue && attackNum != aerialComboSize-1 //&& effect.hasHit
 					{
 						with obj_player_attack_effect instance_destroy();
-						if lockOnTarget != noone && distance_to_object(lockOnTarget) <= aerialTrackDistance && lockOnTarget.phase != "dying" //this will get changed as enemy code gets changed
+						if lockOnTarget != noone && distance_to_object(lockOnTarget) <= attackTrackDistance && lockOnTarget.phase != "dying" //this will get changed as enemy code gets changed
 						{
 							aerialTargetX = lockOnTarget.x;
 							aerialTargetY = lockOnTarget.y;

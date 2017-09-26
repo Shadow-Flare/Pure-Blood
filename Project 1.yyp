@@ -71,6 +71,14 @@
             }
         },
         {
+            "Key": "03015f93-b529-4c80-abe6-1c56250dc4af",
+            "Value": {
+                "id": "aae67417-3a73-4b50-8cf4-301ddb6f2edb",
+                "resourcePath": "sprites\\sprPlayerBodySwordRopeShotHolding\\sprPlayerBodySwordRopeShotHolding.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "03a1278a-f4b6-4dfe-8db6-8c1910338934",
             "Value": {
                 "id": "4b5b0f41-4062-4ef0-a434-f85faea8bd6d",
@@ -108,6 +116,14 @@
                 "id": "8c2b0d0f-7849-453c-9aff-c7d1029422b4",
                 "resourcePath": "objects\\obj_room_transition\\obj_room_transition.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "07603535-fbc1-4536-af0a-5a1f9f495f11",
+            "Value": {
+                "id": "c8aca775-d59d-477b-9029-ab847a6725f1",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowPostTowards\\sprPlayerBodySwordCrossbowPostTowards.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -183,6 +199,22 @@
             }
         },
         {
+            "Key": "0ef03476-7e24-4a3b-8b44-b24d6413e173",
+            "Value": {
+                "id": "d681d6bb-e159-4141-a9dc-90878c64fce4",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowAimTowards\\sprPlayerBodySwordCrossbowAimTowards.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "0f2e6859-bdce-4725-9a9b-2a7999539562",
+            "Value": {
+                "id": "7fb4462c-73ba-4f30-882b-43861d2d7fa6",
+                "resourcePath": "sprites\\sprPlayerBodySwordRopeShotPre\\sprPlayerBodySwordRopeShotPre.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "0f4ccd5a-34ae-43f5-a7af-eb62bc2d7b02",
             "Value": {
                 "id": "c550d03d-c833-4130-b0c7-ce203a555fd7",
@@ -255,6 +287,14 @@
             }
         },
         {
+            "Key": "134b18cf-45c6-4065-87ca-24ef2603f0de",
+            "Value": {
+                "id": "252503b3-7b3b-40a5-b0b7-fd6138b092ec",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowPreAway\\sprPlayerBodySwordCrossbowPreAway.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "13e2ef6a-5e19-4dd8-a8ee-3f0077fd53f2",
             "Value": {
                 "id": "7f463d6d-9fb9-4ff6-ac80-f38788b7e2da",
@@ -268,6 +308,14 @@
                 "id": "639b9a8d-343f-425d-b78f-93fe61962af2",
                 "resourcePath": "scripts\\can_use_ability\\can_use_ability.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "15479c73-35a8-4765-99f1-830d69f00e74",
+            "Value": {
+                "id": "ab7f5000-f235-4fd4-a3bb-f50f1dcaf28b",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowAimAway\\sprPlayerBodySwordCrossbowAimAway.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -551,6 +599,14 @@
             }
         },
         {
+            "Key": "2f4caf51-3900-440e-ab28-acaaa80dce26",
+            "Value": {
+                "id": "344fbe1f-e3ec-4676-b739-d092aa3f5f98",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowFireAway\\sprPlayerBodySwordCrossbowFireAway.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "2f8fb5d1-0e74-4a80-9d93-2846e89a5f86",
             "Value": {
                 "id": "406b3b31-e652-4a5e-a97d-a8d7b82d9e7b",
@@ -628,6 +684,14 @@
                 "id": "90444332-5f52-4ac8-91c7-d3f521431189",
                 "resourcePath": "shaders\\shd_blur\\shd_blur.yy",
                 "resourceType": "GMShader"
+            }
+        },
+        {
+            "Key": "35b7e49c-c769-441b-8c08-fad7dfa48c69",
+            "Value": {
+                "id": "2a49626a-887a-4aab-bb38-fb1465d8aa24",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowPostAway\\sprPlayerBodySwordCrossbowPostAway.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -1111,6 +1175,14 @@
             }
         },
         {
+            "Key": "59164915-0f7c-40fd-9bea-d691be484ebb",
+            "Value": {
+                "id": "34a9dd75-7826-48ea-ab7c-6b78e0e28d94",
+                "resourcePath": "sprites\\sprPlayerBodySwordRopeShotFire\\sprPlayerBodySwordRopeShotFire.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "5a4b3140-2340-4a67-ac48-1aee0495e507",
             "Value": {
                 "id": "27ab7045-7fcf-43a1-925e-998b6a61933e",
@@ -1123,6 +1195,14 @@
             "Value": {
                 "id": "ad398095-00b7-4586-87ca-af8069bbc9e9",
                 "resourcePath": "sprites\\sprPlayerWeaponGladiusCrossbowAim\\sprPlayerWeaponGladiusCrossbowAim.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "5ae8d701-d3a4-4efb-bd40-1dfc2f39dfad",
+            "Value": {
+                "id": "db2f8ff7-7d4e-45c2-9fad-5153c04ad5b7",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowPreTowards\\sprPlayerBodySwordCrossbowPreTowards.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1311,6 +1391,14 @@
             }
         },
         {
+            "Key": "68043087-379a-4059-8ea6-b5864562d620",
+            "Value": {
+                "id": "a31bc3d1-543a-4556-a0b7-fa704ff12885",
+                "resourcePath": "sprites\\sprPlayerBodySwordRopeShotAerialPre\\sprPlayerBodySwordRopeShotAerialPre.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "68f3d9d1-f508-4311-b1af-729aa13f793b",
             "Value": {
                 "id": "4a39f16e-58ce-43c4-8364-d7decb9c34e1",
@@ -1387,6 +1475,14 @@
             "Value": {
                 "id": "c570b782-a1f7-44ff-861c-91b9de60471f",
                 "resourcePath": "sprites\\spr_servant_guard_flung\\spr_servant_guard_flung.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "6d55edae-f45a-452f-bb4f-2504b518d3d2",
+            "Value": {
+                "id": "71c995bb-a190-4e62-bbf9-8ee69642cd52",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowHoldingAway\\sprPlayerBodySwordCrossbowHoldingAway.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1871,6 +1967,14 @@
             }
         },
         {
+            "Key": "8b870bcd-1326-4395-9b08-ca73d52265d0",
+            "Value": {
+                "id": "9f605268-cd3d-457f-8527-ed687262fe21",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowAerialHolding\\sprPlayerBodySwordCrossbowAerialHolding.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "8bc35983-a5bb-4004-9e18-a21c114040fd",
             "Value": {
                 "id": "28f7eae8-520a-448f-b1f2-4027c17810e6",
@@ -1931,6 +2035,14 @@
             "Value": {
                 "id": "e4931790-8a9e-48ee-96af-ac4d15ccdfef",
                 "resourcePath": "sprites\\spr_zombie_male_1_flung\\spr_zombie_male_1_flung.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "911c3037-5d30-446d-8695-0f3d143c049c",
+            "Value": {
+                "id": "4c82a5f9-a73b-4a9c-8f6a-df113def79e1",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowHoldingTowards\\sprPlayerBodySwordCrossbowHoldingTowards.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2271,6 +2383,14 @@
             }
         },
         {
+            "Key": "a7127ddf-74f5-47dd-bca0-b35db0b85eb8",
+            "Value": {
+                "id": "57719def-97ae-42a5-8649-2c14218413f3",
+                "resourcePath": "sprites\\sprPlayerBodySwordRopeShotAerialFire\\sprPlayerBodySwordRopeShotAerialFire.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "a7744ee4-bdd5-4b5f-8a49-37fb23f1b6cb",
             "Value": {
                 "id": "b66d8bd2-2c67-42ae-b8c4-1c123c167757",
@@ -2563,6 +2683,22 @@
             "Value": {
                 "id": "8fb3c4a9-6975-49a1-94d8-777834f5fbe9",
                 "resourcePath": "sprites\\spr_zombie_male_1_prone\\spr_zombie_male_1_prone.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "bf501747-9931-4144-b9b0-309fdadbc38d",
+            "Value": {
+                "id": "29a216cf-f1d3-47df-b549-6afa8f36554c",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowFireTowards\\sprPlayerBodySwordCrossbowFireTowards.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "bff8b697-769a-44f2-b9ca-c0798624c062",
+            "Value": {
+                "id": "9efaffe7-a0ff-496a-96e9-2af65562373c",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowAerialPre\\sprPlayerBodySwordCrossbowAerialPre.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2874,7 +3010,7 @@
             "Key": "d4166d54-e3a2-49d3-ae38-feee56b24223",
             "Value": {
                 "id": "2a663bb4-7cfb-4191-aa27-bc8f6136537f",
-                "resourcePath": "objects\\obj_hook\\obj_hook.yy",
+                "resourcePath": "objects\\objRopeShot\\objRopeShot.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -3071,6 +3207,14 @@
             }
         },
         {
+            "Key": "e3347aa5-d4a0-4620-a800-96e9e84cb392",
+            "Value": {
+                "id": "40a7f123-cc09-4a44-841c-f04b472a0028",
+                "resourcePath": "sprites\\sprPlayerBodySwordRopeShotAerialHolding\\sprPlayerBodySwordRopeShotAerialHolding.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "e36cd115-3eb0-413d-b5bc-d4df7afaeccb",
             "Value": {
                 "id": "8cb2297f-f62d-4cec-a037-a0596fe64a19",
@@ -3132,6 +3276,14 @@
                 "id": "7320f987-f8d0-478e-a073-99197c942261",
                 "resourcePath": "fonts\\fnt_arena_menu\\fnt_arena_menu.yy",
                 "resourceType": "GMFont"
+            }
+        },
+        {
+            "Key": "e8b7387a-7a6d-4175-a596-4349d8f48739",
+            "Value": {
+                "id": "5e915e68-5ecb-40a9-b2f2-8c74a291a885",
+                "resourcePath": "sprites\\sprPlayerBodySwordCrossbowAerialFire\\sprPlayerBodySwordCrossbowAerialFire.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -3287,6 +3439,14 @@
             }
         },
         {
+            "Key": "f32fe7ff-c6fa-4721-899a-11b18b9114b5",
+            "Value": {
+                "id": "c9a4c96a-cdb3-4722-81da-acf65854e385",
+                "resourcePath": "scripts\\scr_player_fireRopeShot\\scr_player_fireRopeShot.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "f418569b-3bdd-4706-a0e4-364317f54032",
             "Value": {
                 "id": "cc5cbe0f-c02d-4efe-a6b1-598544bf2ab2",
@@ -3435,6 +3595,7 @@
         "60527a22-336a-4d46-a708-074e9ec321b1",
         "78a60a3b-b481-439e-b28d-00f69500dc3b",
         "bd3d50dd-87dd-4a28-a465-33e9c4503206",
+        "f32fe7ff-c6fa-4721-899a-11b18b9114b5",
         "49219d72-b7ea-4d01-a0cc-cabcc297891d",
         "3e985499-439b-4eea-b0da-42a4ccda5b73",
         "f2d58720-e714-4a12-b6bf-db2fdc43e2bc",

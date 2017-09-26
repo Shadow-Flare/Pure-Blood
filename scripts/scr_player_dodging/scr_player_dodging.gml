@@ -8,8 +8,6 @@ if IE && inputManager.bInput bInputQueue = 1;
 phaseTimer++;
 subPhaseTimer++;
 
-blocking = 0;
-
 	//Sprite
 var newImageSpeed = sprite_get_number(sprPlayerBodySwordDodging)/(dodgeDurationPerforming+dodgeDurationPost);
 update_sprite(sprPlayerBodySwordDodging,newImageSpeed);
@@ -28,8 +26,6 @@ switch subPhase
 		}
 			//xSpd
 		xSpd = facing*dodgeDistance/(room_speed*dodgeDurationPerforming);
-			//ySpd
-		ySpd += global.g;
 		break;
 		
 	case subState.post:
@@ -37,13 +33,13 @@ switch subPhase
 		{
 			phase = state.base;
 			phaseTimer = 0;
+			phased = 0;
+			dodging = 0;
 			subPhaseTimer = 0;
 			scr_player_base_subPhaseDeterminer();
 		}
 			//xSpd
 		xSpd -= xSpd/4;
-			//ySpd
-		ySpd += global.g;
 		break;
 }
 		

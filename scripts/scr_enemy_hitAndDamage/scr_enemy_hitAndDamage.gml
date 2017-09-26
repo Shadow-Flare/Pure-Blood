@@ -57,8 +57,9 @@ if (place_meeting(x,y,obj_player_attack_parent) || (blocking && place_meeting(x+
 										if phase != "dying" phase = "staggered";
 										subPhase = "stagger"
 									}
+									image_index = 0;
 									staggerTimer = 0;
-									staggerMove = dirNum*4*8
+									xSpd = dirNum*effect.hitKnockback;
 									attackTimer = 0;
 									attackCooldown = 0;
 								}
@@ -88,7 +89,7 @@ if (place_meeting(x,y,obj_player_attack_parent) || (blocking && place_meeting(x+
 										subPhase = "stagger"
 									}
 									staggerTimer = 0;
-									staggerMove = dirNum*4*8
+									xSpd = dirNum*effect.hitKnockback;
 									attackTimer = 0;
 									attackCooldown = 0;
 								}
