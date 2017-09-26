@@ -10,7 +10,7 @@ if place_meeting(x,y,obj_grapple_parent) && phase == "shooting"
 	if point_distance(caster.x,caster.y,x,y) > hookDist pullDir = 1;
 	else if point_distance(caster.x,caster.y,x,y) <= hookDist pullDir = -1;
 }
-else if place_meeting(x,y,obj_enemy_parent) && phase == "shooting"
+else if place_meeting(x,y,obj_enemy_parent) && instance_place(x,y,obj_enemy_parent).phase != "dying" && phase == "shooting"
 {
 	mount = instance_place(x,y,obj_enemy_parent);
 	x = mount.x;
@@ -41,16 +41,11 @@ if phase == "hooked"
 	 ||(pullDir == -1 && point_distance(caster.x,caster.y,x,y)+caster.hookedSpeed < hookDist)
 	{
 		phase = "hooked";
-		caster.phase = "hooked";
-		caster.subPhase = "";
 		moveDir = point_direction(caster.x,caster.y,x,y);
-		caster.xSpd = pullDir*caster.hookedSpeed*dcos(moveDir);
-		caster.ySpd = -pullDir*caster.hookedSpeed*dsin(moveDir);
 	}
 	else
 	{
 		phase = "hookedStop";
-		caster.subPhase = "stop";
 		while point_distance(caster.x,caster.y,x,y) > hookDist
 		{
 			moveDir = point_direction(caster.x,caster.y,x,y);
@@ -64,7 +59,6 @@ if phase == "hooked"
 	if xPrev == floor(caster.x) && yPrev == floor(caster.y)
 	{
 		phase = "hookedStop";
-		caster.phase = phase;
 		aSpd = 0;
 	}
 	xPrev = floor(caster.x);
@@ -121,9 +115,6 @@ if phase == "hookedEnemyPull"
 	x = mount.x;
 	y = mount.y;
 	mount.phase = "hooked";
-	caster.phase = "hooked";
-	if caster.onGround caster.subPhase = "enemyPullGround";
-	else caster.subPhase = "enemyPullAerial";
 	var enemySpeed = 30
 	var enemyDestX = caster.x + sign(mount.x-caster.x)*8*16;
 	var enemyDestY = caster.y;
@@ -139,8 +130,6 @@ if phase == "hookedEnemyPull"
 		phase = "returning";
 		if caster.onGround
 		{
-			caster.phase = "idle";
-			caster.subPhase = "";
 			mount.phase = "stagger";
 			mount.staggerTimer = 0;
 			mount.xSpd = 0;
@@ -148,8 +137,6 @@ if phase == "hookedEnemyPull"
 		}
 		else
 		{
-			caster.phase = "idle";
-			caster.subPhase = "";
 			mount.phase = "aerialAttacked";
 			mount.aerialAttackedTimer = 0;
 			mount.xSpd = 0;

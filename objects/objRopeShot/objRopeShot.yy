@@ -2,7 +2,7 @@
     "id": "d4166d54-e3a2-49d3-ae38-feee56b24223",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_hook",
+    "name": "objRopeShot",
     "eventList": [
         {
             "id": "11f8d24e-eef5-4d89-a430-474f55d7b6e6",

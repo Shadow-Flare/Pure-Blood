@@ -98,8 +98,8 @@ else if phase == "dying" xSpd -= xSpd/8;
 else if phase == "staggered" || phase == "dying"
 	{
 		if subPhase == "" xSpd -= xSpd/4;
-		else if subPhase == "deflection" xSpd -= xSpd/4
-		else if subPhase == "stagger" xSpd -= xSpd/4
+		else if subPhase == "deflection" xSpd -= xSpd/4;
+		else if subPhase == "stagger" xSpd -= xSpd/4;
 		else if subPhase == "flung" xSpd -= xSpd/60;
 		else if subPhase == "prone" xSpd -= xSpd/4;
 		else if subPhase == "recover" xSpd -= xSpd/4;

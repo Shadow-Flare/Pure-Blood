@@ -16,19 +16,32 @@ auxSpriteXScale = 0;
 auxSpriteYScale = 0;
 auxSpriteRotation = 0;
 
-offhandFireAngle = 0;
+aimAngle = 0;
 
-crossbowDurationPre = 0.5;
-crossbowDurationFire = 0.3;
+offhandHardCooldown = 0.2;
+offhandHardCooldownTimer = -1;
+
+crossbowDurationPre = 0.2;
+crossbowDurationFire = 0.25;
 crossbowDurationHolding = 0.3;
-crossbowDurationPost = 0.5;
+crossbowDurationPost = 0.2;
+crossbowDurationAerialPre = 0.2;
+crossbowDurationAerialFire = 0.25;
+crossbowDurationAerialHolding = 0.2;
+crossbowAerialBounce = -2.5;
 crossbowBoltInitialSpeed = 80;
+
+ropeShotDurationPre = 0.2;
+ropeShotDurationFire = 0.25;
+ropeShotSpeedGround = 60;
+ropeShotSpeedAerial = 90;
+ropeShotMaxDist = 1500
 
 attackName = noone;
 attackHardCooldown = 0.2;
 attackHardCooldownTimer = -1;
 
-aerialTrackDistance = 126;
+attackTrackDistance = 126;
 aerialAttackVertBoost = -6;
 
 blockingDurationPre = 0.2;
@@ -42,7 +55,9 @@ dodgeDurationPost = 0.2;
 
 ropeShotTargetRange = 1024;
 
+blocking = 0;
 hasBlocked = 0;
+dodging = 0;
 
 reset_queue();
 

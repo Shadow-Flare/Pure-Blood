@@ -12,8 +12,6 @@ blocking = 0;
 
 	//xSpd
 xSpd = 0
-	//ySpd
-ySpd += global.g;
 
 	//Sub states
 #region states
