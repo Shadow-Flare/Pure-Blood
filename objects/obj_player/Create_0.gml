@@ -4,6 +4,7 @@ phaseTimer = 0;
 subPhase = subState.idle;
 subPhaseTimer = 0;
 vPhase = vState.grounded;
+actorType = actorTypes.player;
 
 baseSpriteIndex = noone;
 weaponSpriteIndex = noone;
@@ -17,6 +18,10 @@ auxSpriteYScale = 0;
 auxSpriteRotation = 0;
 
 aimAngle = 0;
+
+jumpNum = 0;
+var jumpHeightVar = 3.5;								//total jump height in blocks (16x16px or 128x128)
+jumpPow = sqrt(2*(jumpHeightVar*16*8)*global.g)-1;		//jumpHeightVar*<blockSize>*<pixelSize>
 
 offhandHardCooldown = 0.2;
 offhandHardCooldownTimer = -1;
@@ -47,7 +52,8 @@ aerialAttackVertBoost = -6;
 blockingDurationPre = 0.2;
 blockingDurationBlocking = 0.5;
 blockingDurationPost = 0.2;
-blockingDurationReaction = 0.3
+blockingDurationReaction = 0.3;
+hasBlocked = 0;
 
 dodgeDistance = 16*8*3.5;				//16*8*<number of blocks>		//(before "xSpd-=xSpd/4" slowdown)
 dodgeDurationPerforming = 0.2;
@@ -55,9 +61,12 @@ dodgeDurationPost = 0.2;
 
 ropeShotTargetRange = 1024;
 
-blocking = 0;
-hasBlocked = 0;
-dodging = 0;
+hitPhase = hitState.normal;
+isInvulnerable = 0;
+
+staggeredDuration = 0.6;
+proneDuration = 0.6;
+deathDuration = 3;
 
 reset_queue();
 
@@ -107,7 +116,6 @@ global.ownedOffhands[1] = 1;
 	global.ownedActivatables[1,1] = 3;
 
 //mechanical related definitions
-jumpHeightVar = 3.5;			//total jump height in blocks (16x16px or 128x128)
 maxFallSpeed = 40;
 //dodgeDistance = 80*8			//16*8*<number of blocks>
 //dodgeDuration = 0.4;
@@ -167,7 +175,6 @@ softLockOn = 0;
 hardLockOn = 0;
 canChangeTarget = 1;
 preOffhand = 0;
-jumpPow = sqrt(2*(jumpHeightVar*16*8)*global.g)-1;		//jumpHeightVar*<blockSize>*<pixelSize>
 defaultMoveSpeed = moveSpeed;
 defaultRoomSpeed = room_speed;
 defaultImageSpeed = image_speed;
@@ -187,7 +194,6 @@ yPrev = 0;
 //timers & checkers
 timerState = 0;
 attackNum = 0;
-jumpNum = 0;
 attackTimer = 0;
 canAerialAttack = 1;
 canAerialAttackTimer = 0;

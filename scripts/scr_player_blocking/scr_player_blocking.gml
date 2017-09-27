@@ -8,8 +8,6 @@ if IE && inputManager.bInput bInputQueue = 1;
 phaseTimer++;
 subPhaseTimer++;
 
-blocking = 0;
-
 	//xSpd
 xSpd = 0
 
@@ -32,16 +30,16 @@ switch subPhase
 		update_sprite(sprPlayerBodySwordBlocking,newImageSpeed);
 		if subPhaseTimer >= round(room_speed*blockingDurationPre)
 		{
-			subPhase = subState.blocking;
+			blocking = 1;
+			subPhase = subState.performing;
 			subPhaseTimer = 0;
 		}
 		break;
 		
-	case subState.blocking:
+	case subState.performing:
 			//Sprite
 		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlocking)/(blockingDurationPre+blockingDurationBlocking+blockingDurationPost);
 		update_sprite(sprPlayerBodySwordBlocking,newImageSpeed);
-		blocking = 1;
 		if hasBlocked
 		{
 			subPhase = subState.reaction;
@@ -49,17 +47,20 @@ switch subPhase
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationBlocking)
 		{
+			blocking = 0;
 			subPhase = subState.post;
 			subPhaseTimer = 0;
 		}
 		break;
-	
+		
 	case subState.reaction:
 			//Sprite
 		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlockingReaction)/(blockingDurationReaction);
 		update_sprite(sprPlayerBodySwordBlockingReaction,newImageSpeed);
+		blocking = 1;
 		if xInputQueue
 		{
+			blocking = 0;
 			attackNum = 0;
 			reset_queue();
 			//initial data & tranistion
@@ -72,6 +73,7 @@ switch subPhase
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationReaction)
 		{
+			blocking = 0;
 			subPhase = subState.post;
 			subPhaseTimer = 0;
 		}

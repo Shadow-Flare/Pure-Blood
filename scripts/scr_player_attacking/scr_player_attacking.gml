@@ -21,8 +21,6 @@ else if comboSize%2 == attackNum%2 && attackNum != comboSize && attackAnimation 
 var newImageSpeed = sprite_get_number(attackAnimation)/(attackDuration+attackCooldown)
 update_sprite(attackAnimation,newImageSpeed);
 
-if hardLockOn || softLockOn && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
-
 switch vPhase
 {
 	case vState.grounded:
@@ -73,6 +71,7 @@ switch vPhase
 						//keep attacking? (ground combo)
 					if xInputQueue && attackNum != comboSize-1 //&& effect.hasHit
 					{
+						if hardLockOn || softLockOn && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
 						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;
@@ -85,6 +84,7 @@ switch vPhase
 						//perform uppercut? (mid ground combo using weapon)
 					else if yInputQueue && attackNum < comboSize-2 //&& effect.hasHit
 					{
+						if hardLockOn || softLockOn && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
 						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;

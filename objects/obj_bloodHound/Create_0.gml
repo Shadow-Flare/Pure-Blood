@@ -1,3 +1,5 @@
+actorType = actorTypes.enemy;
+
 //stats
 xpGiven = 200;
 moveSpeed = 6;
