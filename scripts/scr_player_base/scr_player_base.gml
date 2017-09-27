@@ -103,18 +103,9 @@ switch subPhase
 #region change state
 	//to hit reactions
 		//not done yet
-
-	//to dying
-	if hp <= 0
-	{
-		phase = state.dying;
-		phaseTimer = 0;
-		subPhase = subState.none;
-		subPhaseTimer = 0;
-	}
 	
 	//Jumping
-	else if aInputQueue
+	if aInputQueue
 	{
 		reset_queue();
 		if vPhase == vState.grounded
@@ -178,7 +169,7 @@ switch subPhase
 						//Forwards/horizontal
 						if !hardLockOn || sign(moveH) == lockOnDir
 						{
-							if !place_meeting(x+dodgeDistance,y,obj_actor_parent) phased = 1;
+							if !place_meeting(x+obj_comboCache.attackMoveDistancesX[obj_comboCache.activeForwardsId],y,obj_actor_parent) phased = 1;
 							scr_player_combo_ext(obj_comboCache.activeForwardsId);
 						}
 						//Backwards

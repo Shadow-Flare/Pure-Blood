@@ -7,7 +7,7 @@
         "c152ccd1-0bc5-4ce6-b294-814c6a6c4e5b"
     ],
     "filterType": "GMScript",
-    "folderName": "ability sub groups",
+    "folderName": "ability sub scripts",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

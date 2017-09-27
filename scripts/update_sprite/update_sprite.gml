@@ -1,4 +1,5 @@
 ///@arg baseSprite
+///@arg imageSpeed
 
 if baseSpriteIndex != argument0
 {

@@ -1,7 +1,10 @@
 //Initialize enums (MOVE TO CONTROLLER CREATE)
-enum state {base, attacking, offhand, ability, dying, blocking, dodging};
+enum actorTypes {player, ally, enemy}
+
+enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, dying};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, flung};
 enum vState {grounded, midAir, jumping};
-enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, blocking, reaction};
+enum hitState {normal, blocking, dodging}
 
 //Initials
 IE = instance_exists(inputManager)
@@ -197,203 +200,24 @@ switch phase
 	case state.offhand:
 		scr_player_offhand();
 		break;
+	case state.ability:
+		scr_player_ability();
+		break;
 	case state.blocking:
 		scr_player_blocking();
 		break;
 	case state.dodging:
 		scr_player_dodging();
 		break;
-	case state.ability:
-		scr_player_ability();
+	case state.hitReaction:
+		scr_player_hitReaction();
+		break;
+	case state.dying:
+		scr_player_dying();
 		break;
 }
 #endregion
 
+scr_player_hitCheck();
+scr_player_statusCheck();
 scr_move_with_collisions();
-
-#region old stuff
-if global.g = "im a nerd" //just so i can utilize the #regions
-{
-
-#region Hit Reaction	
-//react to hit
-if place_meeting(x,y,obj_enemy_attack_effect) && (!(phase == "dying" && subPhase != "flung") && phase != "dodging")
-{
-	var effNum = instance_number(obj_enemy_attack_effect);
-	for (var i = 0; i < effNum; i++)
-	{
-		effect = instance_find(obj_enemy_attack_effect,i);
-		if place_meeting(x,y,effect)
-		{
-			enemy = effect.caster;
-			if effect.hitOn && !effect.hasHit
-			{
-				effect.hasHit = 1;
-				dirNum = sign(x-enemy.x);
-				if phase == "blocking" && dirNum == -facing && !effect.pierce
-				{
-					subPhase = "reaction"
-					blockTimer = 0;
-					xSpd = 5*dirNum;
-					enemy.deflected = 1;
-				}
-				else
-				{
-					// audio (make reflective of enemy)
-					audio_play_sound(snd_enemy_hit,10,0);
-					// stats
-					if  isInvulnerable == "Off" scr_hit(effect,effect.hitType,effect.hitDamage,effect.statusType,effect.statusValue,effect.caster);
-					//determine phase
-					if effect.hitStagger <= toughness reaction = "nothing";
-					else if effect.hitStagger <= toughness*2 || effect.hitKnockback == 0 reaction = "stagger";
-					else reaction = "fling";
-					// effect & phase
-					if ((phase == "hooked" || phase == "hookedStop") && (reaction == "stagger" || reaction == "fling")) || subPhase == "flung"
-					{
-						if reaction == "stagger"
-						{
-							effect.hitKnockback = max(10,effect.hitKnockback);
-							reaction = "fling";
-						}
-						if phase == "hooked" instance_destroy(obj_hook);
-					}
-					switch reaction
-					{
-						case "nothing":
-							 //do not change phase
-							break;
-						case "stagger":
-							if subPhase != "flung" && subPhase != "prone"
-							{
-								phase = "staggered";
-								subPhase = "stagger"
-								staggerTimer = 0;
-								xSpd = 5*dirNum;
-							}
-							attackTimer = 0;
-							timerState = 0;
-							attackNum = 0;
-							break;
-						case "fling":
-							phase = "staggered";
-							subPhase = "flung"
-							attackTimer = 0;
-							timerState = 0;
-							proneTimer = 0;
-							hasLeftGround = 0;
-							reactDir = 35;
-							hitPow = effect.hitKnockback;
-							xSpd = dirNum*hitPow*dcos(reactDir);
-							ySpd = -hitPow*dsin(reactDir);
-							attackNum = 0;
-							break;
-					}
-				}
-			}
-		}
-	}
-}
-
-//staggerTimer
-if phase == "staggered" && global.bInput
-{
-	bInputQueue = 1;
-}
-
-if (phase == "staggered" || phase == "dying") && subPhase == "deflected"
-{
-	staggerTimer++;
-	if staggerTimer >= room_speed*deflectedDuration 
-	{
-		if phase != "dying" phase = "idle";
-		subPhase = "";
-	}
-}
-else if (phase == "staggered" || phase == "dying") && subPhase == "stagger"
-{
-	staggerTimer++;
-	if staggerTimer >= room_speed*staggerDuration 
-	{
-		if phase != "dying" phase = "idle";
-		subPhase = "";
-	}
-}
-else if (phase == "staggered" || phase == "dying") && (subPhase == "flung")
-{
-	proneTimer++
-	if !onGround hasLeftGround = 1;
-	if onGround && (proneTimer >= room_speed || hasLeftGround)
-	{
-		subPhase = "prone";
-		deathTimer = 0;
-		proneTimer = 0;
-	}
-}
-else if (phase == "staggered" || phase == "dying") && subPhase == "prone"
-{
-	proneTimer++;
-	if proneTimer >= room_speed*proneDuration
-	{
-		if phase != "dying" subPhase = "recover";
-		proneTimer = 0;
-	}
-}
-else if (phase == "staggered" || phase == "dying") && subPhase == "recover"
-{
-	proneTimer++;
-	if proneTimer >= room_speed*proneRecoverDuration
-	{
-		if phase != "dying" phase = "idle";
-		subPhase = ""
-		proneTimer = 0;
-	}
-}
-
-//special effects
-if bleedValue == bleedResist
-{
-	scr_hit_effect_general(hitType,hitColour,60)
-	hp -= maxHp*(60/100);
-	bleedValue = 0;
-}
-bleedValue -= 10/room_speed;
-bleedValue = clamp(bleedValue,0,100);
-	#endregion
-
-#region Dying & Room Transitions
-//clamp HP
-hp = clamp(hp,0,global.hpMax);
-
-if hp <= 0 && phase != "dying"
-{
-	phase = "dying";
-	if subPhase != "flung" subPhase = "";
-	deathTimer = 0;
-}
-else if phase == "dying" && subPhase != "flung"
-{
-	deathTimer++;
-	if deathTimer == room_speed*deathDuration
-	{
-		falling = 1;	//later change this all to reflect desired death screen
-		transitioning = 1;
-	}
-}
-
-//Fall
-if place_meeting(x,y,obj_fall) && !instance_exists(obj_transition_controller)
-{
-	transitioning = 1;
-	falling = 1;
-}
-
-//Room Change
-if (place_meeting(x,y,obj_room_transition))&&(!global.spawning)&&!instance_exists(obj_transition_controller)
-{
-	transitioning = 1;
-	falling = 0;
-}
-#endregion
-
-}
-#endregion
