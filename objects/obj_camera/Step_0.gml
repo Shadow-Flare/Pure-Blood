@@ -1,1 +1,0 @@
-scr_camera_step();

@@ -117017,8 +117017,8 @@
         ]
     },
     "out_columns": 20,
-    "out_tilehborder": 2,
-    "out_tilevborder": 2,
+    "out_tilehborder": 1,
+    "out_tilevborder": 1,
     "spriteId": "ea60447b-c844-4e47-95f7-fa723aee6002",
     "sprite_no_export": true,
     "textureGroupId": "1225f6b0-ac20-43bd-a82e-be73fa0b6f4f",
@@ -117424,10 +117424,10 @@
     ],
     "tile_animation_speed": 15,
     "tile_count": 391,
-    "tileheight": 128,
+    "tileheight": 16,
     "tilehsep": 0,
     "tilevsep": 0,
-    "tilewidth": 128,
+    "tilewidth": 16,
     "tilexoff": 0,
     "tileyoff": 0
 }

@@ -65,13 +65,11 @@
         "SerialiseData": null,
         "SerialiseHeight": 0,
         "SerialiseWidth": 0,
-        "TileSerialiseData": [
-            
-        ]
+        "TileSerialiseData": []
     },
     "out_columns": 19,
-    "out_tilehborder": 2,
-    "out_tilevborder": 2,
+    "out_tilehborder": 1,
+    "out_tilevborder": 1,
     "spriteId": "39874c0c-008d-444b-9934-bea74c8b8fae",
     "sprite_no_export": true,
     "textureGroupId": "1225f6b0-ac20-43bd-a82e-be73fa0b6f4f",
@@ -426,15 +424,13 @@
         ],
         "SerialiseFrameCount": 1
     },
-    "tile_animation_frames": [
-        
-    ],
+    "tile_animation_frames": [],
     "tile_animation_speed": 15,
     "tile_count": 345,
-    "tileheight": 128,
+    "tileheight": 16,
     "tilehsep": 0,
     "tilevsep": 0,
-    "tilewidth": 128,
+    "tilewidth": 16,
     "tilexoff": 0,
     "tileyoff": 0
 }

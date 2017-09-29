@@ -51,6 +51,6 @@ if !place_free(x+xSpd,y)||(place_meeting(x+xSpd,y,obj_actor_parent)&&(!instance_
 	if resetX xSpd = 0
 }
 
-x+=xSpd;
+x+=xSpd
 
 with obj_block_nonSolid solid = 0;
