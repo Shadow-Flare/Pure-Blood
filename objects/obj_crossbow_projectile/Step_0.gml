@@ -24,11 +24,11 @@ if hitOn
 }
 
 //particles && trail set
-if obj_comboCache.offhandSubtypeNames[subId] = "Normal Bolts"
+if ComboCache.offhandSubtypeNames[subId] = "Normal Bolts"
 {
 	trailColour = make_color_rgb(119,136,153);
 }
-else if obj_comboCache.offhandSubtypeNames[subId] = "Flaming Bolts"
+else if ComboCache.offhandSubtypeNames[subId] = "Flaming Bolts"
 {
 	trailColour = make_color_rgb(226,88,34);
 		
@@ -62,7 +62,7 @@ else if obj_comboCache.offhandSubtypeNames[subId] = "Flaming Bolts"
 	part_emitter_burst(pSys,pEmitter,pFire,2);
 	part_emitter_burst(pSys,pEmitter,pEmber,-20);
 }
-else if obj_comboCache.offhandSubtypeNames[subId] = "Frozen Bolts"
+else if ComboCache.offhandSubtypeNames[subId] = "Frozen Bolts"
 {
 	trailColour = make_color_rgb(21,84,191);
 			
@@ -85,7 +85,7 @@ else if obj_comboCache.offhandSubtypeNames[subId] = "Frozen Bolts"
 	part_emitter_region(pSys,pEmitter,xPrev+random_range(-4,4),x+random_range(-4,4),yPrev+random_range(-4,4),y+random_range(-4,4),ps_shape_line,ps_distr_linear);
 	part_emitter_burst(pSys,pEmitter,pSnow,-30);
 }
-else if obj_comboCache.offhandSubtypeNames[subId] = "Charged Bolts"
+else if ComboCache.offhandSubtypeNames[subId] = "Charged Bolts"
 {
 	trailColour = make_color_rgb(216,227,76);
 	trailVariance = 32;
@@ -116,7 +116,7 @@ else if obj_comboCache.offhandSubtypeNames[subId] = "Charged Bolts"
 		part_emitter_burst(pSys,pEmitter,pSpark,irandom_range(7,14));
 	}
 }
-else if obj_comboCache.offhandSubtypeNames[subId] = "Serrated Bolts"
+else if ComboCache.offhandSubtypeNames[subId] = "Serrated Bolts"
 {
 	trailColour = make_color_rgb(139,0,0);
 	trailSizeRatio = 1.9;

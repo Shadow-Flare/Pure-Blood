@@ -1,9 +1,9 @@
-if (place_meeting(x,y,obj_player_attack_parent) || (blocking && place_meeting(x+facing*blockRange,y,obj_player_attack_parent))) && !(phase == "dying" && subPhase != "flung")
+if (place_meeting(x,y,objPlayer_attack_parent) || (blocking && place_meeting(x+facing*blockRange,y,objPlayer_attack_parent))) && !(phase == "dying" && subPhase != "flung")
 {          
-	var effNum = instance_number(obj_player_attack_parent);
+	var effNum = instance_number(objPlayer_attack_parent);
 	for (var i = 0; i < effNum; i++)
 	{
-		effect = instance_find(obj_player_attack_parent,i);
+		effect = instance_find(objPlayer_attack_parent,i);
 		if place_meeting(x,y,effect) || (blocking && place_meeting(x+facing*blockRange,y,effect))
 		{
 			enemy = effect.caster;

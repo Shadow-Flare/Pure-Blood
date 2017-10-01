@@ -71,7 +71,7 @@ if phase == "bloating"
 	}
 }
 
-if place_meeting(x,y,obj_player_attack_parent) && instance_place(x,y,obj_player_attack_parent).hitOn phase = "dying"
+if place_meeting(x,y,objPlayer_attack_parent) && instance_place(x,y,objPlayer_attack_parent).hitOn phase = "dying"
 
 if phase == "bloating" && !instance_exists(targetCorpse) phase = "dying"
 

@@ -2,7 +2,7 @@
     "id": "bdba61cf-b240-4de2-8569-5aa6db15457d",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "inputManager",
+    "name": "InputManager",
     "eventList": [
         {
             "id": "ef48766e-984b-462a-9410-7cd1cb8df570",
@@ -26,7 +26,7 @@
         }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
-    "parentObjectId": "00000000-0000-0000-0000-000000000000",
+    "parentObjectId": "253f21ba-9289-4712-9959-65efe0ddfc19",
     "persistent": true,
     "physicsAngularDamping": 0.1,
     "physicsDensity": 0.5,

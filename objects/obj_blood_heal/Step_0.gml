@@ -14,6 +14,6 @@ y += ySpd
 if place_meeting(x,y,target)
 {
 	target.hp++;
-	target.hp = clamp(target.hp,0,global.hpMax);
+	target.hp = clamp(target.hp,0,PlayerStats.hpmaxhpmax);
 	instance_destroy();
 }

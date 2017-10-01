@@ -1,3 +1,5 @@
+event_inherited();
+
 moveInputH = 0;
 moveInputV = 0;
 targetInputH = 0;

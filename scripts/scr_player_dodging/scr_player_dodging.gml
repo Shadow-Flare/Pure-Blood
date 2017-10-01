@@ -1,9 +1,9 @@
 //get needed data
-var IE = instance_exists(inputManager)
-if IE && inputManager.xInput xInputQueue = 1;
-if IE && inputManager.yInput yInputQueue = 1;
-if IE && inputManager.aInput aInputQueue = 1;
-if IE && inputManager.bInput bInputQueue = 1;
+var IE = instance_exists(InputManager)
+if IE && InputManager.xInput xInputQueue = 1;
+if IE && InputManager.yInput yInputQueue = 1;
+if IE && InputManager.aInput aInputQueue = 1;
+if IE && InputManager.bInput bInputQueue = 1;
 
 phaseTimer++;
 subPhaseTimer++;

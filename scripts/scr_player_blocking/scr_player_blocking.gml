@@ -1,9 +1,9 @@
 //get needed data
-var IE = instance_exists(inputManager)
-if IE && inputManager.xInput xInputQueue = 1;
-if IE && inputManager.yInput yInputQueue = 1;
-if IE && inputManager.aInput aInputQueue = 1;
-if IE && inputManager.bInput bInputQueue = 1;
+var IE = instance_exists(InputManager)
+if IE && InputManager.xInput xInputQueue = 1;
+if IE && InputManager.yInput yInputQueue = 1;
+if IE && InputManager.aInput aInputQueue = 1;
+if IE && InputManager.bInput bInputQueue = 1;
 
 phaseTimer++;
 subPhaseTimer++;
@@ -68,7 +68,7 @@ switch subPhase
 			phaseTimer = 0;
 			subPhase = subState.performing;
 			subPhaseTimer = 0;
-			scr_player_combo_ext(obj_comboCache.activeCounterId);
+			scr_player_combo_ext(ComboCache.activeCounterId);
 			reset_queue();
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationReaction)

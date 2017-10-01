@@ -5,8 +5,8 @@ var spriteW = sprite_get_width(spr_glow);
 var spriteH = sprite_get_height(spr_glow);
 var c = argument1;
 
-var xCam = camera_get_view_x(obj_camera.cam);
-var yCam = camera_get_view_y(obj_camera.cam);
+var xCam = camera_get_view_x(Camera.cam);
+var yCam = camera_get_view_y(Camera.cam);
 
 surface_set_target(obj_controller.light);
 

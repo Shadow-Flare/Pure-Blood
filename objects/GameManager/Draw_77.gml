@@ -1,0 +1,1 @@
+draw_surface_ext(application_surface,monitorXOffset,monitorYOffset,1,1,0,c_white,1);

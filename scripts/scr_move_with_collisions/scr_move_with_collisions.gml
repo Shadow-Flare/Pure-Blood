@@ -32,7 +32,7 @@ if (place_meeting(x,y,obj_actor_parent)&&(!instance_place(x,y,obj_actor_parent).
 	dirNum = sign(x-instance_place(x,y,obj_actor_parent).x);
 	if phase != "flung" && phase != "dyingFlung"
 	{
-		if object_index == obj_player xSpd = moveSpeed*dirNum/2;
+		if object_index == objPlayer xSpd = moveSpeed*dirNum/2;
 		else xSpd = moveSpeed*dirNum*2;
 	}
 }

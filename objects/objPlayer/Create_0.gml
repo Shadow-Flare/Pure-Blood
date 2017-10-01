@@ -68,9 +68,10 @@ staggeredDuration = 0.6;
 proneDuration = 0.6;
 deathDuration = 3;
 
-reset_queue();
+dUInputTimer = -1;
+dRInputTimer = -1;
 
-// ALL PAST HERE ARE UNUSED AT THE MOMENT
+reset_queue();
 
 //savedata
 global.xp = 0;
@@ -81,11 +82,11 @@ global.dexterity = 5;
 global.cunning = 5;				//now unused
 global.intelligence = 5;
 global.willpower = 5;
-global.hpMax = 20+4*global.constitution;
+PlayerStats.hpMax = 20+4*global.constitution;
 global.mpMax = 20+4*global.willpower;
 
 //stats
-hp = global.hpMax;
+hp = PlayerStats.hpMax;
 mp = global.mpMax;
 physicalPower = 0+0.5*global.strength+0.5*global.dexterity;
 physicalStagger = 1;

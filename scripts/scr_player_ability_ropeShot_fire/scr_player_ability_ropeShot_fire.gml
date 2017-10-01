@@ -1,29 +1,29 @@
 ///@arg Angle
 
-if mp >= obj_comboCache.offhandSubtypeManaCosts[obj_comboCache.activeOffhandSubtypeID]
+if mp >= ComboCache.offhandSubtypeManaCosts[ComboCache.activeOffhandSubtypeID]
 {
-	mp -= obj_comboCache.offhandSubtypeManaCosts[obj_comboCache.activeOffhandSubtypeID];
+	mp -= ComboCache.offhandSubtypeManaCosts[ComboCache.activeOffhandSubtypeID];
 	var w = 0;
 }
 else var w = 1;
 
-var SUBID = obj_comboCache.activeOffhandSubtypeID;
+var SUBID = ComboCache.activeOffhandSubtypeID;
 var qD = argument0+random_range(-2,2);
 var spd = crossbowBoltInitialSpeed;
 var projectileXStrt = x+facing*41+(8*16*dcos(qD)+facing*(8*2.5*dcos(qD+90)));
 var projectileYStrt = y-23-(8*16*dsin(qD)+facing*(8*2.5*dsin(qD+90)));
 
-with instance_create_depth(projectileXStrt,projectileYStrt,depth,obj_comboCache.offhandBaseProjectiles[obj_comboCache.activeOffhandID])
+with instance_create_depth(projectileXStrt,projectileYStrt,depth,ComboCache.offhandBaseProjectiles[ComboCache.activeOffhandID])
 {
 	wiff = w;
 	caster = other;
 	subId = SUBID;
 	xSpd = spd*dcos(qD);
 	ySpd = -spd*dsin(qD);
-	hitType = obj_comboCache.offhandSubtypeDamageTypes[subId];
-	hitDamage = obj_comboCache.offhandSubtypeDamageModifiers[subId]*other.physicalPower;			//CHANGE STAT DEPENDANCY?
-	hitStagger = obj_comboCache.offhandSubtypeStaggerModifiers[subId];								//^^
-	hitKnockback = obj_comboCache.offhandSubtypeKnockbacks[subId];
-	statusType = obj_comboCache.offhandSubtypeStatusTypes[subId];
-	statusValue = obj_comboCache.offhandSubtypeStatusValues[subId];
+	hitType = ComboCache.offhandSubtypeDamageTypes[subId];
+	hitDamage = ComboCache.offhandSubtypeDamageModifiers[subId]*other.physicalPower;			//CHANGE STAT DEPENDANCY?
+	hitStagger = ComboCache.offhandSubtypeStaggerModifiers[subId];								//^^
+	hitKnockback = ComboCache.offhandSubtypeKnockbacks[subId];
+	statusType = ComboCache.offhandSubtypeStatusTypes[subId];
+	statusValue = ComboCache.offhandSubtypeStatusValues[subId];
 }

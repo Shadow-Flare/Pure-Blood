@@ -1,4 +1,4 @@
-if (phase=="neutral")&&(place_meeting(x,y-1,obj_player)&&!place_meeting(x,y+sprite_get_bbox_bottom(sprite_index),obj_player))&&obj_player.ySpd>=0
+if (phase=="neutral")&&(place_meeting(x,y-1,objPlayer)&&!place_meeting(x,y+sprite_get_bbox_bottom(sprite_index),objPlayer))&&objPlayer.ySpd>=0
 {
 	phase= "shakey";
 	shakeTimer = -1;

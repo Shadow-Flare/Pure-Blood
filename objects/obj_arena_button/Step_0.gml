@@ -1,8 +1,8 @@
-if place_meeting(x,y,obj_player)
+if place_meeting(x,y,objPlayer)
 {
 	lightUp = 1;
 	timer++;
-	if instance_exists(inputManager) && inputManager.bInput
+	if instance_exists(InputManager) && InputManager.bInput
 	{
 			pausing = 1;
 	}

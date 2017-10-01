@@ -1,9 +1,9 @@
 //get needed data
-var IE = instance_exists(inputManager)
-if IE && inputManager.xInput xInputQueue = 1;
-if IE && inputManager.yInput yInputQueue = 1;
-if IE && inputManager.aInput aInputQueue = 1;
-if IE && inputManager.bInput bInputQueue = 1;
+var IE = instance_exists(InputManager)
+if IE && InputManager.xInput xInputQueue = 1;
+if IE && InputManager.yInput yInputQueue = 1;
+if IE && InputManager.aInput aInputQueue = 1;
+if IE && InputManager.bInput bInputQueue = 1;
 
 #region do things
 phaseTimer++;
@@ -73,7 +73,7 @@ switch vPhase
 					{
 						if hardLockOn || softLockOn && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
 						phased = 0;
-						with obj_player_attack_effect instance_destroy();
+						with objPlayer_attack_effect instance_destroy();
 						attackNum++;
 						reset_queue();
 						scr_player_combo();
@@ -86,7 +86,7 @@ switch vPhase
 					{
 						if hardLockOn || softLockOn && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
 						phased = 0;
-						with obj_player_attack_effect instance_destroy();
+						with objPlayer_attack_effect instance_destroy();
 						attackNum++;
 						reset_queue();
 						scr_player_combo_uppercut();
@@ -98,7 +98,7 @@ switch vPhase
 					else if aInputQueue
 					{
 						phased = 0;
-						with obj_player_attack_effect instance_destroy();		
+						with objPlayer_attack_effect instance_destroy();		
 						ySpd = -jumpPow;
 						jumpNum++;
 						phase = state.base;
@@ -110,7 +110,7 @@ switch vPhase
 					else if subPhaseTimer >= round(attackCooldown*room_speed)
 					{
 						phased = 0;
-						with obj_player_attack_effect instance_destroy();
+						with objPlayer_attack_effect instance_destroy();
 						phase = state.base;
 						phaseTimer = 0;
 						if attackName != "Uppercut" attackHardCooldownTimer = 0; //switch on
@@ -126,7 +126,7 @@ switch vPhase
 					#region air attack
 					if xInputQueue && attackNum != aerialComboSize-1 //&& effect.hasHit
 					{
-						with obj_player_attack_effect instance_destroy();
+						with objPlayer_attack_effect instance_destroy();
 						if lockOnTarget != noone && distance_to_object(lockOnTarget) <= attackTrackDistance && lockOnTarget.phase != "dying" //this will get changed as enemy code gets changed
 						{
 							aerialTargetX = lockOnTarget.x;
@@ -142,8 +142,8 @@ switch vPhase
 						xInputQueue = 0;
 						yInputQueue = 0;
 						bInputQueue = 0;
-						if attackNum == aerialComboSize-1 var aerialAttackId = obj_comboCache.activeAerialID + 1; // + 0
-						else var aerialAttackId = obj_comboCache.activeAerialID;
+						if attackNum == aerialComboSize-1 var aerialAttackId = ComboCache.activeAerialID + 1; // + 0
+						else var aerialAttackId = ComboCache.activeAerialID;
 						scr_player_combo_ext(aerialAttackId);
 						phaseTimer = 0;							//reset for properties
 						subPhase = subState.performing;
@@ -154,7 +154,7 @@ switch vPhase
 						//end
 					else if subPhaseTimer >= round(attackCooldown*room_speed)
 					{
-						with obj_player_attack_effect instance_destroy();
+						with objPlayer_attack_effect instance_destroy();
 						phase = state.base;
 						phaseTimer = 0;
 						attackName = noone;

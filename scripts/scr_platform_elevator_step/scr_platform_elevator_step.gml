@@ -1,6 +1,6 @@
 maxHeight=initialY-(blockHeight*64);
 
-if (phase=="neutral")&&(place_meeting(x,y-1,obj_player))&&(place_meeting(x,y+3,obj_elevator_base))&&(global.xInput==true)
+if (phase=="neutral")&&(place_meeting(x,y-1,objPlayer))&&(place_meeting(x,y+3,obj_elevator_base))&&(global.xInput==true)
 {
 	phase="up";
 }

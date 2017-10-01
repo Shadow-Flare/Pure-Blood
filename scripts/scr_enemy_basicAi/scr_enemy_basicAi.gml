@@ -5,7 +5,7 @@ if argument0 target = noone
 
 if target == noone
 {
-	var posTarget = instance_nearest(x,y,obj_player);
+	var posTarget = instance_nearest(x,y,objPlayer);
 	var xSearchDist = (x-posTarget.x);
 	var ySearchDist = (y-posTarget.y);
 	var searchDist = sqrt(power(xSearchDist,2)+power(ySearchDist,2));

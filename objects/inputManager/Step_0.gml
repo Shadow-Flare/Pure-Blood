@@ -1,6 +1,6 @@
 if gamepad_is_connected(0)
 {
-	gamepad_set_axis_deadzone(0,0.3);
+	gamepad_set_axis_deadzone(0, 0.3);
 	//Left stick axis
 	moveInputH = gamepad_axis_value(0, gp_axislh);
 	moveInputV = gamepad_axis_value(0, gp_axislv);
@@ -10,14 +10,14 @@ if gamepad_is_connected(0)
 	targetInputV = gamepad_axis_value(0, gp_axisrv);
 	
 	//face buttons
-	aInput = gamepad_button_check_pressed(0,gp_face1);
-	bInput = gamepad_button_check_pressed(0,gp_face2);
-	xInput = gamepad_button_check_pressed(0,gp_face3);
-	yInput = gamepad_button_check_pressed(0,gp_face4);
-	aInputHeld = gamepad_button_check(0,gp_face1);
-	bInputHeld = gamepad_button_check(0,gp_face2);
-	xInputHeld = gamepad_button_check(0,gp_face3);
-	yInputHeld = gamepad_button_check(0,gp_face4);
+	aInput = gamepad_button_check_pressed(0, gp_face1);
+	bInput = gamepad_button_check_pressed(0, gp_face2);
+	xInput = gamepad_button_check_pressed(0, gp_face3);
+	yInput = gamepad_button_check_pressed(0, gp_face4);
+	aInputHeld = gamepad_button_check(0, gp_face1);
+	bInputHeld = gamepad_button_check(0, gp_face2);
+	xInputHeld = gamepad_button_check(0, gp_face3);
+	yInputHeld = gamepad_button_check(0, gp_face4);
 	
 	//shoulder buttons
 	rbInput = gamepad_button_check_pressed(0,gp_shoulderr);

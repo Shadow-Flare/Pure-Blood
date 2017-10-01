@@ -7,7 +7,7 @@ enum vState {grounded, midAir, jumping};
 enum hitState {normal, blocking, dodging}
 
 //Initials
-IE = instance_exists(inputManager)
+IE = instance_exists(InputManager)
 
 #region lock-on
 //soft lockon
@@ -20,8 +20,8 @@ if (softLockOn||hardLockOn) && !instance_exists(lockOnTarget)
 
 if IE
 {
-	if inputManager.rsInput && softLockOn {softLockOn = 0 hardLockOn = 1;}
-	else if inputManager.rsInput && hardLockOn {hardLockOn = 0;}
+	if InputManager.rsInput && softLockOn {softLockOn = 0 hardLockOn = 1;}
+	else if InputManager.rsInput && hardLockOn {hardLockOn = 0;}
 }
 
 if !hardLockOn
@@ -63,8 +63,8 @@ if gamepad_is_connected(0)
 	{
 		if IE
 		{
-			var h = inputManager.targetInputH;
-			var v = inputManager.targetInputV;
+			var h = InputManager.targetInputH;
+			var v = InputManager.targetInputV;
 		}
 		else
 		{
@@ -96,12 +96,12 @@ if gamepad_is_connected(0)
 	}
 	if !canChangeTarget
 	{
-		if !IE || (inputManager.targetInput==0&&inputManager.targetInputV==0) canChangeTarget = 1;
+		if !IE || (InputManager.targetInput==0&&InputManager.targetInputV==0) canChangeTarget = 1;
 	}
 }
 else
 {
-	if hardLockOn && IE && inputManager.keyboardTargetChangeInput
+	if hardLockOn && IE && InputManager.keyboardTargetChangeInput
 	{
 		var stopIt = 0;
 		if !variable_instance_exists(id,"targetList") targetList = [];
@@ -139,7 +139,7 @@ else
 
 	//targets (only ropeshot atm, stuff will probably be added)
 ropeShotTarget = noone;
-switch obj_comboCache.activeOffhandActivatableID
+switch ComboCache.activeOffhandActivatableID
 {
 		//rope shot
 	case 0:
@@ -220,4 +220,5 @@ switch phase
 
 scr_player_hitCheck();
 scr_player_statusCheck();
+scr_player_equipmentChange();
 scr_move_with_collisions();

@@ -1,6 +1,6 @@
 with obj_actor_parent
 {
-	if ((object_index != obj_player && !flying && !dropThroughPlatforms) || (object_index == obj_player && instance_exists(inputManager) && !(sign(inputManager.moveInputV) == 1 && inputManager.aInput)) && phase != "hooked")
+	if ((object_index != objPlayer && !flying && !dropThroughPlatforms) || (object_index == objPlayer && instance_exists(InputManager) && !(sign(InputManager.moveInputV) == 1 && InputManager.aInput)) && phase != "hooked")
 	{
 		boxHeight = bbox_bottom-bbox_top;
 		boxWidth = bbox_right-bbox_left;
@@ -24,15 +24,15 @@ with obj_item_parent
 	}
 }
 /*
-if (place_meeting(x, y-1, obj_player))&&(obj_player.y+(obj_player.bbox_bottom-obj_player.bbox_top)-obj_player.ySpd<=y-ySpd)||(place_meeting(x,y-1,obj_player)&&!place_meeting(x,y+y-yprevious+11,obj_player)&&ySpd >= -global.g)&&obj_player.y-obj_player.yprevious>=0
+if (place_meeting(x, y-1, objPlayer))&&(objPlayer.y+(objPlayer.bbox_bottom-objPlayer.bbox_top)-objPlayer.ySpd<=y-ySpd)||(place_meeting(x,y-1,objPlayer)&&!place_meeting(x,y+y-yprevious+11,objPlayer)&&ySpd >= -global.g)&&objPlayer.y-objPlayer.yprevious>=0
 {
-	obj_player.eleX = x;
-	obj_player.eleBboxTop = bbox_top;
-	obj_player.eleId = id;
-	obj_player.eleYSpd = ySpd;
-	//obj_player.elePhase = phase;
-	if phase = "shakey" obj_player.eleYMod = yMod;
-	with obj_player
+	objPlayer.eleX = x;
+	objPlayer.eleBboxTop = bbox_top;
+	objPlayer.eleId = id;
+	objPlayer.eleYSpd = ySpd;
+	//objPlayer.elePhase = phase;
+	if phase = "shakey" objPlayer.eleYMod = yMod;
+	with objPlayer
 	{
 		if (!place_free(x,ceil(eleBboxTop-(bbox_bottom-bbox_top))))
 		{

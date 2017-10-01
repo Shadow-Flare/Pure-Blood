@@ -1,13 +1,13 @@
 //get needed data
-var IE = instance_exists(inputManager)
-if IE var moveH = inputManager.moveInputH;
+var IE = instance_exists(InputManager)
+if IE var moveH = InputManager.moveInputH;
 else var moveH = 0;
-if IE var moveV = inputManager.moveInputV;
+if IE var moveV = InputManager.moveInputV;
 else var moveV = 0;
-if IE && inputManager.xInput xInputQueue = 1;
-if IE && inputManager.yInput yInputQueue = 1;
-if IE && inputManager.aInput aInputQueue = 1;
-if IE && inputManager.bInput bInputQueue = 1;
+if IE && InputManager.xInput xInputQueue = 1;
+if IE && InputManager.yInput yInputQueue = 1;
+if IE && InputManager.aInput aInputQueue = 1;
+if IE && InputManager.bInput bInputQueue = 1;
 
 #region do things
 phaseTimer++;
@@ -79,7 +79,7 @@ switch subPhase
 		if moveH != 0 xSpd = clamp(xSpd+moveH*moveSpeed/15,-moveSpeed,moveSpeed);
 		else xSpd -= xSpd/20;
 			//ySpd
-		if vPhase = vState.jumping && !inputManager.aInputHeld ySpd -= ySpd/8;
+		if vPhase = vState.jumping && !InputManager.aInputHeld ySpd -= ySpd/8;
 		break;
 		
 	case subState.landing:
@@ -160,20 +160,20 @@ switch subPhase
 					else if abs(moveV) >= abs(moveH)
 					{	
 						//Upwards
-						if sign(moveV) == -1 scr_player_combo_ext(obj_comboCache.activeUpwardsId);
+						if sign(moveV) == -1 scr_player_combo_ext(ComboCache.activeUpwardsId);
 						//Downwards
-						else scr_player_combo_ext(obj_comboCache.activeDownwardsId);
+						else scr_player_combo_ext(ComboCache.activeDownwardsId);
 					}
 					else
 					{
 						//Forwards/horizontal
 						if !hardLockOn || sign(moveH) == lockOnDir
 						{
-							if !place_meeting(x+obj_comboCache.attackMoveDistancesX[obj_comboCache.activeForwardsId],y,obj_actor_parent) phased = 1;
-							scr_player_combo_ext(obj_comboCache.activeForwardsId);
+							if !place_meeting(x+ComboCache.attackMoveDistancesX[ComboCache.activeForwardsId],y,obj_actor_parent) phased = 1;
+							scr_player_combo_ext(ComboCache.activeForwardsId);
 						}
 						//Backwards
-						else scr_player_combo_ext(obj_comboCache.activeBackwardsId);
+						else scr_player_combo_ext(ComboCache.activeBackwardsId);
 					}
 					break;
 				case vState.midAir:
@@ -188,7 +188,7 @@ switch subPhase
 						aerialTargetX = -4;
 						aerialTargetY = -4;	
 					}
-					var aerialAttackId = obj_comboCache.activeAerialID // + 0
+					var aerialAttackId = ComboCache.activeAerialID // + 0
 					scr_player_combo_ext(aerialAttackId);
 					if aerialTargetX == -4 && aerialTargetY == -4 ySpd = aerialAttackVertBoost;
 					else facing = lockOnDir;
@@ -209,7 +209,7 @@ switch subPhase
 	}
 	
 	//to Ability
-	else if IE && inputManager.rbInput && can_use_ability()
+	else if IE && InputManager.rbInput && can_use_ability()
 	{
 		phase = state.ability;
 		phaseTimer = 0;

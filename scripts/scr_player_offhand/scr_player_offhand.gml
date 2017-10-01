@@ -1,13 +1,13 @@
 //get needed data
-var IE = instance_exists(inputManager)
-if IE var moveH = inputManager.moveInputH;
+var IE = instance_exists(InputManager)
+if IE var moveH = InputManager.moveInputH;
 else var moveH = 0;
-if IE var moveV = inputManager.moveInputV;
+if IE var moveV = InputManager.moveInputV;
 else var moveV = 0;
-if IE && inputManager.xInput xInputQueue = 1;
-if IE && inputManager.yInput yInputQueue = 1;
-if IE && inputManager.aInput aInputQueue = 1;
-if IE && inputManager.bInput bInputQueue = 1;
+if IE && InputManager.xInput xInputQueue = 1;
+if IE && InputManager.yInput yInputQueue = 1;
+if IE && InputManager.aInput aInputQueue = 1;
+if IE && InputManager.bInput bInputQueue = 1;
 
 phaseTimer++;
 subPhaseTimer++;
@@ -18,7 +18,7 @@ else if moveH != 0 && vPhase == vState.grounded facing = sign(moveH);
 	//Sub states
 #region sub States
 
-switch obj_comboCache.activeOffhandID
+switch ComboCache.activeOffhandID
 {	
 	case 0:	
 		switch vPhase
@@ -30,7 +30,7 @@ switch obj_comboCache.activeOffhandID
 					case subState.pre:
 						if subPhaseTimer >= round(crossbowDurationPre*room_speed)
 						{ 
-							if IE && inputManager.yInputHeld
+							if IE && InputManager.yInputHeld
 							{
 								subPhase = subState.aim;
 								subPhaseTimer = 0;
@@ -81,11 +81,11 @@ switch obj_comboCache.activeOffhandID
 						break;
 		
 					case subState.aim:
-						var h = inputManager.moveInputH;
-						var v = inputManager.moveInputV;
+						var h = InputManager.moveInputH;
+						var v = InputManager.moveInputV;
 						if !(h==0 && v==0) aimAngle = point_direction(0,0,h,v);
 						facing = (aimAngle<90||aimAngle>270)? 1:-1;
-						if !IE || !inputManager.yInputHeld
+						if !IE || !InputManager.yInputHeld
 						{
 							scr_player_fireCrossbow(aimAngle);
 							subPhase = subState.fire
@@ -105,7 +105,7 @@ switch obj_comboCache.activeOffhandID
 					case subState.holding:
 						if yInputQueue
 						{
-							if !IE || !inputManager.yInputHeld
+							if !IE || !InputManager.yInputHeld
 							{
 								reset_queue();
 								if hardLockOn||softLockOn facing = lockOnDir

@@ -33,8 +33,8 @@ for (var i = 0; i < array_length_1d(attackHitStart); i++)
 	}
 }
 
-x = obj_player.x+facing*attackXOffset;
-y = obj_player.y+attackYOffset;
+x = objPlayer.x+facing*attackXOffset;
+y = objPlayer.y+attackYOffset;
 
 if attackName == "uppercut" && effectOn
 {

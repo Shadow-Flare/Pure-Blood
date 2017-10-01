@@ -9,7 +9,7 @@ var caster = argument5;
 hpPrev = hp;
 if variable_instance_exists(source,"subId")
 {
-	if obj_comboCache.offhandSubtypeNames[source.subId] != "Osmose"
+	if ComboCache.offhandSubtypeNames[source.subId] != "Osmose"
 	{
 		if attackType != -1 hp -= (100/resistances[attackType])*attackPower;
 	}
@@ -37,15 +37,15 @@ if variable_instance_exists(source,"subId")
 }
 else if attackType != -1 hp -= (100/resistances[attackType])*attackPower;
 
-if object_index = obj_player var mh = global.hpMax
+if object_index = objPlayer var mh = PlayerStats.hpmax
 else var mh = maxHp
 var hpLostPC = (abs(hpPrev-hp)/mh)
 
-if object_index = obj_player hp = clamp(hp,0,global.hpMax)
+if object_index = objPlayer hp = clamp(hp,0,PlayerStats.hpmax)
 else hp = clamp(hp,0,maxHp)
 if variable_instance_exists(id,"mp")
 {
-	if object_index = obj_player mp = clamp(mp,0,global.mpMax)
+	if object_index = objPlayer mp = clamp(mp,0,global.mpMax)
 	else mp = clamp(mp,0,maxMp)
 }
 
@@ -65,7 +65,7 @@ if source.type == "proj"
 	}
 	if (source.object_index == obj_spells_projectile)
 	{
-		if obj_comboCache.offhandSubtypeNames[source.subId] == "Leech"
+		if ComboCache.offhandSubtypeNames[source.subId] == "Leech"
 		{
 			if hitEffectType == "blood"
 			{
@@ -94,7 +94,7 @@ if source.type == "proj"
 				}
 			}
 		}
-		else if obj_comboCache.offhandSubtypeNames[source.subId] == "Osmose"
+		else if ComboCache.offhandSubtypeNames[source.subId] == "Osmose"
 		{
 			if statHit = "mp" var statLost = mpPrev-mp;
 			else if statHit = "hp" var statLost = hpPrev-hp;
@@ -121,7 +121,7 @@ if source.type == "proj"
 		}
 	}
 }
-if object_index = obj_player var mh = global.hpMax
+if object_index = objPlayer var mh = PlayerStats.hpmaxhpmax
 else var mh = maxHp
 var partCount = hpLostPC*50
 var partSpeed = 5+hpLostPC*30

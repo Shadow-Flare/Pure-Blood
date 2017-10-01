@@ -1,7 +1,7 @@
-var IE = instance_exists(inputManager)
-if IE var moveH = inputManager.moveInputH;
+var IE = instance_exists(InputManager)
+if IE var moveH = InputManager.moveInputH;
 else var moveH = 0;
-if IE var moveV = inputManager.moveInputV;
+if IE var moveV = InputManager.moveInputV;
 else var moveV = 0;
 
 switch vPhase

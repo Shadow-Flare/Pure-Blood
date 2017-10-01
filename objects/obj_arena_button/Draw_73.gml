@@ -10,5 +10,5 @@ if pausing
 			draw_surface(application_surface,0,0);
 		gpu_set_blendmode(bm_normal);
 	surface_reset_target();
-	instance_create_layer(0,0,layer_get_id("lay_interactables"),obj_arena_settings_controller);
+	instance_create_layer(0,0,layer_get_id("lay_interactables"),ArenaSettingsManager);
 }

@@ -1,7 +1,7 @@
-player = obj_player;
+player = objPlayer;
 //shut down all object in room save technicals
 instance_deactivate_all(1);
-instance_activate_object(obj_combo_cache);
+instance_activate_object(SingletonAbstract); // Any child of this will be activated
 	
 //reset start input
 global.startInput = 0;

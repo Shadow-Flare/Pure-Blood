@@ -6,38 +6,38 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	caster = pl;
 	caster.effect = id;
 	//get effect properties/collisions
-	attackName = obj_comboCache.attackNames[attackNum];
-	attackDuration = obj_comboCache.attackDurations[attackNum];
-	attackCooldown = obj_comboCache.attackCooldowns[attackNum];
+	attackName = ComboCache.attackNames[attackNum];
+	attackDuration = ComboCache.attackDurations[attackNum];
+	attackCooldown = ComboCache.attackCooldowns[attackNum];
 	pl.attackName = attackName;
 	pl.attackDuration = attackDuration;
-	pl.attackAnimation = obj_comboCache.attackAnimations[attackNum];
+	pl.attackAnimation = ComboCache.attackAnimations[attackNum];
 	pl.attackCooldown = attackCooldown;
-	pl.attackMoveDistanceY = obj_comboCache.attackMoveDistancesY[attackNum];
-	pl.attackMoveDistanceX = obj_comboCache.attackMoveDistancesX[attackNum];
-	pl.attackMoveStart = obj_comboCache.attackMoveStart[attackNum];
-	pl.attackMoveDuration = obj_comboCache.attackMoveDuration[attackNum];
-	for(var i = 0; i < array_length_2d(obj_comboCache.attackHitStart,attackNum); i++)
+	pl.attackMoveDistanceY = ComboCache.attackMoveDistancesY[attackNum];
+	pl.attackMoveDistanceX = ComboCache.attackMoveDistancesX[attackNum];
+	pl.attackMoveStart = ComboCache.attackMoveStart[attackNum];
+	pl.attackMoveDuration = ComboCache.attackMoveDuration[attackNum];
+	for(var i = 0; i < array_length_2d(ComboCache.attackHitStart,attackNum); i++)
 	{
 		//Hit box numbs
-		attackHitStart[i] = obj_comboCache.attackHitStart[attackNum,i];
-		attackHitDuration[i] = obj_comboCache.attackHitDuration[attackNum,i];
+		attackHitStart[i] = ComboCache.attackHitStart[attackNum,i];
+		attackHitDuration[i] = ComboCache.attackHitDuration[attackNum,i];
 		//STATS
-		attackDamageType[i] = obj_comboCache.attackDamageTypes[attackNum,i];
-		attackDamageModifier[i] = obj_comboCache.attackDamageModifiers[attackNum,i];
-		attackStaggerModifier[i] = obj_comboCache.attackStaggerModifiers[attackNum,i];
-		attackKnockback[i] = obj_comboCache.attackKnockbacks[attackNum,i];
-		attackStatusType[i] = obj_comboCache.attackStatusTypes[attackNum,i];
-		attackStatusValue[i] = obj_comboCache.attackStatusValues[attackNum,i];
+		attackDamageType[i] = ComboCache.attackDamageTypes[attackNum,i];
+		attackDamageModifier[i] = ComboCache.attackDamageModifiers[attackNum,i];
+		attackStaggerModifier[i] = ComboCache.attackStaggerModifiers[attackNum,i];
+		attackKnockback[i] = ComboCache.attackKnockbacks[attackNum,i];
+		attackStatusType[i] = ComboCache.attackStatusTypes[attackNum,i];
+		attackStatusValue[i] = ComboCache.attackStatusValues[attackNum,i];
 	}
-	attackXOffset = obj_comboCache.attackXOffsets[attackNum];
-	attackYOffset = obj_comboCache.attackYOffsets[attackNum];
+	attackXOffset = ComboCache.attackXOffsets[attackNum];
+	attackYOffset = ComboCache.attackYOffsets[attackNum];
 	
 	//Set
 	timer = 0;
 	facing = pl.facing;
 	x=pl.x+facing*attackXOffset;
-	image_xscale = facing*obj_comboCache.attackWidths[attackNum]/8;
+	image_xscale = facing*ComboCache.attackWidths[attackNum]/8;
 	y=pl.y+attackYOffset;
-	image_yscale = obj_comboCache.attackHeights[attackNum]/8;
+	image_yscale = ComboCache.attackHeights[attackNum]/8;
 }

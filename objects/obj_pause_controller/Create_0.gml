@@ -1,1 +1,0 @@
-scr_pause_controller_create();
