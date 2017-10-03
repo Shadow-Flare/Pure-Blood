@@ -42,7 +42,7 @@ switch phase
 		}
 		break;
 	case "down": 
-		if ySpd < 5 ySpd += global.g;
+		if ySpd < 5 ySpd += GameManager.grav;
 		if ySpd > 5 ySpd = 5;
 		downTimer++;
 		if downTimer == room_speed*4

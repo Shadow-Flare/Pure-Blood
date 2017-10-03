@@ -1,5 +1,5 @@
 {
-    "id": "0e28d23f-95eb-4628-bc26-5668cf32f57d",
+    "id": "60527a22-336a-4d46-a708-074e9ec321b1",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "scr_player_combo",

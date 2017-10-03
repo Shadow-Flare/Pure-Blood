@@ -21,7 +21,7 @@ else if onGround
 {
 	xSpd -= xSpd/4;
 }
-ySpd += global.g*0.75;
+ySpd += GameManager.grav*0.75;
 
 xSpdPrev = xSpd;
 scr_move_with_collisions();

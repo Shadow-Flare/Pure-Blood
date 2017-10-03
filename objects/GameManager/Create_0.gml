@@ -10,7 +10,7 @@ consoleEnabled = false;
 monitorW = display_get_width();
 monitorH = display_get_height();
 monitorXOffset = ((monitorW-320)/2);
-monitorYOffset = ((monitorH-180)/2);
+monitorYOffset = ((monitorH-176)/2);
 displayResolutionX = 1920;
 displayResolutionY = 1080;
 
@@ -20,3 +20,5 @@ if(monitorW>=displayResolutionX && monitorH>=displayResolutionY)
 	monitorXOffset=(monitorW-displayResolutionX)/2;
 	monitorYOffset=(monitorH-displayResolutionY)/2;
 }
+
+grav = 0.25;

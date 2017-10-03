@@ -5,26 +5,26 @@ if timer == floor((attackDuration+attackCooldown)*room_speed)
 	instance_destroy();
 }
 
-for (var i = 0; i < array_length_1d(attackHitStart); i++)
+for (var i = 0; i < array_length_1d(attackHitStarts); i++)
 {
-	if timer == floor(attackHitStart[i]*room_speed)
+	if timer == floor(attackHitStarts[i]*room_speed)
 	{
 		effectOn = 1;
 		hasHit = 0;
 		hitType = attackDamageType[i];
-		hitDamage = attackDamageModifier[i] * caster.physicalPower;
+		hitDamage = attackDamageModifier[i] * PlayerStats.physicalPower;
 		statusType = attackStatusType[i];
 		statusValue = attackStatusValue[i];									 // make factor of player stats
-		hitStagger = attackStaggerModifier[i] * caster.physicalStagger;		 // make factor of player stats
+		hitStagger = attackStaggerModifier[i] * PlayerStats.physicalStagger;		 // make factor of player stats
 		hitKnockback = attackKnockback[i];
 		hitOn = 1;
 		image_blend = c_blue;
 	}
 }
 
-for (var i = 0; i < array_length_1d(attackHitStart); i++)
+for (var i = 0; i < array_length_1d(attackHitStarts); i++)
 {
-	if timer == floor((attackHitStart[i]+attackHitDuration[i])*room_speed)
+	if timer == floor((attackHitStarts[i]+attackHitDurations[i])*room_speed)
 	{
 		hitOn = 0;
 		effectOn = 0;

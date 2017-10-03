@@ -24,7 +24,7 @@ with obj_item_parent
 	}
 }
 /*
-if (place_meeting(x, y-1, objPlayer))&&(objPlayer.y+(objPlayer.bbox_bottom-objPlayer.bbox_top)-objPlayer.ySpd<=y-ySpd)||(place_meeting(x,y-1,objPlayer)&&!place_meeting(x,y+y-yprevious+11,objPlayer)&&ySpd >= -global.g)&&objPlayer.y-objPlayer.yprevious>=0
+if (place_meeting(x, y-1, objPlayer))&&(objPlayer.y+(objPlayer.bbox_bottom-objPlayer.bbox_top)-objPlayer.ySpd<=y-ySpd)||(place_meeting(x,y-1,objPlayer)&&!place_meeting(x,y+y-yprevious+11,objPlayer)&&ySpd >= -GameManager.grav)&&objPlayer.y-objPlayer.yprevious>=0
 {
 	objPlayer.eleX = x;
 	objPlayer.eleBboxTop = bbox_top;
@@ -49,7 +49,7 @@ if (place_meeting(x, y-1, objPlayer))&&(objPlayer.y+(objPlayer.bbox_bottom-objPl
 				{
 					x-=i*sideNum;
 					y = ceil(eleBboxTop-(bbox_bottom-bbox_top));
-					if ySpd >= -global.g ySpd = eleYSpd;
+					if ySpd >= -GameManager.grav ySpd = eleYSpd;
 					break;
 				}
 			}
@@ -57,7 +57,7 @@ if (place_meeting(x, y-1, objPlayer))&&(objPlayer.y+(objPlayer.bbox_bottom-objPl
 		else
 		{
 			y = ceil(eleBboxTop-(bbox_bottom-bbox_top)/2);
-			if ySpd >= -global.g ySpd = eleYSpd;
+			if ySpd >= -GameManager.grav ySpd = eleYSpd;
 		}
 	}
 }

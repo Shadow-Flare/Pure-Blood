@@ -155,12 +155,12 @@ if phase == "attack2"
 #endregion
 
 #region react to hit OLD
-//if place_meeting(x,y,objPlayer_attack_parent) && !(phase == "dying" && subPhase != "flung")
+//if place_meeting(x,y,obj_player_attack_parent) && !(phase == "dying" && subPhase != "flung")
 //{          
-//	var effNum = instance_number(objPlayer_attack_parent);
+//	var effNum = instance_number(obj_player_attack_parent);
 //	for (var i = 0; i < effNum; i++)
 //	{
-//		effect = instance_find(objPlayer_attack_parent,i);
+//		effect = instance_find(obj_player_attack_parent,i);
 //		if place_meeting(x,y,effect)
 //		{
 //			enemy = effect.caster;
@@ -331,12 +331,12 @@ else if phase == "attack1" && subPhase == "end" ySpd -= ySpd/20
 else if phase == "attack2" && subPhase == "attacking" ySpd -= ySpd/2;
 else if phase == "staggered" || phase == "dying"
 {
-	if subPhase == "" ySpd += global.g
-	else if subPhase == "deflected" ySpd+=global.g/2;
+	if subPhase == "" ySpd += GameManager.grav
+	else if subPhase == "deflected" ySpd+=GameManager.grav/2;
 	else if subPhase == "stagger" ySpd -= ySpd/4;
-	else if subPhase == "prone" ySpd+=global.g/2;
-	else if subPhase == "flung" ySpd+=global.g/2;
-	else if subPhase == "recover" ySpd+=global.g/2
+	else if subPhase == "prone" ySpd+=GameManager.grav/2;
+	else if subPhase == "flung" ySpd+=GameManager.grav/2;
+	else if subPhase == "recover" ySpd+=GameManager.grav/2
 }
 else if phase == "moving"
 {
@@ -346,9 +346,9 @@ else if phase == "moving"
 }
 else if phase == "aerialAttacked"
 {
-	 if ySpd < -2 ySpd+=global.g/2;
-	 else if abs(ySpd) <= 2 ySpd  += global.g/16;
-	 else ySpd+=global.g;
+	 if ySpd < -2 ySpd+=GameManager.grav/2;
+	 else if abs(ySpd) <= 2 ySpd  += GameManager.grav/16;
+	 else ySpd+=GameManager.grav;
 }
 else
 {

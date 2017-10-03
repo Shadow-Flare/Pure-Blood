@@ -27,7 +27,7 @@ part_type_alpha2(pRain,0.6,0);
 part_type_blend(pRain,1);
 part_type_direction(pRain,45,135,0,0);
 part_type_speed(pRain,8,10,0,0);
-part_type_gravity(pRain,global.g/3,270);
+part_type_gravity(pRain,GameManager.grav/3,270);
 part_type_life(pRain,25,35);
 
 sRain = audio_emitter_create();

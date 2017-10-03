@@ -12,7 +12,7 @@ if phase == "hovering"
 }
 else if phase == "falling"
 {
-	vspeed += global.g*0.75;
+	vspeed += GameManager.grav*0.75;
 	image_angle = 0;
 	initialScale = image_xscale;
 }

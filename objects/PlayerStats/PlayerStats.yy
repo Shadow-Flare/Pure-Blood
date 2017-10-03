@@ -4,16 +4,7 @@
     "mvc": "1.0",
     "name": "PlayerStats",
     "eventList": [
-        {
-            "id": "83b8aa37-b1b3-499e-8622-b9db519c21a6",
-            "modelName": "GMEvent",
-            "mvc": "1.0",
-            "IsDnD": false,
-            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 0,
-            "eventtype": 0,
-            "m_owner": "a98a0c14-5945-4135-a1ba-2a89682d3de3"
-        }
+        
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "parentObjectId": "00000000-0000-0000-0000-000000000000",

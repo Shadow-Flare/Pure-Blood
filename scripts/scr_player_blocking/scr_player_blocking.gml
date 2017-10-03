@@ -68,7 +68,7 @@ switch subPhase
 			phaseTimer = 0;
 			subPhase = subState.performing;
 			subPhaseTimer = 0;
-			scr_player_combo_ext(ComboCache.activeCounterId);
+			scr_player_combo(PlayerStats.activeCounterId);
 			reset_queue();
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationReaction)

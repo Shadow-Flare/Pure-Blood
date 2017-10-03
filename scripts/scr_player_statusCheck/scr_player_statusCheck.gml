@@ -1,4 +1,4 @@
-if hp <= 0 
+if PlayerStats.hp <= 0 
 {
 	phase = state.dying;
 	phaseTimer = 0;

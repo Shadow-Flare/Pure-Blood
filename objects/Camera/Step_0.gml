@@ -12,19 +12,19 @@ switch phase
 		if !instance_exists(objPlayer) phase = cameraState.idle;
 		else
 		{
-			if !objPlayer.hardLockOn
+			if objPlayer.lockOnType == lockOn.hard
 			{
-				xTo = objPlayer.x
-				yTo = objPlayer.y
+				if instance_exists(objPlayer.lockOnTarget)
+				{
+					var lockTarget = objPlayer.lockOnTarget;
+					xTo = (objPlayer.x*3 + lockTarget.x)/4
+					yTo = (objPlayer.y*3 + lockTarget.y)/4
+				}
 			}
 			else
 			{
-				if instance_exists(follow.lockOnTarget)
-				{
-					var lockTarget = follow.lockOnTarget;
-					xTo = (follow.x*3 + lockTarget.x)/4
-					yTo = (follow.y*3 + lockTarget.y)/4
-				}
+				xTo = objPlayer.x
+				yTo = objPlayer.y
 			}
 		}
 		break;

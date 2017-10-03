@@ -125,4 +125,4 @@ if object_index = objPlayer var mh = PlayerStats.hpmaxhpmax
 else var mh = maxHp
 var partCount = hpLostPC*50
 var partSpeed = 5+hpLostPC*30
-scr_hit_effect(caster,hitEffectType,hitEffectColour,partCount,partSpeed);
+//scr_hit_effect(caster,hitEffectType,hitEffectColour,partCount,partSpeed);

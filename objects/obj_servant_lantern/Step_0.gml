@@ -192,14 +192,14 @@ else
 }
 	#endregion
 	#region//vertical
-if (phase == "stagger" || phase == "dying") && subPhase == "flung" ySpd+=global.g/2;
+if (phase == "stagger" || phase == "dying") && subPhase == "flung" ySpd+=GameManager.grav/2;
 else if phase == "aerialAttacked"
 {
-	 if ySpd < -2 ySpd+=global.g/2;
-	 else if abs(ySpd) <= 2 ySpd  += global.g/16;
-	 else ySpd+=global.g;
+	 if ySpd < -2 ySpd+=GameManager.grav/2;
+	 else if abs(ySpd) <= 2 ySpd  += GameManager.grav/16;
+	 else ySpd+=GameManager.grav;
 }
-else ySpd+=global.g;
+else ySpd+=GameManager.grav;
 	#endregion
 #endregion
 

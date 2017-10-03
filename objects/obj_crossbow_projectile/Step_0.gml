@@ -1,7 +1,7 @@
 lifeTime++
 if lifeTime >= room_speed*0.2
 {
-	ySpd += global.g/4;
+	ySpd += GameManager.grav/4;
 	xSpd -= xSpd/40;
 }
 

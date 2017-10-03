@@ -1,5 +1,5 @@
 //delete if no longer in arena
-if room != rm_arena1 && room != rm_arena2 && room != rm_arena3 && room != rm_arena4
+if room != rmArena1 && room != rmArena2 && room != rmArena3 && room != rmArena4
 {
 	instance_destroy();
 	instance_destroy(ArenaSettingsManager);
@@ -22,11 +22,11 @@ if !instance_exists(ArenaSettingsManager) && !instance_exists(PauseController)
 	var count = 0;
 	if enemy != noone
 	{
-		with enemy if phase != "dying" count++;
+		with enemy if actorType != actorTypes.corpse count++;
 		if count < arenaStats[1] && spawnTimer == -1
 		{
-			if room == rm_arena1 || room == rm_arena4 {var spawnX = 1472+random_range(-225,225); var spawnY = -160;}
-	   else if room == rm_arena2 || room == rm_arena3 {var spawnX = 2176+random_range(-225,225); var spawnY = -160;}
+			if room == rmArena1 || room == rmArena4 {var spawnX = 160+random_range(-25,25); var spawnY = -32;}
+	   else if room == rmArena2 || room == rmArena3 {var spawnX = 2176+random_range(-225,225); var spawnY = -160;}
 	   else {var spawnX = 0; var spawnY = 0;}
 			instance_create_layer(spawnX,spawnY,layer_get_id("lay_entities"),enemy);
 			spawnTimer = 0;
@@ -58,28 +58,28 @@ with enemy physicalPower = other.arenaStats[3];
 with enemy isInvulnerable = other.arenaStats[4];
 
 //Player Maximum Hp
-PlayerStats.hpmaxhpmax = other.arenaStats[5];
+PlayerStats.hpMax = other.arenaStats[5];
 
 //Player Physical Strength
-with player physicalPower = other.arenaStats[6];
+PlayerStats.physicalPower = other.arenaStats[6];
 
 //Player Invulnerability
-with player isInvulnerable = other.arenaStats[7];
+PlayerStats.isInvulnerable = other.arenaStats[7];
 
 //Arena Number
 switch arenaStats[8]
 {
 	case "Manor: Small":
-		dest = rm_arena1;
+		dest = rmArena1;
 		break;
 	case "Dungeon: Large":
-		dest = rm_arena2;
+		dest = rmArena2;
 		break;
 	case "Forest: Large with pitfalls":
-		dest = rm_arena3;
+		dest = rmArena3;
 		break;
 	case "Town: Small, Flat and borderless":
-		dest = rm_arena4;
+		dest = rmArena4;
 		break;
 }
 if room != dest

@@ -1,3 +1,60 @@
+#region INITIALIZER
+attackNames = ds_map_create();
+attackTypes = ds_map_create();
+attackAnimations = ds_map_create();
+attackDurations = ds_map_create();
+attackCooldowns = ds_map_create();
+attackHitStarts = ds_map_create();
+attackHitDurations = ds_map_create();
+attackMoveStart = ds_map_create();
+attackMoveDuration = ds_map_create();
+attackMoveDistancesY = ds_map_create();
+attackMoveDistancesX = ds_map_create();
+attackXOffsets = ds_map_create();
+attackYOffsets = ds_map_create();
+attackWidths = ds_map_create();
+attackHeights = ds_map_create();
+attackDamageTypes = ds_map_create();
+attackDamageModifiers = ds_map_create();
+attackStaggerModifiers = ds_map_create();
+attackKnockbacks = ds_map_create();
+attackStatusTypes = ds_map_create();
+attackStatusValues = ds_map_create();
+#endregion
+
+#region #-01 Uppercut:					template for uppercut
+var tmpId = -1;
+attackNames[? tmpId] = "Uppercut";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordCrossbowUppercut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.3;
+attackCooldowns[? tmpId] = 0.1;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 2;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],1);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],-1);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);		
+#endregion
+
 //GROUND COMBO VARIABLES
 //Attack Types:
 //	0: non-typical, used for utilities like counter attacks && directional attacks
@@ -18,220 +75,278 @@
 //		8: Gut
 
 #region #000 Counter:				Counter attack - flows into rest of combo afterwards.
-var tmpId = 0;
-attackNames[tmpId] = "Counter";								//Name to be displayed in combo editor
-attackTypes[tmpId] = 0;										//dictates possible slots for editor, key above
-attackAnimations[tmpId] = sprPlayerBodySwordCounter;		//body sprite
-attackDurations[tmpId] = 0.4;								//active attack duration (seconds)			//below code looks complex but just place the relevant
-attackCooldowns[tmpId] = 0.2;								//cooldown period AFTER duration (seconds)	//time in FRAMES in between the "/**/"s (collumn index is for multiple hits)
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;							//total distance moved Vertically over move duration (8*<distance in pixels>)
-attackMoveDistancesX[tmpId] = 8*24;							//total distance moved Horizontally over move duration (8*<distance in pixels>)
-attackXOffsets[tmpId] = 8*16;								//distance from player center where center of hitbox will be along X axis (8*<distance in pixels>)
-attackYOffsets[tmpId] = 8*-6;								//distance from player center where center of hitbox will be along Y axis (8*<distance in pixels>)
-attackWidths[tmpId] = 8*30;									//width of hit box about box center (8*<width in pixels>)
-attackHeights[tmpId] = 8*18;									//height of hit box about box center (8*<height in pixels>)
-attackDamageTypes[tmpId,0] = 0;								//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
-attackDamageModifiers[tmpId,0] = 1.3;							//Damage modifier (multiplicative)
-attackStaggerModifiers[tmpId,0] = 1.3;							//Stagger modifier (multiplicative)
-attackKnockbacks[tmpId,0] = 40;								//Physics knockback on a heavy stagger attack
-attackStatusTypes[tmpId,0] = -1;								//Status Type (-1:None|0:Bleed)
-attackStatusValues[tmpId,0] = 0;								//Status Value (NEED BASED ON PLAYER STAT IMPLEMENTATION)
+tmpId++;
+attackNames[? tmpId] = "Counter";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordCounter;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.4;
+attackCooldowns[? tmpId] = 0.2;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 24;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],1.3);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],5);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
 #region #001 Skyward Slice:			Upwards attack - slash upwards while jumping, does not (typically) uppercut enemies.
 tmpId++;
-attackNames[tmpId] = "Skyward Slice";
-attackTypes[tmpId] = 0;
-attackAnimations[tmpId] = sprPlayerBodySwordSkywardSlice;
-attackDurations[tmpId] = 0.6;
-attackCooldowns[tmpId] = 0.2;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*-40;
-attackMoveDistancesX[tmpId] = 8*0;
-attackXOffsets[tmpId] = 8*16;
-attackYOffsets[tmpId] = 8*-6;
-attackWidths[tmpId] = 8*30;
-attackHeights[tmpId] = 8*18;
-attackDamageTypes[tmpId,0] = 0;
-attackDamageModifiers[tmpId,0] = 0.3;
-attackStaggerModifiers[tmpId,0] = 1;
-attackKnockbacks[tmpId,0] = -1;
-attackStatusTypes[tmpId,0] = -1;
-attackStatusValues[tmpId,0] = 0;
+attackNames[? tmpId] = "Skyward Slice";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordSkywardSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.6;
+attackCooldowns[? tmpId] = 0.2;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = -40;
+attackMoveDistancesX[? tmpId] = 6;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.3);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],-1);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
 #region #002 Earthen Release:		Downwards attack - attack to both sides of player with moderate reach, low damage and high stagger.
 tmpId++;
-attackNames[tmpId] = "Earthen Release"
-attackTypes[tmpId] = 0;
-attackAnimations[tmpId] = sprPlayerBodySwordEarthenRelease;
-attackDurations[tmpId] = 0.8;
-attackCooldowns[tmpId] = 0.4;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;
-attackMoveDistancesX[tmpId] = 8*0;
-attackXOffsets[tmpId] = 8*0;
-attackYOffsets[tmpId] = 8*-12;
-attackWidths[tmpId] = 8*60;
-attackHeights[tmpId] = 8*32;
-attackDamageTypes[tmpId,0] = 2;								
-attackDamageModifiers[tmpId,0] = 0.8;					
-attackStaggerModifiers[tmpId,0] = 1.3;			
-attackKnockbacks[tmpId,0] = 25;						
-attackStatusTypes[tmpId,0] = -1;					
-attackStatusValues[tmpId,0] = 0;	
+attackNames[? tmpId] = "Earthen Release";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordEarthenRelease;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.8;
+attackCooldowns[? tmpId] = 0.4;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 0;
+attackXOffsets[? tmpId] = 0;
+attackYOffsets[? tmpId] = -12;
+attackWidths[? tmpId] = 60;
+attackHeights[? tmpId] = 32;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],2);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.8);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],4);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
 #region #003 Burst:					Forwards attack - flows into rest of combo.
 tmpId++;
-attackNames[tmpId] = "Burst"
-attackTypes[tmpId] = 0;
-attackAnimations[tmpId] = sprPlayerBodySwordBurst;
-attackDurations[tmpId] = 0.8;
-attackCooldowns[tmpId] = 0.2;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;
-attackMoveDistancesX[tmpId] = 8*80;
-attackXOffsets[tmpId] = 8*16;
-attackYOffsets[tmpId] = 8*-6;
-attackWidths[tmpId] = 8*30;
-attackHeights[tmpId] = 8*18;
-attackDamageTypes[tmpId,0] = 2;								
-attackDamageModifiers[tmpId,0] = 0.8;					
-attackStaggerModifiers[tmpId,0] = 1.3;			
-attackKnockbacks[tmpId,0] = 25;						
-attackStatusTypes[tmpId,0] = -1;					
-attackStatusValues[tmpId,0] = 0;	
+attackNames[? tmpId] = "Burst";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordBurst;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.8;
+attackCooldowns[? tmpId] = 0.2;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 80;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],2);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.8);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],3);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
 #region #004 Shove:					Backwards attack - slow attack pushing enemy backwards.
 tmpId++;
-attackNames[tmpId] = "Shove";
-attackTypes[tmpId] = 0;
-attackAnimations[tmpId] = sprPlayerBodySwordShove
-attackDurations[tmpId] = 0.6;
-attackCooldowns[tmpId] = 0.3;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;
-attackMoveDistancesX[tmpId] = 8*6;
-attackXOffsets[tmpId] = 8*16;
-attackYOffsets[tmpId] = 8*-6;
-attackWidths[tmpId] = 8*30;
-attackHeights[tmpId] = 8*18;
-attackDamageTypes[tmpId,0] = 1;
-attackDamageModifiers[tmpId,0] = 0.2;
-attackStaggerModifiers[tmpId,0] = 2.5;
-attackKnockbacks[tmpId,0] = 30;
-attackStatusTypes[tmpId,0] = -1;
-attackStatusValues[tmpId,0] = 0;
+attackNames[? tmpId] = "Shove";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordShove;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.6;
+attackCooldowns[? tmpId] = 0.3;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 6;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],1);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.2);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],2.5);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],4);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
 #region #005 Slice:					Fast basic strike.
 tmpId++;
-attackNames[tmpId] = "Slice";
-attackTypes[tmpId] = 1;
-attackAnimations[tmpId] = sprPlayerBodySwordSlice;
-attackDurations[tmpId] = 0.2;
-attackCooldowns[tmpId] = 0.4;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;
-attackMoveDistancesX[tmpId] = 8*6;
-attackXOffsets[tmpId] = 8*16;
-attackYOffsets[tmpId] = 8*-6;
-attackWidths[tmpId] = 8*30;
-attackHeights[tmpId] = 8*18;
-attackDamageTypes[tmpId,0] = 0;
-attackDamageModifiers[tmpId,0] = 1;
-attackStaggerModifiers[tmpId,0] = 1.25;
-attackKnockbacks[tmpId,0] = 16;
-attackStatusTypes[tmpId,0] = -1;
-attackStatusValues[tmpId,0] = 0;				
+attackNames[? tmpId] = "Slice";
+attackTypes[? tmpId] = 1;
+attackAnimations[? tmpId] = sprPlayerBodySwordSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.2;
+attackCooldowns[? tmpId] = 0.4;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 6;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],1);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],2);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);				
 #endregion
 #region #006 Smash:					Heavy knockback attack.
 tmpId++;
-attackNames[tmpId] = "Smash"
-attackTypes[tmpId] = 4;
-attackAnimations[tmpId] = sprPlayerBodySwordSmash;
-attackDurations[tmpId] = 0.6;
-attackCooldowns[tmpId] = 0.4;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;
-attackMoveDistancesX[tmpId] = 8*8;
-attackXOffsets[tmpId] = 8*8;
-attackYOffsets[tmpId] = 8*-8;
-attackWidths[tmpId] = 8*40;
-attackHeights[tmpId] = 8*30;
-attackDamageTypes[tmpId,0] = 1;								
-attackDamageModifiers[tmpId,0] = 2.8;					
-attackStaggerModifiers[tmpId,0] = 4;			
-attackKnockbacks[tmpId,0] = 80;						
-attackStatusTypes[tmpId,0] = -1;					
-attackStatusValues[tmpId,0] = 0;		
+attackNames[? tmpId] = "Smash";
+attackTypes[? tmpId] = 4;
+attackAnimations[? tmpId] = sprPlayerBodySwordSmash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.6;
+attackCooldowns[? tmpId] = 0.4;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 8;
+attackXOffsets[? tmpId] = 8;
+attackYOffsets[? tmpId] = -8;
+attackWidths[? tmpId] = 40;
+attackHeights[? tmpId] = 30;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],1);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],2.8);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],4);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],10);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
 #region #007 Gut:					Bleed inducing finisher, attemps to knock down opponent on second hit.
 tmpId++;
-attackNames[tmpId] = "Gut"
-attackTypes[tmpId] = 4;
-attackAnimations[tmpId] = sprPlayerBodySwordGut;
-attackDurations[tmpId] = 2;
-attackCooldowns[tmpId] = 0;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitStart[tmpId,1] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/8/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,1] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 8*0;
-attackMoveDistancesX[tmpId] = 8*2;
-attackXOffsets[tmpId] = 8*16;
-attackYOffsets[tmpId] = 8*0;
-attackWidths[tmpId] = 8*20;
-attackHeights[tmpId] = 8*9;
-attackDamageTypes[tmpId,0] = 2;
-attackDamageModifiers[tmpId,0] = 0.5;
-attackStaggerModifiers[tmpId,0] = 2;
-attackKnockbacks[tmpId,0] = 0;
-attackStatusTypes[tmpId,0] = -1;
-attackStatusValues[tmpId,0] = 0;
-attackDamageTypes[tmpId,1] = 2;
-attackDamageModifiers[tmpId,1] = 0.1;
-attackStaggerModifiers[tmpId,1] = 4;
-attackKnockbacks[tmpId,1] = 20;
-attackStatusTypes[tmpId,1] = 0;
-attackStatusValues[tmpId,1] = 130;
+attackNames[? tmpId] = "Gut";
+attackTypes[? tmpId] = 4;
+attackAnimations[? tmpId] = sprPlayerBodySwordGut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 2;
+attackCooldowns[? tmpId] = 0;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])),
+										 (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/8/**//sprite_get_number(attackAnimations[? tmpId])),
+											(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 2;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = 0;
+attackWidths[? tmpId] = 20;
+attackHeights[? tmpId] = 9;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],2,2);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.5,0.1);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],2,4);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],0,2.5);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1,0);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0,130);	
 #endregion
 
 //class ID lists
 //Sword: (0)Slice (1)Burst (2)Smash (3)Gut
-swordClassId = 0;
+swordClassID = 0;
 
-swordCounterId = 0;
-swordUpwardsId = 1;
-swordDownwardsId = 2;
-swordForwardsId = 3;
-swordBackwardsId = 4;
+swordCounterID = 0;
+swordUpwardsID = 1;
+swordDownwardsID = 2;
+swordForwardsID = 3;
+swordBackwardsID = 4;
 
 swordSize = tmpId
 for(var i = 0; i < tmpId+1; i++)
 {
-	classSwordAttackIDs[i] = i+swordClassId;
+	classSwordAttackIDs[i] = i+swordClassID;
 }
 
 //AERIAL COMBO VARIABLES
@@ -242,93 +357,71 @@ for(var i = 0; i < tmpId+1; i++)
 
 //aerial class ID lists
 //Sword: (0)Basic (1)Slam
-aerialSwordId = tmpId+1;
 
 #region #008 Slash:					Fast basic strike.
 tmpId++;
-attackNames[tmpId] = "Slash";								//Name to be displayed in combo editor
-attackAnimations[tmpId] = sprPlayerBodySwordAerialSlash;	//body sprite
-attackSpecialEffects[tmpId] = "";
-attackDurations[tmpId] = 0.2;								//active attack duration (seconds)			//below code looks complex but just place the relevant
-attackCooldowns[tmpId] = 0.4;								//cooldown period AFTER duration (seconds)	//FRAMES in between the "/**/"s (collumn index is for multiple hits)
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 0;
-attackMoveDistancesX[tmpId] = 0;
-attackXOffsets[tmpId] = 8*16;								//distance from player center where center of hitbox will be along X axis (8*<distance in pixels>)
-attackYOffsets[tmpId] = 8*-6;								//distance from player center where center of hitbox will be along Y axis (8*<distance in pixels>)
-attackWidths[tmpId] = 8*30;									//width of hit box about box center (8*<width in pixels>)
-attackHeights[tmpId] = 8*18;									//height of hit box about box center (8*<height in pixels>)
-attackDamageTypes[tmpId,0] = 0;								//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
-attackDamageModifiers[tmpId,0] = 1;							//Damage modifier (multiplicative)
-attackStaggerModifiers[tmpId,0] = 1.25;							//Stagger modifier (multiplicative)
-attackKnockbacks[tmpId,0] = 12;								//Physics knockback on a heavy stagger attack
-attackStatusTypes[tmpId,0] = -1;								//Status Type (-1:None|0:Bleed)
-attackStatusValues[tmpId,0] = 0;								//Status Value (NEED BASED ON PLAYER STAT IMPLEMENTATION)
+attackNames[? tmpId] = "Slash";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.2;
+attackCooldowns[? tmpId] = 0.4;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 6;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],1);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],12);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
 #region #009 Slam:					Heavy knockback attack.
 tmpId++;
-attackNames[tmpId] = "Slam"
-attackTypes[tmpId] = 2;
-attackAnimations[tmpId] = sprPlayerBodySwordAerialSlam
-attackSpecialEffects[tmpId] = "";
-attackDurations[tmpId] = 0.6;
-attackCooldowns[tmpId] = 0.4;
-attackHitStart[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/3/**//sprite_get_number(attackAnimations[tmpId]));
-attackHitDuration[tmpId,0] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/2/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveStart[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/1/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDuration[tmpId] = (attackDurations[tmpId]+attackCooldowns[tmpId])*(/**/4/**//sprite_get_number(attackAnimations[tmpId]));
-attackMoveDistancesY[tmpId] = 0;
-attackMoveDistancesX[tmpId] = 0;
-attackXOffsets[tmpId] = 8*8;
-attackYOffsets[tmpId] = 8*-8;
-attackWidths[tmpId] = 8*40;
-attackHeights[tmpId] = 8*30;
-attackDamageTypes[tmpId,0] = 1;								
-attackDamageModifiers[tmpId,0] = 2.8;					
-attackStaggerModifiers[tmpId,0] = 4;			
-attackKnockbacks[tmpId,0] = -2;
-attackStatusTypes[tmpId,0] = -1;
-attackStatusValues[tmpId,0] = 0;	
+attackNames[? tmpId] = "Slam";
+attackTypes[? tmpId] = 2;
+attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlam;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.4;
+attackCooldowns[? tmpId] = 0.3;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 12;
+attackXOffsets[? tmpId] = 8;
+attackYOffsets[? tmpId] = -8;
+attackWidths[? tmpId] = 40;
+attackHeights[? tmpId] = 30;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],1);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],2.8);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],4);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],-2);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
-
-//ACTIVE COMBO VARIABLES; WHACKED IN DEFAULTS, GET RID OF THESE
-	//[attack1]-[attack2]-[attack3]
-	//[0]-[0]-[0]
-	//active class: Fists
-
-	//active combo properties
-scr_set_combo(0,5);			//slice
-scr_set_combo(1,5);			//slice
-scr_set_combo(2,5);			//slice
-scr_set_combo(3,6);			//smash
-
-scr_set_class("Sword");
-
-//General uppercut data
-uppercutName = "Uppercut";
-uppercutType = 1;
-uppercutAnimation = sprPlayerBodySwordSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-uppercutDuration = 0.3;
-uppercutCooldown = 0.1;
-uppercutHitStart[0] = (uppercutDuration+uppercutCooldown)*(/**/3/**//sprite_get_number(uppercutAnimation));
-uppercutHitDuration[0] = (uppercutDuration+uppercutCooldown)*(/**/2/**//sprite_get_number(uppercutAnimation));
-uppercutMoveStart = (uppercutDuration+uppercutCooldown)*(/**/2/**//sprite_get_number(uppercutAnimation));
-uppercutMoveDuration = (uppercutDuration+uppercutCooldown)*(/**/1/**//sprite_get_number(uppercutAnimation));
-uppercutMoveDistanceY = 8*0;
-uppercutMoveDistanceX = 8*6;
-uppercutXOffset = 8*16;
-uppercutYOffset = 8*-6;
-uppercutWidth = 8*30;
-uppercutHeight = 8*18;
-//uppercutDamageType[0] = 0;						//dictated in scr_player_combo_uppercut()
-uppercutDamageModifier[0] = 1;
-uppercutStaggerModifier[0] = 1.25;
-uppercutKnockback[0] = -1;
-uppercutStatusType[0] = -1;
-uppercutStatusValue[0] = 0;
 
 //EQUIPMENT & SPELLS
 	//Equipments:

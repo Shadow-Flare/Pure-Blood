@@ -65,7 +65,7 @@ if current_menu = "status"
 	draw_set_colour(c_purple);
 	draw_text(400,100,"EXP:				" + string(global.xp));
 	draw_set_colour(c_yellow);
-	draw_text(600,100,"Gold:			" + string(global.gold));
+	draw_text(600,100,"Gold:			" + string(GameManager.gravold));
 	draw_set_colour(c_lime);
 	draw_text(400,150,"Health:			" + string(ceil(objPlayer.hp))+"/" + string(PlayerStats.hpmax));
 	draw_set_colour(c_blue);

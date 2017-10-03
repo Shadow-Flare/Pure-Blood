@@ -12,7 +12,7 @@ if IE && InputManager.bInput bInputQueue = 1;
 phaseTimer++;
 subPhaseTimer++;
 
-if hardLockOn || softLockOn facing = lockOnDir;
+if lockOnType != lockOn.off facing = lockOnDir;
 else if moveH != 0 && vPhase == vState.grounded facing = sign(moveH);
 
 	//Sub states
@@ -37,7 +37,7 @@ switch ComboCache.activeOffhandID
 							}
 							else
 							{
-								if !hardLockOn && !softLockOn aimAngle = (facing==1)? 0:180;
+								if lockOnType == lockOn.off aimAngle = (facing==1)? 0:180;
 								else {aimAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y)}
 								scr_player_fireCrossbow(aimAngle);
 								subPhase = subState.fire;
@@ -65,7 +65,7 @@ switch ComboCache.activeOffhandID
 							subPhase = subState.holding;
 							subPhaseTimer = 0;
 						}
-						if !hardLockOn && !softLockOn aimAngle = (facing==1)? 0:180;
+						if lockOnType == lockOn.off aimAngle = (facing==1)? 0:180;
 						else {aimAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y)}
 							//Sprite
 						if sign(moveH) == facing var newSprite = sprPlayerBodySwordCrossbowFireTowards;
@@ -108,9 +108,12 @@ switch ComboCache.activeOffhandID
 							if !IE || !InputManager.yInputHeld
 							{
 								reset_queue();
-								if hardLockOn||softLockOn facing = lockOnDir
-								if !hardLockOn && !softLockOn aimAngle = (facing==1)? 0:180;
-								else {aimAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y); facing = lockOnDir;}
+								if lockOnType != lockOn.off 
+								{
+									facing = lockOnDir
+									aimAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y);
+								}
+								else aimAngle = (facing==1)? 0:180;
 								scr_player_fireCrossbow(aimAngle);
 								subPhase = subState.fire;
 								subPhaseTimer = 0;
@@ -173,7 +176,7 @@ switch ComboCache.activeOffhandID
 						if subPhaseTimer >= round(crossbowDurationAerialPre*room_speed)
 						{
 							reset_queue();
-							if !hardLockOn && !softLockOn aimAngle = (facing==1)? 0:180;
+							if lockOnType == lockOn.off aimAngle = (facing==1)? 0:180;
 							else {aimAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y); facing = lockOnDir;}
 							scr_player_fireCrossbow(aimAngle);
 							subPhase = subState.fire;
@@ -189,7 +192,7 @@ switch ComboCache.activeOffhandID
 						if moveH != 0 xSpd = clamp(xSpd+moveH*moveSpeed/15,-moveSpeed/2,moveSpeed/2);
 						else xSpd -= xSpd/20;
 							//ySpd
-						ySpd -= global.g*(1/2);		//1/2 G
+						ySpd -= GameManager.grav*(1/2);		//1/2 G
 						break;
 						
 					case subState.fire:
@@ -206,14 +209,14 @@ switch ComboCache.activeOffhandID
 						if moveH != 0 xSpd = clamp(xSpd+moveH*moveSpeed/15,-moveSpeed/2,moveSpeed/2);
 						else xSpd -= xSpd/20;
 							//ySpd
-						ySpd -= global.g*(1/4);		//3/4 G
+						ySpd -= GameManager.grav*(1/4);		//3/4 G
 						break;
 
 					case subState.holding:
 						if yInputQueue
 						{
 							reset_queue();
-							if !hardLockOn && !softLockOn aimAngle = (facing==1)? 0:180;
+							if lockOnType == lockOn.off aimAngle = (facing==1)? 0:180;
 							else {aimAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y); facing = lockOnDir;}
 							scr_player_fireCrossbow(aimAngle);
 							subPhase = subState.fire;
@@ -234,7 +237,7 @@ switch ComboCache.activeOffhandID
 						if moveH != 0 xSpd = clamp(xSpd+moveH*moveSpeed/15,-moveSpeed/2,moveSpeed/2);
 						else xSpd -= xSpd/20;
 							//ySpd
-						ySpd -= global.g*(1/4);		//3/4 G
+						ySpd -= GameManager.grav*(1/4);		//3/4 G
 						break;
 												
 				}				
@@ -250,8 +253,8 @@ switch ComboCache.activeOffhandID
 image_xscale = facing;
 
 	//aux sprite data
-auxSpriteXOffset = 41;
-auxSpriteYOffset = -23;
+auxSpriteXOffset = 5;
+auxSpriteYOffset = -3;
 auxSpriteXScale = 1;
 //auxSpriteYScale = 1;			//base
 auxSpriteRotation = aimAngle;

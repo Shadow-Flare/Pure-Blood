@@ -12,7 +12,7 @@ switch vPhase
 			subPhase = subState.idle;
 			subPhaseTimer = 0;
 		}
-		else if !hardLockOn
+		else if lockOnType != lockOn.hard
 		{
 			if abs(moveH) <= 0.8
 			{

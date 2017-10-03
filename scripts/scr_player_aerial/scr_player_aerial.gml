@@ -1,5 +1,5 @@
 var pl = id;
-with instance_create_depth(x,y,-100,objPlayer_attack_effect)
+with instance_create_depth(x,y,-100,obj_player_attack_effect)
 {
 	caster = pl;
 	caster.effect = id;

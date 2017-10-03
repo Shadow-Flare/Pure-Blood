@@ -304,7 +304,7 @@ if phase == "attack4"
 		image_index = 0;
 		//leap to player
 		attack4TravelDistance = abs(target.x-x);
-		var spd = sqrt((global.g*attack4TravelDistance)/(2*dcos(attack4Angle)*dsin(attack4Angle)))
+		var spd = sqrt((GameManager.grav*attack4TravelDistance)/(2*dcos(attack4Angle)*dsin(attack4Angle)))
 		xSpd = facing*dcos(attack4Angle)*spd;
 		ySpd = -dsin(attack4Angle)*spd
 	}
@@ -389,15 +389,15 @@ else
 }
 	#endregion
 	#region vertical
-if (phase == "stagger" || phase == "dying") && subPhase == "flung" ySpd+=global.g/2;
-else if phase == "attack4" && subPhase == "jumping" ySpd+=global.g*0.75;
+if (phase == "stagger" || phase == "dying") && subPhase == "flung" ySpd+=GameManager.grav/2;
+else if phase == "attack4" && subPhase == "jumping" ySpd+=GameManager.grav*0.75;
 else if phase == "aerialAttacked"
 {
-	 if ySpd < -2 ySpd+=global.g/2;
-	 else if abs(ySpd) <= 2 ySpd  += global.g/16;
-	 else ySpd+=global.g;
+	 if ySpd < -2 ySpd+=GameManager.grav/2;
+	 else if abs(ySpd) <= 2 ySpd  += GameManager.grav/16;
+	 else ySpd+=GameManager.grav;
 }
-else ySpd+=global.g;
+else ySpd+=GameManager.grav;
 	#endregion
 #endregion
 
