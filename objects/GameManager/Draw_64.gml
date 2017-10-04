@@ -13,14 +13,14 @@ switch gameState
 {
 	case GameState.inGame:
 	case GameState.arena:
-		if !global.paused
+		if pauseState = PauseState.normal
 		{
 			//Stats //HP
 			hp = ceil(objPlayer.hp);
-			maxHp = PlayerStats.hpmaxhpmax;
+			hpMax = PlayerStats.hphpMaxmax;
 			draw_set_font(fnt_menu_large);
-			draw_set_colour(make_color_rgb(255-(hp/maxHp*255),hp/maxHp*255,0));
-			draw_text(40,40,string(floor(hp))+"/"+string(floor(maxHp)));
+			draw_set_colour(make_color_rgb(255-(hp/hpMax*255),hp/hpMax*255,0));
+			draw_text(40,40,string(floor(hp))+"/"+string(floor(hpMax)));
 				//MP
 			mp = floor(objPlayer.mp);
 			maxMp = global.mpMax;

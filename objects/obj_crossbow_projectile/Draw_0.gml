@@ -22,4 +22,5 @@ if lifeTime > room_speed*6
 {
 	image_alpha = (1-((lifeTime-room_speed*6)/room_speed*2))
 }
+
 draw_self();

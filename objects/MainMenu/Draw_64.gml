@@ -13,6 +13,6 @@ for (var i = 0; i < array_height_2d(current_menu_options); i++)
 		{
 			draw_set_colour(c_white);
 		}
-		draw_text(16+80*i,100-50+10*j,current_menu_options[i, j]);
+		draw_text((10+30*i)*GameManager.GuiRX,(65+7*j)*GameManager.GuiRY,current_menu_options[i, j]);
 	}
 }

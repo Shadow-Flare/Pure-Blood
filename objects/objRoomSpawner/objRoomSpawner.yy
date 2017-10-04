@@ -1,12 +1,21 @@
 {
-    "id": "06cdddf8-3611-4e0f-be9f-5f0ba10939c8",
+    "id": "013880e5-45b6-4cce-8ac1-0d426f517ee3",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_room_transition",
+    "name": "objRoomSpawner",
     "eventList": [
-        
+        {
+            "id": "dabffbef-0b03-407d-97ed-782ef611d9c2",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 0,
+            "m_owner": "013880e5-45b6-4cce-8ac1-0d426f517ee3"
+        }
     ],
-    "maskSpriteId": "5f6281e2-9017-4260-8bbc-5e31f6d66962",
+    "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "parentObjectId": "00000000-0000-0000-0000-000000000000",
     "persistent": false,
     "physicsAngularDamping": 0.1,
@@ -22,6 +31,6 @@
     "physicsShapePoints": null,
     "physicsStartAwake": true,
     "solid": false,
-    "spriteId": "9fc7b531-d547-41a7-80cc-dcec6fec32b8",
+    "spriteId": "6cc0339e-225f-42fc-99b6-52899c92b345",
     "visible": false
 }

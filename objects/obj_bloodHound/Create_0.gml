@@ -3,8 +3,8 @@ actorType = actorTypes.enemy;
 //stats
 xpGiven = 200;
 moveSpeed = 6;
-maxHp = 160;
-hp = maxHp;
+hpMax = 160;
+hp = hpMax;
 toughness = 4;
 physicalPower = 8;
 hookWeight = 1;		//0 = pulled to player, 1 = pull player//

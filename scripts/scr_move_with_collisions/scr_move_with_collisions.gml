@@ -27,9 +27,9 @@ if(!place_free(x,y+ySpd))
 y+=ySpd;
 
 // do H collision check
-if (place_meeting(x,y,obj_actor_parent)&&(!instance_place(x,y,obj_actor_parent).phased && !phased))
+if (place_meeting(x,y,objActorParent)&&(!instance_place(x,y,objActorParent).phased && !phased))
 {
-	dirNum = sign(x-instance_place(x,y,obj_actor_parent).x);
+	dirNum = sign(x-instance_place(x,y,objActorParent).x);
 	if phase != "flung" && phase != "dyingFlung"
 	{
 		if object_index == objPlayer xSpd = PlayerStats.moveSpeed*dirNum*1;
@@ -37,14 +37,14 @@ if (place_meeting(x,y,obj_actor_parent)&&(!instance_place(x,y,obj_actor_parent).
 	}
 }
 	
-if !place_free(x+xSpd,y)||(place_meeting(x+xSpd,y,obj_actor_parent)&&(!instance_place(x+xSpd,y,obj_actor_parent).phased&&!phased))
+if !place_free(x+xSpd,y)||(place_meeting(x+xSpd,y,objActorParent)&&(!instance_place(x+xSpd,y,objActorParent).phased&&!phased))
 {
 	var resetX = 1;
 	if !place_free(x+xSpd,y) && place_free(x+xSpd,y-8) {while!place_free(x+xSpd,y) y-=1; resetX = 0;}
-	else if abs(xSpd) >= 1 while(place_free(x+sign(xSpd),y)&&!place_meeting(x+sign(xSpd),y,obj_actor_parent)) x+=sign(xSpd);
-	if (place_meeting(x,y,obj_actor_parent))
+	else if abs(xSpd) >= 1 while(place_free(x+sign(xSpd),y)&&!place_meeting(x+sign(xSpd),y,objActorParent)) x+=sign(xSpd);
+	if (place_meeting(x,y,objActorParent))
 	{
-		dirNum = sign(x-instance_place(x,y,obj_actor_parent).x);
+		dirNum = sign(x-instance_place(x,y,objActorParent).x);
 		if sign(xSpd) != dirNum
 		{
 			if object_index == objPlayer xSpd = dirNum*PlayerStats.moveSpeed;

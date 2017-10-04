@@ -129,7 +129,7 @@ switch subPhase
 		}
 		else
 		{
-			if !place_meeting(x+dodgeDistance,y,obj_actor_parent) phased = 1;
+			if !place_meeting(x+dodgeDistance,y,objActorParent) phased = 1;
 			phase = state.dodging;
 			phaseTimer = 0;
 			subPhase = subState.performing;
@@ -169,7 +169,7 @@ switch subPhase
 						//Forwards/horizontal
 						if lockOnType != lockOn.hard || sign(moveH) == lockOnDir
 						{
-							if !place_meeting(x+ComboCache.attackMoveDistancesX[? PlayerStats.activeForwardsID],y,obj_actor_parent) phased = 1;
+							if !place_meeting(x+ComboCache.attackMoveDistancesX[? PlayerStats.activeForwardsID],y,objActorParent) phased = 1;
 							scr_player_combo(PlayerStats.activeForwardsID);
 						}
 						//Backwards

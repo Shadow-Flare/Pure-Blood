@@ -16,10 +16,10 @@ with objAttackEffectParent
 				//audio (make reflective of damage type and other variables)
 				audio_play_sound(snd_enemy_hit,10,0);
 				//stats
-				if PlayerStats.isInvulnerable == false scr_hit(attack,attack.hitType,attack.hitDamage,attack.statusType,attack.statusValue,enemy);
+				if PlayerStats.isInvulnerable == false scr_hit_player(attack,attack.hitType,attack.hitDamage,attack.statusType,attack.statusValue,enemy);
 				//determine reaction
-				if attack.hitStagger <= toughness var reaction = 0;										//nothing
-				else if attack.hitStagger <= toughness*2 || attack.hitKnockback == 0 reaction = 1;		//stagger
+				if attack.hitStagger <= PlayerStats.toughness var reaction = 0;										//nothing
+				else if attack.hitStagger <= PlayerStats.toughness*2 || attack.hitKnockback == 0 reaction = 1;		//stagger
 				else reaction = 2;																		//fling
 				//react
 				switch reaction

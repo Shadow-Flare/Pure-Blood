@@ -49,7 +49,7 @@ if !instance_exists(ArenaSettingsManager) && !instance_exists(PauseController)
 }
 
 //Enemy Maximum Hp
-with enemy maxHp = other.arenaStats[2];
+with enemy hpMax = other.arenaStats[2];
 
 //Enemy Physical Strength
 with enemy physicalPower = other.arenaStats[3];
@@ -84,7 +84,7 @@ switch arenaStats[8]
 }
 if room != dest
 {
-		global.roomTrans = instance_create_depth(player.x,player.y,0,obj_room_transition)
+		global.roomTrans = instance_create_depth(player.x,player.y,0,objRoomTransition)
 		with global.roomTrans
 		{
 			roomFrom = room;

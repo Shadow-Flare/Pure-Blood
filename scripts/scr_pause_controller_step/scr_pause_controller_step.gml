@@ -136,7 +136,7 @@ if (aInput == 1)
 					sY = 0;
 					break;
 				case "Return to main menu":
-				global.roomTrans = instance_create_layer(x,y,layer_get_id("lay_technicals"),obj_room_transition);
+				global.roomTrans = instance_create_layer(x,y,layer_get_id("lay_technicals"),objRoomTransition);
 				with global.roomTrans {roomTo = rm_main_menu; roomFrom = room;}
 				instance_create_depth(0,0,-10000,TransitionManager);
 					break;

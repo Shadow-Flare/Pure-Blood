@@ -16,8 +16,8 @@ with instance_create_layer(x,y,layer,obj_enemy_attack_effect)
 {
 	//get effect properties/collisions
 	attackDuration = argument0;  				//seconds
-	attackXOffset = argument1*8;
-	attackYOffset = argument2*8;
+	attackXOffset = argument1;
+	attackYOffset = argument2;
 	attackWidth = argument3;
 	attackHeight = argument4;
 	//STATS
@@ -37,8 +37,8 @@ with instance_create_layer(x,y,layer,obj_enemy_attack_effect)
 	y=zomb.y+attackYOffset;
 	//size
 	sprite_index = spr_attack_effect_editor;
-	image_xscale *= facing*attackWidth;
-	image_yscale *=	attackHeight;
+	image_xscale *= facing*attackWidth/3;
+	image_yscale *=	attackHeight/3;
 	caster = zomb;
 	originalPhase = caster.phase;
 }

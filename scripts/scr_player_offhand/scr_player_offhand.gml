@@ -46,7 +46,7 @@ switch ComboCache.activeOffhandID
 							reset_queue();
 						}
 							//xSpd
-						if moveH != 0 xSpd = moveSpeed/2*sign(moveH);
+						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
 							//Sprite
 						if sign(moveH) == facing var newSprite = sprPlayerBodySwordCrossbowPreTowards;							
@@ -76,7 +76,7 @@ switch ComboCache.activeOffhandID
 						update_sprite(newSprite,newImageSpeed);
 						auxSpriteIndex = sprPlayerAuxSwordCrossbowFire;
 							//xSpd
-						if moveH != 0 xSpd = moveSpeed/2*sign(moveH);
+						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
 						break;
 		
@@ -140,7 +140,7 @@ switch ComboCache.activeOffhandID
 						update_sprite(newSprite,newImageSpeed);
 						auxSpriteIndex = sprPlayerAuxSwordCrossbowHolding;
 							//xSpd
-						if moveH != 0 xSpd = moveSpeed/2*sign(moveH);
+						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
 						break;
 		
@@ -161,7 +161,7 @@ switch ComboCache.activeOffhandID
 							//these are commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
 						//auxSpriteIndex = sprPlayerAuxSwordCrossbowPost;
 							//xSpd
-						if moveH != 0 xSpd = moveSpeed/2*sign(moveH);
+						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
 						break;
 				}
@@ -189,7 +189,7 @@ switch ComboCache.activeOffhandID
 							//this is commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
 						//auxSpriteIndex = sprPlayerAuxSwordCrossbowPre;
 							//xSpd
-						if moveH != 0 xSpd = clamp(xSpd+moveH*moveSpeed/15,-moveSpeed/2,moveSpeed/2);
+						if moveH != 0 xSpd = clamp(xSpd+moveH*PlayerStats.moveSpeed/15,-PlayerStats.moveSpeed/2,PlayerStats.moveSpeed/2);
 						else xSpd -= xSpd/20;
 							//ySpd
 						ySpd -= GameManager.grav*(1/2);		//1/2 G
@@ -206,7 +206,7 @@ switch ComboCache.activeOffhandID
 						var newImageSpeed = sprite_get_number(sprPlayerBodySwordCrossbowAerialFire)/(crossbowDurationAerialFire);
 						update_sprite(sprPlayerBodySwordCrossbowAerialFire,newImageSpeed);
 						auxSpriteIndex = sprPlayerAuxSwordCrossbowFire;
-						if moveH != 0 xSpd = clamp(xSpd+moveH*moveSpeed/15,-moveSpeed/2,moveSpeed/2);
+						if moveH != 0 xSpd = clamp(xSpd+moveH*PlayerStats.moveSpeed/15,-PlayerStats.moveSpeed/2,PlayerStats.moveSpeed/2);
 						else xSpd -= xSpd/20;
 							//ySpd
 						ySpd -= GameManager.grav*(1/4);		//3/4 G
@@ -234,7 +234,7 @@ switch ComboCache.activeOffhandID
 						update_sprite(sprPlayerBodySwordCrossbowAerialHolding,newImageSpeed);
 						auxSpriteIndex = sprPlayerAuxSwordCrossbowHolding;
 							//xSpd
-						if moveH != 0 xSpd = clamp(xSpd+moveH*moveSpeed/15,-moveSpeed/2,moveSpeed/2);
+						if moveH != 0 xSpd = clamp(xSpd+moveH*PlayerStats.moveSpeed/15,-PlayerStats.moveSpeed/2,PlayerStats.moveSpeed/2);
 						else xSpd -= xSpd/20;
 							//ySpd
 						ySpd -= GameManager.grav*(1/4);		//3/4 G

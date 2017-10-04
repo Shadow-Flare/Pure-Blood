@@ -36,7 +36,7 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	timer = 0;
 	facing = pl.facing;
 	x=pl.x+facing*attackXOffset;
-	image_xscale = facing*ComboCache.attackWidths[? attackID]/8;
+	image_xscale = facing*ComboCache.attackWidths[? attackID]/3;
 	y=pl.y+attackYOffset;
-	image_yscale = ComboCache.attackHeights[? attackID]/8;
+	image_yscale = ComboCache.attackHeights[? attackID]/3;
 }

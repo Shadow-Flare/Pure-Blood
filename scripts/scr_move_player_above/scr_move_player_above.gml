@@ -1,4 +1,4 @@
-with obj_actor_parent
+with objActorParent
 {
 	if ((object_index != objPlayer && !flying && !dropThroughPlatforms) || (object_index == objPlayer && instance_exists(InputManager) && !(sign(InputManager.moveInputV) == 1 && InputManager.aInput)) && phase != "hooked")
 	{

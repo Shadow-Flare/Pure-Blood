@@ -38,8 +38,8 @@ for(var i = 0; i < TRAILNUMBEROFTRAILS; i++)
 		var vector1 = vTrail[i,j];
 		var vector2 = vTrail[i,j+1];
 		draw_set_alpha(TRAILALPHA);
-		if vector1 != -1 && vector1 != -2 && vector2 != -1 && vector2 != -2 draw_line_width_color(vector1[0],vector1[1],vector2[0],vector2[1],TRAILSIZERATIO*4,TRAILCOLOUR,TRAILCOLOUR);
-		if vector1 == -2 && vector2 != -1 && vector2 != -2 draw_line_width_color(x,y,vector2[0],vector2[1],TRAILSIZERATIO*4,TRAILCOLOUR,TRAILCOLOUR);
+		if vector1 != -1 && vector1 != -2 && vector2 != -1 && vector2 != -2 draw_line_width_color(vector1[0],vector1[1],vector2[0],vector2[1],TRAILSIZERATIO*0.5,TRAILCOLOUR,TRAILCOLOUR);
+		if vector1 == -2 && vector2 != -1 && vector2 != -2 draw_line_width_color(x,y,vector2[0],vector2[1],TRAILSIZERATIO*0.5,TRAILCOLOUR,TRAILCOLOUR);
 		TRAILSIZERATIO *= 9/10;
 		TRAILALPHA *= 9/10;
 	}

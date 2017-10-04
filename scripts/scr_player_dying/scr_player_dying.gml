@@ -18,8 +18,7 @@ switch subPhase
 	case subState.none:
 		if subPhaseTimer >= round(room_speed*deathDuration)
 		{
-			falling = 1;
-			transitioning = 1;
+			GameManager.playerDead = true;
 		}
 			//xSpd
 		xSpd -= xSpd/8;
@@ -34,8 +33,7 @@ switch subPhase
 			case vState.grounded:
 				if subPhaseTimer >= round(room_speed*deathDuration)
 				{
-					falling = 1;
-					transitioning = 1;			//change these to reflect death screen!
+					GameManager.playerDead = true;
 				}
 					//xSpd
 				xSpd -= xSpd/8;

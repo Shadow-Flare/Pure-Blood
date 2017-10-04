@@ -1,8 +1,8 @@
 //stats
 xpGiven = 14;
 moveSpeed = 3;
-maxHp = 20;
-hp = maxHp;
+hpMax = 20;
+hp = hpMax;
 toughness = 1;
 physicalPower = 7;
 attack1Duration = 1;

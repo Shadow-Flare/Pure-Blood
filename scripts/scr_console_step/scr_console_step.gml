@@ -45,7 +45,7 @@ if consoleState == "on"
 			}
 			else if room_exists(asset_get_index(extra))
 			{
-				with instance_create_depth(player.x,player.y,0,obj_room_transition)
+				with instance_create_depth(player.x,player.y,0,objRoomTransition)
 				{
 					roomFrom = room;
 					roomTo = asset_get_index(other.extra)

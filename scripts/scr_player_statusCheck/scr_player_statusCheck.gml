@@ -14,7 +14,7 @@ if place_meeting(x,y,obj_fall) && !instance_exists(TransitionManager)
 }
 
 //Room Change
-if (place_meeting(x,y,obj_room_transition))&&(!global.spawning)&&!instance_exists(TransitionManager)
+if (place_meeting(x,y,objRoomTransition))&&(!global.spawning)&&!instance_exists(TransitionManager)
 {
 	transitioning = 1;
 	falling = 0;

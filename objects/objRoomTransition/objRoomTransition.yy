@@ -1,12 +1,12 @@
 {
-    "id": "812a5959-2c49-4984-8229-c01dcb7f776a",
+    "id": "06cdddf8-3611-4e0f-be9f-5f0ba10939c8",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_actor_parent",
+    "name": "objRoomTransition",
     "eventList": [
         
     ],
-    "maskSpriteId": "00000000-0000-0000-0000-000000000000",
+    "maskSpriteId": "5f6281e2-9017-4260-8bbc-5e31f6d66962",
     "parentObjectId": "00000000-0000-0000-0000-000000000000",
     "persistent": false,
     "physicsAngularDamping": 0.1,
@@ -22,6 +22,6 @@
     "physicsShapePoints": null,
     "physicsStartAwake": true,
     "solid": false,
-    "spriteId": "00000000-0000-0000-0000-000000000000",
-    "visible": true
+    "spriteId": "9fc7b531-d547-41a7-80cc-dcec6fec32b8",
+    "visible": false
 }

@@ -320,9 +320,9 @@ if aInput == 1
 					var en = ArenaController.enemy;
 					instance_activate_object(pl);
 					instance_activate_object(en);
-					pl.hp = pl.maxHp;
+					pl.hp = pl.hpMax;
 					pl.mp = pl.maxMp;
-					en.hp = en.maxHp;
+					en.hp = en.hpMax;
 					if variable_instance_exists(en,"maxMp") en.mp = en.maxMp;
 					instance_deactivate_object(pl);
 					instance_deactivate_object(en);					

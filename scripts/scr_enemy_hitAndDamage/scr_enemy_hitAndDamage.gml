@@ -130,7 +130,7 @@ if (place_meeting(x,y,obj_player_attack_parent) || (blocking && place_meeting(x+
 if statusValues[0] == statusResistances[0]
 {
 	scr_hit_effect_general(hitEffectType,hitEffectColour,60)
-	hp -= maxHp*(60/100);
+	hp -= hpMax*(60/100);
 	statusValues[0] = 0;
 	statusResistances[0] *= 1.2;
 }
@@ -139,7 +139,7 @@ statusValues[0] = clamp(statusValues[0],0,100);
 
 //dying
 	//hp clamp
-hp = clamp(hp,0,maxHp);
+hp = clamp(hp,0,hpMax);
 
 if hp <= 0 && phase != "dying"
 {

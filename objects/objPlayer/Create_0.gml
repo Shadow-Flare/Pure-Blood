@@ -15,7 +15,7 @@ subPhase = subState.idle;
 subPhaseTimer = 0;
 vPhase = vState.grounded;
 actorType = actorTypes.player;
-maxFallSpeed = 40;
+maxFallSpeed = 5;
 phased = 0;
 
 landingDuration = 0.6;
@@ -34,6 +34,7 @@ auxSpriteRotation = 0;
 enum lockOn {off, soft, hard}
 lockOnType = lockOn.off;
 lockOnTarget = noone;
+hardLockRange = 280;
 canChangeTarget = 1;
 
 aimAngle = 0;
@@ -51,19 +52,19 @@ crossbowDurationAerialPre = 0.2;
 crossbowDurationAerialFire = 0.25;
 crossbowDurationAerialHolding = 0.2;
 crossbowAerialBounce = -2.5;
-crossbowBoltInitialSpeed = 80;
+crossbowBoltInitialSpeed = 10;
 
 ropeShotDurationPre = 0.2;
 ropeShotDurationFire = 0.25;
-ropeShotSpeedGround = 60;
-ropeShotSpeedAerial = 90;
-ropeShotTargetRange = 1024;
-ropeShotMaxDist = 1500
+ropeShotSpeedGround = 7;
+ropeShotSpeedAerial = 11;
+ropeShotTargetRange = 120;
+ropeShotMaxDist = 180
 
 attackName = noone;
 attackHardCooldown = 0.2;
 attackHardCooldownTimer = -1;
-attackTrackDistance = 126;
+attackTrackDistance = 14;
 
 aerialAttackVertBoost = -0.25;
 aerialTargetX = -4;

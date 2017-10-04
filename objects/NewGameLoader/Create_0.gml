@@ -41,18 +41,22 @@ with PlayerStats
 	hitEffectColour = "dark red";
 
 	//Damage type resistances
-	resistances[0] = 100;			//Slash
-	resistances[1] = 100;			//Blunt
-	resistances[2] = 100;			//Pierce
-	resistances[3] = 100;			//Fire
-	resistances[4] = 100;			//Ice
-	resistances[5] = 100;			//Lightning
-	resistances[6] = 100;			//Arcane
-	resistances[7] = 100;			//Light
-	resistances[8] = 100;			//Dark
+	damageResistances[0] = 1;			//Slash
+	damageResistances[1] = 1;			//Blunt
+	damageResistances[2] = 1;			//Pierce
+	damageResistances[3] = 1;			//Fire
+	damageResistances[4] = 1;			//Ice
+	damageResistances[5] = 1;			//Lightning
+	damageResistances[6] = 1;			//Arcane
+	damageResistances[7] = 1;			//Light
+	damageResistances[8] = 1;			//Dark
+	damageResistances[9] = 1;			//X damage
 
-	//Status resistances
-	bleedResist = 100;
+	//Special Damage initializers
+	specialDamage[0] = 0;				//Bleed
+
+	//Special resistances
+	specialResist[0] = 100;				//Bleed
 
 	//owned stuff
 	upgradeHasDoubleJump = 0;

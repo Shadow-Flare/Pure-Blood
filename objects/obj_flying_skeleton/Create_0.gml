@@ -3,8 +3,8 @@
 //stats
 xpGiven = 7;
 moveSpeed = 7;			//#
-maxHp = 20;				//#
-hp = maxHp;				//#
+hpMax = 20;				//#
+hp = hpMax;				//#
 toughness = 1;			//#
 physicalPower = 7;		//#
 hookWeight = 0;		//0 = pulled to player, 1 = pull player//

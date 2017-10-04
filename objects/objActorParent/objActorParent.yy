@@ -1,19 +1,10 @@
 {
-    "id": "013880e5-45b6-4cce-8ac1-0d426f517ee3",
+    "id": "812a5959-2c49-4984-8229-c01dcb7f776a",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_room_player_spawn",
+    "name": "objActorParent",
     "eventList": [
-        {
-            "id": "dabffbef-0b03-407d-97ed-782ef611d9c2",
-            "modelName": "GMEvent",
-            "mvc": "1.0",
-            "IsDnD": false,
-            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 0,
-            "eventtype": 0,
-            "m_owner": "013880e5-45b6-4cce-8ac1-0d426f517ee3"
-        }
+        
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "parentObjectId": "00000000-0000-0000-0000-000000000000",
@@ -31,6 +22,6 @@
     "physicsShapePoints": null,
     "physicsStartAwake": true,
     "solid": false,
-    "spriteId": "6cc0339e-225f-42fc-99b6-52899c92b345",
-    "visible": false
+    "spriteId": "00000000-0000-0000-0000-000000000000",
+    "visible": true
 }
