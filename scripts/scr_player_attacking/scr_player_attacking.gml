@@ -77,7 +77,11 @@ switch vPhase
 						//keep attacking? (ground combo)
 					if xInputQueue && attackNum != PlayerStats.comboSize-1 //&& effect.hasHit
 					{
-						if lockOnType != lockOn.off && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
+						switch lockOnType
+						{
+							case lockOn.soft: if distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir; break;
+							case lockOn.hard: facing = lockOnDir; break;							
+						}
 						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;
@@ -90,7 +94,11 @@ switch vPhase
 						//perform uppercut? (mid ground combo using weapon)
 					else if yInputQueue && attackNum < PlayerStats.comboSize-2 //&& effect.hasHit
 					{
-						if lockOnType != lockOn.off && distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir;
+						switch lockOnType
+						{
+							case lockOn.soft: if distance_to_object(lockOnTarget) <= attackTrackDistance facing = lockOnDir; break;
+							case lockOn.hard: facing = lockOnDir; break;							
+						}
 						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						attackNum++;

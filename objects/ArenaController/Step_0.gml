@@ -82,14 +82,12 @@ switch arenaStats[8]
 		dest = rmArena4;
 		break;
 }
-if room != dest
+if room != dest && !instance_exists(ArenaSettingsManager) && !instance_exists(objRoomTransition)
 {
-		global.roomTrans = instance_create_depth(player.x,player.y,0,objRoomTransition)
-		with global.roomTrans
-		{
-			roomFrom = room;
-			roomTo = other.dest;
-		}
+	with instance_create_depth(objPlayer.x,objPlayer.y,0,objRoomTransition)
+	{
+		roomTo = other.dest;
+	}
 }
 
 //Arena platforms
@@ -109,11 +107,11 @@ switch arenaStats[9]
 switch arenaStats[10]
 {
 	case "off":
-		instance_deactivate_object(obj_grapple_parent);
+		instance_deactivate_object(objGrappleParent);
 		layer_set_visible("Tiles_arena_hookPoints",0)
 		break;
 	case "on":
-		instance_activate_object(obj_grapple_parent);
+		instance_activate_object(objGrappleParent);
 		layer_set_visible("Tiles_arena_hookPoints",1)
 		break;
 }

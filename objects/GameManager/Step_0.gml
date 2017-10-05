@@ -17,8 +17,8 @@ if pauseState = PauseState.normal
 		{
 			var trans =  instance_place(x,y,objRoomTransition)
 			other.transitionRoomTo = trans.roomTo;
-			other.transitionRoomFrom = trans.roomFrom;
-			pauseState = PauseState.transitioning;
+			other.transitionRoomFrom = room;
+			other.pauseState = PauseState.transitioning;
 		}
 	}
 

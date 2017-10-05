@@ -173,11 +173,11 @@ if die == 0
 		part_emitter_burst(pSys,pEmitter,pOsmose,1);
 	}
 	//movement
-	if !place_free(x+xSpd,y+ySpd) || place_meeting(x+xSpd,y+ySpd,obj_enemy_parent)
+	if !place_free(x+xSpd,y+ySpd) || place_meeting(x+xSpd,y+ySpd,objEnemyParent)
 	{
 		var xvar = xSpd/(abs(xSpd)+abs(ySpd));
 		var yvar = ySpd/(abs(xSpd)+abs(ySpd));
-		while place_free(x+xvar,y+yvar) && !place_meeting(x+xvar,y+yvar,obj_enemy_parent) {x += xvar; y+= yvar};
+		while place_free(x+xvar,y+yvar) && !place_meeting(x+xvar,y+yvar,objEnemyParent) {x += xvar; y+= yvar};
 		hitOn = 0;
 		die = 1;
 	}

@@ -6,7 +6,7 @@ if GameManager.lastSpawner != noone
 }
 else
 {
-	var spawner = instance_find(obj_room_player_spawn,0);
+	var spawner = instance_find(objRoomSpawner,0);
 	objPlayer.x = spawner.x;
 	objPlayer.y = spawner.y;
 }

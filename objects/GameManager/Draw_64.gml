@@ -15,6 +15,7 @@ switch gameState
 	case GameState.arena:
 		if pauseState = PauseState.normal
 		{
+			/*
 			//Stats //HP
 			hp = ceil(objPlayer.hp);
 			hpMax = PlayerStats.hphpMaxmax;
@@ -40,6 +41,7 @@ switch gameState
 			draw_text(60,1080-80,offhandSubtypeName);
 			draw_text(80,1080-40,activeAbilityName);
 			draw_set_valign(fa_top);
+			*/
 		}
 		break;
 }

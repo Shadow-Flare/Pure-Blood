@@ -24,6 +24,7 @@ switch gameState
 						roomFrom = other.transitionRoomFrom;
 					}
 				}
+				break;
 			case PauseState.death:
 				if !instance_exists(DeathController)
 				{

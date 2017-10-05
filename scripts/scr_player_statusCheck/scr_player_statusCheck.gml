@@ -5,17 +5,3 @@ if PlayerStats.hp <= 0
 	if subPhase != subState.flung subPhase = subState.none
 	subPhaseTimer = 0;
 }
-
-//Fall
-if place_meeting(x,y,obj_fall) && !instance_exists(TransitionManager)
-{
-	transitioning = 1;
-	falling = 1;
-}
-
-//Room Change
-if (place_meeting(x,y,objRoomTransition))&&(!global.spawning)&&!instance_exists(TransitionManager)
-{
-	transitioning = 1;
-	falling = 0;
-}

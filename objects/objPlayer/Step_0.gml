@@ -20,8 +20,29 @@ switch lockOnType
 {
 	case lockOn.off:
 	case lockOn.soft:
-		var minDist = -1;
-		lockOnTarget = instance_nearest(x,y,obj_enemy_parent);
+		lockOnTarget = noone;
+		var keepChecking = true;
+		while keepChecking
+		{
+			lockOnTarget = instance_nearest(x,y,objEnemyParent);
+			if distance_to_object(lockOnTarget) > softLockRange
+			{
+				lockOnTarget = noone;
+				keepChecking = false;
+				instance_activate_object(objEnemyParent);
+			}
+			else if lockOnTarget.actorType == actorTypes.corpse
+			{
+				instance_deactivate_object(lockOnTarget);
+				lockOnTarget = noone;
+			}
+			else
+			{
+				keepChecking = false
+			}
+		}
+		instance_activate_object(objEnemyParent);
+		if distance_to_object(lockOnTarget) > softLockRange lockOnTarget = noone;
 		if lockOnTarget != noone 
 		{
 			lockOnType = lockOn.soft;
@@ -31,14 +52,13 @@ switch lockOnType
 		if InputManager.rsInput && lockOnType == lockOn.soft lockOnType = lockOn.hard;
 		break;
 	case lockOn.hard:
+		lockOnDir = sign(lockOnTarget.x-x);
+		if lockOnDir == 0 lockOnDir = 1;
 		if distance_to_object(lockOnTarget) > hardLockRange || lockOnTarget.actorType == actorTypes.corpse
 		{
 			lockOnTarget = noone;
 			lockOnType = lockOn.off;
-		}
-		lockOnDir = sign(lockOnTarget.x-x);
-		if lockOnDir == 0 lockOnDir = 1;
-		
+		}		
 		if gamepad_is_connected(0)
 		{
 			//target switch
@@ -53,7 +73,7 @@ switch lockOnType
 					else if h > 0 && abs(h)>=abs(v) {var maxAngle = 45; var minAngle = 315;}
 					else if v < 0 && abs(v)>=abs(h) {var maxAngle = 135; var minAngle = 45;}
 					else if v >= 0 && abs(v)>= abs(h) {var maxAngle = 315; var minAngle = 225;}
-					with obj_enemy_parent
+					with objEnemyParent
 					{
 						var searchAngle = point_direction(other.lockOnTarget.x,other.lockOnTarget.y,x,y)
 						if other.lockOnTarget != id && ((searchAngle > minAngle && searchAngle < maxAngle)||(minAngle == 315 && (searchAngle < 45 || minAngle > 315))) && (distance_to_object(other.lockOnTarget)<minDist||minDist==-1) && distance_to_object(other) < other.hardLockRange
@@ -81,7 +101,7 @@ switch lockOnType
 				var stopIt = 0;
 				var targetList = [];
 				var lockOnIndex = -4;
-				with obj_enemy_parent
+				with objEnemyParent
 				{
 					if distance_to_object(other) <= other.hardLockRange
 					{
@@ -123,10 +143,16 @@ switch ComboCache.activeOffhandActivatableID
 {
 		//rope shot
 	case 0:
-		var nearestRopeShotTarget = instance_nearest(x,y,obj_grapple_parent);
+		var nearestRopeShotTarget = instance_nearest(x,y,objGrappleParent);
 		if lockOnType = lockOn.hard ropeShotTarget = [lockOnTarget.x,lockOnTarget.y]
 		else if distance_to_object(nearestRopeShotTarget) <= ropeShotTargetRange ropeShotTarget = [nearestRopeShotTarget.x,nearestRopeShotTarget.y];
 		else ropeShotTarget = noone;
+		
+		if ropeShotTarget != noone
+		{
+			if object_get_parent(object_index) == objGrappleParent ropeShotTargetType = 1;		//mount
+			else ropeShotTargetType = 0;														//not mount
+		}
 		break;
 
 }

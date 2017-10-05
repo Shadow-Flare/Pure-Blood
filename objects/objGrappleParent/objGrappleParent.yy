@@ -2,7 +2,7 @@
     "id": "41019d17-6a61-4f7d-8e7b-6762ca96fbae",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_grapple_parent",
+    "name": "objGrappleParent",
     "eventList": [
         {
             "id": "44a545f7-772a-4533-8620-d17ac57ef0ea",

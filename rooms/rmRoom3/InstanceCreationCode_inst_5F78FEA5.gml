@@ -1,2 +1,2 @@
-roomFrom = rm_room3;
-roomTo = rm_room1;
+roomFrom = rmRoom3;
+roomTo = rmRoom1;

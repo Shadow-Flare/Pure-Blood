@@ -2,6 +2,7 @@
 instance_deactivate_all(1);
 instance_activate_object(ComboCache);
 instance_activate_object(ArenaController);
+instance_activate_object(PlayerStats);
 	
 //reset start input
 global.startInput = 0;

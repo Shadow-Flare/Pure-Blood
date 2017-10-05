@@ -21,11 +21,13 @@ else
 			instance_create_layer(52,368,"lay_player",objPlayer);
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(NewGameLoader);
+			GameManager.gameState = GameState.inGame;
 			break;
 		case loadType.arena:
 			instance_create_layer(48,128,"lay_player",objPlayer);
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(ArenaGameLoader);
+			GameManager.gameState = GameState.arena;
 			break;
 	}
 	instance_destroy();

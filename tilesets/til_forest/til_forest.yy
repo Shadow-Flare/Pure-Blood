@@ -437,7 +437,9 @@
         ],
         "SerialiseFrameCount": 1
     },
-    "tile_animation_frames": [],
+    "tile_animation_frames": [
+        
+    ],
     "tile_animation_speed": 15,
     "tile_count": 345,
     "tileheight": 16,

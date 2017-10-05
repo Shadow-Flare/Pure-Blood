@@ -1,6 +1,6 @@
-if place_meeting(x,y,obj_grapple_parent) && phase == "shooting"
+if place_meeting(x,y,objGrappleParent) && phase == "shooting"
 {
-	mount = instance_place(x,y,obj_grapple_parent);
+	mount = instance_place(x,y,objGrappleParent);
 	x = mount.x;
 	y = mount.y;
 	phase = "hooked";
@@ -10,9 +10,9 @@ if place_meeting(x,y,obj_grapple_parent) && phase == "shooting"
 	if point_distance(caster.x,caster.y,x,y) > hookDist pullDir = 1;
 	else if point_distance(caster.x,caster.y,x,y) <= hookDist pullDir = -1;
 }
-else if place_meeting(x,y,obj_enemy_parent) && instance_place(x,y,obj_enemy_parent).phase != "dying" && phase == "shooting"
+else if place_meeting(x,y,objEnemyParent) && instance_place(x,y,objEnemyParent).phase != "dying" && phase == "shooting"
 {
-	mount = instance_place(x,y,obj_enemy_parent);
+	mount = instance_place(x,y,objEnemyParent);
 	x = mount.x;
 	y = mount.y;
 	if mount.hookWeight == 0 phase = "hookedEnemyPull";

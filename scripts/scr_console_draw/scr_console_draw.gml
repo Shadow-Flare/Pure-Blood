@@ -21,14 +21,14 @@ if consoleState == "on"
 	draw_text(viewW-400*2,60,"Lock-On Type:				"+string(lockOnType));
 	if lockOnTarget != noone draw_text(viewW-200*2,60,"Lock-On Target:			"+string(object_get_name(lockOnTarget)));
 	
-	if instance_exists(instance_nearest(player.x,player.y,obj_enemy_parent))
+	if instance_exists(instance_nearest(player.x,player.y,objEnemyParent))
 	{
-		draw_text(viewW-400*2, 90,"Nearest Enemy:			"+string(object_get_name(instance_nearest(player.x,player.y,obj_enemy_parent).object_index)));
-		draw_text(viewW-200*2, 90,"Nearest Enemy Attack:	"+string(instance_nearest(player.x,player.y,obj_enemy_parent).nextAttack));
-		draw_text(viewW-400*2,100,"Nearest Enemy Phase:		"+string(instance_nearest(player.x,player.y,obj_enemy_parent).phase));
-		draw_text(viewW-200*2,100,"Nearest Enemy SubPhase:	"+string(instance_nearest(player.x,player.y,obj_enemy_parent).subPhase));
-		draw_text(viewW-400*2,110,"Nearest Enemy Pos X:		"+string(instance_nearest(player.x,player.y,obj_enemy_parent).x));
-		draw_text(viewW-200*2,110,"Nearest Enemy Pos Y:		"+string(instance_nearest(player.x,player.y,obj_enemy_parent).y));
+		draw_text(viewW-400*2, 90,"Nearest Enemy:			"+string(object_get_name(instance_nearest(player.x,player.y,objEnemyParent).object_index)));
+		draw_text(viewW-200*2, 90,"Nearest Enemy Attack:	"+string(instance_nearest(player.x,player.y,objEnemyParent).nextAttack));
+		draw_text(viewW-400*2,100,"Nearest Enemy Phase:		"+string(instance_nearest(player.x,player.y,objEnemyParent).phase));
+		draw_text(viewW-200*2,100,"Nearest Enemy SubPhase:	"+string(instance_nearest(player.x,player.y,objEnemyParent).subPhase));
+		draw_text(viewW-400*2,110,"Nearest Enemy Pos X:		"+string(instance_nearest(player.x,player.y,objEnemyParent).x));
+		draw_text(viewW-200*2,110,"Nearest Enemy Pos Y:		"+string(instance_nearest(player.x,player.y,objEnemyParent).y));
 	}
 	
 	for(var i = 0; i < 7; i++)

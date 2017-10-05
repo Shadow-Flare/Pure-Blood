@@ -330,7 +330,7 @@
             "Key": "17d27a21-fe51-4f95-9a80-3b17e7f08c95",
             "Value": {
                 "id": "bbe1770c-b3d7-4f45-88da-fd2c5e4b0df7",
-                "resourcePath": "objects\\obj_enemy_parent\\obj_enemy_parent.yy",
+                "resourcePath": "objects\\objEnemyParent\\objEnemyParent.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -834,7 +834,7 @@
             "Key": "41019d17-6a61-4f7d-8e7b-6762ca96fbae",
             "Value": {
                 "id": "aad301b7-8109-4fdc-873c-95a2ec057153",
-                "resourcePath": "objects\\obj_grapple_parent\\obj_grapple_parent.yy",
+                "resourcePath": "objects\\objGrappleParent\\objGrappleParent.yy",
                 "resourceType": "GMObject"
             }
         },

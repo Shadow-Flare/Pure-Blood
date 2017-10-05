@@ -1,1 +1,1 @@
-spawnFrom = rm_room1;
+spawnFrom = rmRoom1;

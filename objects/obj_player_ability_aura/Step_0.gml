@@ -18,7 +18,7 @@ y = caster.y;
 if !hitOn hitTimer++;
 if !hitOn && hitTimer >= round(room_speed*0.25) hitOn = 1;
 
-with obj_enemy_parent
+with objEnemyParent
 {
 	if place_meeting(x,y,other)
 	{

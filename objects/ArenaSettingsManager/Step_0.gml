@@ -425,11 +425,11 @@ if unpause
 	switch ArenaController.arenaStats[10]
 	{
 		case "off":
-			instance_deactivate_object(obj_grapple_parent);
+			instance_deactivate_object(objGrappleParent);
 			layer_set_visible("Tiles_arena_hookPoints",0)
 			break;
 		case "on":
-			instance_activate_object(obj_grapple_parent);
+			instance_activate_object(objGrappleParent);
 			layer_set_visible("Tiles_arena_hookPoints",1)
 			break;
 	}

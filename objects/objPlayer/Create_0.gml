@@ -34,7 +34,9 @@ auxSpriteRotation = 0;
 enum lockOn {off, soft, hard}
 lockOnType = lockOn.off;
 lockOnTarget = noone;
-hardLockRange = 280;
+softLockRange = 260;
+hardLockRange = 320;
+lockImageTimer = 0;
 canChangeTarget = 1;
 
 aimAngle = 0;
@@ -64,7 +66,7 @@ ropeShotMaxDist = 180
 attackName = noone;
 attackHardCooldown = 0.2;
 attackHardCooldownTimer = -1;
-attackTrackDistance = 14;
+attackTrackDistance = 24;
 
 aerialAttackVertBoost = -0.25;
 aerialTargetX = -4;

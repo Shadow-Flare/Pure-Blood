@@ -8,7 +8,7 @@ y+=ySpd;
 if lifeTimer == round(room_speed*4) && phase == "inactive" {phase = "armed"; lifeTimer = 0;}
 if lifeTimer >= room_speed*60 {phase = "timer"; lifeTimer = 0;}
 
-nearestEnemy = instance_nearest(x,y,obj_enemy_parent);
+nearestEnemy = instance_nearest(x,y,objEnemyParent);
 nearestEnemyDist = distance_to_object(nearestEnemy);
 
 if phase == "armed"
