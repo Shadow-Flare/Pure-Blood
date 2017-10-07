@@ -139,7 +139,7 @@ switch lockOnType
 
 	//targets (only ropeshot atm, stuff will probably be added)
 ropeShotTarget = noone;
-switch ComboCache.activeOffhandActivatableID
+switch PlayerStats.activeOffhandActivatableID
 {
 		//rope shot
 	case 0:

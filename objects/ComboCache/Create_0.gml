@@ -173,7 +173,7 @@ attackStatusValues[? tmpId] = ds_list_create();
 #region #003 Burst:					Forwards attack - flows into rest of combo.
 tmpId++;
 attackNames[? tmpId] = "Burst";
-attackTypes[? tmpId] = 0;
+attackTypes[? tmpId] = 2;
 attackAnimations[? tmpId] = sprPlayerBodySwordBurst;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackDurations[? tmpId] = 0.8;
 attackCooldowns[? tmpId] = 0.2;
@@ -393,7 +393,7 @@ attackStatusValues[? tmpId] = ds_list_create();
 #region #009 Slam:					Heavy knockback attack.
 tmpId++;
 attackNames[? tmpId] = "Slam";
-attackTypes[? tmpId] = 2;
+attackTypes[? tmpId] = 0;
 attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlam;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackDurations[? tmpId] = 0.4;
 attackCooldowns[? tmpId] = 0.3;
@@ -421,6 +421,23 @@ attackStatusTypes[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusTypes[? tmpId],-1);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
+#endregion
+
+#region INITIALIZER
+	offhandNames = ds_map_create();
+	
+	offhandSubtypeNames = ds_map_create();
+	offhandSubtypeDamageTypes = ds_map_create();
+	offhandSubtypeDamageModifiers = ds_map_create();
+	offhandSubtypeStatusTypes = ds_map_create();
+	offhandSubtypeStatusValues = ds_map_create();
+	offhandSubtypeStaggerModifiers = ds_map_create();
+	offhandSubtypeKnockbacks = ds_map_create();
+	offhandSubtypeManaCosts = ds_map_create();
+	
+	offhandActivatableNames = ds_map_create();
+	offhandActivatableDurations = ds_map_create();
+	offhandActivatableCooldowns = ds_map_create();
 #endregion
 
 //EQUIPMENT & SPELLS
@@ -451,67 +468,62 @@ attackStatusValues[? tmpId] = ds_list_create();
 		
 //0: Crossbow
 tmpId = 0;
-offhandNames[tmpId] = "Crossbow";
-offhandQuickfireSprites[tmpId] = noone;
-offhandUppercutSprites[tmpId] = sprPlayerBodySwordCrossbowUppercut;
-offhandHoldingSprites[tmpId] = noone;
-//offhandAerialSprites[tmpId] = spr_player_crossbow_aerial_body;
-offhandBaseProjectiles[tmpId] = obj_crossbow_projectile;
+offhandNames[? tmpId] = "Crossbow";
 	//subtypes
   var tmpIdTwo = 0;		//0: Normal Bolts
-		offhandSubtypeNames[tmpIdTwo] = "Normal Bolts";					//Name	
-		offhandSubtypeDamageTypes[tmpIdTwo] = 1;							//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 0.3;					//damage modifier, multiplicative
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;							//Status Type (-1:None|0:Bleed)
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;							//Status Value (NEED BASED ON PLAYER STAT IMPLEMENTATION)
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;					//stagger modifier, multiplicative
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;							//physics knockback on a heavy stagger attack
-		offhandSubtypeManaCosts[tmpIdTwo] = 0;							//mana cost per use
+		offhandSubtypeNames[? tmpIdTwo] = "Normal Bolts";					//Name	
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 1;							//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;					//damage modifier, multiplicative
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;							//Status Type (-1:None|0:Bleed)
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;							//Status Value (NEED BASED ON PLAYER STAT IMPLEMENTATION)
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;					//stagger modifier, multiplicative
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;							//physics knockback on a heavy stagger attack
+		offhandSubtypeManaCosts[? tmpIdTwo] = 0;							//mana cost per use
 		tmpIdTwo++;		//1: Flaming Bolts
-		offhandSubtypeNames[tmpIdTwo] = "Flaming Bolts";
-		offhandSubtypeDamageTypes[tmpIdTwo] = 3;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 0.2;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;
-		offhandSubtypeManaCosts[tmpIdTwo] = 2;
+		offhandSubtypeNames[? tmpIdTwo] = "Flaming Bolts";
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 3;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.2;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;
+		offhandSubtypeManaCosts[? tmpIdTwo] = 2;
 		tmpIdTwo++;		//2: Frozen Bolts
-		offhandSubtypeNames[tmpIdTwo] = "Frozen Bolts";
-		offhandSubtypeDamageTypes[tmpIdTwo] = 4;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 0.3;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;					
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;					
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;						
-		offhandSubtypeManaCosts[tmpIdTwo] = 3;
+		offhandSubtypeNames[? tmpIdTwo] = "Frozen Bolts";
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 4;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;					
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;						
+		offhandSubtypeManaCosts[? tmpIdTwo] = 3;
 		tmpIdTwo++;		//3: Charged Bolts
-		offhandSubtypeNames[tmpIdTwo] = "Charged Bolts";
-		offhandSubtypeDamageTypes[tmpIdTwo] = 5;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 0.4;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;				
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;			
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;	
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;					
-		offhandSubtypeManaCosts[tmpIdTwo] = 4;
+		offhandSubtypeNames[? tmpIdTwo] = "Charged Bolts";
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 5;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.4;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;				
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;			
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;	
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;					
+		offhandSubtypeManaCosts[? tmpIdTwo] = 4;
 		tmpIdTwo++;		//4: Serrated Bolts
-		offhandSubtypeNames[tmpIdTwo] = "Serrated Bolts";
-		offhandSubtypeDamageTypes[tmpIdTwo] = 0;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 0.3;
-		offhandSubtypeStatusTypes[tmpIdTwo] = 0;					
-		offhandSubtypeStatusValues[tmpIdTwo] = 20;				
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;						
-		offhandSubtypeManaCosts[tmpIdTwo] = 3;
+		offhandSubtypeNames[? tmpIdTwo] = "Serrated Bolts";
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 0;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = 0;					
+		offhandSubtypeStatusValues[? tmpIdTwo] = 20;				
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;						
+		offhandSubtypeManaCosts[? tmpIdTwo] = 3;
 	//activatables
   var tmpIdThree = 0;	//0: Rope Shot
-		offhandActivatableNames[tmpIdThree] = "Rope Shot";
-		offhandActivatableDurations[tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[tmpIdThree] = 0.2;
+		offhandActivatableNames[? tmpIdThree] = "Rope Shot";
+		offhandActivatableDurations[? tmpIdThree] = 0.4;
+		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
 		tmpIdThree++;	//1: Shrapnel Burst
-		offhandActivatableNames[tmpIdThree] = "Shrapnel Burst";
-		offhandActivatableDurations[tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[tmpIdThree] = 0.2;
+		offhandActivatableNames[? tmpIdThree] = "Shrapnel Burst";
+		offhandActivatableDurations[? tmpIdThree] = 0.4;
+		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
 		
 crossbowId = tmpId;
 crossbowSubId = 0;
@@ -519,76 +531,67 @@ crossbowSubSize = tmpIdTwo;
 crossbowActiveId = 0;
 crossbowActiveSize = tmpIdThree;
 
+//1: Spells
 tmpId++;
-offhandNames[tmpId] = "Spells"
-offhandQuickfireSprites[tmpId] = spr_player_spells_quickfire_body;
-offhandUppercutSprites[tmpId] = spr_player_spells_uppercut_body;
-offhandHoldingSprites[tmpId] = spr_player_spells_holding_body;
-offhandAerialSprites[tmpId] = spr_player_spells_aerial_body;
-offhandBaseProjectiles[tmpId] = obj_spells_projectile;
+offhandNames[? tmpId] = "Spells"
 	//Subtypes
 		tmpIdTwo++;		//5: Blaze
-		offhandSubtypeNames[tmpIdTwo] = "Blaze"
-		offhandSubtypeDamageTypes[tmpIdTwo] = 3;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 0.8;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;					
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[tmpIdTwo] = 4;
+		offhandSubtypeNames[? tmpIdTwo] = "Blaze"
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 3;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.8;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
+		offhandSubtypeManaCosts[? tmpIdTwo] = 4;
 		tmpIdTwo++;		//6: Frost
-		offhandSubtypeNames[tmpIdTwo] = "Frost"
-		offhandSubtypeDamageTypes[tmpIdTwo] = 4;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 1;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;					
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[tmpIdTwo] = 5;
+		offhandSubtypeNames[? tmpIdTwo] = "Frost"
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 4;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
+		offhandSubtypeManaCosts[? tmpIdTwo] = 5;
 		tmpIdTwo++;		//7: Spark
-		offhandSubtypeNames[tmpIdTwo] = "Spark"
-		offhandSubtypeDamageTypes[tmpIdTwo] = 5;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 1.2;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;					
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[tmpIdTwo] = 6;
+		offhandSubtypeNames[? tmpIdTwo] = "Spark"
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 5;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1.2;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
+		offhandSubtypeManaCosts[? tmpIdTwo] = 6;
 		tmpIdTwo++;		//8: Leech
-		offhandSubtypeNames[tmpIdTwo] = "Leech"
-		offhandSubtypeDamageTypes[tmpIdTwo] = 8;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 0.7;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;					
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[tmpIdTwo] = 8;
+		offhandSubtypeNames[? tmpIdTwo] = "Leech"
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 8;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.7;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
+		offhandSubtypeManaCosts[? tmpIdTwo] = 8;
 		tmpIdTwo++;		//9: Osmose
-		offhandSubtypeNames[tmpIdTwo] = "Osmose"
-		offhandSubtypeDamageTypes[tmpIdTwo] = 6;
-		offhandSubtypeDamageModifiers[tmpIdTwo] = 1;
-		offhandSubtypeStatusTypes[tmpIdTwo] = -1;					
-		offhandSubtypeStatusValues[tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[tmpIdTwo] = 2;
+		offhandSubtypeNames[? tmpIdTwo] = "Osmose"
+		offhandSubtypeDamageTypes[? tmpIdTwo] = 6;
+		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
+		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
+		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
+		offhandSubtypeManaCosts[? tmpIdTwo] = 2;
 	//activatables
 		tmpIdThree++;	//2: Mine
-		offhandActivatableNames[tmpIdThree] = "Mine";
-		offhandActivatableDurations[tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[tmpIdThree] = 0.2;
+		offhandActivatableNames[? tmpIdThree] = "Mine";
+		offhandActivatableDurations[? tmpIdThree] = 0.4;
+		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
 		tmpIdThree++;	//4: Aura
-		offhandActivatableNames[tmpIdThree] = "Aura";
-		offhandActivatableDurations[tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[tmpIdThree] = 0.2;
+		offhandActivatableNames[? tmpIdThree] = "Aura";
+		offhandActivatableDurations[? tmpIdThree] = 0.4;
+		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
 		
 spellId = tmpId;
 spellSubId = crossbowSubId+crossbowSubSize;
 spellSubSize = tmpIdThree-crossbowSubSize;
 spellActiveId = crossbowActiveId+crossbowActiveSize;
 spellActiveSize = tmpIdThree-crossbowActiveSize;
-
-//ACTIVE E&S VARIABLES; WHACKED IN DEFAULTS, GET RID OF THESE
-activeOffhandID = 0;
-activeOffhandSubtypeID = 0;
-activeOffhandActivatableID = 0;

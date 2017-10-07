@@ -1,9 +1,14 @@
 event_inherited();
 
-enum loadType {newGame, arena}
+enum mainTransType {none, newGame, arena, ex}
+enum loadType {none, newGame, arena, ending}
 
 instance_create_depth(0,0,0,InputManager);
 instance_create_depth(0,0,0,GameManager);
+
+transType = mainTransType.none;
+transDur = 2;
+transTimer = 0;
 
 selection = 0;
 

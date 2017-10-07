@@ -94,6 +94,10 @@ with PlayerStats
 	scr_set_aerialCombo(3,9);	//smash
 
 	scr_set_class("Sword");
+	
+	scr_set_offhand(0);			//crossbow
+	scr_set_offhand_sub(0);		//normal
+	scr_set_offhand_active(0);	//ropeshot
 }
 #endregion
 
@@ -144,7 +148,7 @@ with ArenaController
 	//stats
 	enemyID = 0;
 	arenaStats[0] = enemyValues[0,0];			//Enemy Name
-	arenaStats[1] = 1;							//Enemy Number
+	arenaStats[1] = 0;							//Enemy Number
 	arenaStats[2] = enemyValues[0,1];			//Enemy Maximum Hp
 	arenaStats[3] = enemyValues[0,2];			//Enemy Physical Strength
 	arenaStats[4] = enemyValues[0,3];			//Enemy Invulnerability

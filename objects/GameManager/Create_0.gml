@@ -8,7 +8,6 @@ gameState = GameState.mainMenu;
 pauseState = PauseState.normal;
 consoleEnabled = false;
 
-playerDead = false;
 lastSpawner = noone;
 pauseSplash = noone;
 

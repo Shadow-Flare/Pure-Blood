@@ -24,9 +24,9 @@ if ropeShotTarget != noone
 // aiming direction reticule
 if phase = state.offhand && subPhase = subState.aim
 {
-	var aimX = distance*cos(degtorad(aimAngle));
-	var aimY = -distance*sin(degtorad(aimAngle));
-	draw_sprite_ext(spr_hook_target_reticule,0,x + aimX,y + aimY,1,1,-aimAngle,c_white,1);
+	var aimX = x+facing*5+(offhandAimGraphicDistance*dcos(aimAngle)+facing*(2*dcos(aimAngle+90)));
+	var aimY = y-5-(offhandAimGraphicDistance*dsin(aimAngle)+facing*(2*dsin(aimAngle+90)));
+	draw_sprite_ext(spr_hook_target_reticule,0,aimX,aimY,1,1,round(subPhaseTimer),c_white,1);
 }
 
 //lockON target draw

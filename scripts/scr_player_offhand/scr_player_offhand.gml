@@ -18,8 +18,9 @@ else if moveH != 0 && vPhase == vState.grounded facing = sign(moveH);
 	//Sub states
 #region sub States
 
-switch ComboCache.activeOffhandID
+switch PlayerStats.activeOffhandID
 {	
+	//Crossbow
 	case 0:	
 		switch vPhase
 		{

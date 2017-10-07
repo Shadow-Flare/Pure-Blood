@@ -2,7 +2,7 @@
     "id": "9f03dee5-71f7-4777-9f7f-26b083b34187",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_crossbow_projectile",
+    "name": "objCrossbowProjectile",
     "eventList": [
         {
             "id": "a63307db-b545-4860-9328-65d57e7046a2",

@@ -17,6 +17,7 @@ vPhase = vState.grounded;
 actorType = actorTypes.player;
 maxFallSpeed = 5;
 phased = 0;
+isDead = false;
 
 landingDuration = 0.6;
 
@@ -45,6 +46,7 @@ jumpNum = 0;
 
 offhandHardCooldown = 0.2;
 offhandHardCooldownTimer = -1;
+offhandAimGraphicDistance = 64;
 
 crossbowDurationPre = 0.2;
 crossbowDurationFire = 0.25;
@@ -53,7 +55,7 @@ crossbowDurationPost = 0.2;
 crossbowDurationAerialPre = 0.2;
 crossbowDurationAerialFire = 0.25;
 crossbowDurationAerialHolding = 0.2;
-crossbowAerialBounce = -2.5;
+crossbowAerialBounce = -0.3;
 crossbowBoltInitialSpeed = 10;
 
 ropeShotDurationPre = 0.2;

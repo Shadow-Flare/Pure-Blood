@@ -1295,6 +1295,14 @@
             }
         },
         {
+            "Key": "5fca57c5-1fc1-44e8-8642-4d5431bd4e1f",
+            "Value": {
+                "id": "02503c80-075c-4384-87a4-45d78177226d",
+                "resourcePath": "scripts\\scr_set_offhand_sub\\scr_set_offhand_sub.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "5fe83440-49c9-41dd-a4f1-b656402914be",
             "Value": {
                 "id": "193d8b54-0e82-4356-9338-4db92dc44fec",
@@ -1492,6 +1500,14 @@
                 "id": "c570b782-a1f7-44ff-861c-91b9de60471f",
                 "resourcePath": "sprites\\spr_servant_guard_flung\\spr_servant_guard_flung.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "6d166213-b275-4c42-adad-ab670ddcfd1d",
+            "Value": {
+                "id": "c471ecf8-58e8-48f6-ace5-509f93735675",
+                "resourcePath": "scripts\\scr_set_offhand_active\\scr_set_offhand_active.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -2135,6 +2151,14 @@
             }
         },
         {
+            "Key": "98f1ac09-fdac-4a7f-b61e-1ca7d1297e87",
+            "Value": {
+                "id": "18c43afc-18a7-43ab-a513-76efa1488edc",
+                "resourcePath": "scripts\\scr_set_offhand\\scr_set_offhand.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "98ffb7d4-5390-4fab-bafc-b880ded0cc8a",
             "Value": {
                 "id": "c086dd82-8b44-4234-817a-3d1a797cd827",
@@ -2234,7 +2258,7 @@
             "Key": "9f03dee5-71f7-4777-9f7f-26b083b34187",
             "Value": {
                 "id": "9201fb5f-91ef-48ff-b08c-131c8b94c7e2",
-                "resourcePath": "objects\\obj_crossbow_projectile\\obj_crossbow_projectile.yy",
+                "resourcePath": "objects\\objCrossbowProjectile\\objCrossbowProjectile.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -3694,6 +3718,9 @@
         "e29ab3af-8358-4cc6-894c-47f3a9e11e2c",
         "2dead759-4be0-4ad8-9a0e-334088643b5d",
         "77f5789e-b12a-4e47-b14c-4ee55cab3ef1",
+        "98f1ac09-fdac-4a7f-b61e-1ca7d1297e87",
+        "5fca57c5-1fc1-44e8-8642-4d5431bd4e1f",
+        "6d166213-b275-4c42-adad-ab670ddcfd1d",
         "787efba1-7f57-4a7a-b7c3-77ee479b460c",
         "6ab66633-80f8-4b21-bfcb-2bca0a2e55b5",
         "60fca022-1107-4306-880b-c2e3d9d60281",
