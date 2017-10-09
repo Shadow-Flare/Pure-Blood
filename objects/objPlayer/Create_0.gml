@@ -66,6 +66,7 @@ ropeShotTargetRange = 120;
 ropeShotMaxDist = 180
 
 attackName = noone;
+attackNum = 0;
 attackHardCooldown = 0.2;
 attackHardCooldownTimer = -1;
 attackTrackDistance = 24;

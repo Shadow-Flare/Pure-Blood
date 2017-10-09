@@ -243,8 +243,12 @@ if (InputManager.aInput == 1)
 					display_reset(0,ini_read_real("effects","vsync",true))
 					break;
 			}
-			reset_effects()
 			ini_close();
+			reset_effects();
+			instance_deactivate_object(LightingController);
+			instance_deactivate_object(BloodStainController);
+			instance_deactivate_object(RainController);
+			instance_deactivate_object(FogController);
 			break;
 	}
 }

@@ -1,6 +1,7 @@
+controllers[4] = RoomCache;
 controllers[3] = ComboCache;
 controllers[2] = InputManager;
-//controllers[1] = EffectsManager;
+controllers[1] = EffectsManager;
 controllers[0] = PlayerStats;
 
 event_inherited();
@@ -92,5 +93,9 @@ with PlayerStats
 	scr_set_aerialCombo(3,9);	//smash
 
 	scr_set_class("Sword");
+	
+	scr_set_offhand(0);			//crossbow
+	scr_set_offhand_sub(0);		//normal
+	scr_set_offhand_active(0);	//ropeshot
 }
 #endregion

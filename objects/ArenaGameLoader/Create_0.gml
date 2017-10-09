@@ -1,6 +1,7 @@
-controllers[3] = ComboCache;
-controllers[2] = InputManager;
-//controllers[2] = EffectsManager;
+controllers[5] = RoomCache;
+controllers[4] = ComboCache;
+controllers[3] = InputManager;
+controllers[2] = EffectsManager;
 controllers[1] = PlayerStats;
 controllers[0] = ArenaController;
 

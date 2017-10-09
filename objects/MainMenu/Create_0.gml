@@ -7,7 +7,7 @@ instance_create_depth(0,0,0,InputManager);
 instance_create_depth(0,0,0,GameManager);
 
 transType = mainTransType.none;
-transDur = 2;
+transDur = 1.5;
 transTimer = 0;
 
 selection = 0;

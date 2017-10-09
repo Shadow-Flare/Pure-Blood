@@ -1135,6 +1135,14 @@
             }
         },
         {
+            "Key": "54bac922-03ab-41c4-9824-0ccf1abe8ad3",
+            "Value": {
+                "id": "535f267d-79ea-4244-a181-607b59039938",
+                "resourcePath": "scripts\\reset_effects\\reset_effects.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "54f9a996-fbf1-4933-9de0-d4f153c41107",
             "Value": {
                 "id": "0d0cb2d3-64dc-417d-8c73-b9cb3549a1af",
@@ -1268,6 +1276,14 @@
                 "id": "79db8e0b-2e70-42a0-850b-3567c722d0bc",
                 "resourcePath": "views\\5d8f9e97-9a02-4e1d-9365-623e083a907f.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "5e16ed68-064d-48bf-94ba-04fae1e5ba50",
+            "Value": {
+                "id": "f908d64b-7299-4fc8-978b-0621bb7a53c4",
+                "resourcePath": "objects\\RoomCache\\RoomCache.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -3735,6 +3751,7 @@
         "b54a708d-6e8d-4142-8b37-582c78f83b34",
         "7bfdf18e-5196-4955-863e-a1567df02079",
         "93033fd5-9a37-4a63-b21d-99c049838980",
+        "54bac922-03ab-41c4-9824-0ccf1abe8ad3",
         "10ddd823-e8d0-43dc-b0e2-8c60058af7ab",
         "b42ed516-8b61-4877-85a6-54ef9609b231",
         "caba3638-ba58-477b-b865-5823fa8683bd",

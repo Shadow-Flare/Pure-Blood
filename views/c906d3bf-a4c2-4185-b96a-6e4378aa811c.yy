@@ -20,7 +20,8 @@
         "c020b809-1b70-439d-a4c2-9d74ba10f893",
         "a5be1084-de46-46ab-bfe0-814ef8009d1f",
         "0d752824-fa2f-42c9-b970-67f259cd7315",
-        "d084dabb-7a4f-44cc-8d04-02f5c091379e"
+        "d084dabb-7a4f-44cc-8d04-02f5c091379e",
+        "54bac922-03ab-41c4-9824-0ccf1abe8ad3"
     ],
     "filterType": "GMScript",
     "folderName": "Technicals",

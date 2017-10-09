@@ -4,10 +4,10 @@ event_inherited();
 rain = 0;
 rainData = noone;			//empty
 rainPPS = 10;						//particles per second
-rainSpeed = 64;
-rainSpeedVar = 8;					//random variance
+rainSpeed = 8;
+rainSpeedVar = 2;					//random variance
 rainAngle = -105;					//fall angle (degrees)
-rainSize = 8;						//image xscale/yscale modifier (1 = normal)
+rainSize = 1;						//image xscale/yscale modifier (1 = normal)
 rainSpriteFall = spr_rain_fall;		//fall sprite
 
 rainSoundMod = 0;
@@ -26,7 +26,7 @@ part_type_colour1(pRain,merge_colour(c_teal,c_blue,0.5));
 part_type_alpha2(pRain,0.6,0);
 part_type_blend(pRain,1);
 part_type_direction(pRain,45,135,0,0);
-part_type_speed(pRain,8,10,0,0);
+part_type_speed(pRain,1,1.2,0,0);
 part_type_gravity(pRain,GameManager.grav/3,270);
 part_type_life(pRain,25,35);
 

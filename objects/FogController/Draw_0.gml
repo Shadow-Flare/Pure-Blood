@@ -1,7 +1,10 @@
-if EffectsManager.FXFog
+var cam = Camera.cam;
+var camX = camera_get_view_x(cam);
+var camY = camera_get_view_y(cam);
+
+surface_set_target(application_surface);
+for (var i = 0; i < array_length_1d(fogSurfaces); i++)
 {
-	for (var i = 0; i < array_length_1d(fogSurfaces); i++)
-	{
-		if surface_exists(fogSurfaces[i]) draw_surface_ext(fogSurfaces[i],0,0,1,1,0,c_white,0.15)
-	}
+	if surface_exists(fogSurfaces[i]) draw_surface_ext(fogSurfaces[i],0,0,1,1,0,c_white,0.15)
 }
+surface_reset_target();

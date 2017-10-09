@@ -8,6 +8,11 @@ shader_reset();
 
 //Console draw
 if (consoleEnabled) scr_console_draw();
+else
+{
+	show_debug_overlay(0);
+	window_set_cursor(cr_none);
+}
 
 switch gameState
 {

@@ -7,7 +7,7 @@ var camW = camera_get_view_width(Camera.cam);
 var camH = camera_get_view_height(Camera.cam);
 
 audio_emitter_position(sRain,objPlayer.x,objPlayer.y,0);
-audio_emitter_falloff(sRain,2600,4000,1)
+audio_emitter_falloff(sRain,360,500,1)
 audio_listener_position(objPlayer.x,objPlayer.y,0);
 sRainX = 0;
 //sRainY = 0;
@@ -20,7 +20,7 @@ repeat(rainPPS)
 {
 	ds_grid_resize(rainData,ds_grid_width(rainData)+1,3)
 	ds_grid_set(rainData,ds_grid_width(rainData)-1,0,random_range(-room_height*0.5,room_width+room_height*0.5));
-	ds_grid_set(rainData,ds_grid_width(rainData)-1,1,-100);
+	ds_grid_set(rainData,ds_grid_width(rainData)-1,1,-16);
 	ds_grid_set(rainData,ds_grid_width(rainData)-1,2,rainSpeed+random_range(-rainSpeedVar,rainSpeedVar))
 }
 for(var i = 0; i < ds_grid_width(rainData); i++)
@@ -33,8 +33,8 @@ for(var i = 0; i < ds_grid_width(rainData); i++)
 	{
 		rainSoundMod++;
 		rScreenCount++;
-		if rX>objPlayer.x sRainX+=2;
-		else sRainX-=2;
+		if rX>objPlayer.x sRainX+=0.25;
+		else sRainX-=0.25;
 	}
 	if !place_free(rX,rY)
 	{

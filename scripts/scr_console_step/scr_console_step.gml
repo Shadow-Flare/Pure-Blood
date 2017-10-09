@@ -1,20 +1,14 @@
 //TYPER
 key = keyboard_lastchar;
-if (key == "~" || key == "½" || key == "`" || key == "¡" || key == "/" )&&(consoleState == "off")
+if (key == "~" || key == "½" || key == "`" || key == "¡" || key == "/" )
 {
-	consoleState = "on";
-	keyboard_string = "";
-	keyboard_lastchar = "";
-}
-else if (key == "~" || key == "½" || key == "`" || key == "¡" || key == "/" )&&(consoleState == "on")
-{
-	consoleState = "off";
+	consoleEnabled = !consoleEnabled;
 	keyboard_string = "";
 	keyboard_lastchar = "";
 }
 
 //DO-ER
-if consoleState == "on"
+if consoleEnabled
 {	
 	if string_length(keyboard_string)>25 keyboard_string = string_delete(keyboard_string,26,20);
 	if keyboard_check_pressed(vk_down)&&selectIndex != 7
@@ -45,7 +39,7 @@ if consoleState == "on"
 			}
 			else if room_exists(asset_get_index(extra))
 			{
-				with instance_create_depth(player.x,player.y,0,objRoomTransition)
+				with instance_create_depth(objPlayer.x,objPlayer.y,0,objRoomTransition)
 				{
 					roomFrom = room;
 					roomTo = asset_get_index(other.extra)
@@ -95,13 +89,13 @@ if consoleState == "on"
 			}
 			else if extra == "default"
 			{
-				player.moveSpeed = player.defaultMoveSpeed
-				commandRes = "move speed changed to default ("+string(player.defaultMoveSpeed)+") boss.";
+				PlayerStats.moveSpeed = PlayerStats.defaultMoveSpeed
+				commandRes = "move speed changed to default ("+string(PlayerStats.defaultMoveSpeed)+") boss.";
 				audio_play_sound(snd_1,10,0);
 			}
 			else if int64(extra) > 0
 			{
-				player.moveSpeed = int64(extra)
+				PlayerStats.moveSpeed = int64(extra)
 				commandRes = "move speed changed to "+extra+" boss.";
 				audio_play_sound(snd_1,10,0);
 			}
@@ -111,39 +105,25 @@ if consoleState == "on"
 			}
 		}
 		//VSYNC TOGGLE
-		if commandStr == "vsync toggle"
+		if commandStr == "purefps"
 		{
-			global.vsync *= -1;
-			if global.vsync = 1 commandRes = "Vsync enabled boss."
-			else commandRes = "Vsync disabled boss."
+			conPureFps = !conPureFps;
+			if conPureFps commandRes = "Pure Fps mode enabled."
+			else commandRes = "Pure Fps disabled."
 		}
 		//CLICK HACK TOGGLE
 		if commandStr == "clickhack"
 		{
-			if clickHack == 0 
-			{
-				clickHack = 1;
-				commandRes = "click hack turned on boss. (UNSTABLE)";
-			}
-			else
-			{
-				clickHack = 0;
-				commandRes = "click hack turned off boss.";
-			}
+			conClickHack = !conClickHack;
+			if conClockHack commandRes = "click hack turned on. (UNSTABLE)";
+			else commandRes = "click hack turned off boss.";
 		}
 		//help TOGGLE
 		if commandStr == "help" || commandStr == "?"
 		{
-			if helpMenu == 0
-			{
-				helpMenu = 1;
-				commandRes = "help menu enabled boss.";
-			}
-			else
-			{
-				helpMenu = 0;
-				commandRes = "help menu disabled boss.";
-			}
+			conHelpMenu = !conHelpMenu;
+			if conHelpMenu commandRes = "help menu enabled boss.";
+			else commandRes = "help menu disabled boss.";
 		}
 		//HISTORY LOGGER
 		for(var i=0; i<7;i++)
@@ -173,19 +153,31 @@ if keyboard_check_pressed(vk_end)
 }
 
 //CLICK HACK CODE
-if clickHack == 1 && mouse_check_button_pressed(mb_left)
+if conClickHack == 1 && mouse_check_button_pressed(mb_left)
 {
-	player.x = mouse_x;
-	player.y = mouse_y;
+	objPlayer.x = mouse_x;
+	objPlayer.y = mouse_y;
 }
 
 //EXTRAS
-if player.softLockOn lockOnType = "Soft Lock";
-else if player.hardLockOn lockOnType = "Hard Lock";
-else lockOnType = "No Lock"
-
-lockOnTarget = noone
-if player.lockOnTarget != noone
+if instance_exists(objPlayer)
 {
-	with player.lockOnTarget other.lockOnTarget = object_index
+	switch objPlayer.lockOnType
+	{
+		case lockOn.off:
+			conLockOnType = "No Lock";
+			break;
+		case lockOn.soft:
+			conLockOnType = "Soft Lock";
+			break;
+		case lockOn.hard:
+			conLockOnType = "Hard Lock";
+			break;
+	}
+
+	conLockOnTarget = noone
+	if objPlayer.lockOnTarget != noone
+	{
+		with objPlayer.lockOnTarget other.conLockOnTarget = object_index
+	}
 }

@@ -1,5 +1,5 @@
-timer++
-if timer > 60 x++
-if timer < 60 x--
+//timer++
+//if timer > 60 x++
+//if timer < 60 x--
 
-if timer = 120 timer = 0;
+//if timer = 120 timer = 0;

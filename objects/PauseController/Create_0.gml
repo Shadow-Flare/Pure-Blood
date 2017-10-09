@@ -2,13 +2,15 @@ event_inherited();
 
 InputManager.startInput = false;
 
-player = objPlayer;
 //shut down all object in room save technicals
 instance_deactivate_all(1);
+	//Data stores
 instance_activate_object(PlayerStats);
+instance_activate_object(ComboCache);
+instance_activate_object(RoomCache);
+	//Controllers
 instance_activate_object(GameManager);
 instance_activate_object(InputManager);
-instance_activate_object(ComboCache);
 instance_activate_object(EffectsManager);
 
 //format menus

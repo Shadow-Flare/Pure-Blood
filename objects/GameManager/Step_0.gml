@@ -1,8 +1,5 @@
-// Console toggle
-if keyboard_key_press(ord("/"))	consoleEnabled = !consoleEnabled;
-
 // Console step
-if (consoleEnabled) scr_console_step();
+scr_console_step();
 
 //pause state management + transitions
 if gameState != GameState.mainMenu

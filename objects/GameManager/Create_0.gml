@@ -6,7 +6,7 @@ enum PauseState {normal, paused, transitioning, death}
 // Initialize Game
 gameState = GameState.mainMenu;
 pauseState = PauseState.normal;
-consoleEnabled = false;
+scr_console_create();
 
 lastSpawner = noone;
 pauseSplash = noone;

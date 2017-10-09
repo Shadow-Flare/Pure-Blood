@@ -58,7 +58,6 @@ for (var i = 0; i < array_height_2d(current_menu_options); i++)
 	}
 }
 
-instance_activate_object(player);
 if current_menu = "status"
 {
 	draw_set_font(fnt_status);
@@ -78,7 +77,6 @@ if current_menu = "status"
 	draw_text(400,450,"Intelligence:	" + string(PlayerStats.intelligence));
 	draw_text(400,500,"Willpower:		" + string(PlayerStats.willpower));
 }
-instance_deactivate_object(player);
 
 draw_set_font(fnt_menu);
 draw_set_colour(c_white);

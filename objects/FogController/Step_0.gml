@@ -1,8 +1,11 @@
+var pixelsPerPixel = 12;			//how many pixels in surface = pixels in sprite
+var PixelsPerTile = 16;			//number of sprite pixels per Tile
+
 //fog: compute
 for (var i = 0; i < array_length_1d(fogSpriteNumbers); i++)
 {
-	var num = fogSpriteNumbers[i]*round(room_width/1000);
-	if !surface_exists(fogSurfaces[i]) fogSurfaces[i] = surface_create(room_width,room_height);
+	var num = fogSpriteNumbers[i]*round(surface_get_width(application_surface)/1000);
+	if !surface_exists(fogSurfaces[i]) fogSurfaces[i] = surface_create(surface_get_width(application_surface),surface_get_height(application_surface));
 	if !ds_exists(fogSpriteData,ds_type_list) fogSpriteData = ds_list_create();
 	if ds_list_find_value(fogSpriteData,i) == undefined
 	{
@@ -11,16 +14,15 @@ for (var i = 0; i < array_length_1d(fogSpriteNumbers); i++)
 		for (var j = 0; j < num; j++)
 		{
 			ds_grid_set(g,j,0,irandom(sprite_get_number(spr_fog)-1));						//sprite ID
-			ds_grid_set(g,j,1,irandom(room_width/16)*16);									//x initi
-			ds_grid_set(g,j,2,irandom_range((room_height-125+150*i)/16,(room_height+100+150*i)/16)*16);		//y initi
-			ds_grid_set(g,j,3,random_range(0.5,1)*sign(random_range(-1000,1000)));										//xSpd initi
+			ds_grid_set(g,j,1,irandom(surface_get_width(application_surface)/PixelsPerTile*2)*PixelsPerTile*2);											//x initi
+			var variance = PixelsPerTile*pixelsPerPixel;
+			ds_grid_set(g,j,2,round((surface_get_height(application_surface)+irandom_range((-variance/2),(variance/2)) + PixelsPerTile*pixelsPerPixel*(i*0.25))/12)*12);		//y initi
+			var spdDir = irandom(1); if spdDir == 0 spdDir = -1;
+			ds_grid_set(g,j,3,random_range(0.16,0.32)*spdDir);										//xSpd initi
 		}
 	}
 	surface_set_target(fogSurfaces[i]);
-		gpu_set_blendmode(bm_subtract);
-			draw_set_colour(c_white);
-			draw_rectangle(0,0,surface_get_width(fogSurfaces[i]),surface_get_height(fogSurfaces[i]),0)
-		gpu_set_blendmode(bm_normal);
+		draw_clear_alpha(c_white,0)
 		for (var j = 0; j < num; j++)
 		{
 			var g = ds_list_find_value(fogSpriteData,i)
@@ -30,12 +32,16 @@ for (var i = 0; i < array_length_1d(fogSpriteNumbers); i++)
 				var Y = ds_grid_get(g,j,2);
 				var Spd = ds_grid_get(g,j,3);
 				var X = ds_grid_get(g,j,1) + Spd;
-				if X <= -sprite_get_width(spr_fog)*8 || X >= room_width+sprite_get_width(spr_fog)*8
+				if X < -sprite_get_width(spr_fog)*pixelsPerPixel*2
 				{
-					ds_grid_set(ds_list_find_value(fogSpriteData,i),j,3,ds_grid_get(ds_list_find_value(fogSpriteData,i),j,3)*-1);
+					X = surface_get_width(application_surface)+sprite_get_width(spr_fog)*pixelsPerPixel*2;
 				}
-				ds_grid_set(ds_list_find_value(fogSpriteData,i),j,1,X);
-				draw_sprite_ext(spr_fog,S,X,Y,32,32,0,make_color_rgb(192,192,192),1)
+				else if X > surface_get_width(application_surface)+sprite_get_width(spr_fog)*pixelsPerPixel*2
+				{
+					X = -sprite_get_width(spr_fog)*pixelsPerPixel*2;
+				}
+				ds_grid_set(g,j,1,X);
+				draw_sprite_ext(spr_fog,S,X,Y,pixelsPerPixel*2,pixelsPerPixel*2,0,make_color_rgb(192,192,192),1)
 			}
 		}
 	surface_reset_target();
