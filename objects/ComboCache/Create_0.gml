@@ -64,19 +64,27 @@ attackStatusValues[? tmpId] = ds_list_create();
 //	4: finisher
 //Attacks:
 //1: Sword (# indicates a non selectable attack)
-//		0: #Counter
-//		1: #Skyward Slice
-//		2: #Earthen Release
-//		3: #Burst
-//		4: #Shove
-//		5: #Uppercut
-//		6: Slice (Has alternate animation)
-//		7: Smash
-//		8: Gut
+//		00: #Counter
+//		01: #Skyward Slice
+//		02: #Earthen Release
+//		03: #Burst
+//		04: #Shove
+//		05: Slice (Has alternate animation)
+//		06: Smash
+//		07: Gut
+//2: Spear
+//		08:	#Counter
+//		09:	#Drive
+//		10: #Spin
+//		11: #Skewer
+//		12: #Vault
+//		13: Poke
+//		14: Juggle
+//		15: Drill
 
-#region #000 Counter:				Counter attack - flows into rest of combo afterwards.
+#region #000 Sword Counter:				Counter attack - flows into rest of combo afterwards.
 tmpId++;
-attackNames[? tmpId] = "Counter";
+attackNames[? tmpId] = "Sword Counter";
 attackTypes[? tmpId] = 0;
 attackAnimations[? tmpId] = sprPlayerBodySwordCounter;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackDurations[? tmpId] = 0.4;
@@ -292,7 +300,7 @@ attackDamageModifiers[? tmpId] = ds_list_create();
 attackStaggerModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackStaggerModifiers[? tmpId],4);
 attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],10);
+	ds_list_add(attackKnockbacks[? tmpId],6);
 attackStatusTypes[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusTypes[? tmpId],-1);
 attackStatusValues[? tmpId] = ds_list_create();
@@ -301,6 +309,265 @@ attackStatusValues[? tmpId] = ds_list_create();
 #region #007 Gut:					Bleed inducing finisher, attemps to knock down opponent on second hit.
 tmpId++;
 attackNames[? tmpId] = "Gut";
+attackTypes[? tmpId] = 4;
+attackAnimations[? tmpId] = sprPlayerBodySwordGut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 2;
+attackCooldowns[? tmpId] = 0;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])),
+										 (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/8/**//sprite_get_number(attackAnimations[? tmpId])),
+											(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 2;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = 0;
+attackWidths[? tmpId] = 20;
+attackHeights[? tmpId] = 9;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],2,2);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.5,0.1);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],2,4);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],0,2.5);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1,0);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0,130);	
+#endregion
+
+#region #008 Spear Counter:				Counter attack - flows into rest of combo afterwards.
+tmpId++;
+attackNames[? tmpId] = "Spear Counter";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordCounter;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.4;
+attackCooldowns[? tmpId] = 0.2;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 24;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],1.3);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],5);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
+#endregion
+#region #009 Drive:					Upwards attack - stab upwards while jumping.
+tmpId++;
+attackNames[? tmpId] = "Drive";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordSkywardSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.6;
+attackCooldowns[? tmpId] = 0.2;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = -40;
+attackMoveDistancesX[? tmpId] = 6;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.3);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],-1);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
+#endregion
+#region #010 Spin:					Downwards attack - attack to both sides of player with moderate reach, low damage and high stagger.
+tmpId++;
+attackNames[? tmpId] = "Spin";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordEarthenRelease;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.8;
+attackCooldowns[? tmpId] = 0.4;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 0;
+attackXOffsets[? tmpId] = 0;
+attackYOffsets[? tmpId] = -12;
+attackWidths[? tmpId] = 60;
+attackHeights[? tmpId] = 32;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],2);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.8);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],4);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);		
+#endregion
+#region #011 Skewer:				Forwards attack - flows into rest of combo.
+tmpId++;
+attackNames[? tmpId] = "Skewer";
+attackTypes[? tmpId] = 2;
+attackAnimations[? tmpId] = sprPlayerBodySwordBurst;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.8;
+attackCooldowns[? tmpId] = 0.2;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 80;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],2);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.8);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],3);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);		
+#endregion
+#region #012 Vault:					Backwards attack - flip backwards, landing a light hit in the process.
+tmpId++;
+attackNames[? tmpId] = "Vault";
+attackTypes[? tmpId] = 0;
+attackAnimations[? tmpId] = sprPlayerBodySwordShove;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.6;
+attackCooldowns[? tmpId] = 0.3;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 6;
+attackXOffsets[? tmpId] = 16;
+attackYOffsets[? tmpId] = -6;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],1);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],0.2);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],2.5);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],4);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
+#endregion
+#region #013 Poke:					Fast basic strike.
+tmpId++;
+attackNames[? tmpId] = "Poke";
+attackTypes[? tmpId] = 1;
+attackAnimations[? tmpId] = sprPlayerBodySwordSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.2;
+attackCooldowns[? tmpId] = 0.4;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 6;
+attackXOffsets[? tmpId] = 2;
+attackYOffsets[? tmpId] = -2;
+attackWidths[? tmpId] = 30;
+attackHeights[? tmpId] = 18;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],0);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],1);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],2);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);				
+#endregion
+#region #014 Juggle:				hits twice, does not uppercut, suitable against mid-air enemies.
+tmpId++;
+attackNames[? tmpId] = "Juggle";
+attackTypes[? tmpId] = 4;
+attackAnimations[? tmpId] = sprPlayerBodySwordSmash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackDurations[? tmpId] = 0.6;
+attackCooldowns[? tmpId] = 0.4;
+attackHitStarts[? tmpId] = ds_list_create();
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackHitDurations[? tmpId] = ds_list_create();
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDistancesY[? tmpId] = 0;
+attackMoveDistancesX[? tmpId] = 8;
+attackXOffsets[? tmpId] = 8;
+attackYOffsets[? tmpId] = -8;
+attackWidths[? tmpId] = 40;
+attackHeights[? tmpId] = 30;
+attackDamageTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageTypes[? tmpId],1);
+attackDamageModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackDamageModifiers[? tmpId],2.8);
+attackStaggerModifiers[? tmpId] = ds_list_create();
+	ds_list_add(attackStaggerModifiers[? tmpId],4);
+attackKnockbacks[? tmpId] = ds_list_create();
+	ds_list_add(attackKnockbacks[? tmpId],10);
+attackStatusTypes[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusTypes[? tmpId],-1);
+attackStatusValues[? tmpId] = ds_list_create();
+	ds_list_add(attackStatusValues[? tmpId],0);	
+#endregion
+#region #015 Drill:					extra-long range stab.
+tmpId++;
+attackNames[? tmpId] = "Drill";
 attackTypes[? tmpId] = 4;
 attackAnimations[? tmpId] = sprPlayerBodySwordGut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackDurations[? tmpId] = 2;
@@ -358,7 +625,7 @@ for(var i = 0; i < tmpId+1; i++)
 //aerial class ID lists
 //Sword: (0)Basic (1)Slam
 
-#region #008 Slash:					Fast basic strike.
+#region #016 Slash:					Fast basic strike.
 tmpId++;
 attackNames[? tmpId] = "Slash";
 attackTypes[? tmpId] = 0;
@@ -390,7 +657,7 @@ attackStatusTypes[? tmpId] = ds_list_create();
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
-#region #009 Slam:					Heavy knockback attack.
+#region #017 Slam:					Heavy knockback attack.
 tmpId++;
 attackNames[? tmpId] = "Slam";
 attackTypes[? tmpId] = 0;

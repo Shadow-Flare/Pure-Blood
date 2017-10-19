@@ -1,7 +1,3 @@
-var cam = Camera.cam;
-var camX = camera_get_view_x(cam);
-var camY = camera_get_view_y(cam);
-
 surface_set_target(application_surface);
 for (var i = 0; i < array_length_1d(fogSurfaces); i++)
 {

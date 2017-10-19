@@ -19,14 +19,15 @@ with objRoomSpawner
 }
 if !hasSpawned
 {
-	with instance_find(objRoomSpawner,0)
+	with objPlayer
 	{
-		objPlayer.phase = state.base;
+		var spawner = instance_find(objRoomSpawner,0);
+		phase = state.base;
 		scr_player_base_subPhaseDeterminer();
-		objPlayer.x = x;
-		objPlayer.y = y;
-		objPlayer.ySpd = 0;
-		objPlayer.xSpd = 0;
+		x = spawner.x;
+		y = spawner.y;
+		ySpd = 0;
+		xSpd = 0;
 		GameManager.lastSpawner = id;
 		hasSpawned = true; 
 	}

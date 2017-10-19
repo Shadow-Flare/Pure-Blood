@@ -1,5 +1,19 @@
 event_inherited();
 
+//enum initializers
+	//actor
+enum actorTypes {player, ally, enemy, corpse}
+enum hitState {normal, blocking, dodging}
+
+	//player
+enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, emote, dying, action1, action2, action3, action4, action5};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, flung, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
+enum vState {grounded, midAir, jumping};
+
+	//enemies
+enum enemyAggroState {passive, attacking}
+
+	//game manager
 enum GameState {mainMenu, inGame, arena}
 enum PauseState {normal, paused, transitioning, death}
 
@@ -34,3 +48,7 @@ if(monitorW>=displayResolutionX && monitorH>=displayResolutionY)
 }
 
 grav = 0.25;
+dL = -1;
+dR = -1;
+dU = -1;
+dD = -1;

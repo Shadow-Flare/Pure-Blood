@@ -32,6 +32,8 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	attackXOffset = ComboCache.attackXOffsets[? attackID];
 	attackYOffset = ComboCache.attackYOffsets[? attackID];
 	
+	hitList = ds_list_create();
+	
 	//Set
 	timer = 0;
 	facing = pl.facing;

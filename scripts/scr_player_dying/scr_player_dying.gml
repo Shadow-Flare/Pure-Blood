@@ -19,6 +19,7 @@ switch subPhase
 		if subPhaseTimer >= round(room_speed*deathDuration)
 		{
 			isDead = true;
+			actorType = actorTypes.corpse;
 		}
 			//xSpd
 		xSpd -= xSpd/8;
@@ -34,6 +35,7 @@ switch subPhase
 				if subPhaseTimer >= round(room_speed*deathDuration)
 				{
 					isDead = true;
+					actorType = actorTypes.corpse;
 				}
 					//xSpd
 				xSpd -= xSpd/8;
@@ -54,6 +56,12 @@ switch subPhase
 }
 		
 #endregion
-	
-	//addional properties
-image_xscale = facing;
+
+if isDead
+{
+	image_alpha -= deathFadeDuration/60;
+	if image_alpha <= 0
+	{
+		//DEATH CODE
+	}
+}

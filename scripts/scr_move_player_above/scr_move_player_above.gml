@@ -1,14 +1,15 @@
 with objActorParent
 {
-	if ((object_index != objPlayer && !flying && !dropThroughPlatforms) || (object_index == objPlayer && instance_exists(InputManager) && !(sign(InputManager.moveInputV) == 1 && InputManager.aInput)) && phase != "hooked")
+	if ((object_index != objPlayer && !flying && !dropThroughPlatforms) || (object_index == objPlayer && !(sign(InputManager.moveInputV) == 1 && InputManager.aInput)))
 	{
 		boxHeight = bbox_bottom-bbox_top;
 		boxWidth = bbox_right-bbox_left;
 		if (yprevious+boxHeight/2 < other.y) && (ySpd > 0) && (y+boxHeight/2 > other.y) && (x+boxWidth/2 >= other.x) && (x-boxWidth/2 <= other.x+other.sprite_width)
 		{
+			if place_free(x,floor(y)) y = floor(y);
 			while place_meeting(x,y,other) y--;
 			ySpd = 0;
-			onGround = 1;
+			vPhase = vState.grounded;
 		}
 	}
 }

@@ -10,6 +10,7 @@ phaseTimer++;
 subPhaseTimer++;
 
 	//properties
+		//Sprite
 if attackAnimation == sprPlayerBodySwordSlice && PlayerStats.comboSize%2 == attackNum%2 && attackNum != PlayerStats.comboSize
 {
 	attackAnimation = sprPlayerBodySwordSlice2;
@@ -181,6 +182,3 @@ switch vPhase
 			break;
 	}
 #endregion
-
-	//addional properties
-image_xscale = facing;

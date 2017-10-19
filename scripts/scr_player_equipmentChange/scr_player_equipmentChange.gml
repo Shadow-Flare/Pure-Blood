@@ -7,57 +7,57 @@ if (InputManager.dUInput)
 if (dUInputTimer != -1)
 {
 	dUInputTimer++;
-	if (!dUInputTimerInputHeld)
+	if (!InputManager.dUInputHeld)
 	{
-		if player.phase != "offhand" && player.phase != "ability"
+		if phase != state.offhand && phase != state.ability
 		{
-			for (var i = 0; i < array_length_1d(global.ownedOffhands); i++)
+			for (var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
 			{
-				if global.ownedOffhands[i] = global.activeOffhandID
+				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
 				{
 					ownedID = i;
 					break;
 				}
 			}
-			for (var i = 0; i < array_length_2d(global.ownedSubtypes,ownedID); i++)
+			for (var i = 0; i < array_length_2d(PlayerStats.ownedSubtypes,ownedID); i++)
 			{
-				if global.ownedSubtypes[ownedID,i] = global.activeOffhandSubtypeID
+				if PlayerStats.ownedSubtypes[ownedID,i] = PlayerStats.activeOffhandSubtypeID
 				{
 					ownedSubtypeID = i;
 					break;
 				}
 			}
-			for (var i = 0; i < array_length_1d(global.ownedActivatables); i++)
+			for (var i = 0; i < array_length_1d(PlayerStats.ownedActivatables); i++)
 			{
-				if global.ownedActivatables[ownedID,i] = global.activeOffhandActivatableID
+				if PlayerStats.ownedActivatables[ownedID,i] = PlayerStats.activeOffhandActivatableID
 				{
 					activeOwnedID = i;
 					break;
 				}
 			}
 			ownedSubtypeID++;
-			if ownedSubtypeID >= array_length_2d(global.ownedSubtypes,ownedID) ownedSubtypeID = 0;
-			global.activeOffhandSubtypeID = global.ownedSubtypes[ownedID,ownedSubtypeID];
+			if ownedSubtypeID >= array_length_2d(PlayerStats.ownedSubtypes,ownedID) ownedSubtypeID = 0;
+			PlayerStats.activeOffhandSubtypeID = PlayerStats.ownedSubtypes[ownedID,ownedSubtypeID];
 		}
 		dUInputTimer = -1;
 	}
 	else if (dUInputTimer = floor(room_speed * 0.5))
 	{
-		if player.phase != "offhand" && player.phase != "ability" && player.phase != "hooked"
+		if phase != state.offhand && phase != state.ability //&& phase != state.hooked
 		{
-			for (var i = 0; i < array_length_1d(global.ownedOffhands); i++)
+			for (var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
 			{
-				if global.ownedOffhands[i] = global.activeOffhandID
+				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
 				{
 					ownedID = i;
 					break;
 				}
 			}
 			ownedID++;
-			if ownedID >= array_length_1d(global.ownedOffhands) ownedID = 0;
-			global.activeOffhandID = global.ownedOffhands[ownedID];
-			global.activeOffhandSubtypeID = global.ownedSubtypes[ownedID,0];
-			global.activeOffhandActivatableID = global.ownedActivatables[ownedID,0];
+			if ownedID >= array_length_1d(PlayerStats.ownedOffhands) ownedID = 0;
+			PlayerStats.activeOffhandID = PlayerStats.ownedOffhands[ownedID];
+			PlayerStats.activeOffhandSubtypeID = PlayerStats.ownedSubtypes[ownedID,0];
+			PlayerStats.activeOffhandActivatableID = PlayerStats.ownedActivatables[ownedID,0];
 		}
 		dUInputTimer = -1;
 	}
@@ -72,31 +72,31 @@ if (InputManager.dRInput)
 if dRInputTimer != -1
 {
 	dRInputTimer++;
-	if (!dRInputTimerInputHeld)
+	if (!InputManager.dRInputHeld)
 	{
-		if (player.phase != "ability" && player.phase != "hooked")
+		if phase != state.ability //&& phase != hooked
 		{
-			for (var i = 0; i < array_length_1d(global.ownedOffhands); i++)
+			for (var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
 			{
 				ownedID = 0;
-				if global.ownedOffhands[i] = global.activeOffhandID
+				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
 				{
 					ownedID = i;
 					break;
 				}
 			}
-			for (var i = 0; i < array_length_2d(global.ownedActivatables,ownedID); i++)
+			for (var i = 0; i < array_length_2d(PlayerStats.ownedActivatables,ownedID); i++)
 			{
 				activeOwnedID = 0;
-				if global.ownedActivatables[ownedID,i] = global.activeOffhandActivatableID
+				if PlayerStats.ownedActivatables[ownedID,i] = PlayerStats.activeOffhandActivatableID
 				{
 					activeOwnedID = i;
 					break;
 				}
 			}
 			activeOwnedID++;
-			if activeOwnedID >= array_length_2d(global.ownedActivatables,ownedID) activeOwnedID = 0;
-			global.activeOffhandActivatableID = global.ownedActivatables[ownedID,activeOwnedID];
+			if activeOwnedID >= array_length_2d(PlayerStats.ownedActivatables,ownedID) activeOwnedID = 0;
+			PlayerStats.activeOffhandActivatableID = PlayerStats.ownedActivatables[ownedID,activeOwnedID];
 		}
 		dRInputTimer = -1;
 	}

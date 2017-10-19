@@ -1,8 +1,9 @@
 //move if not free
-var safeCheckDist = 64;
+var safeCheckDist = 32;
 //nonsolid
 with obj_block_nonSolid solid = 1
 
+					//this is awful and should be changed
 if !place_free(x,y)
 {
 	for(var i = 0; i < safeCheckDist; i++)
@@ -20,7 +21,8 @@ if !place_free(x,y)
 //do V collision check
 if(!place_free(x,y+ySpd))
 {
-	while(place_free(x,y+sign(ySpd)/10)) y+=sign(ySpd)/10;
+	if place_free(x,floor(y)) y = floor(y);
+	while(place_free(x,y+sign(ySpd))) y+=sign(ySpd);
 	ySpd = 0;
 }
 
@@ -32,10 +34,9 @@ if place_meeting(x+xSpd,y,objActorParent) && !phased
 	var othActor = instance_place(x+xSpd,y,objActorParent);
 	if !othActor.phased
 	{
-		var dirToOther = sign(x-othActor.x);
-		if object_index == objPlayer var ms = PlayerStats.moveSpeed;
-		else var ms = moveSpeed;
-		while place_meeting(x+xSpd*10,y,objActorParent) && xSpd <= ms {xSpd+=dirToOther/10; othActor.xSpd-=dirToOther/10;}
+		var dirToOther = sign(othActor.x-x);
+		while place_meeting(x+xSpd,y,othActor) xSpd-=dirToOther/10;
+		if abs(xSpd) > statCache.moveSpeed xSpd = sign(xSpd)*statCache.moveSpeed;
 	}
 }
 

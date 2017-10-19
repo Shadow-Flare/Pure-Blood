@@ -1,3 +1,7 @@
+var cam = Camera.cam;
+var camX = camera_get_view_x(cam);
+var camY = camera_get_view_y(cam);
+
 var pixelsPerPixel = 12;			//how many pixels in surface = pixels in sprite
 var PixelsPerTile = 16;			//number of sprite pixels per Tile
 
@@ -14,11 +18,11 @@ for (var i = 0; i < array_length_1d(fogSpriteNumbers); i++)
 		for (var j = 0; j < num; j++)
 		{
 			ds_grid_set(g,j,0,irandom(sprite_get_number(spr_fog)-1));						//sprite ID
-			ds_grid_set(g,j,1,irandom(surface_get_width(application_surface)/PixelsPerTile*2)*PixelsPerTile*2);											//x initi
-			var variance = PixelsPerTile*pixelsPerPixel;
-			ds_grid_set(g,j,2,round((surface_get_height(application_surface)+irandom_range((-variance/2),(variance/2)) + PixelsPerTile*pixelsPerPixel*(i*0.25))/12)*12);		//y initi
+			ds_grid_set(g,j,1,irandom(room_width));											//x initi
+			var variance = PixelsPerTile*1;
+			ds_grid_set(g,j,2,round((room_height+irandom_range((-variance/2),(variance/2)) + PixelsPerTile*(i*2-1.5))/2)*2);		//y initi
 			var spdDir = irandom(1); if spdDir == 0 spdDir = -1;
-			ds_grid_set(g,j,3,random_range(0.16,0.32)*spdDir);										//xSpd initi
+			ds_grid_set(g,j,3,random_range(0.05,0.10)*spdDir*(1-0.2*i));										//xSpd initi
 		}
 	}
 	surface_set_target(fogSurfaces[i]);
@@ -41,7 +45,7 @@ for (var i = 0; i < array_length_1d(fogSpriteNumbers); i++)
 					X = -sprite_get_width(spr_fog)*pixelsPerPixel*2;
 				}
 				ds_grid_set(g,j,1,X);
-				draw_sprite_ext(spr_fog,S,X,Y,pixelsPerPixel*2,pixelsPerPixel*2,0,make_color_rgb(192,192,192),1)
+				draw_sprite_ext(spr_fog,S,(X-camX)*6,(Y-camY)*6,6*3,6*3,0,make_color_rgb(192,192,192),1)
 			}
 		}
 	surface_reset_target();

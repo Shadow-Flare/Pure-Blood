@@ -101,18 +101,18 @@ switch subPhase
 #endregion
 
 #region change state
-	//to hit reactions
-		//not done yet
-	
 	//Jumping
 	if aInputQueue
 	{
 		reset_queue();
-		if vPhase == vState.grounded
+		if sign(InputManager.moveInputV) != 1
 		{
-			vPhase = vState.jumping;
-			ySpd = -PlayerStats.jumpPow;
-			jumpNum++;
+			if vPhase == vState.grounded
+			{
+				vPhase = vState.jumping;
+				ySpd = -PlayerStats.jumpPow;
+				jumpNum++;
+			}
 		}
 	}
 
@@ -216,6 +216,3 @@ switch subPhase
 		subPhaseTimer = 0;
 	}
 #endregion
-
-	//addional properties
-image_xscale = facing;

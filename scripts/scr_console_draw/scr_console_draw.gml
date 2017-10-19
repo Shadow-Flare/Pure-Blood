@@ -31,15 +31,16 @@ if consoleEnabled
 			draw_text(viewW-200*2,40,"Attack Number:			"+string(objPlayer.attackNum));
 			draw_text(viewW-400*2,50,"Player Phase:				"+string(objPlayer.phase));
 			draw_text(viewW-200*2,50,"Player Sub-Phase:			"+string(objPlayer.subPhase));
-			draw_text(viewW-400*2,60,"Lock-On Type:				"+string(conLockOnType));
+			draw_text(viewW-400*2,60,"Player Vertical-Phase:	"+string(objPlayer.vPhase));
+			draw_text(viewW-200*2,60,"Lock-On Type:				"+string(conLockOnType));
 			if conLockOnTarget != noone draw_text(viewW-200*2,60,"Lock-On Target:			"+string(object_get_name(conLockOnTarget)));
 	
 			if instance_exists(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent))
 			{
 				draw_text(viewW-400*2, 90,"Nearest Enemy:			"+string(object_get_name(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).object_index)));
-				draw_text(viewW-200*2, 90,"Nearest Enemy Attack:	"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).nextAttack));
-				draw_text(viewW-400*2,100,"Nearest Enemy Phase:		"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).phase));
-				draw_text(viewW-200*2,100,"Nearest Enemy SubPhase:	"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).subPhase));
+				draw_text(viewW-200*2, 90,"Nearest Enemy Phase:		"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).phase));
+				draw_text(viewW-400*2,100,"Nearest Enemy SubPhase:	"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).subPhase));
+				draw_text(viewW-200*2,100,"Nearest Enemy Vertical-Phase:	"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).vPhase));
 				draw_text(viewW-400*2,110,"Nearest Enemy Pos X:		"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).x));
 				draw_text(viewW-200*2,110,"Nearest Enemy Pos Y:		"+string(instance_nearest(objPlayer.x,objPlayer.y,objEnemyParent).y));
 			}

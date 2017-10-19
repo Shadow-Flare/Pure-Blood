@@ -94,6 +94,3 @@ switch subPhase
 }
 		
 #endregion
-	
-	//addional properties
-image_xscale = facing;

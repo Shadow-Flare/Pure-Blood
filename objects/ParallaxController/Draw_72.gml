@@ -1,18 +1,27 @@
-//background && parallax
-if instance_exists(Camera)
+//background
+	//bck fill
+var scale = 0.25;
+var fillScale = 0.25;
+draw_sprite_tiled_ext(paraBack,0,0,0,fillScale,fillScale,c_white,1);
+	
+	//bck layers
+for(var i = 0; i < array_length_1d(paraSprites); i++)
 {
-	var xScale = room_height / sprite_get_height(bck_forest) * 1.2;
-	var yScale = xScale;
-	var shift = Camera.xPos*backgroundSpeed/sprite_get_number(bck_forest);
-	for(var i = 0; i < sprite_get_number(bck_forest); i++)
+	var sprS = paraSpeeds[i];
+	if sprS <= 1
 	{
-		draw_sprite_tiled_ext(bck_forest,i,Camera.xPos-shift*i,0,xScale,yScale,c_white,1);
+		var spr = paraSprites[i];
+		var sprW = sprite_get_width(spr)*scale;
+		var sprH = sprite_get_height(spr)*scale;
+		var sprN = sprite_get_number(spr);
+		for(var i = 0; i < sprite_get_number(spr); i++)
+		{
+			for (var j = 0; j < ceil(room_width/sprW); j++)
+			{
+				var xPos = Camera.xPos*(1-(sprS*i/sprN))+j*sprW;
+				var yPos = (-room_height+Camera.yPos+camera_get_view_height(Camera.cam))*(1-(sprS*0.5*i/sprN))+room_height-sprH;
+				draw_sprite_ext(spr,i,xPos,yPos,scale,scale,0,c_white,1);
+			}
+		}
 	}
-}
-
-if instance_exists(Camera) && layer_exists(layer_get_id("Tiles_parallax_a"))
-{
-	var shift = Camera.xPos*paraASpd;
-	draw_tilemap(layer_tilemap_get_id(layer_get_id("Tiles_parallax_a")),Camera.xPos-shift,0)
-	layer_set_visible(layer_get_id("Tiles_parallax_a"),0);
 }

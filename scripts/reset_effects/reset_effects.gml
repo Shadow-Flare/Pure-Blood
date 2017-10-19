@@ -27,6 +27,7 @@ instance_destroy(BloodStainController);
 if ini_read_real("effects","blood",1) instance_create_depth(0,0,0,BloodStainController);
 else instance_destroy(BloodStainController);
 
-//instance_create_depth(0,0,0,ParallaxController);
+instance_destroy(ParallaxController);
+instance_create_depth(0,0,0,ParallaxController);
 
 ini_close();

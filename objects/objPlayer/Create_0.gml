@@ -1,10 +1,4 @@
-//Initialize enums (MOVE TO CONTROLLER CREATE)
-enum actorTypes {player, ally, enemy, corpse}
-
-enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, dying};
-enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, flung};
-enum vState {grounded, midAir, jumping};
-enum hitState {normal, blocking, dodging}
+statCache = PlayerStats;
 
 xSpd = 0;
 ySpd = 0;
@@ -14,6 +8,7 @@ phaseTimer = 0;
 subPhase = subState.idle;
 subPhaseTimer = 0;
 vPhase = vState.grounded;
+hitPhase = hitState.normal;
 actorType = actorTypes.player;
 maxFallSpeed = 5;
 phased = 0;
@@ -85,11 +80,11 @@ dodgeDistance = 16*3.5;				//16*<number of blocks>		//(before "xSpd-=xSpd/4" slo
 dodgeDurationPerforming = 0.2;
 dodgeDurationPost = 0.2;
 
-hitPhase = hitState.normal;
-
+isDead = false;
 staggeredDuration = 0.6;
 proneDuration = 0.6;
 deathDuration = 3;
+deathFadeDuration = 5;
 
 dUInputTimer = -1;
 dRInputTimer = -1;

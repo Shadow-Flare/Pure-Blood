@@ -18,17 +18,21 @@ update_sprite(sprPlayerBodySwordDodging,newImageSpeed);
 switch subPhase
 {
 	case subState.performing:
+				//xSpd
+		xSpd = facing*dodgeDistance/(room_speed*dodgeDurationPerforming);
+		
 		dodging = 1;
 		if subPhaseTimer >= round(room_speed*dodgeDurationPerforming)
 		{
 			subPhase = subState.post;
 			subPhaseTimer = 0;
 		}
-			//xSpd
-		xSpd = facing*dodgeDistance/(room_speed*dodgeDurationPerforming);
 		break;
 		
 	case subState.post:
+				//xSpd
+		xSpd -= xSpd/4;
+		
 		if subPhaseTimer >= round(room_speed*dodgeDurationPost)
 		{
 			phase = state.base;
@@ -38,12 +42,7 @@ switch subPhase
 			subPhaseTimer = 0;
 			scr_player_base_subPhaseDeterminer();
 		}
-			//xSpd
-		xSpd -= xSpd/4;
 		break;
 }
 		
 #endregion
-	
-	//addional properties
-image_xscale = facing;

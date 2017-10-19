@@ -1,4 +1,3 @@
-///@scr_enemy_attack(duration, x offset, y offset, width, height, damageType, damage, stagger, knockback, statusType, specialValue, pierce)
 ///@arg duration
 ///@arg x_off
 ///@arg y_off
@@ -11,7 +10,7 @@
 ///@arg status_type
 ///@arg status_value
 ///@arg pierce
-var zomb = id;
+var enemy = id;
 with instance_create_layer(x,y,layer,obj_enemy_attack_effect)
 {
 	//get effect properties/collisions
@@ -31,14 +30,18 @@ with instance_create_layer(x,y,layer,obj_enemy_attack_effect)
 	type = "melee";
 	//Set
 	timer = 0;
-	facing = zomb.facing;
+	facing = enemy.facing;
 	//pos
-	x=zomb.x+facing*attackXOffset;
-	y=zomb.y+attackYOffset;
+	x=enemy.x+facing*attackXOffset;
+	y=enemy.y+attackYOffset;
 	//size
 	sprite_index = spr_attack_effect_editor;
 	image_xscale *= facing*attackWidth/3;
 	image_yscale *=	attackHeight/3;
-	caster = zomb;
-	originalPhase = caster.phase;
+	caster = enemy;
+	
+	hasHit = 0;
+	
+	hitList = ds_list_create();
+hitOn = 1;
 }

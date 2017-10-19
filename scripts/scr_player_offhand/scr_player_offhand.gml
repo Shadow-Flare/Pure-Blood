@@ -249,9 +249,6 @@ switch PlayerStats.activeOffhandID
 }
 		
 #endregion
-	
-	//addional properties
-image_xscale = facing;
 
 	//aux sprite data
 auxSpriteXOffset = 5;

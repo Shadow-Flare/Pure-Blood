@@ -26,4 +26,6 @@ with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCrossbowProj
 	hitKnockback = ComboCache.offhandSubtypeKnockbacks[? subId];
 	statusType = ComboCache.offhandSubtypeStatusTypes[? subId];
 	statusValue = ComboCache.offhandSubtypeStatusValues[? subId];
+	
+	hitList = ds_list_create();
 }

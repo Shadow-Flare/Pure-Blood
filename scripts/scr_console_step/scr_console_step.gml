@@ -115,7 +115,7 @@ if consoleEnabled
 		if commandStr == "clickhack"
 		{
 			conClickHack = !conClickHack;
-			if conClockHack commandRes = "click hack turned on. (UNSTABLE)";
+			if conClickHack commandRes = "click hack turned on. (UNSTABLE)";
 			else commandRes = "click hack turned off boss.";
 		}
 		//help TOGGLE

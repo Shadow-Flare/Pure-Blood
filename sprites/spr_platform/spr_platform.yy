@@ -8,11 +8,12 @@
     "VTile": false,
     "bbox_bottom": 2,
     "bbox_left": 0,
-    "bbox_right": 16,
+    "bbox_right": 15,
     "bbox_top": 0,
     "bboxmode": 2,
     "colkind": 1,
     "coltolerance": 0,
+    "edgeFiltering": false,
     "frames": [
         {
             "id": "653ee26e-3f83-41fb-b85b-37e93fbdadbc",
@@ -54,8 +55,10 @@
         }
     ],
     "origin": 0,
+    "originLocked": false,
     "playbackSpeed": 15,
     "playbackSpeedType": 0,
+    "premultiplyAlpha": false,
     "sepmasks": false,
     "swatchColours": null,
     "swfPrecision": 2.525,

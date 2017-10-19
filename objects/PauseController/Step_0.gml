@@ -249,6 +249,7 @@ if (InputManager.aInput == 1)
 			instance_deactivate_object(BloodStainController);
 			instance_deactivate_object(RainController);
 			instance_deactivate_object(FogController);
+			instance_deactivate_object(ParallaxController);
 			break;
 	}
 }

@@ -14,17 +14,17 @@ var caster = argument5;
 
 if attackType != -1
 {
-	hp -= attackPower/damageResistances[attackType];
-	var mh = hpMax;
-	var h = hp;
+	statCache.hp -= attackPower/statCache.damageResistances[attackType];
+	var mh = statCache.hpMax;
+	var h = statCache.hp;
 	var hpLostPC = ((mh-h)/mh)
 	var partCount = hpLostPC*50
-	var partSpeed = 0.8+hpLostPC*4
-	scr_hit_effect(caster,hitEffectType,hitEffectColour,partCount,partSpeed);
-	hp = clamp(hp,0,hpMax);
+	var partSpeed = 5+hpLostPC*30
+	scr_hit_effect(caster,statCache.hitEffectType,statCache.hitEffectColour,partCount,partSpeed);
+	statCache.hp = clamp(statCache.hp,0,statCache.hpMax);
 }
 
 if specialType != -1
 {
-	specialDamage[specialType] = clamp(specialDamage[specialType]-specialPower,0,specialHp[specialType])
+	statCache.specialDamage[specialType] = clamp(statCache.specialDamage[specialType]-specialPower,0,specialHp[specialType])
 }

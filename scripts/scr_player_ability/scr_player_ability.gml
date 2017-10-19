@@ -20,6 +20,3 @@ switch ComboCache.activeOffhandActivatableID
 }
 		
 #endregion
-	
-	//addional properties
-image_xscale = facing;

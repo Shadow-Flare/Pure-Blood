@@ -1,11 +1,3 @@
-/*
-shader_set(shd_bloom);
-shader_set_uniform_f(bloomIntensity,darknessStr/3); //0 = off, 1 = a bit, 80 = extremely intense
-shader_set_uniform_f(bloomblurSize,1/512);
-draw_surface(application_surface, 0, 0);
-shader_reset();
-*/
-
 //Console draw
 if (consoleEnabled) scr_console_draw();
 else
@@ -20,25 +12,24 @@ switch gameState
 	case GameState.arena:
 		if pauseState = PauseState.normal
 		{
-			/*
 			//Stats //HP
-			hp = ceil(objPlayer.hp);
-			hpMax = PlayerStats.hphpMaxmax;
+			var hp = ceil(PlayerStats.hp);
+			var hpMax = PlayerStats.hpMax;
 			draw_set_font(fnt_menu_large);
 			draw_set_colour(make_color_rgb(255-(hp/hpMax*255),hp/hpMax*255,0));
 			draw_text(40,40,string(floor(hp))+"/"+string(floor(hpMax)));
 				//MP
-			mp = floor(objPlayer.mp);
-			maxMp = global.mpMax;
+			var mp = floor(PlayerStats.mp);
+			var mpMax = PlayerStats.mpMax;
 			draw_set_font(fnt_menu_large);
-			draw_set_colour(make_color_rgb(255-(mp/maxMp*255),0,mp/maxMp*255));
-			draw_text(40,80,string(floor(mp))+"/"+string(floor(maxMp)));
+			draw_set_colour(make_color_rgb(255-(mp/mpMax*255),0,mp/mpMax*255));
+			draw_text(40,80,string(floor(mp))+"/"+string(floor(mpMax)));
 
 			//equipment
 				//Offhand && Subtype
-			activeAbilityName = ComboCache.offhandActivatableNames[ComboCache.activeOffhandActivatableID];
-			offhandName = ComboCache.offhandNames[ComboCache.activeOffhandID];
-			offhandSubtypeName = ComboCache.offhandSubtypeNames[ComboCache.activeOffhandSubtypeID];
+			var activeAbilityName = ComboCache.offhandActivatableNames[? PlayerStats.activeOffhandActivatableID];
+			var offhandName = ComboCache.offhandNames[? PlayerStats.activeOffhandID];
+			var offhandSubtypeName = ComboCache.offhandSubtypeNames[? PlayerStats.activeOffhandSubtypeID];
 			draw_set_font(fnt_menu);
 			draw_set_colour(c_orange);
 			draw_set_valign(fa_bottom);
@@ -46,7 +37,6 @@ switch gameState
 			draw_text(60,1080-80,offhandSubtypeName);
 			draw_text(80,1080-40,activeAbilityName);
 			draw_set_valign(fa_top);
-			*/
 		}
 		break;
 }

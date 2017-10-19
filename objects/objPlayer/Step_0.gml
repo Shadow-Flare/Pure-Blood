@@ -182,18 +182,21 @@ if offhandHardCooldownTimer != -1
 switch vPhase
 {
 	case vState.grounded:
-		if !(place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) && phase != state.attacking vPhase = vState.midAir;
+		var block = instance_place(x,y+1,obj_block_parent)
+		if block == noone || place_meeting(x,y,block) vPhase = vState.midAir;
 		break;
 	case vState.midAir:
-		if (place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) && phase != state.attacking vPhase = vState.grounded;
+		var block = instance_place(x,y+1,obj_block_parent)
+		if block != noone && !place_meeting(x,y,block) vPhase = vState.grounded;
+		else ySpd += GameManager.grav;
+		if ySpd > maxFallSpeed ySpd = maxFallSpeed;
 		break;
 	case vState.jumping:
-		if (place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) vPhase = vState.grounded;
+		ySpd += GameManager.grav;
+		if ySpd > maxFallSpeed ySpd = maxFallSpeed;
 		if ySpd >= 0 vPhase = vState.midAir;
 		break;
 }
-ySpd += GameManager.grav;
-if ySpd > maxFallSpeed ySpd = maxFallSpeed;
 
 switch phase
 {
@@ -224,7 +227,10 @@ switch phase
 }
 #endregion
 
-scr_player_hitCheck();
-scr_player_statusCheck();
+scr_hitCheck();
+scr_statusCheck();
 scr_player_equipmentChange();
 scr_move_with_collisions();
+
+	//addional properties
+image_xscale = facing;

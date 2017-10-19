@@ -25,7 +25,8 @@ with PlayerStats
 	physicalStagger = 0+0.25*strength;
 	magicalPower = 0+1*intelligence;
 	magicalStagger = 2+0.25*intelligence+0.25*willpower;
-	toughness = 0+0.75*constitution;
+	physicalToughness = 0+0.75*constitution;
+	magicalToughness = 0+0.75*willpower;
 
 	hp = hpMax;
 	mp = mpMax;
@@ -87,15 +88,18 @@ with PlayerStats
 	scr_set_combo(3,6);			//smash
 
 		//active combo properties
-	scr_set_aerialCombo(0,8);	//slice
-	scr_set_aerialCombo(1,8);	//slice
-	scr_set_aerialCombo(2,8);	//slice
-	scr_set_aerialCombo(3,9);	//smash
+	scr_set_aerialCombo(0,16);	//slice
+	scr_set_aerialCombo(1,16);	//slice
+	scr_set_aerialCombo(2,16);	//slice
+	scr_set_aerialCombo(3,17);	//smash
 
 	scr_set_class("Sword");
 	
 	scr_set_offhand(0);			//crossbow
 	scr_set_offhand_sub(0);		//normal
 	scr_set_offhand_active(0);	//ropeshot
+	
+		//misc
+	isInvulnerable = false;
 }
 #endregion
