@@ -3,6 +3,7 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 {
 	attackID = argument0;
 	caster = pl;
+	casterType = pl.actorType;
 	caster.effect = id;
 	//get effect properties/collisions
 	attackName = ComboCache.attackNames[? attackID];
@@ -31,6 +32,7 @@ with instance_create_depth(x,y,-100,obj_player_attack_effect)
 	}
 	attackXOffset = ComboCache.attackXOffsets[? attackID];
 	attackYOffset = ComboCache.attackYOffsets[? attackID];
+	pierce = 0;
 	
 	hitList = ds_list_create();
 	

@@ -5,7 +5,7 @@
 //if !onGround && phase == "idle"
 //{
 //	phase = "fling"
-//	scr_enemy_attack(9999,0,0,16,16,1,damage,stagger,15,-1,0,0);
+//	scr_enemy_attack(true,9999,0,0,16,16,1,damage,stagger,15,-1,0,0);
 //}
 //else if onGround && phase = "fling"
 //{

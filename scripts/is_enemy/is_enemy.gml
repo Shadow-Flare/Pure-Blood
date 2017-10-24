@@ -1,8 +1,8 @@
-///@arg firstActor
-///@arg secondActor
+///@arg firstActorType
+///@arg secondActorType
 
-var actor1Type = argument0.actorType;
-var actor2Type = argument1.actorType;
+var actor1Type = argument0;
+var actor2Type = argument1;
 
 	//only implement code for enemies
 switch actor1Type
@@ -11,6 +11,7 @@ switch actor1Type
 		switch actor2Type
 		{
 			case actorTypes.enemy:
+			case actorTypes.wild:
 				return true;
 				break;
 		}
@@ -19,6 +20,7 @@ switch actor1Type
 		switch actor2Type
 		{
 			case actorTypes.enemy:
+			case actorTypes.wild:
 				return true;
 				break;
 		}
@@ -28,6 +30,18 @@ switch actor1Type
 		{
 			case actorTypes.player:
 			case actorTypes.ally:
+			case actorTypes.wild:
+				return true;
+				break;
+		}
+		break;
+	case actorTypes.wild:
+		switch actor2Type
+		{
+			case actorTypes.player:
+			case actorTypes.ally:
+			case actorTypes.enemy:
+			case actorTypes.wild:
 				return true;
 				break;
 		}

@@ -1,5 +1,5 @@
 //begin dying
-if statCache.hp <= 0 && phase != state.dying
+if phase != state.dying && statCache.hp <= 0
 {
 	phased = 1;
 	actorType = actorTypes.corpse;

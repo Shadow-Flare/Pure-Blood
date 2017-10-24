@@ -9,7 +9,7 @@
         "96627081-762c-4fdf-87bf-dca22df42e61"
     ],
     "filterType": "GMSprite",
-    "folderName": "bloodhound and extras",
+    "folderName": "Bloodhound and extras",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

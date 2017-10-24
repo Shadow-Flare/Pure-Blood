@@ -5,7 +5,7 @@ if auxSpriteIndex != noone draw_sprite_ext(auxSpriteIndex,image_index,x+facing*a
 draw_self();
 
 //draw weapon
-if weaponSpriteIndex != noone draw_sprite_ext(weaponSpriteIndex,image_index,x,y,facing,1,0,c_white,1);
+if weaponSpriteIndex != noone draw_sprite_ext(weaponSpriteIndex,image_index,x,y,facing,1,0,c_white,image_alpha);
 
 //draw effect
 if effectSpriteIndex != noone draw_sprite_ext(effectSpriteIndex,image_index,x,y,facing,1,0,c_white,1);

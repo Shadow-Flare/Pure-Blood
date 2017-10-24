@@ -129,7 +129,8 @@ switch subPhase
 		}
 		else
 		{
-			if !place_meeting(x+dodgeDistance,y,objActorParent) phased = 1;
+			facing = sign(moveH);
+			phased = 1;
 			phase = state.dodging;
 			phaseTimer = 0;
 			subPhase = subState.performing;
@@ -169,7 +170,7 @@ switch subPhase
 						//Forwards/horizontal
 						if lockOnType != lockOn.hard || sign(moveH) == lockOnDir
 						{
-							if !place_meeting(x+ComboCache.attackMoveDistancesX[? PlayerStats.activeForwardsID],y,objActorParent) phased = 1;
+							//if !place_meeting(x+ComboCache.attackMoveDistancesX[? PlayerStats.activeForwardsID],y,objActorParent) phased = 1;
 							scr_player_combo(PlayerStats.activeForwardsID);
 						}
 						//Backwards
@@ -180,7 +181,9 @@ switch subPhase
 				case vState.jumping:
 					if lockOnType != lockOn.off && distance_to_object(lockOnTarget) <= attackTrackDistance 
 					{
-						aerialTargetX = lockOnTarget.x;
+						var dirToPlayer = sign(x-lockOnTarget.x);
+						var enemyBBoxWidth = lockOnTarget.bbox_right-lockOnTarget.bbox_left;
+						aerialTargetX = lockOnTarget.x+dirToPlayer*(enemyBBoxWidth/2+10);
 						aerialTargetY = lockOnTarget.y;
 					}
 					else

@@ -29,17 +29,32 @@ if(!place_free(x,y+ySpd))
 y+=ySpd;
 
 // do H collision check
-if place_meeting(x+xSpd,y,objActorParent) && !phased
+	//enemies
+if !phased
 {
-	var othActor = instance_place(x+xSpd,y,objActorParent);
-	if !othActor.phased
+	if place_meeting(x+xSpd,y,objActorParent)
 	{
-		var dirToOther = sign(othActor.x-x);
-		while place_meeting(x+xSpd,y,othActor) xSpd-=dirToOther/10;
-		if abs(xSpd) > statCache.moveSpeed xSpd = sign(xSpd)*statCache.moveSpeed;
+		var othActor = instance_place(x+xSpd,y,objActorParent);
+		if !othActor.phased && !place_meeting(x,y,othActor)
+		{
+			var dirToOther = sign(othActor.x-x);
+			while place_meeting(x+xSpd,y,othActor) xSpd-=dirToOther/10;
+		}
+	}
+	
+	if place_meeting(x,y,objActorParent)
+	{
+		var othActor = instance_place(x,y,objActorParent);
+		if !othActor.phased
+		{
+			var dirToOther = sign(othActor.x-x);
+			if place_meeting(x,y,othActor) xSpd-=dirToOther*1;
+			//if abs(xSpd) > statCache.moveSpeed xSpd = sign(xSpd)*statCache.moveSpeed;
+		}
 	}
 }
 
+	//solids
 if(!place_free(x+xSpd,y))
 {
 	while(place_free(x+sign(xSpd)/10,y)) x+=sign(xSpd)/10;

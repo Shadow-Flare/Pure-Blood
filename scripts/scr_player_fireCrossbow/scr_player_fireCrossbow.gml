@@ -17,6 +17,7 @@ with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCrossbowProj
 {
 	wiff = w;
 	caster = other;
+	casterType = other.actorType; 
 	subId = SUBID;
 	xSpd = spd*dcos(qD);
 	ySpd = -spd*dsin(qD);
@@ -26,6 +27,7 @@ with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCrossbowProj
 	hitKnockback = ComboCache.offhandSubtypeKnockbacks[? subId];
 	statusType = ComboCache.offhandSubtypeStatusTypes[? subId];
 	statusValue = ComboCache.offhandSubtypeStatusValues[? subId];
+	pierce = false;
 	
 	hitList = ds_list_create();
 }

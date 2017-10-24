@@ -25,6 +25,7 @@ else
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(NewGameLoader);
 			GameManager.gameState = GameState.inGame;
+			GameManager.lastSpawner =  instance_nearest(objPlayer.x,objPlayer.y,objRoomSpawner);
 			type = loadType.ending;
 			break;
 		case loadType.arena:
@@ -32,6 +33,7 @@ else
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(ArenaGameLoader);
 			GameManager.gameState = GameState.arena;
+			GameManager.lastSpawner =  instance_nearest(objPlayer.x,objPlayer.y,objRoomSpawner);
 			type = loadType.ending;
 			break;
 	}

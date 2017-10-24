@@ -128,7 +128,7 @@
 //	attackTimer++;
 //	if attackTimer = round(room_speed*attack1Duration*(9/sprite_get_number(sprite_index))) && subPhase == "attacking"
 //	{
-//		scr_enemy_attack(0.4,16,12,30,20,0,physicalPower*0.5,6,15,-1,0,0); 
+//		scr_enemy_attack(true,0.4,16,12,30,20,0,physicalPower*0.5,6,15,-1,0,0); 
 //		xSpd = facing*attack1Move;
 //		var corpseNum = 3;
 //		repeat(corpseNum)
@@ -252,7 +252,7 @@
 //	}
 //	if attackTimer = round(room_speed*attack3Duration*(7/sprite_get_number(sprite_index))) && subPhase == "attacking"
 //	{
-//		scr_enemy_attack(0.4,20,8,22,40,0,physicalPower*1.3,12,80,-1,0,1); 
+//		scr_enemy_attack(true,0.4,20,8,22,40,0,physicalPower*1.3,12,80,-1,0,1); 
 //	}
 //	//CANT BE DEFLECTED
 //	//if deflected && subPhase == "attacking"
@@ -294,9 +294,9 @@
 //	attackTimer++;
 //	if attackTimer == round(room_speed*attack4PreDuration) && subPhase == "pre"
 //	{
-//		scr_enemy_attack(999,0,0,40,36,1,physicalPower*0.6,6,15,-1,0,0); 
+//		scr_enemy_attack(true,999,0,0,40,36,1,physicalPower*0.6,6,15,-1,0,0); 
 //		xSpd = facing*attack3Move;
-//		//@scr_enemy_attack(dur,xOff,yOff,width,height,damType,dam,stagger,knockback,statType,statValue,pierce)
+//		//@scr_enemy_attack(true,dur,xOff,yOff,width,height,damType,dam,stagger,knockback,statType,statValue,pierce)
 //		subPhase = "jumping"
 //		phased = 1;
 //		attackTimer = 0;

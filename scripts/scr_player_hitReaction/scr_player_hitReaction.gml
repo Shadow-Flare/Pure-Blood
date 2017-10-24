@@ -18,6 +18,7 @@ switch subPhase
 	case subState.staggered:
 		if subPhaseTimer >= round(room_speed*staggeredDuration)
 		{
+			phased = false;
 			phase = state.base;
 			phaseTimer = 0;
 			scr_player_base_subPhaseDeterminer();
@@ -35,6 +36,7 @@ switch subPhase
 			case vState.grounded:
 				if subPhaseTimer >= round(room_speed*proneDuration)
 				{
+					phased = false;
 					phase = state.base;
 					phaseTimer = 0;
 					scr_player_base_subPhaseDeterminer();

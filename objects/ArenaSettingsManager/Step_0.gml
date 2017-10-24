@@ -184,8 +184,8 @@ if aInput == 1
 					slotOptions = [];	
 										
 					num = 0;
-					slotOptions[0] = "Off";
-					slotOptions[1] = "On";
+					slotOptions[0] = false;
+					slotOptions[1] = true;
 					for (var i = 0; i < array_length_1d(slotOptions); i++)
 					{
 						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
@@ -245,8 +245,8 @@ if aInput == 1
 					slotOptions = [];	
 										
 					num = 0;
-					slotOptions[0] = "Off";
-					slotOptions[1] = "On";
+					slotOptions[0] = false;
+					slotOptions[1] = true;
 					for (var i = 0; i < array_length_1d(slotOptions); i++)
 					{
 						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]

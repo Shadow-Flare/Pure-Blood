@@ -10,7 +10,7 @@ instance_activate_object(ParallaxController);
 	//room dependant
 		//lighting
 instance_destroy(LightingController);
-if ini_read_real("effects","lighting",1) && RoomCache.rmDarknessData[? room] != 0 instance_create_depth(-1000,0,0,LightingController);
+if ini_read_real("effects","lighting",1) && RoomCache.rmDarknessData[? room] != 0 instance_create_depth(0,0,-1000,LightingController);
 else instance_destroy(LightingController);
 		//Fog
 instance_destroy(FogController);

@@ -25,8 +25,8 @@ with PlayerStats
 	physicalStagger = 0+0.25*strength;
 	magicalPower = 0+1*intelligence;
 	magicalStagger = 2+0.25*intelligence+0.25*willpower;
-	physicalToughness = 0+0.75*constitution;
-	magicalToughness = 0+0.75*willpower;
+	physicalToughness = 2+0.30*constitution;
+	magicalToughness = 2+0.30*willpower;
 
 	hp = hpMax;
 	mp = mpMax;

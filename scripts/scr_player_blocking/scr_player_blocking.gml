@@ -30,7 +30,7 @@ switch subPhase
 		update_sprite(sprPlayerBodySwordBlocking,newImageSpeed);
 		if subPhaseTimer >= round(room_speed*blockingDurationPre)
 		{
-			blocking = 1;
+			hitPhase = hitState.blocking;
 			subPhase = subState.performing;
 			subPhaseTimer = 0;
 		}
@@ -40,14 +40,15 @@ switch subPhase
 			//Sprite
 		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlocking)/(blockingDurationPre+blockingDurationBlocking+blockingDurationPost);
 		update_sprite(sprPlayerBodySwordBlocking,newImageSpeed);
-		if hasBlocked
+		if hasDeflected
 		{
+			hasDeflected = false;
 			subPhase = subState.reaction;
 			subPhaseTimer = 0;
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationBlocking)
 		{
-			blocking = 0;
+			hitPhase = hitState.normal;
 			subPhase = subState.post;
 			subPhaseTimer = 0;
 		}
@@ -57,23 +58,23 @@ switch subPhase
 			//Sprite
 		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlockingReaction)/(blockingDurationReaction);
 		update_sprite(sprPlayerBodySwordBlockingReaction,newImageSpeed);
-		blocking = 1;
 		if xInputQueue
 		{
 			blocking = 0;
 			attackNum = 0;
 			reset_queue();
 			//initial data & tranistion
+			hitPhase = hitState.normal;
 			phase = state.attacking;
 			phaseTimer = 0;
 			subPhase = subState.performing;
 			subPhaseTimer = 0;
-			scr_player_combo(PlayerStats.activeCounterId);
+			scr_player_combo(PlayerStats.activeCounterID);
 			reset_queue();
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationReaction)
 		{
-			blocking = 0;
+			hitPhase = hitState.normal;
 			subPhase = subState.post;
 			subPhaseTimer = 0;
 		}

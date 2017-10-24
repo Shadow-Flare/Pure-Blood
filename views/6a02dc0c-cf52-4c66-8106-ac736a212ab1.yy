@@ -15,7 +15,7 @@
         "38ae59e6-b517-46b8-bf4a-ffbf123a89ba"
     ],
     "filterType": "GMSprite",
-    "folderName": "Flying skeleton",
+    "folderName": "Flying Skeleton",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

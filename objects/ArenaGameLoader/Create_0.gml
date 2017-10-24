@@ -26,8 +26,8 @@ with PlayerStats
 	physicalStagger = 0+0.25*strength;
 	magicalPower = 0+1*intelligence;
 	magicalStagger = 2+0.25*intelligence+0.25*willpower;
-	physicalToughness = 0+0.75*constitution;
-	magicalToughness = 0+0.75*willpower;
+	physicalToughness = 2+0.30*constitution;
+	magicalToughness = 2+0.30*willpower;
 
 	hp = hpMax;
 	mp = mpMax;
@@ -112,7 +112,7 @@ with ArenaController
 	//initialisers
 	spawnTimer = -1;
 
-	numberOfEnemies = 1;	//CHANGE AS ENEMIES ARE REFACTORED!
+	numberOfEnemies = 2;	//CHANGE AS ENEMIES ARE REFACTORED!
 	for(var i = 0; i < numberOfEnemies; i++)
 	{
 		if i == 0
@@ -122,13 +122,13 @@ with ArenaController
 		}
 		else if i == 1
 		{
-			enemyValues[i,0] = "Flying Skeleton"
-			enemyValues[i,4] = obj_flying_skeleton
+			enemyValues[i,0] = "Guard Servant"
+			enemyValues[i,4] = objServantGuard
 		}
 		else if i == 2
 		{
-			enemyValues[i,0] = "Guard Servant"
-			enemyValues[i,4] = obj_servant_guard
+			enemyValues[i,0] = "Flying Skeleton"
+			enemyValues[i,4] = obj_flying_skeleton
 		}
 		else if i == 3
 		{
@@ -146,7 +146,7 @@ with ArenaController
 		enemyValues[i,1] = cache.hpMax;
 		enemyValues[i,2] = cache.damagePower;
 	
-		enemyValues[i,3] = "Off";
+		enemyValues[i,3] = false;
 		enemyList[i] = enemyValues[i,0];
 		instance_destroy(temp);
 	}

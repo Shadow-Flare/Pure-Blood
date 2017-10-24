@@ -67,7 +67,7 @@ if phase == "bloating"
 		explodeTimer = 0;
 		instance_destroy(targetCorpse);
 		//explode!
-		scr_enemy_attack(explodeDuration,0,0,80,80,8,9,6,0,-1,0,1); 
+		scr_enemy_attack(true,explodeDuration,0,0,80,80,8,9,6,0,-1,0,1); 
 	}
 }
 

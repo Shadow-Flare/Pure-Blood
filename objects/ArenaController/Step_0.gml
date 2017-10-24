@@ -49,13 +49,13 @@ if !instance_exists(ArenaSettingsManager) && !instance_exists(PauseController)
 }
 
 //Enemy Maximum Hp
-with enemy hpMax = other.arenaStats[2];
+with enemy statCache.hpMax = other.arenaStats[2];
 
 //Enemy Physical Strength
-with enemy physicalPower = other.arenaStats[3];
+with enemy statCache.physicalPower = other.arenaStats[3];
 
 //Enemy Invulnerability
-with enemy isInvulnerable = other.arenaStats[4];
+with enemy statCache.isInvulnerable = other.arenaStats[4];
 
 //Player Maximum Hp
 PlayerStats.hpMax = other.arenaStats[5];

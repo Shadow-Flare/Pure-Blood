@@ -1,5 +1,5 @@
 //get box stats
-enemy = argument0;
+var enemy = argument0;
 var Sx = x;
 var Sy = y;
 var Ex = enemy.x;

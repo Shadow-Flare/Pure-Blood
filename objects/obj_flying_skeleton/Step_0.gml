@@ -98,8 +98,8 @@
 //		attackTimer = 0;
 //		ySpd = attack1InitialSpeedY;
 //		xSpd = attack1InitialSpeedX;
-//		scr_enemy_attack(attack1Duration,0,0,10,22,1,physicalPower*1,6,20,-1,0,0); 
-//	//@scr_enemy_attack(dur,xOff,yOff,width,height,damType,dam,stagger,knockback,statType,statValue,pierce)
+//		scr_enemy_attack(true,attack1Duration,0,0,10,22,1,physicalPower*1,6,20,-1,0,0); 
+//	//@scr_enemy_attack(true,dur,xOff,yOff,width,height,damType,dam,stagger,knockback,statType,statValue,pierce)
 //	}
 //	if (attackTimer == attack1Duration*room_speed || ySpd <= -0.5*attack1InitialSpeedY) && subPhase == "attacking"
 //	{
@@ -128,8 +128,8 @@
 //	attackTimer++;
 //	if attackTimer = round(room_speed*attack2Duration/2) && subPhase == "attacking"
 //	{
-//		scr_enemy_attack(0.2,16,0,16,16,1,physicalPower*1.25,6,15,-1,0,0); 
-//		//@scr_enemy_attack(dur,xOff,yOff,width,height,damType,dam,stagger,knockback,statType,statValue,pierce)
+//		scr_enemy_attack(true,0.2,16,0,16,16,1,physicalPower*1.25,6,15,-1,0,0); 
+//		//@scr_enemy_attack(true,dur,xOff,yOff,width,height,damType,dam,stagger,knockback,statType,statValue,pierce)
 //	}
 //	if deflected && subPhase == "attacking"
 //	{

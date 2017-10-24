@@ -11,4 +11,14 @@ else
 	objPlayer.y = spawner.y;
 }
 
-PlayerStats.hp = PlayerStats.hpMax;
+with objPlayer
+{
+	statCache.hp = statCache.hpMax;
+	phase = state.base;
+	phaseTimer = 0;
+	scr_player_base_subPhaseDeterminer();
+	isDead = false;
+	actorType = actorTypes.player;
+	phased = false;
+	image_alpha = 1;
+}

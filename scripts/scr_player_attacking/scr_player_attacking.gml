@@ -1,9 +1,8 @@
 //get needed data
-var IE = instance_exists(InputManager)
-if IE && InputManager.xInput xInputQueue = 1;
-if IE && InputManager.yInput yInputQueue = 1;
-if IE && InputManager.aInput aInputQueue = 1;
-if IE && InputManager.bInput bInputQueue = 1;
+if InputManager.xInput xInputQueue = 1;
+if InputManager.yInput yInputQueue = 1;
+if InputManager.aInput aInputQueue = 1;
+if InputManager.bInput bInputQueue = 1;
 
 #region do things
 phaseTimer++;
@@ -34,8 +33,7 @@ switch vPhase
 			//ySpd
 		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
 		{
-			if aerialTargetX != -4 && aerialTargetY != -4 ySpd = (aerialTargetY-y)/8;
-			else ySpd = attackMoveDistanceY/((attackMoveDuration)*room_speed);
+			ySpd = attackMoveDistanceY/((attackMoveDuration)*room_speed);
 		}
 		break;
 
@@ -44,17 +42,27 @@ switch vPhase
 			//xspd
 		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
 		{
-			if aerialTargetX != -4 && aerialTargetY != -4 xSpd = (aerialTargetX-x)/8;
+			if aerialTargetX != -4
+			{
+				xSpd = (aerialTargetX-x)/8;
+			}
 			else xSpd = facing*(attackMoveDistanceX/((attackMoveDuration)*room_speed));
 		}
 		else xSpd -= xSpd/4;
 			//ySpd
 		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
 		{
-			if aerialTargetX != -4 && aerialTargetY != -4 ySpd = (aerialTargetY-y)/8;
+			if aerialTargetY != -4 
+			{
+				ySpd = (aerialTargetY-y)/8;
+			}
 			else ySpd = attackMoveDistanceY/((attackMoveDuration)*room_speed);
 		}
-		else ySpd -= GameManager.grav*(3/4); //quarter G
+		else
+		{
+			ySpd -= GameManager.grav*(3/4); //1/4 G
+			ySpd = clamp(ySpd,-aerialYSpdCap,aerialYSpdCap);
+		}
 		break;
 }
 
@@ -123,7 +131,9 @@ switch vPhase
 					}
 						//end
 					else if subPhaseTimer >= round(attackCooldown*room_speed)
-					{
+					{							
+						aerialTargetX = -4;
+						aerialTargetY = -4;	
 						phased = 0;
 						with obj_player_attack_effect instance_destroy();
 						phase = state.base;
@@ -142,9 +152,11 @@ switch vPhase
 					if xInputQueue && attackNum != PlayerStats.aerialComboSize-1 //&& effect.hasHit
 					{
 						with obj_player_attack_effect instance_destroy();
-						if lockOnType != lockOn.off && distance_to_object(lockOnTarget) <= attackTrackDistance && lockOnTarget.phase != "dying" //this will get changed as enemy code gets changed
+						if lockOnType != lockOn.off && distance_to_object(lockOnTarget) <= attackTrackDistance
 						{
-							aerialTargetX = lockOnTarget.x;
+							var dirToPlayer = sign(x-lockOnTarget.x);
+							var enemyBBoxWidth = lockOnTarget.bbox_right-lockOnTarget.bbox_left;
+							aerialTargetX = lockOnTarget.x+dirToPlayer*(enemyBBoxWidth/2+10);
 							aerialTargetY = lockOnTarget.y;
 						}
 						else
@@ -168,6 +180,8 @@ switch vPhase
 					else if subPhaseTimer >= round(attackCooldown*room_speed)
 					{
 						with obj_player_attack_effect instance_destroy();
+						aerialTargetX = -4;
+						aerialTargetY = -4;	
 						phase = state.base;
 						phaseTimer = 0;
 						attackName = noone;
