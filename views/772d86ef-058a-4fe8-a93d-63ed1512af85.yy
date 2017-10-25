@@ -1,0 +1,26 @@
+{
+    "id": "772d86ef-058a-4fe8-a93d-63ed1512af85",
+    "modelName": "GMFolder",
+    "mvc": "1.1",
+    "name": "772d86ef-058a-4fe8-a93d-63ed1512af85",
+    "children": [
+        "c51e66d2-a4b1-40bd-835c-3c21b7e71dad",
+        "b4caa36f-073c-4501-8b8f-cbaf829db00a",
+        "7ed8b2ef-e7e1-4c81-af44-19dd1fa42ced",
+        "e97ebb64-5705-421b-9fda-4d40f8e7898f",
+        "7f877f1b-952f-4c0a-81d6-990e29a63bb3",
+        "540d96a8-b314-4ac4-a009-5bb1d5491154",
+        "839cb0a4-b39c-4076-8524-302625aa44ba",
+        "43ed8957-abd8-475b-8519-d7123e269406",
+        "8a028b30-0329-4caa-9e17-83b8fe3335d7",
+        "92a3b214-c8b3-4d08-a656-75eae76a719d",
+        "cb189bc5-a993-437e-bfc9-cb1478f8d49a",
+        "1f6573e5-a8a1-46a1-b4a2-41e8ff838119",
+        "4e70935b-53f4-4526-8be0-bf96ca2a4d50",
+        "5e84c024-c6db-42ca-86dd-d76370efc0f2"
+    ],
+    "filterType": "GMSprite",
+    "folderName": "Sanguine Connoisseur",
+    "isDefaultView": false,
+    "localisedFolderName": ""
+}

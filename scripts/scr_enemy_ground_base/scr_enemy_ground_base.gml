@@ -103,6 +103,7 @@ switch subPhase
 					phase = state.action5;
 					break;
 			}
+			driveAction = 0;
 			actionHardCooldownTimer = 0;
 			subPhase = subState.actionSub1;
 			phaseTimer = 0;

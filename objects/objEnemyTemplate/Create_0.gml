@@ -89,9 +89,6 @@ driveJump = false;
 driveAction = 0;
 driveMove = 0;
 
-//attack data
-attack1Range = 16*2.5;									//$$//
-
 //base checks
 actionHardCooldownTimer = -1;
 hasDeflected = false;
@@ -109,6 +106,9 @@ staggeredDuration = 0.5;								//$$//
 proneDuration = 0.6;									//$$//
 deathDuration = 1;										//$$//
 deathFadeDuration = 2;									//$$//
+
+//ai data
+attack1Range = 16*2.5;									//$$//
 
 //action data
 	//action1: general attack				the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings

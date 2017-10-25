@@ -12,7 +12,8 @@
         "afb2de0b-e651-487c-977f-d7b2ca773d8a",
         "dc20d3b5-24c4-47d3-8787-e324f55f3a0b",
         "e969628b-4836-4ed0-b1ed-909e02ba22f3",
-        "bac73329-65fd-441c-9199-7a20135a887b"
+        "bac73329-65fd-441c-9199-7a20135a887b",
+        "dd2fca87-81bf-4681-9175-ac11f13aa19d"
     ],
     "filterType": "GMScript",
     "folderName": "state behaviour scripts",

@@ -463,6 +463,14 @@
             }
         },
         {
+            "Key": "1f6573e5-a8a1-46a1-b4a2-41e8ff838119",
+            "Value": {
+                "id": "1acd4de5-6447-480d-b5d1-853e2c1e6080",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyAction2Sub1\\sprSanguineConnoisseurBodyAction2Sub1.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "1f8acba9-79d5-46b3-ae62-9495dc52b64e",
             "Value": {
                 "id": "380ec251-925e-4d1f-bfa1-8657d21aa712",
@@ -999,6 +1007,14 @@
             }
         },
         {
+            "Key": "43ed8957-abd8-475b-8519-d7123e269406",
+            "Value": {
+                "id": "45d3fc40-0b87-47b0-9bf8-b2de97eb9643",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyDying\\sprSanguineConnoisseurBodyDying.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "45ce1c99-5191-4231-ad49-f1c304bdc13a",
             "Value": {
                 "id": "e0a23724-3c5f-4814-adb8-5aee7edaa395",
@@ -1191,6 +1207,14 @@
             }
         },
         {
+            "Key": "4e70935b-53f4-4526-8be0-bf96ca2a4d50",
+            "Value": {
+                "id": "bc7615fa-41e6-40d5-b185-94670b8ab3f4",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyAction2Sub2\\sprSanguineConnoisseurBodyAction2Sub2.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "4e9433ad-05de-4b45-8cf7-32b6404cf76e",
             "Value": {
                 "id": "7c823567-04a9-407f-aa5d-8afd63b6eec6",
@@ -1235,6 +1259,14 @@
             "Value": {
                 "id": "57790e6b-7cbe-483b-b995-7adc967b5e2d",
                 "resourcePath": "sprites\\sprEnemySpriteMissing\\sprEnemySpriteMissing.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "540d96a8-b314-4ac4-a009-5bb1d5491154",
+            "Value": {
+                "id": "29a17775-053d-49e3-8b15-c8f2fc794162",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyProne\\sprSanguineConnoisseurBodyProne.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1415,6 +1447,14 @@
             }
         },
         {
+            "Key": "5e84c024-c6db-42ca-86dd-d76370efc0f2",
+            "Value": {
+                "id": "ef249bad-5fa0-442f-9f07-090f2b7b8fd8",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyAction2Sub3\\sprSanguineConnoisseurBodyAction2Sub3.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "5f216d30-cc45-4ebc-b6ae-ade0082ad493",
             "Value": {
                 "id": "e92bef9e-0c1c-44b1-9f0f-920a10067779",
@@ -1540,6 +1580,14 @@
                 "id": "257fe842-feb6-4790-977c-444c805daa99",
                 "resourcePath": "sprites\\sprPlayerWeaponGladiusWalking\\sprPlayerWeaponGladiusWalking.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "66d37285-314d-4a5d-ab95-3dbfdfaa89f8",
+            "Value": {
+                "id": "3faaf408-f81a-4572-b546-28d20aea1ba3",
+                "resourcePath": "objects\\objSanguineConnoisseurProjectile\\objSanguineConnoisseurProjectile.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -1855,6 +1903,14 @@
             }
         },
         {
+            "Key": "772d86ef-058a-4fe8-a93d-63ed1512af85",
+            "Value": {
+                "id": "9a49ec43-564e-442b-845a-c59403b72648",
+                "resourcePath": "views\\772d86ef-058a-4fe8-a93d-63ed1512af85.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "776069cd-3e3a-45ac-afb1-06fe8aafe656",
             "Value": {
                 "id": "bc96a204-4423-4dfd-a670-d366af150d47",
@@ -1959,6 +2015,14 @@
             }
         },
         {
+            "Key": "7d1cae89-2daf-4c51-9ce5-68728c68e686",
+            "Value": {
+                "id": "47ca313c-c128-4c30-be80-c2997a6b445a",
+                "resourcePath": "objects\\objSanguineConnoisseur\\objSanguineConnoisseur.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "7d4edb8b-82ed-4159-8d39-22ab07af999a",
             "Value": {
                 "id": "d0183b4b-e3af-43db-944a-d5fa2496f345",
@@ -1988,6 +2052,22 @@
                 "id": "6da72213-0c15-4d6b-867a-59ad5c1b9771",
                 "resourcePath": "views\\7ea20593-e8a2-41a4-8f62-4a303d830462.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "7ed8b2ef-e7e1-4c81-af44-19dd1fa42ced",
+            "Value": {
+                "id": "41ff2be4-76de-4aef-bd29-85749891bac2",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyAirborne\\sprSanguineConnoisseurBodyAirborne.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "7f877f1b-952f-4c0a-81d6-990e29a63bb3",
+            "Value": {
+                "id": "f9fd32f6-fd2b-444b-b666-aa491d079ed1",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyFlung\\sprSanguineConnoisseurBodyFlung.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -2044,6 +2124,14 @@
                 "id": "f08bb986-0ff4-474e-b824-870ad45901d2",
                 "resourcePath": "objects\\obj_platform_parent\\obj_platform_parent.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "839cb0a4-b39c-4076-8524-302625aa44ba",
+            "Value": {
+                "id": "68e164e8-a565-42fd-9959-a486071097bc",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyAerialStagger\\sprSanguineConnoisseurBodyAerialStagger.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -2151,6 +2239,14 @@
             }
         },
         {
+            "Key": "891fc7b3-d5d1-4649-8efa-16f6247adf11",
+            "Value": {
+                "id": "19a05c55-9e99-4127-8ee8-305d00aca1d8",
+                "resourcePath": "scripts\\scr_sanguineConnoisseur_action1\\scr_sanguineConnoisseur_action1.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "8923a388-abdc-401a-b01a-70b4da490b9f",
             "Value": {
                 "id": "a20b97e0-179c-4724-997c-419555b89853",
@@ -2163,6 +2259,14 @@
             "Value": {
                 "id": "d93baf72-8df5-4bab-b16d-df20053fcb15",
                 "resourcePath": "sprites\\spr_flyingSkeleton_idle\\spr_flyingSkeleton_idle.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "8a028b30-0329-4caa-9e17-83b8fe3335d7",
+            "Value": {
+                "id": "114e4edf-136f-4916-bd57-f943c1dd977d",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyDyingProne\\sprSanguineConnoisseurBodyDyingProne.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2275,6 +2379,22 @@
             "Value": {
                 "id": "4c82a5f9-a73b-4a9c-8f6a-df113def79e1",
                 "resourcePath": "sprites\\sprPlayerBodySwordCrossbowHoldingTowards\\sprPlayerBodySwordCrossbowHoldingTowards.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "919bb142-9efe-45f1-81a0-0b8c2fe54078",
+            "Value": {
+                "id": "34492680-3a6d-4f5b-ad18-ebe9b3d2f25a",
+                "resourcePath": "scripts\\scr_sanguineConnoisseur_ai\\scr_sanguineConnoisseur_ai.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "92a3b214-c8b3-4d08-a656-75eae76a719d",
+            "Value": {
+                "id": "363cbf55-fe6a-4a77-aebf-c81ff05d9161",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyAction1Sub1\\sprSanguineConnoisseurBodyAction1Sub1.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -2500,6 +2620,14 @@
                 "id": "6bc388fa-3f77-4667-8418-b214d1d2c8da",
                 "resourcePath": "sprites\\sprPlayerBodySwordAerialSlash2\\sprPlayerBodySwordAerialSlash2.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "9e7840a5-6b2d-4c7b-bc94-99b3062d12db",
+            "Value": {
+                "id": "69a45f09-a32c-4a00-8a4e-a8bbece49293",
+                "resourcePath": "scripts\\scr_sanguineConnoisseur_action2\\scr_sanguineConnoisseur_action2.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -2903,6 +3031,14 @@
             }
         },
         {
+            "Key": "b4caa36f-073c-4501-8b8f-cbaf829db00a",
+            "Value": {
+                "id": "2ad4cf7c-2d71-47d8-b380-94ecf9ad2444",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyLanding\\sprSanguineConnoisseurBodyLanding.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "b54a708d-6e8d-4142-8b37-582c78f83b34",
             "Value": {
                 "id": "44ce4e97-796b-463f-ba6b-489c9b5c5013",
@@ -3175,6 +3311,14 @@
             }
         },
         {
+            "Key": "c51e66d2-a4b1-40bd-835c-3c21b7e71dad",
+            "Value": {
+                "id": "ca4d87aa-9d51-4585-acf6-9519da6e5c2b",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyIdle\\sprSanguineConnoisseurBodyIdle.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "c5539887-2c9f-4a67-bf83-445d2d288561",
             "Value": {
                 "id": "fea87bc6-d3a2-40eb-89c0-5c05a7cc5e07",
@@ -3351,11 +3495,27 @@
             }
         },
         {
+            "Key": "cb189bc5-a993-437e-bfc9-cb1478f8d49a",
+            "Value": {
+                "id": "0b47688e-e162-43c0-858b-d014414cbdf7",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyAction1Sub2\\sprSanguineConnoisseurBodyAction1Sub2.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "cc98d028-7bdd-4680-85f3-c87a7baa481e",
             "Value": {
                 "id": "49c1fdc9-3f08-49b8-ad20-de9f21da0f7c",
                 "resourcePath": "options\\windows\\options_windows.yy",
                 "resourceType": "GMWindowsOptions"
+            }
+        },
+        {
+            "Key": "ccba11c9-ea68-446d-8fae-6b30b3c7cd6f",
+            "Value": {
+                "id": "afd7355b-02bc-4049-8de0-e0d7fe4d5264",
+                "resourcePath": "views\\ccba11c9-ea68-446d-8fae-6b30b3c7cd6f.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -3531,6 +3691,14 @@
             "Value": {
                 "id": "ad01b0db-c18b-4e26-b14e-f92ff742a121",
                 "resourcePath": "views\\dc20d3b5-24c4-47d3-8787-e324f55f3a0b.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "dd2fca87-81bf-4681-9175-ac11f13aa19d",
+            "Value": {
+                "id": "20250056-46dc-45d8-abc5-59913d2f7566",
+                "resourcePath": "views\\dd2fca87-81bf-4681-9175-ac11f13aa19d.yy",
                 "resourceType": "GMFolder"
             }
         },
@@ -3756,6 +3924,14 @@
                 "id": "1661438e-d266-4d81-a7fd-7902cd43c1ff",
                 "resourcePath": "views\\e969628b-4836-4ed0-b1ed-909e02ba22f3.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "e97ebb64-5705-421b-9fda-4d40f8e7898f",
+            "Value": {
+                "id": "9dfb5542-afe4-4efe-91dc-d5c8156e8291",
+                "resourcePath": "sprites\\sprSanguineConnoisseurBodyStagger\\sprSanguineConnoisseurBodyStagger.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -4092,11 +4268,14 @@
         "402ac495-9791-4b0a-9311-4249d7f7143e",
         "956dc0ba-28fd-4384-9969-eeb60c726b23",
         "154c2d97-9f8c-44bf-baa8-863e3dc84dd0",
+        "891fc7b3-d5d1-4649-8efa-16f6247adf11",
+        "9e7840a5-6b2d-4c7b-bc94-99b3062d12db",
         "f9ecf899-a1ac-4d2c-ae7d-a08c27caec56",
         "67109cb0-836b-4897-8933-fde526d9795f",
         "9de9f719-347e-4175-9249-45f7a2e49ec4",
         "8894c81b-f0d9-4d80-99f2-5469dc95856a",
         "0c372188-a9cd-450b-bab7-2ba4c760e370",
+        "919bb142-9efe-45f1-81a0-0b8c2fe54078",
         "2f2ce3aa-0bbb-4387-a6b5-36ab039c06f2",
         "3b2ada31-8b81-4a50-9cb9-1d307035dd36",
         "d11abacc-8b9f-4c1f-8bd2-b507b072ba48",

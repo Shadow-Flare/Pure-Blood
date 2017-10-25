@@ -1,4 +1,5 @@
 event_inherited();
+randomize();
 
 //enum initializers
 	//actor

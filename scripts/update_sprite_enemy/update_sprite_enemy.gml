@@ -23,8 +23,9 @@ if baseSpriteIndex != argument0
 	if asset_get_type(bodySpriteName) == asset_sprite 
 	{
 		sprite_delete(tempBodySprite);
-		tempBodySprite = sprite_duplicate(asset_get_index(bodySpriteName));
-		var sprSpd = sprite_get_speed(asset_get_index(bodySpriteName))
+		var spr = asset_get_index(bodySpriteName);
+		tempBodySprite = sprite_duplicate(spr);
+		var sprSpd = sprite_get_speed(spr)
 		sprite_set_speed(tempBodySprite,sprSpd,spritespeed_framespersecond);
 		sprite_collision_mask(tempBodySprite,false,2,bboxLeft,bboxTop,bboxRight,bboxBottom,1,255);
 		sprite_index = tempBodySprite;
