@@ -8,6 +8,9 @@ if room == loading
 		case loadType.arena:
 			instance_create_depth(0,0,0,ArenaGameLoader);
 			break;
+		case loadType.hordeMode:
+			instance_create_depth(0,0,0,HordeModeGameLoader);
+			break;
 	}
 
 	room_goto(roomTo);
@@ -21,7 +24,7 @@ else
 			//do nothing
 			break;
 		case loadType.newGame:
-			instance_create_layer(52,368,"lay_player",objPlayer);
+			instance_create_layer( 52,368,"lay_player",objPlayer);
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(NewGameLoader);
 			GameManager.gameState = GameState.inGame;
@@ -29,10 +32,18 @@ else
 			type = loadType.ending;
 			break;
 		case loadType.arena:
-			instance_create_layer(48,128,"lay_player",objPlayer);
+			instance_create_layer( 48,128,"lay_player",objPlayer);
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(ArenaGameLoader);
 			GameManager.gameState = GameState.arena;
+			GameManager.lastSpawner =  instance_nearest(objPlayer.x,objPlayer.y,objRoomSpawner);
+			type = loadType.ending;
+			break;
+		case loadType.hordeMode:
+			instance_create_layer(384,316,"lay_player",objPlayer);
+			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
+			instance_destroy(HordeModeGameLoader);
+			GameManager.gameState = GameState.hordeMode;
 			GameManager.lastSpawner =  instance_nearest(objPlayer.x,objPlayer.y,objRoomSpawner);
 			type = loadType.ending;
 			break;

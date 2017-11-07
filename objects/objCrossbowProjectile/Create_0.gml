@@ -1,3 +1,5 @@
+attackType = attackTypes.projectile;
+
 lifeTime = 0;
 hasHit = 0;
 hitOn = 1;

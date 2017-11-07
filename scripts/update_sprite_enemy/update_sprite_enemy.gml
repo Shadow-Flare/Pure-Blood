@@ -1,5 +1,5 @@
 ///@arg baseSprite
-///@arg imageSpeed
+///@arg imageSpeed (negative to follow a duration)
 
 if baseSpriteIndex != argument0
 {	
@@ -8,15 +8,10 @@ if baseSpriteIndex != argument0
 
 	//baseSprite update
 	baseSpriteIndex = argument0;
-	image_index = 0;
-	image_speed = argument1;
 
 	//get strings
 		//body sprite
-	var bodySpriteName = string_replace(sprite_get_name(baseSpriteIndex),"Zombie",entityName);
-		
-		//effect sprite
-	var effectSpriteName = string_replace(bodySpriteName,"Body","Effect");
+	var bodySpriteName = string_replace(sprite_get_name(baseSpriteIndex),"BASE",entityName);
 	
 	//roundup
 		//body sprite
@@ -32,9 +27,10 @@ if baseSpriteIndex != argument0
 	}
 	else sprite_index = sprEnemySpriteMissing;
 	
-		//effect sprite
-	if asset_get_type(effectSpriteName) == asset_sprite effectSpriteIndex = asset_get_index(effectSpriteName);
-	else effectSpriteIndex = noone;
+		//speed and index reset
+	image_index = 0;
+	if sign(argument1) >= 0	image_speed = argument1;
+	else if sign(argument1) == -1 image_speed = sprite_get_number(sprite_index)/abs(argument1);
 		
 		//Auxiliary sprite; just a reset, if used, code for it is added AFTER this script
 	auxSpriteIndex = noone;

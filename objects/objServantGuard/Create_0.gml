@@ -16,7 +16,9 @@ ySpd = 0;
 facing = irandom(1);
 if facing == 0 facing = -1;
 phased = false;
+pushable = true;
 flying = false;
+onPlatform = false;
 dropThroughPlatforms = false;
 tempBodySprite = noone;
 
@@ -31,7 +33,7 @@ bboxTop = bboxDefaultTop;
 bboxBottom = bboxDefaultBottom;
 
 if !layer_exists("lay_caches") layer_create(0,"lay_caches");
-statCache = instance_create_layer(0,0,"lay_caches",actorStats)
+statCache = instance_create_layer(0,0,"lay_caches",ActorStats)
 with statCache
 {
 	hpMax = 60;											
@@ -43,8 +45,11 @@ with statCache
 	physicalToughness = 1.2;							
 	magicalToughness = 1.2;								
 	
-	moveSpeed = 0.3;									
+	moveSpeed = 0.45;									
 	defaultMoveSpeed = moveSpeed;
+	
+	killExp = 12
+	killGold = [0.1,4-16]
 	
 	hitEffectType = "blood";
 	hitEffectColour = "dark red";
@@ -80,47 +85,49 @@ driveMove = 0;
 
 //base checks
 actionHardCooldownTimer = -1;
+hasBlocked = false;
 hasDeflected = false;
 canChangeVState = true;
 isDead = false;
 hasBeenHit = false;
 lastHitType = -1;
 
-//variables
-aggroRange = 16*7;										
-actionHardCooldown = 2;									
-landingDuration = 0.5;									
+//variables					
+landingDuration = 0.5;
+staggeredDuration = 0.5;
+proneDuration = 0.6;
+deflectDuration = 0.7;
 
-staggeredDuration = 0.5;								
-proneDuration = 0.6;									
 deathDuration = 1;										
 deathFadeDuration = 3;									
 
 //ai data
-attack1Range = 16*2.25;	
+aggroRange = 16*7;										
+actionHardCooldown = 2;		
+actionAiDelay = 1;
+attack1Range = 16*2.25;
 
 //action data
-actionAiDelay = 1;
 	//action1: general attack				the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings
-attack1Animation = sprServantGuardBodyAction1											
-attack1Duration = 1.2;																	//$$//
-attack1HitStart = attack1Duration*(/**/5/**//sprite_get_number(attack1Animation))		
-attack1HitDuration = attack1Duration*(/**/2/**//sprite_get_number(attack1Animation))	
-attack1MoveBurst = 3;																	//$$//
-attack1Move = 0;																		//$$//
-attack1MoveStart = attack1Duration*(/**/4/**//sprite_get_number(attack1Animation))		
-attack1MoveDuration = attack1Duration*(/**/3/**//sprite_get_number(attack1Animation))	
-attack1XOffset = 16;																	//$$//
-attack1YOffset = -6;																	//$$//
-attack1Width = 20;																		//$$//
-attack1Height = 12;																		//$$//
-attack1DamageType = 2;																	//$$//
-attack1Damage = 1;																	//$$//
-attack1Stagger = 1;																		//$$//
-attack1Knockback = 3.5;																	//$$//
-attack1StatusType = -1;																	//$$//
-attack1StatusValue = 0;																	//$$//
-attack1Pierce = false;																	//$$//
+action1Animation = sprServantGuardBodyAction1											
+action1FrameData = -1;
+action1Follow = true;
+action1Duration = 1;																	//$$//
+action1AttackSoundID = noone;															//$$//
+action1HitSoundID = noone;																//$$//
+action1HitStart = action1Duration*(/**/5/**//sprite_get_number(action1Animation))		
+action1HitDuration = action1Duration*(/**/3/**//sprite_get_number(action1Animation))	
+action1MoveBurst = 3;																	//$$//
+action1Move = 0;																		//$$//
+action1MoveStart = action1Duration*(/**/4/**//sprite_get_number(action1Animation))		
+action1MoveDuration = action1Duration*(/**/3/**//sprite_get_number(action1Animation))	
+action1DamageType = 2;																	//$$//
+action1Damage = 1;																	//$$//
+action1Stagger = 1;																		//$$//
+action1Knockback = 3.5;																	//$$//
+action1StatusType = -1;																	//$$//
+action1StatusValue = 0;																	//$$//
+action1Pierce = false;																	//$$//
 
 	//action2: parry begin
 action2AiTimer = 0;
@@ -132,21 +139,24 @@ action2AnimationSub1Back = sprServantGuardBodyAction2Sub1Back;
 action2DurationSub1 = 7;
 action2HitBoxShiftSub1 = 16;
 			//damage zone
+action2ZoneAnimation = sprServantGuardEffectAction2Sub1;
 action2ZoneID = noone;
+action2ZoneFrameData = -1;
+action2ZoneDuration = -1;
+action2ZoneFollow = true;
+action2ZoneAttackSoundID = noone;
+action2ZoneHitSoundID = noone;
+action2ZoneDuration = -1;
 action2ZoneDamageType = 1;
 action2ZoneDamage = 0.3;
 action2ZoneStagger = 0;
 action2ZoneKnockback = 1.5;
-action2ZoneXOffset = 7.5;
-action2ZoneYOffset = -7;
-action2ZoneWidth = 28;
-action2ZoneHeight = 4;
 action2ZoneStatusType = -1;
 action2ZoneStatusValue = 0;
 action2ZonePierce = false;	
 
 		//sub2: blocking reaction
-action2DurationSub2 = 0.6;
+action2DurationSub2 = 0.3;
 action2AnimationSub2 = sprServantGuardBodyAction2Sub2;
 
 		//sub3: returning after no block
@@ -154,22 +164,22 @@ action2DurationSub3 = 0.3;
 action2AnimationSub3 = sprServantGuardBodyAction2Sub3;
 
 	//action3: parry counter-attack				the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings
-attack3Animation = sprServantGuardBodyAction3											
-attack3Duration = 0.8;																	//$$//
-attack3HitStart = attack3Duration*(/**/5/**//sprite_get_number(attack3Animation))		
-attack3HitDuration = attack3Duration*(/**/3/**//sprite_get_number(attack3Animation))	
-attack3MoveBurst = 3;																	//$$//
-attack3Move = 0;																		//$$//
-attack3MoveStart = attack3Duration*(/**/4/**//sprite_get_number(attack3Animation))		
-attack3MoveDuration = attack3Duration*(/**/3/**//sprite_get_number(attack3Animation))	
-attack3XOffset = 2;																	//$$//
-attack3YOffset = 1;																	//$$//
-attack3Width = 42;																		//$$//
-attack3Height = 16;																		//$$//
-attack3DamageType = 2;																	//$$//
-attack3Damage = 2;																	
-attack3Stagger = 1.5;																		
-attack3Knockback = 4;																	//$$//
-attack3StatusType = -1;																	//$$//
-attack3StatusValue = 0;																	//$$//
-attack3Pierce = false;																	//$$//
+action3Animation = sprServantGuardBodyAction3											
+action3FrameData = -1;
+action3Follow = true;
+action3Duration = 0.7;	//$$//
+action3AttackSoundID = noone;															//$$//
+action3HitSoundID = noone;																//$$//
+action3HitStart = action3Duration*(/**/5/**//sprite_get_number(action3Animation))		
+action3HitDuration = action3Duration*(/**/2/**//sprite_get_number(action3Animation))	
+action3MoveBurst = 3;																	//$$//
+action3Move = 0;																		//$$//
+action3MoveStart = action3Duration*(/**/4/**//sprite_get_number(action3Animation))		
+action3MoveDuration = action3Duration*(/**/3/**//sprite_get_number(action3Animation))	
+action3DamageType = 2;																	//$$//
+action3Damage = 2;																	
+action3Stagger = 1.5;																		
+action3Knockback = 4;																	//$$//
+action3StatusType = -1;																	//$$//
+action3StatusValue = 0;																	//$$//
+action3Pierce = false;																	//$$//

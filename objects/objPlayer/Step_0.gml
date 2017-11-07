@@ -1,6 +1,3 @@
-//Initials
-IE = instance_exists(InputManager)
-
 #region lock-on
 
 if !canChangeTarget
@@ -91,7 +88,7 @@ switch lockOnType
 			}
 			if !canChangeTarget
 			{
-				if !IE || (InputManager.targetInput==0&&InputManager.targetInputV==0) canChangeTarget = 1;
+				if (InputManager.targetInputH==0&&InputManager.targetInputV==0) canChangeTarget = 1;
 			}
 		}
 		else
@@ -137,7 +134,7 @@ switch lockOnType
 //needed code. Though at times multiple passive
 //codes may be needed.
 
-	//targets (only ropeshot atm, stuff will probably be added)
+	#region targets (only ropeshot atm, stuff will probably be added)
 ropeShotTarget = noone;
 switch PlayerStats.activeOffhandActivatableID
 {
@@ -156,9 +153,9 @@ switch PlayerStats.activeOffhandActivatableID
 		break;
 
 }
-
-	//melee attack cooldown
-if attackHardCooldownTimer != -1
+	#endregion
+	#region melee attack cooldown
+if attackHardCooldownTimer != -1 && phase != state.attacking
 {
 	attackHardCooldownTimer++;
 	if attackHardCooldownTimer >= round(attackHardCooldown*room_speed)
@@ -166,7 +163,8 @@ if attackHardCooldownTimer != -1
 		attackHardCooldownTimer = -1; //switch off
 	}
 }
-	//offhand attack cooldown
+	#endregion
+	#region offhand attack cooldown
 if offhandHardCooldownTimer != -1
 {
 	offhandHardCooldownTimer++;
@@ -175,29 +173,82 @@ if offhandHardCooldownTimer != -1
 		offhandHardCooldownTimer = -1; //switch off
 	}
 }
+	#endregion
+	#region reset hitPhase
+switch hitPhase
+{
+	case hitState.normal:
+		//do nothing
+		break;
+	case hitState.blocking:
+		if !(phase == state.blocking && subPhase == subState.performing) hitPhase = hitState.normal;
+		break;
+	case hitState.dodging:
+		if !(phase == state.dodging) hitPhase = hitState.normal;
+		break;
+}
+	#endregion
 
 #endregion
 
 #region State mechanisms
+
+	#region Vertical State machine
+lastVState = vPhase;
 switch vPhase
 {
 	case vState.grounded:
-		var block = instance_place(x,y+1,obj_block_parent)
-		if block == noone || place_meeting(x,y,block) vPhase = vState.midAir;
+			//transition
+		var isGrounded = false;
+		with obj_block_parent
+		{
+			if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
+			{
+				isGrounded = true;
+				if object_is_ancestor(object_index,obj_platform_parent) other.onPlatform = true;
+				else other.onPlatform = false;
+				break;
+			}
+		}
+		if !isGrounded
+		{
+			vPhase = vState.midAir;
+			onPlatform = false
+		}
+			//no ySpd change
 		break;
 	case vState.midAir:
-		var block = instance_place(x,y+1,obj_block_parent)
-		if block != noone && !place_meeting(x,y,block) vPhase = vState.grounded;
-		else ySpd += GameManager.grav;
+			//transition
+		var isGrounded = false;
+		if sign(ySpd) != -1
+		{
+			with obj_block_parent
+			{
+				if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
+				{
+					isGrounded = true;
+					other.vPhase = vState.grounded;
+					if object_is_ancestor(object_index,obj_platform_parent) other.onPlatform = true;
+					else other.onPlatform = false;
+					break;
+				}
+			}
+		}
+			//ySpd
+		if !isGrounded ySpd += GameManager.grav;
 		if ySpd > maxFallSpeed ySpd = maxFallSpeed;
 		break;
 	case vState.jumping:
+			//transition
+		if ySpd >= 0 vPhase = vState.midAir;
+			//ySpd
 		ySpd += GameManager.grav;
 		if ySpd > maxFallSpeed ySpd = maxFallSpeed;
-		if ySpd >= 0 vPhase = vState.midAir;
 		break;
 }
-
+	#endregion
+	
+	#region Phase State Machine (nested subPhase)
 switch phase
 {
 	case state.base:
@@ -225,12 +276,14 @@ switch phase
 		scr_player_dying();
 		break;
 }
+	#endregion
+	
 #endregion
 
 scr_hitCheck();
 scr_statusCheck();
 scr_player_equipmentChange();
-scr_move_with_collisions();
+scr_actor_moveWithCollisions();
 
 	//addional properties
 image_xscale = facing;

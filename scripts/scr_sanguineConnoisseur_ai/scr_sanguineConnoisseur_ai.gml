@@ -16,6 +16,8 @@ switch aggroPhase
 			{
 				numOfAction1++;
 				driveAction = 1;
+				targetX = target.x;
+				targetY = target.y;
 			}
 				//teleport
 			else 

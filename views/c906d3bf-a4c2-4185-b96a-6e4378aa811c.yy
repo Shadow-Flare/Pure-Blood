@@ -20,8 +20,15 @@
         "a5be1084-de46-46ab-bfe0-814ef8009d1f",
         "98b0c46e-9a75-4714-a2b9-7318da9458a5",
         "54bac922-03ab-41c4-9824-0ccf1abe8ad3",
-        "0d752824-fa2f-42c9-b970-67f259cd7315",
-        "d084dabb-7a4f-44cc-8d04-02f5c091379e"
+        "d084dabb-7a4f-44cc-8d04-02f5c091379e",
+        "fab4e98d-1ded-4dbb-971c-1df8632e3f1d",
+        "eca2ff8f-7626-4f1a-91e1-6a56cbb782e8",
+        "058a3a0d-2bea-4eb5-8d3d-a3f7e1439abc",
+        "87ccad8a-4867-4f70-bf78-08733421b53a",
+        "1b750c01-be72-4e02-b279-75cda54df376",
+        "ce07baad-f0ea-4bd1-967e-5133689f473b",
+        "34fdac28-1a68-4d72-971b-15d7686f14f6",
+        "d945ae21-e322-4143-adce-ea2b3a00483f"
     ],
     "filterType": "GMScript",
     "folderName": "Technicals",

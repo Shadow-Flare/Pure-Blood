@@ -15,9 +15,10 @@
         "1db05dae-6fee-4cbe-b43c-2511d8acc3d5",
         "7d4edb8b-82ed-4159-8d39-22ab07af999a",
         "50eb7d90-fa01-41c9-a272-4ca25da5f550",
+        "a213d4ff-ace4-4993-9052-afb33deaa028",
+        "1b0f22ee-0c05-4a97-aff2-81f9c99d8cba",
         "c9455f5b-f552-46f7-9327-71e3e2cd8a6d",
-        "7187fc77-ce88-49b3-8798-4c7479cc11a8",
-        "4f84996a-b863-48ef-bb43-c962c115f5bf"
+        "7187fc77-ce88-49b3-8798-4c7479cc11a8"
     ],
     "filterType": "GMSprite",
     "folderName": "Servant Lantern",

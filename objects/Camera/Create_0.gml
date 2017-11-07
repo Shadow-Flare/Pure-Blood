@@ -1,3 +1,5 @@
+event_inherited();
+
 enum cameraState {idle, player}
 
 cam = camera_create_view(0, 0, 320, 176, 0, -1, -1, -1, 0, 0);

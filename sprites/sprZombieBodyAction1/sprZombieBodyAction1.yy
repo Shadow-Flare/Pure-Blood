@@ -8,7 +8,7 @@
     "VTile": false,
     "bbox_bottom": 47,
     "bbox_left": 17,
-    "bbox_right": 29,
+    "bbox_right": 28,
     "bbox_top": 18,
     "bboxmode": 2,
     "colkind": 1,
@@ -263,6 +263,6 @@
     "textureGroupId": "1225f6b0-ac20-43bd-a82e-be73fa0b6f4f",
     "type": 0,
     "width": 48,
-    "xorig": 25,
-    "yorig": 33
+    "xorig": 23,
+    "yorig": 29
 }

@@ -18,11 +18,6 @@ for (var i = 0; i < array_length_1d(controllers); i++)
 	if (!instance_exists(controllers[i]))
 	{
 		obj = instance_create_layer(-1, -1, "Controllers", controllers[i]);	// Instance to create
-		if (!variable_instance_exists(obj, "singleton"))
-		{
-			show_debug_message("Singletonnot initialized for " + object_get_name(obj) +
-							", need to make sure we use event_inherited() in the create event.");
-		}
 	}
 }
 

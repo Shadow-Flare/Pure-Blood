@@ -1,7 +1,7 @@
 event_inherited();
 
-enum mainTransType {none, newGame, arena, ex}
-enum loadType {none, newGame, arena, ending}
+enum mainTransType {none, newGame, arena, hordeMode, ex}
+enum loadType {none, newGame, arena, hordeMode, ending}
 
 instance_create_depth(0,0,0,InputManager);
 instance_create_depth(0,0,0,GameManager);
@@ -14,7 +14,8 @@ selection = 0;
 
 menu_title[0, 0] = "Start";
 menu_title[0, 1] = "Arena";
-menu_title[0, 2] = "Exit";
+menu_title[0, 2] = "Horde Mode";
+menu_title[0, 3] = "Exit";
 
 //initialize
 current_menu = "title menu";

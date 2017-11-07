@@ -1,5 +1,12 @@
 timer++;
 
+	//kill if too far out of screen (is allowed to be directly above room due to gravity)
+var borderWidth = 10;
+if x < -borderWidth || x > room_width+borderWidth || y > room_height+borderWidth
+{
+	instance_destroy();
+}
+
 if timer >= room_speed*hoverDuration && phase == "hovering"
 {
 	phase = "falling"
@@ -24,4 +31,14 @@ if !place_free(x,y) && phase == "falling"
 	vspeed = 0;
 	hspeed = 0;
 	phase = "splatting"
+}
+
+if hasDrawn
+{
+	if random(1) < 1/5
+	{
+		if BloodStainController.lastBloodSound != noone audio_stop_sound(BloodStainController.lastBloodSound)
+		BloodStainController.lastBloodSound = audio_play_sound(snd_bloodSplat,10,0);
+	}
+	instance_destroy();
 }

@@ -5,6 +5,7 @@ switch gameState
 {
 	case GameState.inGame:
 	case GameState.arena:
+	case GameState.hordeMode:
 		switch pauseState
 		{
 			case PauseState.paused:

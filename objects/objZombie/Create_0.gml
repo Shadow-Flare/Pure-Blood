@@ -9,16 +9,18 @@ hitPhase = hitState.normal;
 phaseTimer = 0;
 subPhaseTimer = 0;
 baseSpriteIndex = sprite_index;
-effectSpriteIndex = noone;
 maxFallSpeed = 5;
 xSpd = 0;
 ySpd = 0;
 facing = irandom(1);
 if facing == 0 facing = -1;
 phased = false;
+pushable = true;
 flying = false;
+onPlatform = false;
 dropThroughPlatforms = false;
 tempBodySprite = noone;
+target = noone;
 
 bboxDefaultLeft = sprite_get_bbox_left(sprite_index);
 bboxDefaultRight = sprite_get_bbox_right(sprite_index);
@@ -31,7 +33,7 @@ bboxTop = bboxDefaultTop;
 bboxBottom = bboxDefaultBottom;
 
 if !layer_exists("lay_caches") layer_create(0,"lay_caches");
-statCache = instance_create_layer(0,0,"lay_caches",actorStats)
+statCache = instance_create_layer(0,0,"lay_caches",ActorStats)
 with statCache
 {
 	hpMax = 20;											
@@ -45,6 +47,9 @@ with statCache
 	
 	moveSpeed = 0.5;									
 	defaultMoveSpeed = moveSpeed;
+	
+	killExp = 4
+	killGold = [0.1,4,16]
 	
 	hitEffectType = "blood";
 	hitEffectColour = "dark red";
@@ -83,6 +88,7 @@ attack1Range = 16*2.5;
 
 //base checks
 actionHardCooldownTimer = -1;
+hasBlocked = false;
 hasDeflected = false;
 canChangeVState = true;
 isDead = false;
@@ -90,33 +96,36 @@ hasBeenHit = false;
 lastHitType = -1;
 
 //variables
-aggroRange = 16*7;										
-actionHardCooldown = 3;									
 landingDuration = 0.7;									
-
 staggeredDuration = 0.5;								
-proneDuration = 0.6;									
+proneDuration = 0.6;
+deflectDuration = 0.7;
+
 deathDuration = 1;										
 deathFadeDuration = 2;									
 
+//ai data
+aggroRange = 16*7;										
+actionHardCooldown = 3;	
+
 //action data
 	//action1: general attack				the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings
-attack1Animation = sprZombieBodyAction1													
-attack1Duration = 2;																	
-attack1HitStart = attack1Duration*(/**/5/**//sprite_get_number(attack1Animation))		
-attack1HitDuration = attack1Duration*(/**/3/**//sprite_get_number(attack1Animation))	
-attack1MoveBurst = 3;																	
-attack1Move = 0;																		
-attack1MoveStart = attack1Duration*(/**/4/**//sprite_get_number(attack1Animation))		
-attack1MoveDuration = attack1Duration*(/**/2/**//sprite_get_number(attack1Animation))	
-attack1XOffset = 16;																	
-attack1YOffset = -6;																	
-attack1Width = 4;																		
-attack1Height = 18;																		
-attack1DamageType = 2;																	
-attack1Damage = 1;																		
-attack1Stagger = 1;																		
-attack1Knockback = 12;																	
-attack1StatusType = -1;																	
-attack1StatusValue = 0;																	
-attack1Pierce = false;																	
+action1Animation = sprZombieBodyAction1													
+action1FrameData = -1;
+action1Follow = true;
+action1Duration = 2;	
+action1AttackSoundID = noone;															//$$//
+action1HitSoundID = noone;																//$$//
+action1HitStart = action1Duration*(/**/5/**//sprite_get_number(action1Animation))		
+action1HitDuration = action1Duration*(/**/3/**//sprite_get_number(action1Animation))	
+action1MoveBurst = 3;																	
+action1Move = 0;																		
+action1MoveStart = action1Duration*(/**/4/**//sprite_get_number(action1Animation))		
+action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))																		
+action1DamageType = 2;																	
+action1Damage = 1;																		
+action1Stagger = 1;																		
+action1Knockback = 12;																	
+action1StatusType = -1;																	
+action1StatusValue = 0;																	
+action1Pierce = false;																	

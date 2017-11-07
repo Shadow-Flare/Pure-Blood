@@ -13,19 +13,18 @@ switch subPhase
 			//xSpd
 		xSpd -= xSpd/4;
 			//sprite
-		var newImage = action2Sub1Animation
-		var newImageSpeed = sprite_get_number(newImage)/action2Sub1Duration;
-		update_sprite_enemy(newImage,newImageSpeed);
+		update_sprite_enemy(action2Sub1Animation,-action2Sub1Duration);
 		break;
 	case subState.actionSub2:
 			//transition
 		if subPhaseTimer >= round(action2Sub2Duration*room_speed)
 		{
+			driveAction = 0;
 			subPhase = subState.actionSub3;
 			subPhaseTimer = 0;
 			with obj_block_nonSolid solid = true;
 			with obj_platform_parent solid = true;
-			while(true)
+			repeat(128)
 			{
 				var tempX = irandom_range(0,room_width);
 				var tempY = irandom_range(0,room_height);
@@ -54,9 +53,7 @@ switch subPhase
 			//xSpd
 		xSpd -= xSpd/4;
 			//sprite
-		var newImage = action2Sub2Animation
-		var newImageSpeed = sprite_get_number(newImage)/action2Sub2Duration;
-		update_sprite_enemy(newImage,newImageSpeed);
+		update_sprite_enemy(action2Sub2Animation,-action2Sub2Duration);
 		break;
 	case subState.actionSub3:
 			//transition
@@ -64,13 +61,11 @@ switch subPhase
 		{
 			phase = state.base;
 			phaseTimer = 0;
-			scr_enemy_base_subPhaseDeterminer();
+			scr_enemy_ground_base_subPhaseDeterminer();
 		}
 			//xSpd
 		xSpd -= xSpd/4;
 			//sprite
-		var newImage = action2Sub3Animation
-		var newImageSpeed = sprite_get_number(newImage)/action2Sub3Duration;
-		update_sprite_enemy(newImage,newImageSpeed);
+		update_sprite_enemy(action2Sub3Animation,-action2Sub3Duration);
 		break;
 }

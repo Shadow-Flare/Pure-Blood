@@ -24,8 +24,7 @@ switch subPhase
 			//xSpd
 		xSpd -= xSpd/8;
 			//Sprite
-		var newImageSpeed = sprite_get_number(sprPlayerBodySwordDying)/(deathDuration)
-		update_sprite(sprPlayerBodySwordDying,newImageSpeed)
+		update_sprite(sprPlayerBodyDefaultDying,-deathDuration)
 		break;
 		
 	case subState.flung:
@@ -40,8 +39,7 @@ switch subPhase
 					//xSpd
 				xSpd -= xSpd/8;
 					//Sprite
-				var newImageSpeed = sprite_get_number(sprPlayerBodySwordDyingProne)/(deathDuration)
-				update_sprite(sprPlayerBodySwordDyingProne,newImageSpeed)
+				update_sprite(sprPlayerBodyDefaultDyingProne,-deathDuration)
 				break;
 			case vState.jumping:
 			case vState.midAir:
@@ -49,7 +47,7 @@ switch subPhase
 					//xSpd
 				xSpd -= xSpd/80;
 					//Sprite
-				update_sprite(sprPlayerBodySwordFlung,1)
+				update_sprite(sprPlayerBodyDefaultFlung,1)
 				break
 		}
 		break;

@@ -10,20 +10,22 @@ with objAttackEffectParent
 		{
 			hasBeenHit = true;
 			lastHitType = attack.hitType;
-			if instance_exists(enemy) var dirNum = sign(x-enemy.x);
+			if attack.attackType = attackTypes.melee && instance_exists(enemy) var dirNum = sign(x-enemy.x);
 			else var dirNum = sign(x-attack.x);
 			if !attack.pierce && hitPhase == hitState.blocking && dirNum == -facing
 			{
-				hasDeflected = 1;
+				hasBlocked = true;
+				enemy.hasDeflected = true;
+				other.hasDeflected = true;
 				xSpd = dirNum*max(attack.hitKnockback/2,1);
-				if instance_exists(enemy) enemy.xSpd = -dirNum*2
+				if attack.attackType = attackTypes.melee && instance_exists(enemy) enemy.xSpd = -dirNum*2
 			}
-			else
+			else if hitPhase != hitState.dodging
 			{
 				//audio (make reflective of damage type and other variables and remove from attack objects)
 				//audio_play_sound(snd_enemy_hit,10,0);
 				//stats
-				if stats.isInvulnerable == false scr_hit(attack,attack.hitType,attack.hitDamage,attack.statusType,attack.statusValue,enemy);
+				if stats.isInvulnerable == false scr_hit(attack,attack.hitSoundID,attack.hitType,attack.hitDamage,attack.statusType,attack.statusValue,enemy);
 				//determine reaction: Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
 				switch attack.hitType
 				{
@@ -48,10 +50,12 @@ with objAttackEffectParent
 					case 1:						//stagger
 						if phase == state.hitReaction && subPhase == subState.aerialStagger
 						{
-								//state change (none)
+								//reset timer
+							subPhaseTimer -= 0.4*room_speed;
+							if subPhaseTimer <= 0 subPhaseTimer = 0;
 								//movement
 							xSpd = attack.hitKnockback*dirNum;
-							ySpd = -attack.hitKnockback;
+							ySpd = 0;
 						}
 						else
 						{
@@ -67,9 +71,11 @@ with objAttackEffectParent
 					case 2:						//flung
 						if phase == state.hitReaction && subPhase == subState.aerialStagger
 						{
-								//state change (none)
+								//state change
+							subPhase = subState.flung;
+							subPhaseTimer = 0;
 								//movement
-							var reactDir = -60+random_range(-5,5);
+							var reactDir = -30+random_range(-5,5);
 							xSpd = dirNum*attack.hitKnockback*dcos(reactDir);
 							ySpd = -attack.hitKnockback*dsin(reactDir);
 						}
@@ -95,6 +101,7 @@ with objAttackEffectParent
 						subPhaseTimer = 0;
 						//movement
 						ySpd = attack.hitKnockback;
+						xSpd = dirNum*1;
 						break
 				}
 			}

@@ -12,7 +12,12 @@ hitPhase = hitState.normal;
 actorType = actorTypes.player;
 maxFallSpeed = 5;
 phased = 0;
+pushable = true;
 isDead = false;
+dropThroughPlatforms = false;
+onPlatform = false;
+canStep = true;
+equipmentChange = false;
 
 bboxDefaultLeft = bbox_left;
 bboxDefaultRight = bbox_right;
@@ -28,7 +33,7 @@ landingDuration = 0.6;
 
 baseSpriteIndex = noone;
 weaponSpriteIndex = noone;
-effectSpriteIndex = noone;
+//effectSpriteIndex = noone;
 
 auxSpriteIndex = noone;
 auxSpriteXOffset = 0;
@@ -71,10 +76,14 @@ ropeShotTargetRange = 120;
 ropeShotMaxDist = 180
 
 attackName = noone;
-attackNum = 0;
-attackHardCooldown = 0.2;
+attackNum = -1;
+attackHardCooldown = 0.3;
 attackHardCooldownTimer = -1;
-attackTrackDistance = 40;
+attackGroundTrackDistance = 32;
+attackTrackXDistance = 32;
+attackTrackYDistance = 16;
+attackEffectAlpha = 0.7;
+hasDeflected = false;
 
 aerialAttackVertBoost = -0.25;
 aerialYSpdCap = 0.5;
@@ -85,19 +94,23 @@ blockingDurationPre = 0.1;
 blockingDurationBlocking = 0.7;
 blockingDurationPost = 0.2;
 blockingDurationReaction = 0.4;
-hasDeflected = false;
+hasBlocked = false;
 
 dodgeDistance = 16*3.5;				//16*<number of blocks>		//(before "xSpd-=xSpd/4" slowdown)
 dodgeDurationPerforming = 0.2;
 dodgeDurationPost = 0.2;
 
-isDead = false;
 staggeredDuration = 0.6;
 proneDuration = 1;
+deflectDuration = 0.7;
+
+isDead = false;
 deathDuration = 3;
 deathFadeDuration = 5;
 
 dUInputTimer = -1;
+dLInputTimer = -1;
 dRInputTimer = -1;
+dDInputTimer = -1;
 
 reset_queue();

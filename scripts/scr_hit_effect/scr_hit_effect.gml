@@ -30,6 +30,6 @@ if argument1 = "blood"
 		part.image_xscale = scale;
 		part.image_yscale = scale;
 		part.colour = colour;
-		part.hoverDuration = 0.4;
+		part.hoverDuration = random_range(0.1,0.4);
 	}
 }

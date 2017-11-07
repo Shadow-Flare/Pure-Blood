@@ -1,3 +1,5 @@
+#region Up: change offhand equpment/subtype
+
 //Up input change
 if (InputManager.dUInput)
 {
@@ -15,7 +17,7 @@ if (dUInputTimer != -1)
 			{
 				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
 				{
-					ownedID = i;
+					var ownedID = i;
 					break;
 				}
 			}
@@ -23,7 +25,7 @@ if (dUInputTimer != -1)
 			{
 				if PlayerStats.ownedSubtypes[ownedID,i] = PlayerStats.activeOffhandSubtypeID
 				{
-					ownedSubtypeID = i;
+					var ownedSubtypeID = i;
 					break;
 				}
 			}
@@ -31,7 +33,7 @@ if (dUInputTimer != -1)
 			{
 				if PlayerStats.ownedActivatables[ownedID,i] = PlayerStats.activeOffhandActivatableID
 				{
-					activeOwnedID = i;
+					var activeOwnedID = i;
 					break;
 				}
 			}
@@ -63,6 +65,65 @@ if (dUInputTimer != -1)
 	}
 }
 
+#endregion
+#region Left: change held weapon
+
+	#region code without hold function (active)
+if InputManager.dLInput
+{
+	for (var i = 0; i < array_length_1d(PlayerStats.heldWeapons); i++)
+	{
+		var ownedID = 0;
+		if PlayerStats.heldWeapons[i] = PlayerStats.currentWeaponID
+		{
+			ownedID = i;
+			break;
+		}
+	}
+	ownedID++;
+	if ownedID >= array_length_1d(PlayerStats.heldWeapons) ownedID = 0;
+	PlayerStats.currentWeaponID = PlayerStats.heldWeapons[ownedID];
+	equipmentChange = true;
+}
+	#endregion
+	#region code with hold function (inactive)
+//if (InputManager.dLInput)
+//{
+//	dLInputTimer = 0;
+//}
+	
+//if dLInputTimer != -1
+//{
+//	dLInputTimer++;
+//	if (!InputManager.dLInputHeld)
+//	{
+//		if phase != state.attacking //&& phase != hooked
+//		{
+//			for (var i = 0; i < array_length_1d(PlayerStats.heldWeapons); i++)
+//			{
+//				var ownedID = 0;
+//				if PlayerStats.heldWeapons[i] = PlayerStats.currentWeaponID
+//				{
+//					ownedID = i;
+//					break;
+//				}
+//			}
+//			ownedID++;
+//			if ownedID >= array_length_1d(PlayerStats.heldWeapons) ownedID = 0;
+//			PlayerStats.currentWeaponID = PlayerStats.heldWeapons[ownedID];
+//		}
+//		dLInputTimer = -1;
+//	}
+//	else if dLInputTimer = floor(room_speed * 1)
+//	{
+//		dLInputTimer = -1;
+//		//do hold things
+//	}
+//}
+	#endregion
+
+#endregion
+#region Right: change active ability
 
 if (InputManager.dRInput)
 {
@@ -78,7 +139,7 @@ if dRInputTimer != -1
 		{
 			for (var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
 			{
-				ownedID = 0;
+				var ownedID = 0;
 				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
 				{
 					ownedID = i;
@@ -87,7 +148,7 @@ if dRInputTimer != -1
 			}
 			for (var i = 0; i < array_length_2d(PlayerStats.ownedActivatables,ownedID); i++)
 			{
-				activeOwnedID = 0;
+				var activeOwnedID = 0;
 				if PlayerStats.ownedActivatables[ownedID,i] = PlayerStats.activeOffhandActivatableID
 				{
 					activeOwnedID = i;
@@ -105,3 +166,5 @@ if dRInputTimer != -1
 		dRInputTimer = -1;
 	}
 }
+
+#endregion

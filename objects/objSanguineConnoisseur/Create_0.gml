@@ -16,7 +16,9 @@ ySpd = 0;
 facing = irandom(1);
 if facing == 0 facing = -1;
 phased = false;
+pushable = true;
 flying = false;
+onPlatform = false;
 dropThroughPlatforms = false;
 tempBodySprite = noone;
 
@@ -31,20 +33,23 @@ bboxTop = bboxDefaultTop;
 bboxBottom = bboxDefaultBottom;
 
 if !layer_exists("lay_caches") layer_create(0,"lay_caches");
-statCache = instance_create_layer(0,0,"lay_caches",actorStats)
+statCache = instance_create_layer(0,0,"lay_caches",ActorStats)
 with statCache
 {
 	hpMax = 45;
 	mpMax = 80;
 	
-	damagePower = 5;
-	staggerPower = 2;
+	damagePower = 6;
+	staggerPower = 4;
 	
 	physicalToughness = 1;
 	magicalToughness = 1;
 	
 	moveSpeed = 0;
 	defaultMoveSpeed = moveSpeed;
+	
+	killExp = 20
+	killGold = [0.1,4-16]
 	
 	hitEffectType = "blood";
 	hitEffectColour = "dark red";
@@ -80,6 +85,7 @@ driveMove = 0;
 
 //base checks
 actionHardCooldownTimer = -1;
+hasBlocked = false;
 hasDeflected = false;
 canChangeVState = true;
 isDead = false;
@@ -87,18 +93,21 @@ hasBeenHit = false;
 lastHitType = -1;
 
 //variables
-aggroRange = 16*16;
-actionHardCooldown = 2.2;
 landingDuration = 0.7;
-
+deflectDuration = 0.7;									//&&//
 staggeredDuration = 0.5;
 proneDuration = 0.6;
+
 deathDuration = 1;										//$$//
 deathFadeDuration = 2;									//$$//
 
 //ai data
+aggroRange = 16*16;
+actionHardCooldown = 2.2;
 attackMinRange = 16*6;
 numOfAction1 = 0;
+targetX = -4;
+targetY = -4;
 
 //action data
 	//action1: ranged attack
@@ -110,9 +119,10 @@ action1Sub1Duration = 1;
 action1Sub2Animation = sprSanguineConnoisseurBodyAction1Sub2;
 action1Sub2Duration = 0.7;
 	action1Sub2ProjCreateTime = action1Sub2Duration*(/**/7/**//sprite_get_number(action1Sub2Animation));
-	action1Sub2ProjCreateXOffset = 0;
-	action1Sub2ProjCreateYOffset = -18;
-	action1Sub2ProjCreateSpeed = 3;
+	action1Sub2AttackSoundID = noone;															//$$//															//$$//
+	action1Sub2ProjCreateXOffset = -6;
+	action1Sub2ProjCreateYOffset = -21;
+	action1Sub2ProjCreateSpeed = 4;
 	action1Sub2ProjDamageType = 8;
 	action1Sub2ProjDamage = 1;
 	action1Sub2ProjStagger = 1;
@@ -129,7 +139,7 @@ action2Sub1Duration = 1;
 		//sub1: teleport
 action2Sub2Animation = sprSanguineConnoisseurBodyAction2Sub2;
 action2Sub2Duration = 0.7; 
-action2Sub2TeleportMinDistance = 16*12;
+action2Sub2TeleportMinDistance = attackMinRange*1.25;
 
 		//sub1: re-appear
 action2Sub3Animation = sprSanguineConnoisseurBodyAction2Sub3;

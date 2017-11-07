@@ -4,10 +4,19 @@
     "mvc": "1.0",
     "name": "PlayerStats",
     "eventList": [
-        
+        {
+            "id": "6b6ba504-6342-48ed-9cad-5bb7e4219550",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "a98a0c14-5945-4135-a1ba-2a89682d3de3"
+        }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
-    "parentObjectId": "00000000-0000-0000-0000-000000000000",
+    "parentObjectId": "24c597c6-8d03-4d3c-b2c5-93c0548ea204",
     "persistent": true,
     "physicsAngularDamping": 0.1,
     "physicsDensity": 0.5,

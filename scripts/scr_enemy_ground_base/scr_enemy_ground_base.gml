@@ -19,17 +19,17 @@ switch subPhase
 {
 	case subState.idle:
 			//sprite
-		update_sprite_enemy(sprZombieBodyIdle,1);
+		update_sprite_enemy(sprBASEBodyIdle,1);
 			//xspd
-		scr_enemy_base_subPhaseDeterminer();
+		scr_enemy_ground_base_subPhaseDeterminer();
 		xSpd-=xSpd/4;
 		break;
 	case subState.running:
 			//sprite
-		update_sprite_enemy(sprZombieBodyRunning,1);
+		update_sprite_enemy(sprBASEBodyRunning,1);
 			//xspd
 		xSpd = facing*statCache.moveSpeed;
-		scr_enemy_base_subPhaseDeterminer();
+		scr_enemy_ground_base_subPhaseDeterminer();
 		break;
 	case subState.airborne:
 		if vPhase = vState.grounded
@@ -37,10 +37,10 @@ switch subPhase
 			jumpNum = 0;
 			subPhase = subState.landing;
 			subPhaseTimer = 0;
-			if driveMove != 0 scr_enemy_base_subPhaseDeterminer();
+			if driveMove != 0 scr_enemy_ground_base_subPhaseDeterminer();
 		}
 			//sprite
-		update_sprite_enemy(sprZombieBodyAirborne,0);
+		update_sprite_enemy(sprBASEBodyAirborne,0);
 		if ySpd < 0 image_index = 0;
 		else image_index = 1;
 			//xSpd
@@ -50,13 +50,11 @@ switch subPhase
 	case subState.landing:
 		if subPhaseTimer >= round(landingDuration*room_speed)
 		{
-			scr_enemy_base_subPhaseDeterminer();
+			scr_enemy_ground_base_subPhaseDeterminer();
 		}
-		if vPhase != vState.grounded scr_enemy_base_subPhaseDeterminer();
+		if vPhase != vState.grounded scr_enemy_ground_base_subPhaseDeterminer();
 			//Sprite
-		var newImageSprite = sprZombieBodyLanding;
-		var newImageSpeed = sprite_get_number(newImageSprite)/landingDuration;
-		update_sprite_enemy(newImageSprite,newImageSpeed);
+		update_sprite_enemy(sprBASEBodyLanding,-landingDuration);
 			//xSpd
 		xSpd -= xSpd/4;
 		break;

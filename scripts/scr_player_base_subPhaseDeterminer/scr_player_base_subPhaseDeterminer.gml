@@ -4,7 +4,7 @@ else var moveH = 0;
 if IE var moveV = InputManager.moveInputV;
 else var moveV = 0;
 
-if abs(xSpd) > PlayerStats.moveSpeed xSpd = sign(xSpd)*PlayerStats.moveSpeed
+//if abs(xSpd) > PlayerStats.moveSpeed xSpd = sign(xSpd)*PlayerStats.moveSpeed
 
 switch vPhase
 {

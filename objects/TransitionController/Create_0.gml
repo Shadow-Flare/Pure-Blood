@@ -1,3 +1,5 @@
+event_inherited();
+
 timer = 0;
 
 instance_deactivate_all(1);

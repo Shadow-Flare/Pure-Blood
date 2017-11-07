@@ -25,17 +25,15 @@ scr_zombie_ai();
 			scr_enemy_ground_hitReaction();
 			break;
 		case state.dying:
-			scr_enemy_ground_dying(0);
+			scr_enemy_ground_dying();
 			break;
 	}
 	
 #endregion
 
 scr_hitCheck();
-
-scr_move_with_collisions();
-
 scr_statusCheck();
+scr_actor_moveWithCollisions();
 
 
 	//addional properties

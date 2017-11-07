@@ -17,15 +17,14 @@ switch subPhase
 		switch vPhase
 		{
 			case vState.grounded:
-				var newSprite = sprPlayerBodySwordRopeShotPre;
+				var newSprite = sprPlayerBodyDefaultRopeShotPre;
 				break;
 			case vState.jumping:
 			case vState.midAir:
-				var newSprite = sprPlayerBodySwordRopeShotAerialPre;
+				var newSprite = sprPlayerBodyDefaultRopeShotAerialPre;
 				break;
 		}
-		var newImageSpeed = sprite_get_number(newSprite)/(ropeShotDurationPre);
-		update_sprite(newSprite,newImageSpeed);
+		update_sprite(newSprite,-ropeShotDurationPre);
 			//this is commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
 		//auxSpriteIndex = sprPlayerAuxSwordCrossbowPre;
 			//xSpd
@@ -44,16 +43,15 @@ switch subPhase
 		switch vPhase
 		{
 			case vState.grounded:
-				var newSprite = sprPlayerBodySwordRopeShotFire;
+				var newSprite = sprPlayerBodyDefaultRopeShotFire;
 				break;
 			case vState.jumping:
 			case vState.midAir:
-				var newSprite = sprPlayerBodySwordRopeShotAerialFire;
+				var newSprite = sprPlayerBodyDefaultRopeShotAerialFire;
 				break;
 		}
-		var newImageSpeed = sprite_get_number(newSprite)/(ropeShotDurationPre);
-		update_sprite(newSprite,newImageSpeed);
-		auxSpriteIndex = sprPlayerAuxSwordCrossbowFire;
+		update_sprite(newSprite,-ropeShotDurationPre);
+		auxSpriteIndex = sprPlayerAuxDefaultCrossbowFire;
 		//xSpd
 		xSpd -= xSpd/20;
 			//ySpd
@@ -71,15 +69,15 @@ switch subPhase
 		switch vPhase
 		{
 			case vState.grounded:
-				var newSprite = sprPlayerBodySwordRopeShotHolding;
+				var newSprite = sprPlayerBodyDefaultRopeShotHolding;
 				break;
 			case vState.jumping:
 			case vState.midAir:
-				var newSprite = sprPlayerBodySwordRopeShotAerialHolding;
+				var newSprite = sprPlayerBodyDefaultRopeShotAerialHolding;
 				break;
 		}
 		update_sprite(newSprite,1);
-		auxSpriteIndex = sprPlayerAuxSwordCrossbowHolding;
+		auxSpriteIndex = sprPlayerAuxDefaultCrossbowHolding;
 			//xSpd
 		xSpd -= xSpd/20;
 			//ySpd

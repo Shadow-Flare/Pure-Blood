@@ -28,7 +28,7 @@ scr_sanguineConnoisseur_ai();
 			scr_enemy_ground_hitReaction();
 			break;
 		case state.dying:
-			scr_enemy_ground_dying(0);
+			scr_enemy_ground_dying();
 			break;
 	}
 	
@@ -36,7 +36,7 @@ scr_sanguineConnoisseur_ai();
 
 scr_hitCheck();
 scr_statusCheck();
-scr_move_with_collisions();
+scr_actor_moveWithCollisions();
 
 	//addional properties
 image_xscale = facing;

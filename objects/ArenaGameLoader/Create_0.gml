@@ -1,110 +1,16 @@
-controllers[5] = RoomCache;
-controllers[4] = ComboCache;
-controllers[3] = InputManager;
-controllers[2] = EffectsManager;
-controllers[1] = PlayerStats;
+controllers[8] = PlayerStats;
+controllers[7] = AudioCache;
+controllers[6] = ItemCache;
+controllers[5] = LootCache;
+controllers[4] = RoomCache;
+controllers[3] = ComboCache;
+controllers[2] = InputManager;
+controllers[1] = EffectsManager;
 controllers[0] = ArenaController;
 
 event_inherited();
 
-#region Player Stats setup
-with PlayerStats
-{
-	xp = 0;
-	gold = 0;
-
-	strength = 5;
-	constitution = 5;
-	dexterity = 5;
-	cunning = 5;				//now unused
-	intelligence = 5;
-	willpower = 5;
-
-	hpMax = 20+4*constitution;
-	mpMax = 20+4*willpower;
-	physicalPower = 0+0.5*strength+0.5*dexterity;
-	physicalStagger = 0+0.25*strength;
-	magicalPower = 0+1*intelligence;
-	magicalStagger = 2+0.25*intelligence+0.25*willpower;
-	physicalToughness = 2+0.30*constitution;
-	magicalToughness = 2+0.30*willpower;
-
-	hp = hpMax;
-	mp = mpMax;
-	isInvulnerable = false;
-
-	moveSpeed = 2;
-	defaultMoveSpeed = moveSpeed;
-	var jumpHeightVar = 2.5;								//total jump height in blocks (16x16px or 128x128)
-	jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);		//jumpHeightVar*<blockSize>
-
-	comboSize = 4;
-	aerialComboSize = 4;
-
-	hitEffectType = "blood";
-	hitEffectColour = "dark red";
-
-	//Damage type resistances
-	damageResistances[0] = 1;			//Slash
-	damageResistances[1] = 1;			//Blunt
-	damageResistances[2] = 1;			//Pierce
-	damageResistances[3] = 1;			//Fire
-	damageResistances[4] = 1;			//Ice
-	damageResistances[5] = 1;			//Lightning
-	damageResistances[6] = 1;			//Arcane
-	damageResistances[7] = 1;			//Light
-	damageResistances[8] = 1;			//Dark
-	damageResistances[9] = 1;			//X damage
-
-	//Special Damage initializers
-	specialDamage[0] = 0;				//Bleed
-
-	//Special resistances
-	specialResist[0] = 100;				//Bleed
-
-	//owned stuff
-	upgradeHasDoubleJump = 0;
-	upgradeHasHover = 0;
-	upgradeHasAerialDodge = 0;
-
-	ownedOffhands[0] = 0;
-		ownedSubtypes[0,0] = 0;
-		ownedSubtypes[0,1] = 1;
-		ownedSubtypes[0,2] = 2;
-		ownedSubtypes[0,3] = 3;
-		ownedSubtypes[0,4] = 4;
-		ownedActivatables[0,0] = 0;
-	ownedOffhands[1] = 1;
-		ownedSubtypes[1,0] = 5;
-		ownedSubtypes[1,1] = 6;
-		ownedSubtypes[1,2] = 7;
-		ownedSubtypes[1,3] = 8;
-		ownedSubtypes[1,4] = 9;
-		ownedActivatables[1,0] = 2;
-		ownedActivatables[1,1] = 3;
-
-		//active combo properties
-	scr_set_combo(0,5);			//slice
-	scr_set_combo(1,5);			//slice
-	scr_set_combo(2,5);			//slice
-	scr_set_combo(3,6);			//smash
-
-		//active combo properties
-	scr_set_aerialCombo(0,16);	//slice
-	scr_set_aerialCombo(1,16);	//slice
-	scr_set_aerialCombo(2,16);	//slice
-	scr_set_aerialCombo(3,17);	//smash
-
-	scr_set_class("Sword");
-	
-	scr_set_offhand(0);			//crossbow
-	scr_set_offhand_sub(0);		//normal
-	scr_set_offhand_active(0);	//ropeshot
-	
-			//misc
-	isInvulnerable = false;
-}
-#endregion
+scr_playerCache_basicPlayerSetup();
 
 #region Arena controller Setup
 with ArenaController
@@ -112,34 +18,42 @@ with ArenaController
 	//initialisers
 	spawnTimer = -1;
 
-	numberOfEnemies = 2;	//CHANGE AS ENEMIES ARE REFACTORED!
+	numberOfEnemies = 6;	//CHANGE AS ENEMIES ARE REFACTORED!
 	for(var i = 0; i < numberOfEnemies; i++)
 	{
-		if i == 0
+		switch i
 		{
-			enemyValues[i,0] = "Zombie"
-			enemyValues[i,4] = objZombie
+			case 0:
+				enemyValues[i,0] = "Zombie"
+				enemyValues[i,4] = objZombie
+				break;
+			case 1:
+				enemyValues[i,0] = "Guard Servant"
+				enemyValues[i,4] = objServantGuard
+				break;
+			case 2:
+				enemyValues[i,0] = "Lantern Servant"
+				enemyValues[i,4] = objServantLantern
+				break;
+			case 3:
+				enemyValues[i,0] = "Bound Servant"
+				enemyValues[i,4] = objServantBound
+				break;
+			case 4:
+				enemyValues[i,0] = "Sanguine Connoisseur"
+				enemyValues[i,4] = objSanguineConnoisseur
+				break;
+			case 5:
+				enemyValues[i,0] = "Blood Hound"
+				enemyValues[i,4] = objBloodHound
+				break;
+			case 6:
+				enemyValues[i,0] = "Flying Skeleton"
+				enemyValues[i,4] = obj_flying_skeleton
+				break;
 		}
-		else if i == 1
-		{
-			enemyValues[i,0] = "Guard Servant"
-			enemyValues[i,4] = objServantGuard
-		}
-		else if i == 2
-		{
-			enemyValues[i,0] = "Flying Skeleton"
-			enemyValues[i,4] = obj_flying_skeleton
-		}
-		else if i == 3
-		{
-			enemyValues[i,0] = "Lanterns Servant"
-			enemyValues[i,4] = obj_servant_lantern
-		}
-		else if i == 4
-		{
-			enemyValues[i,0] = "Blood Hound"
-			enemyValues[i,4] = obj_bloodHound
-		}
+
+
 	
 		var temp = instance_create_depth(0,0,0,enemyValues[i,4]);
 		var cache = temp.statCache;

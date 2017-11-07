@@ -16,7 +16,9 @@ ySpd = 0;
 facing = irandom(1);
 if facing == 0 facing = -1;
 phased = false;
+pushable = true;
 flying = false;
+onPlatform = false;
 dropThroughPlatforms = false;
 tempBodySprite = noone;
 
@@ -31,7 +33,7 @@ bboxTop = bboxDefaultTop;
 bboxBottom = bboxDefaultBottom;
 
 if !layer_exists("lay_caches") layer_create(0,"lay_caches");
-statCache = instance_create_layer(0,0,"lay_caches",actorStats)
+statCache = instance_create_layer(0,0,"lay_caches",ActorStats)
 with statCache
 {
 	hpMax = 80;											//$$//
@@ -45,6 +47,9 @@ with statCache
 	
 	moveSpeed = 2;									//$$//
 	defaultMoveSpeed = moveSpeed;
+	
+	killExp = 2
+	killGold = [0.1,4-16]
 	
 	hitEffectType = "blood";
 	hitEffectColour = "dark red";
@@ -80,6 +85,7 @@ driveMove = 0;
 
 //base checks
 actionHardCooldownTimer = -1;
+hasBlocked = false;
 hasDeflected = false;
 canChangeVState = true;
 isDead = false;
@@ -87,14 +93,16 @@ hasBeenHit = false;
 lastHitType = -1;
 
 //variables
-aggroRange = 16*7;										//$$//
-actionHardCooldown = 3;									//$$//
 landingDuration = 0.7;									//&&//
-
 staggeredDuration = 0.5;
 proneDuration = 0.6;
+deflectDuration = 0.7;									//&&//
+
 deathDuration = 0;
 deathFadeDuration = 0;
+
+//ai data
+actionHardCooldown = 0;
 
 //action data
 	//action1: ignite
@@ -106,15 +114,16 @@ action1Sub2Animation = sprServantBoundBodyAction1Sub2;
 action1Sub2Duration = 3;
 
 	//action1: (basic) explosion
-attack1Duration = 0.7;
-attack1XOffset = 0;
-attack1YOffset = 0;
-attack1Width = 64;
-attack1Height = 64;
-attack1DamageType = 3;
-attack1Damage = 1;
-attack1Stagger = 1;
-attack1Knockback = 4;
-attack1StatusType = -1;
-attack1StatusValue = 0;
-attack1Pierce = 1;
+action1Sub3Animation = sprServantBoundEffectAction1Sub3;
+action1FrameData = -1;
+action1Follow = false;
+action1Duration = 0.7;
+action1AttackSoundID = noone;															//$$//
+action1HitSoundID = noone;																//$$//
+action1DamageType = 3;
+action1Damage = 1;
+action1Stagger = 1;
+action1Knockback = 4;
+action1StatusType = -1;
+action1StatusValue = 0;
+action1Pierce = 1;

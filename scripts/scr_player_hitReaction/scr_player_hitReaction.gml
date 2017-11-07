@@ -26,8 +26,7 @@ switch subPhase
 			//xSpd
 		xSpd -= xSpd/8;
 			//Sprite
-		var newImageSpeed = sprite_get_number(sprPlayerBodySwordStagger)/(staggeredDuration)
-		update_sprite(sprPlayerBodySwordStagger,newImageSpeed)
+		update_sprite(sprPlayerBodyDefaultStagger,-staggeredDuration)
 		break;
 		
 	case subState.flung:
@@ -44,8 +43,7 @@ switch subPhase
 					//xSpd
 				xSpd -= xSpd/8;
 					//Sprite
-				var newImageSpeed = sprite_get_number(sprPlayerBodySwordProne)/(proneDuration)
-				update_sprite(sprPlayerBodySwordProne,newImageSpeed)
+				update_sprite(sprPlayerBodyDefaultProne,-proneDuration)
 				break;
 			case vState.jumping:
 			case vState.midAir:
@@ -53,8 +51,40 @@ switch subPhase
 					//xSpd
 				xSpd -= xSpd/80;
 					//Sprite
-				update_sprite(sprPlayerBodySwordFlung,1)
+				update_sprite(sprPlayerBodyDefaultFlung,1)
 				break
+		}
+		break;
+	case subState.deflected:
+		switch vPhase
+		{
+			case vState.grounded:
+				if subPhaseTimer >= round(room_speed*deflectDuration)
+				{
+					phased = false;
+					phase = state.base;
+					phaseTimer = 0;
+					scr_player_base_subPhaseDeterminer();
+				}
+					//xSpd
+				xSpd -= xSpd/8;
+					//Sprite
+				update_sprite(sprPlayerBodyDefaultDeflect,-deflectDuration)
+				break;
+			case vState.jumping:
+			case vState.midAir:
+				if subPhaseTimer >= round(room_speed*deflectDuration)
+				{
+					phased = false;
+					phase = state.base;
+					phaseTimer = 0;
+					scr_player_base_subPhaseDeterminer();
+				}
+					//xSpd
+				xSpd -= xSpd/8;
+					//Sprite
+				update_sprite(sprPlayerBodyDefaultAerialDeflect,-deflectDuration)
+				break;
 		}
 		break;
 }

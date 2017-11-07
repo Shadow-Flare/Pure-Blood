@@ -4,12 +4,9 @@ switch aggroPhase
 		target = instance_nearest(x,y,objPlayer);
 		if target != noone && distance_to_object(target) <= aggroRange
 		{
-			//phase = state.emote;
-			//subPhase = subState.emote1;
 			aggroPhase = enemyAggroState.attacking;
-			phaseTimer = 0;
-			subPhaseTimer = 0;
 		}
+		else target = noone;
 		break;
 	case enemyAggroState.attacking:
 			//move / de-aggro

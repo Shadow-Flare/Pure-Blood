@@ -16,7 +16,9 @@ ySpd = 0;
 facing = irandom(1);
 if facing == 0 facing = -1;
 phased = false;
+pushable = true;
 flying = false;
+onPlatform = false;
 dropThroughPlatforms = false;
 tempBodySprite = noone;
 
@@ -31,7 +33,7 @@ bboxTop = bboxDefaultTop;
 bboxBottom = bboxDefaultBottom;
 
 if !layer_exists("lay_caches") layer_create(0,"lay_caches");
-statCache = instance_create_layer(0,0,"lay_caches",actorStats)
+statCache = instance_create_layer(0,0,"lay_caches",ActorStats)
 with statCache
 {
 	hpMax = 35;
@@ -45,6 +47,9 @@ with statCache
 	
 	moveSpeed = 0.4;
 	defaultMoveSpeed = moveSpeed;
+
+	killExp = 8;
+	killGold = [0.1,4-16]
 	
 	hitEffectType = "blood";
 	hitEffectColour = "dark red";
@@ -80,6 +85,7 @@ driveMove = 0;
 
 //base checks
 actionHardCooldownTimer = -1;
+hasBlocked = false;
 hasDeflected = false;
 canChangeVState = true;
 isDead = false;
@@ -90,6 +96,8 @@ lastHitType = -1;
 landingDuration = 0.7;									//&&//
 staggeredDuration = 0.5;								//$$//
 proneDuration = 0.6;									//$$//
+deflectDuration = 0.7;
+
 deathDuration = 1;										//$$//
 deathFadeDuration = 2;									//$$//
 
@@ -100,43 +108,43 @@ actionHardCooldown = 3.5;
 
 //action data
 	//action1: general attack				the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings
-attack1Animation = sprServantLanternBodyAction1
-attack1Duration = 2;																	//$$//
-attack1HitStart = attack1Duration*(/**/5/**//sprite_get_number(attack1Animation))		//$$//
-attack1HitDuration = attack1Duration*(/**/3/**//sprite_get_number(attack1Animation))	//$$//
-attack1MoveBurst = 3;																	//$$//
-attack1Move = 0;																		//$$//
-attack1MoveStart = attack1Duration*(/**/4/**//sprite_get_number(attack1Animation))		//$$//
-attack1MoveDuration = attack1Duration*(/**/2/**//sprite_get_number(attack1Animation))	//$$//
-attack1XOffset = 16;																	//$$//
-attack1YOffset = -6;																	//$$//
-attack1Width = 4;																		//$$//
-attack1Height = 18;																		//$$//
-attack1DamageType = 1;																	//$$//
-attack1Damage = 0.8;																		//$$//
-attack1Stagger = 0.8;																		//$$//
-attack1Knockback = 4;																	//$$//
-attack1StatusType = -1;																	//$$//
-attack1StatusValue = 0;																	//$$//
-attack1Pierce = false;																	//$$//
+action1Animation = sprServantLanternBodyAction1;
+action1FrameData = -1;
+action1Follow = true;
+action1Duration = 2;																	//$$//
+action1AttackSoundID = noone;															//$$//
+action1HitSoundID = noone;																//$$//
+action1HitStart = action1Duration*(/**/5/**//sprite_get_number(action1Animation))		//$$//
+action1HitDuration = action1Duration*(/**/3/**//sprite_get_number(action1Animation))	//$$//
+action1MoveBurst = 3;																	//$$//
+action1Move = 0;																		//$$//
+action1MoveStart = action1Duration*(/**/4/**//sprite_get_number(action1Animation))		//$$//
+action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))	//$$//
+action1DamageType = 1;																	//$$//
+action1Damage = 0.8;
+action1Stagger = 0.8;
+action1Knockback = 4;																	//$$//
+action1StatusType = -1;																	//$$//
+action1StatusValue = 0;																	//$$//
+action1Pierce = false;																	//$$//
 
 	//action2: fire burst (targets bound servants alot in ai)
-attack2Animation = sprServantLanternBodyAction2
-attack2Duration = 2;																	//$$//
-attack2HitStart = attack1Duration*(/**/10/**//sprite_get_number(attack2Animation))
-attack2HitDuration = 1.5
-attack2MoveBurst = 0;																	//$$//
-attack2Move = 0;																		//$$//
-attack2MoveStart = attack1Duration*(/**/0/**//sprite_get_number(attack2Animation))
-attack2MoveDuration = attack1Duration*(/**/0/**//sprite_get_number(attack2Animation))
-attack2XOffset = 16;																	//$$//
-attack2YOffset = -6;																	//$$//
-attack2Width = 22;
-attack2Height = 56;
-attack2DamageType = 3;
-attack2Damage = 1.2;																		//$$//
-attack2Stagger = 1.2;																		//$$//
-attack2Knockback = 5;																	//$$//
-attack2StatusType = -1;																	//$$//
-attack2StatusValue = 0;																	//$$//
-attack2Pierce = false;																	//$$//
+action2Animation = sprServantLanternBodyAction2;
+action2FrameData = -1;
+action2Follow = false;
+action2Duration = 2;																	//$$//
+action2AttackSoundID = noone;															//$$//
+action2HitSoundID = noone;																//$$//
+action2HitStart = action1Duration*(/**/10/**//sprite_get_number(action2Animation))
+action2HitDuration = 1.5
+action2MoveBurst = 0;																	//$$//
+action2Move = 0;																		//$$//
+action2MoveStart = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
+action2MoveDuration = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
+action2DamageType = 3;
+action2Damage = 1.2;																		//$$//
+action2Stagger = 1.2;																		//$$//
+action2Knockback = 5;																	//$$//
+action2StatusType = -1;																	//$$//
+action2StatusValue = 0;																	//$$//
+action2Pierce = false;																	//$$//

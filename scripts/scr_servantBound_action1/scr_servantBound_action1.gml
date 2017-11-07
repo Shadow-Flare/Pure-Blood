@@ -14,9 +14,7 @@ switch subPhase
 			//xSpd
 		xSpd -= xSpd/4;
 			//sprite
-		var newImage = action1Sub1Animation;
-		var newImageSpeed = sprite_get_number(newImage)/action1Sub1Duration;
-		update_sprite_enemy(newImage,newImageSpeed);
+		update_sprite_enemy(action1Sub1Animation,-action1Sub1Duration);
 		break;
 	case subState.actionSub2:
 			//transition
@@ -24,12 +22,12 @@ switch subPhase
 		xSpd = facing*statCache.moveSpeed;
 		if (subPhaseTimer >= round(action1Sub2Duration*room_speed) || (place_meeting(x+xSpd,y,objActorParent) && !instance_place(x+xSpd,y,objActorParent).phased) || !place_free(x+xSpd,y)) && statCache.hp != 0
 		{
-			scr_enemy_attack(false, attack1Duration, attack1XOffset, attack1YOffset, attack1Width, attack1Height, attack1DamageType, attack1Damage*statCache.damagePower, attack1Stagger*statCache.staggerPower, attack1Knockback, attack1StatusType, attack1StatusValue, attack1Pierce);
+			scr_enemy_attack(action1FrameData,action1Follow, action1Duration, action1DamageType, action1Damage*statCache.damagePower, action1Stagger*statCache.staggerPower, action1Knockback, action1StatusType, action1StatusValue, action1Pierce, action1Sub3Animation, action1HitSoundID);
+			if action1AttackSoundID != noone audio_play_sound(action1AttackSoundID,10,0);
 			statCache.hp = 0;
 			xSpd = 0;
 		}
 			//sprite
-		var newImage = action1Sub2Animation;
-		update_sprite_enemy(newImage,1);
+		update_sprite_enemy(action1Sub2Animation,1);
 		break;
 }

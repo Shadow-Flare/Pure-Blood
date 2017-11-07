@@ -11,14 +11,12 @@ switch subPhase
 		{
 			phase = state.base;
 			phaseTimer = 0;
-			scr_enemy_base_subPhaseDeterminer();
+			scr_enemy_ground_base_subPhaseDeterminer();
 		}
 			//xSpd
 		xSpd -= xSpd/8;
 			//Sprite
-		var newImage = sprZombieBodyStagger;
-		var newImageSpeed = sprite_get_number(newImage)/(staggeredDuration);
-		update_sprite_enemy(newImage,newImageSpeed);
+		update_sprite_enemy(sprBASEBodyStagger,-staggeredDuration);
 		break;
 		
 	case subState.flung:
@@ -30,14 +28,12 @@ switch subPhase
 					phased = false;
 					phase = state.base;
 					phaseTimer = 0;
-					scr_enemy_base_subPhaseDeterminer();
+					scr_enemy_ground_base_subPhaseDeterminer();
 				}
 					//xSpd
 				xSpd -= xSpd/4;
 					//Sprite
-				var newImage = sprZombieBodyProne;
-				var newImageSpeed = sprite_get_number(newImage)/(proneDuration);
-				update_sprite_enemy(newImage,newImageSpeed);
+				update_sprite_enemy(sprBASEBodyProne,-proneDuration);
 				break;
 			case vState.jumping:
 			case vState.midAir:
@@ -45,7 +41,7 @@ switch subPhase
 					//xSpd
 				xSpd -= xSpd/80;
 					//Sprite
-				update_sprite_enemy(sprZombieBodyFlung,1)
+				update_sprite_enemy(sprBASEBodyFlung,1)
 				break
 		}
 		break;
@@ -59,11 +55,15 @@ switch subPhase
 			case vState.jumping:
 			case vState.midAir:
 					//ySpd
-				if abs(ySpd) <= 1 ySpd -= GameManager.grav*(3/4) // 1/4 * effect of gravity
+				if subPhaseTimer <= round(room_speed*0.7) && ySpd >= -1 && ySpd <= 1
+				{
+					ySpd -= GameManager.grav*(1) //0 grav
+					ySpd -= ySpd/20;
+				}
 					//xSPd
 				xSpd -= xSpd/12;
 					//Sprite
-				update_sprite_enemy(sprZombieBodyAerialStagger,1)
+				update_sprite_enemy(sprBASEBodyAerialStagger,1)
 				break;
 		}
 		break;
@@ -75,14 +75,12 @@ switch subPhase
 				{
 					phase = state.base;
 					phaseTimer = 0;
-					scr_enemy_base_subPhaseDeterminer();
+					scr_enemy_ground_base_subPhaseDeterminer();
 				}
 					//xSpd
 				xSpd -= xSpd/6;
 					//Sprite
-				var newImage = sprZombieBodyDeflect;
-				var newImageSpeed = sprite_get_number(newImage)/(deflectDuration);
-				update_sprite_enemy(newImage,newImageSpeed)
+				update_sprite_enemy(sprBASEBodyDeflect,-deflectDuration)
 				break;
 			case vState.jumping:
 			case vState.midAir:
@@ -92,14 +90,12 @@ switch subPhase
 					canChangeVState = true;
 					phase = state.base;
 					phaseTimer = 0;
-					scr_enemy_base_subPhaseDeterminer();
+					scr_enemy_ground_base_subPhaseDeterminer();
 				}
 					//xSpd
 				xSpd -= xSpd/6;
 					//Sprite
-				var newImage = sprZombieBodyDeflectAerial;
-				var newImageSpeed = sprite_get_number(newImage)/(deflectDuration);
-				update_sprite_enemy(newImage,newImageSpeed)
+				update_sprite_enemy(sprBASEBodyDeflectAerial,-deflectDuration)
 				break;
 		}
 		break;

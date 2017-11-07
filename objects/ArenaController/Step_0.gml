@@ -26,7 +26,7 @@ if !instance_exists(ArenaSettingsManager) && !instance_exists(PauseController)
 		if count < arenaStats[1] && spawnTimer == -1
 		{
 			if room == rmArena1 || room == rmArena4 {var spawnX = 160+random_range(-25,25); var spawnY = -32;}
-	   else if room == rmArena2 || room == rmArena3 {var spawnX = 2176+random_range(-225,225); var spawnY = -160;}
+	   else if room == rmArena2 || room == rmArena3 {var spawnX = 272+random_range(-50,50); var spawnY = -32;}
 	   else {var spawnX = 0; var spawnY = 0;}
 			instance_create_layer(spawnX,spawnY,layer_get_id("lay_entities"),enemy);
 			spawnTimer = 0;

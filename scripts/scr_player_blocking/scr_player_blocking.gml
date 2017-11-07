@@ -26,8 +26,7 @@ switch subPhase
 {
 	case subState.pre:
 			//Sprite
-		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlocking)/(blockingDurationPre+blockingDurationBlocking+blockingDurationPost);
-		update_sprite(sprPlayerBodySwordBlocking,newImageSpeed);
+		update_sprite(sprPlayerBodyDefaultBlocking,-(blockingDurationPre+blockingDurationBlocking+blockingDurationPost));
 		if subPhaseTimer >= round(room_speed*blockingDurationPre)
 		{
 			hitPhase = hitState.blocking;
@@ -38,11 +37,10 @@ switch subPhase
 		
 	case subState.performing:
 			//Sprite
-		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlocking)/(blockingDurationPre+blockingDurationBlocking+blockingDurationPost);
-		update_sprite(sprPlayerBodySwordBlocking,newImageSpeed);
-		if hasDeflected
+		update_sprite(sprPlayerBodyDefaultBlocking,-(blockingDurationPre+blockingDurationBlocking+blockingDurationPost));
+		if hasBlocked
 		{
-			hasDeflected = false;
+			hasBlocked = false;
 			subPhase = subState.reaction;
 			subPhaseTimer = 0;
 		}
@@ -56,11 +54,9 @@ switch subPhase
 		
 	case subState.reaction:
 			//Sprite
-		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlockingReaction)/(blockingDurationReaction);
-		update_sprite(sprPlayerBodySwordBlockingReaction,newImageSpeed);
+		update_sprite(sprPlayerBodyDefaultBlockingReaction,-blockingDurationReaction);
 		if xInputQueue
 		{
-			blocking = 0;
 			attackNum = 0;
 			reset_queue();
 			//initial data & tranistion
@@ -69,7 +65,7 @@ switch subPhase
 			phaseTimer = 0;
 			subPhase = subState.performing;
 			subPhaseTimer = 0;
-			scr_player_combo(PlayerStats.activeCounterID);
+			scr_player_beginAttack(PlayerStats.activeCounterID);
 			reset_queue();
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationReaction)
@@ -82,8 +78,7 @@ switch subPhase
 		
 	case subState.post:
 			//Sprite
-		var newImageSpeed = sprite_get_number(sprPlayerBodySwordBlocking)/(blockingDurationPre+blockingDurationBlocking+blockingDurationPost);
-		update_sprite(sprPlayerBodySwordBlocking,newImageSpeed);
+		update_sprite(sprPlayerBodyDefaultBlocking,-(blockingDurationPre+blockingDurationBlocking+blockingDurationPost));
 		if subPhaseTimer >= round(room_speed*blockingDurationPost)
 		{
 			phase = state.base;

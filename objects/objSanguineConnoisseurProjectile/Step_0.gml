@@ -6,17 +6,18 @@ switch phase
 		hitOn = false
 			//movement slowdown
 		speed -= speed/12;
-			//goto phase 1
-		if timer >= round(slowMovementDuration*room_speed)
-		{
-			timer = 0;
-			phase = 1;
-		}
 			//tracking
 		if instance_exists(target)
 		{
 			targetX = target.x;
 			targetY = target.y;
+		}		
+			//goto phase 1
+		if timer >= round(slowMovementDuration*room_speed)
+		{
+			timer = 0;
+			phase = 1;
+			xDir = sign(targetX-x);
 		}
 			//alter direction
 		var newDirection = point_direction(x,y,targetX,targetY);
@@ -27,7 +28,7 @@ switch phase
 			//check if collision, if so goto phase 2
 		var nextX = x+speed*dcos(direction);
 		var nextY = y+speed*dsin(direction);
-		if place_meeting(nextX,nextY,objActorParent) || !place_free(nextX,nextY)
+		if (place_meeting(nextX,nextY,objActorParent) && is_enemy(casterType,instance_place(nextX,nextY,objActorParent).actorType) && !instance_place(nextX,nextY,objActorParent).phased) || !place_free(nextX,nextY)
 		{
 			while (!place_meeting(x+dcos(direction),y-dsin(direction),objActorParent) || !is_enemy(casterType,instance_place(x+dcos(direction),y-dsin(direction),objActorParent).actorType))
 					&& place_free(x+dcos(direction),y-dsin(direction))
@@ -51,15 +52,18 @@ switch phase
 			targetY = target.y;
 		}
 			//alter direction
-		var newDirection = point_direction(x,y,targetX,targetY);
-		var difference = newDirection-direction;
-		if difference >= 180 difference =- 360;
-		else if difference <= -180 difference += 360;
-		direction += (difference)/(turnFactor);
+		if xDir == sign(targetX-x)
+		{
+			var newDirection = point_direction(x,y,targetX,targetY);
+			var difference = newDirection-direction;
+			if difference >= 180 difference =- 360;
+			else if difference <= -180 difference += 360;
+			direction += (difference)/(turnFactor);
+		}
 			//check if collision, if so goto phase 2
 		var nextX = x+speed*dcos(direction);
 		var nextY = y-speed*dsin(direction);
-		if place_meeting(nextX,nextY,objActorParent) || !place_free(nextX,nextY)
+		if (place_meeting(nextX,nextY,objActorParent) && !instance_place(nextX,nextY,objActorParent).phased) || !place_free(nextX,nextY)
 		{
 			while (!place_meeting(x+dcos(direction),y-dsin(direction),objActorParent) || !is_enemy(casterType,instance_place(x+dcos(direction),y-dsin(direction),objActorParent).actorType))
 					&& place_free(x+dcos(direction),y-dsin(direction))

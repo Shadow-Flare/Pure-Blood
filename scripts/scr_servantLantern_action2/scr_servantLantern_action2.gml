@@ -2,35 +2,34 @@ phaseTimer++;
 subPhaseTimer++;
 
 	//sprite
-var newImage = attack2Animation
-var newImageSpeed = sprite_get_number(newImage)/(attack2Duration)
-update_sprite_enemy(newImage,newImageSpeed)
+update_sprite_enemy(action2Animation,-action2Duration)
 
 switch subPhase
 {
 	case subState.actionSub1:
 			//timing and attack
-		if subPhaseTimer == round(attack2HitStart*room_speed)
+		if subPhaseTimer == round(action2HitStart*room_speed)
 		{
-			scr_enemy_attack(false,attack2HitDuration,attack2XOffset,attack2YOffset,attack2Width,attack2Height,attack2DamageType,attack2Damage*statCache.damagePower,attack2Stagger*statCache.staggerPower,attack2Knockback,attack2StatusType,attack2StatusValue,attack2Pierce)
+			scr_enemy_attack(action2FrameData,action2Follow,action2HitDuration,action2DamageType,action2Damage*statCache.damagePower,action2Stagger*statCache.staggerPower,action2Knockback,action2StatusType,action2StatusValue,action2Pierce,action2Animation,action2HitSoundID)
+			if action2AttackSoundID != noone audio_play_sound(action2AttackSoundID,10,0);
 		}
-		else if subPhaseTimer == round(attack2Duration*room_speed)
+		else if subPhaseTimer == round(action2Duration*room_speed)
 		{
 			phase = state.base;
-			scr_enemy_base_subPhaseDeterminer();
+			scr_enemy_ground_base_subPhaseDeterminer();
 			phaseTimer = 0;
 			subPhaseTimer = 0;
 		}
 			//xSpd
 				//burst
-		if attack2MoveBurst != 0 && phaseTimer == round(attack2MoveStart*room_speed)
+		if action2MoveBurst != 0 && phaseTimer == round(action2MoveStart*room_speed)
 		{
-			xSpd = facing*attack2MoveBurst;
+			xSpd = facing*action2MoveBurst;
 		}
 				//consistent
-		else if attack2Move != 0 && phaseTimer >= round(attack2MoveStart*room_speed) && phaseTimer <= round((attack2MoveStart+attack2MoveDuration)*room_speed)
+		else if action2Move != 0 && phaseTimer >= round(action2MoveStart*room_speed) && phaseTimer <= round((action2MoveStart+action2MoveDuration)*room_speed)
 		{
-			xSpd = facing*attack2Move;
+			xSpd = facing*action2Move;
 		}
 		else xSpd -= xSpd/4;
 		break;

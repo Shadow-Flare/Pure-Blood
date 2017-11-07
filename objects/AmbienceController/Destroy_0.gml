@@ -1,0 +1,1 @@
+if ambienceSoundID != undefined audio_stop_sound(audioID);

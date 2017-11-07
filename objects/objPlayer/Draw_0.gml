@@ -7,8 +7,8 @@ draw_self();
 //draw weapon
 if weaponSpriteIndex != noone draw_sprite_ext(weaponSpriteIndex,image_index,x,y,facing,1,0,c_white,image_alpha);
 
-//draw effect
-if effectSpriteIndex != noone draw_sprite_ext(effectSpriteIndex,image_index,x,y,facing,1,0,c_white,1);
+////draw effect
+//if effectSpriteIndex != noone draw_sprite_ext(effectSpriteIndex,image_index,x,y,facing,1,0,c_white,1);
 
 #region Reticules and Targets
 //grapple target draw
@@ -45,3 +45,6 @@ switch lockOnType
 		break;
 }
 #endregion
+
+//hitBox
+if GameManager.actorBoxVisuals draw_hitbox(c_purple);

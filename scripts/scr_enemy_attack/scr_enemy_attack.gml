@@ -1,9 +1,6 @@
+///@arg [startFrame-endframe]or-1
 ///@arg follow
 ///@arg duration
-///@arg x_off
-///@arg y_off
-///@arg width
-///@arg height
 ///@arg damage_type
 ///@arg damage
 ///@arg stagger
@@ -11,44 +8,46 @@
 ///@arg status_type
 ///@arg status_value
 ///@arg pierce
+///@arg animation
+///@arg soundID
 
 var enemy = id;
-var attackEffect = instance_create_layer(x,y,layer,obj_enemy_attack_effect)
+var attackEffect = instance_create_depth(x,y,depth+1,objMeleeAttackEffect)
 with attackEffect
 {
-	//get effect properties/collisions
-	follow = argument0;
-	attackDuration = argument1;  				//seconds
-	attackXOffset = argument2;
-	attackYOffset = argument3;
-	attackWidth = argument4;
-	attackHeight = argument5;
-	//STATS
-	hitType = argument6;	//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
-	hitDamage = argument7;
-	hitStagger = argument8;
-	hitKnockback = argument9;
-	statusType = argument10;
-	statusValue = argument11;
-	pierce = argument12;
-	type = "melee";
+	caster = enemy;
+	casterType = enemy.actorType;
+		//base data
+	frameData = argument0
+	follow = argument1;
+	attackDuration = argument2;  				//seconds
+		//hit data
+	hitType = argument3;	//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
+	hitDamage = argument4;
+	hitStagger = argument5;
+	hitKnockback = argument6;
+	statusType = argument7;
+	statusValue = argument8;
+	pierce = argument9;
 	//Set
 	timer = 0;
 	facing = enemy.facing;
-	//pos
-	x=enemy.x+facing*attackXOffset;
-	y=enemy.y+attackYOffset;
-	//size
-	sprite_index = spr_attack_effect_editor;
-	image_xscale *= facing*attackWidth/3;
-	image_yscale *=	attackHeight/3;
-	caster = enemy;
-	casterType = enemy.actorType;
-	
-	hasHit = 0;
 	
 	hitList = ds_list_create();
-	hitOn = 1;
+	
+		//audio
+	hitSoundID = argument11;
+		//get sprite
+	var effectSpriteName = string_replace(sprite_get_name(argument10),"Body","Effect");
+	
+		//set data
+	if asset_get_type(effectSpriteName) == asset_sprite
+	{
+		sprite_index = asset_get_index(effectSpriteName);
+		image_index = 0;
+		image_speed = sprite_get_number(sprite_index)/abs(attackDuration);
+		image_xscale = facing;
+	}
 }
 
 return attackEffect;

@@ -1,43 +1,48 @@
 ///@arg baseSprite
 ///@arg imageSpeed
 
-if baseSpriteIndex != argument0
+if baseSpriteIndex != argument0 || equipmentChange
 {
-	var weaponCatStr = "Sword"			//CHANGE, make dependent on current cat.
-	var weaponStr = "Gladius"			//CHANGE, make dependent on current wep.
+	//change equipchange clause
+	equipmentChange = false;
+	
+	var weaponStr = weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.name);
+	var weaponCatStr = class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.name);
 
 	//baseSprite update
 	baseSpriteIndex = argument0;
-	image_index = 0;
-	image_speed = argument1;
 
 	//get strings
 		//body sprite
-	var bodySpriteName = string_replace(sprite_get_name(baseSpriteIndex),"Sword",weaponCatStr);
+	var bodySpriteName = sprite_get_name(baseSpriteIndex);
+	var tmp = string_replace(bodySpriteName,"Default",weaponCatStr);
+	if asset_get_type(tmp) == asset_sprite bodySpriteName = tmp;
 	
 		//weapon sprite
-	var weaponSpriteName = string_replace(bodySpriteName,"Body","Weapon");
+	var weaponSpriteName = string_replace(sprite_get_name(baseSpriteIndex),"Body","Weapon");
 	weaponSpriteName = string_replace(weaponSpriteName,weaponCatStr,weaponStr);
+	weaponSpriteName = string_replace(weaponSpriteName,"Default",weaponStr);
 	
-		//effect sprite
-	var effectSpriteName = string_replace(weaponSpriteName,"Weapon","Effect");
-	if attackName == "Uppercut" 
-	{
-		effectSpriteName = string_replace(effectSpriteName,weaponStr,"");
-	}
+	//	//effect sprite
+	//var effectSpriteName = string_replace(weaponSpriteName,"Weapon","Effect");
+	//if attackName == "Uppercut" 
+	//{
+	//	effectSpriteName = string_replace(effectSpriteName,weaponStr,"");
+	//}
 
 	//roundup
 		//body sprite
-	if asset_get_type(bodySpriteName) != asset_unknown sprite_index = asset_get_index(bodySpriteName);
+	if asset_get_type(bodySpriteName) == asset_sprite sprite_index = asset_get_index(bodySpriteName);
 	else sprite_index = sprPlayerBodySpriteMissing;
 	
 		//weapon sprite
-	if asset_get_type(weaponSpriteName) != asset_unknown weaponSpriteIndex = asset_get_index(weaponSpriteName);
+	if asset_get_type(weaponSpriteName) == asset_sprite weaponSpriteIndex = asset_get_index(weaponSpriteName);
 	else weaponSpriteIndex = noone;
 	
-		//effect sprite
-	if asset_get_type(effectSpriteName) != asset_unknown effectSpriteIndex = asset_get_index(effectSpriteName);
-	else effectSpriteIndex = noone;
+			//speed and index reset
+	image_index = 0;
+	if sign(argument1) >= 0	image_speed = argument1;
+	else if sign(argument1) == -1 image_speed = sprite_get_number(sprite_index)/abs(argument1);
 		
 		//Auxiliary sprite; just a reset, if used, code for it is added AFTER this script
 	auxSpriteIndex = noone;

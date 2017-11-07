@@ -6,6 +6,6 @@ if phase == "splatting"
 		draw_self();
 		surface_reset_target();
 	}
-	instance_destroy();
+	hasDrawn = true;
 }
 else draw_self();

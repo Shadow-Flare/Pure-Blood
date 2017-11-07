@@ -316,16 +316,16 @@ if aInput == 1
 					}
 					break;
 				case "Heal all entities":
-					var pl = ArenaController.player;
-					var en = ArenaController.enemy;
-					instance_activate_object(pl);
-					instance_activate_object(en);
-					pl.hp = pl.hpMax;
-					pl.mp = pl.maxMp;
-					en.hp = en.hpMax;
-					if variable_instance_exists(en,"maxMp") en.mp = en.maxMp;
-					instance_deactivate_object(pl);
-					instance_deactivate_object(en);					
+					with PlayerStats
+					{
+						hp = hpMax;
+						mp = mpMax;
+					}
+					with ActorStats
+					{
+						hp = hpMax;
+						mp = mpMax;						
+					}
 					break;
 				case "Remove all enemies":
 					instance_activate_object(ArenaController.enemy)
@@ -347,8 +347,8 @@ if aInput == 1
 					{
 						instance_activate_object(enemy);
 						with enemy instance_destroy();
-						instance_activate_object(obj_enemy_attack_effect);
-						with obj_enemy_attack_effect instance_destroy();
+						instance_activate_object(objMeleeAttackEffect);
+						with objMeleeAttackEffect instance_destroy();
 						var s = other.slotOptions[other.sExpY]
 						for(var i = 0; i < ArenaController.numberOfEnemies; i++)
 						{

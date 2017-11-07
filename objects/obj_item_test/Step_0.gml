@@ -7,7 +7,7 @@ else xSpd -= xSpd/4;
 
 if !onGround ySpd += GameManager.grav*0.75;
 
-scr_move_with_collisions();
+scr_actor_moveWithCollisions();
 
 onGround = (!place_free(x,y+1)||(place_meeting(x,y+1,obj_platform_parent)&&!place_meeting(x,y,obj_platform_parent))) && place_free(x,y);
 

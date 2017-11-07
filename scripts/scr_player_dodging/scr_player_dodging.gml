@@ -9,8 +9,7 @@ phaseTimer++;
 subPhaseTimer++;
 
 	//Sprite
-var newImageSpeed = sprite_get_number(sprPlayerBodySwordDodging)/(dodgeDurationPerforming+dodgeDurationPost);
-update_sprite(sprPlayerBodySwordDodging,newImageSpeed);
+update_sprite(sprPlayerBodyDefaultDodging,-(dodgeDurationPerforming+dodgeDurationPost));
 
 	//Sub states
 #region states
@@ -18,7 +17,9 @@ update_sprite(sprPlayerBodySwordDodging,newImageSpeed);
 switch subPhase
 {
 	case subState.performing:
-				//xSpd
+			//dodging
+		hitPhase = hitState.dodging;
+			//xSpd
 		xSpd = facing*dodgeDistance/(room_speed*dodgeDurationPerforming);
 		
 		dodging = 1;
@@ -30,7 +31,9 @@ switch subPhase
 		break;
 		
 	case subState.post:
-				//xSpd
+			//stop dodging
+		hitPhase = hitState.normal;
+			//xSpd
 		xSpd -= xSpd/4;
 		
 		if subPhaseTimer >= round(room_speed*dodgeDurationPost)

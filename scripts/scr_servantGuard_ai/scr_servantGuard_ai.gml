@@ -62,11 +62,12 @@ switch aggroPhase
 			else if phase == state.base && phaseTimer == round(actionAiDelay*room_speed)
 			{
 				phaseTimer = 0;
-				var num = irandom(1);
+				if abs(target.y-y) <= 32 var num = irandom(1);
+				else num = 2;
 				switch num
 				{
 					case 1:			//action 2
-						hasDeflected = false;
+						hasBlocked = false;
 						driveAction = 2;
 						break;
 					case 2:			//do nothing

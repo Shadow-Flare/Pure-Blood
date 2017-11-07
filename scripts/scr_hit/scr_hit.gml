@@ -6,20 +6,24 @@
 ///@arg caster
 
 var source = argument0;
-var attackType = argument1;
-var attackPower = argument2;
-var specialType = argument3;
-var specialPower = argument4;
-var caster = argument5;
+var audioID = argument1;
+var attackType = argument2;
+var attackPower = argument3;
+var specialType = argument4;
+var specialPower = argument5;
+var caster = argument6;
 
 if attackType != -1
 {
-	statCache.hp -= attackPower*statCache.damageResistances[attackType];
+		//audio
+	if audioID != noone audio_play_sound(audioID,10,0)
+		//damage
 	var mh = statCache.hpMax;
-	var h = statCache.hp;
-	var hpLostPC = ((mh-h)/mh)
-	var partCount = hpLostPC*50
-	var partSpeed = 1+hpLostPC*4
+	var ph = statCache.hp;
+	statCache.hp -= attackPower*statCache.damageResistances[attackType];
+	var hpLostRatio = ((ph-statCache.hp)/mh)
+	var partCount = hpLostRatio*(100*0.50)
+	var partSpeed = 1+hpLostRatio*(100*0.04)
 	if instance_exists(caster) var src = caster;
 	else var src = source;
 	scr_hit_effect(src,statCache.hitEffectType,statCache.hitEffectColour,partCount,partSpeed);
@@ -28,5 +32,5 @@ if attackType != -1
 
 if specialType != -1
 {
-	statCache.specialDamage[specialType] = clamp(statCache.specialDamage[specialType]-specialPower,0,specialHp[specialType])
+	statCache.specialDamage[specialType] = clamp(statCache.specialDamage[specialType]-specialPower,0,statCache.specialResistances[specialType])
 }
