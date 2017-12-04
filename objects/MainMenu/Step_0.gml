@@ -62,7 +62,7 @@ switch transType
 		transTimer++;
 		if transTimer >= round(room_speed*transDur)
 		{
-			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoom1; type = loadType.newGame; transDur = other.transDur; transTimer = 0;}
+			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX05Y50; type = loadType.newGame; transDur = other.transDur; transTimer = 0;}
 			room_goto(loading);
 		}
 		break;

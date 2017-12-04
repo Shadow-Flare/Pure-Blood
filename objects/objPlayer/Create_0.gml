@@ -2,6 +2,8 @@ statCache = PlayerStats;
 
 xSpd = 0;
 ySpd = 0;
+envXSpd = 0;
+envYSpd = 0;
 facing = 1;
 phase = state.base;
 phaseTimer = 0;
@@ -10,12 +12,15 @@ subPhaseTimer = 0;
 vPhase = vState.grounded;
 hitPhase = hitState.normal;
 actorType = actorTypes.player;
+canChangeVState = true;
+vChangeBreak = true;
+lastAttackHasHit = false;
 maxFallSpeed = 5;
 phased = 0;
 pushable = true;
 isDead = false;
 dropThroughPlatforms = false;
-onPlatform = false;
+onPlatform = noone;
 canStep = true;
 equipmentChange = false;
 
@@ -80,8 +85,8 @@ attackNum = -1;
 attackHardCooldown = 0.3;
 attackHardCooldownTimer = -1;
 attackGroundTrackDistance = 32;
-attackTrackXDistance = 32;
-attackTrackYDistance = 16;
+attackTrackXDistance = 48;
+attackTrackYDistance = 24;
 attackEffectAlpha = 0.7;
 hasDeflected = false;
 
@@ -90,9 +95,9 @@ aerialYSpdCap = 0.5;
 aerialTargetX = -4;
 aerialTargetY = -4;
 
-blockingDurationPre = 0.1;
-blockingDurationBlocking = 0.7;
-blockingDurationPost = 0.2;
+blockingDurationPre = 0.05;
+blockingDurationBlocking = 0.4;
+blockingDurationPost = 0.05;
 blockingDurationReaction = 0.4;
 hasBlocked = false;
 
@@ -100,8 +105,8 @@ dodgeDistance = 16*3.5;				//16*<number of blocks>		//(before "xSpd-=xSpd/4" slo
 dodgeDurationPerforming = 0.2;
 dodgeDurationPost = 0.2;
 
-staggeredDuration = 0.6;
-proneDuration = 1;
+staggeredDuration = 0.9;
+stunnedDuration = 1;
 deflectDuration = 0.7;
 
 isDead = false;

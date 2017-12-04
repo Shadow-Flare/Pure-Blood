@@ -65,7 +65,7 @@ switch subPhase
 			phaseTimer = 0;
 			subPhase = subState.performing;
 			subPhaseTimer = 0;
-			scr_player_beginAttack(PlayerStats.activeCounterID);
+			scr_player_beginAttack(class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.counter))
 			reset_queue();
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationReaction)

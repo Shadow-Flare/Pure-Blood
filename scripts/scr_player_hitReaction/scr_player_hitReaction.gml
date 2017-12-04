@@ -5,7 +5,7 @@ if IE && InputManager.yInput yInputQueue = 1;
 if IE && InputManager.aInput aInputQueue = 1;
 if IE && InputManager.bInput bInputQueue = 1;
 
-if phaseTimer == 0 image_index = 0;
+if subPhaseTimer == 0 baseSpriteIndex = -4;
 
 phaseTimer++;
 subPhaseTimer++;
@@ -29,21 +29,16 @@ switch subPhase
 		update_sprite(sprPlayerBodyDefaultStagger,-staggeredDuration)
 		break;
 		
-	case subState.flung:
+	case subState.aerialStagger:
 		switch vPhase
 		{
 			case vState.grounded:
-				if subPhaseTimer >= round(room_speed*proneDuration)
-				{
-					phased = false;
-					phase = state.base;
-					phaseTimer = 0;
-					scr_player_base_subPhaseDeterminer();
-				}
+				subPhase = subState.stunned;
+				subPhaseTimer = 0;
 					//xSpd
 				xSpd -= xSpd/8;
 					//Sprite
-				update_sprite(sprPlayerBodyDefaultProne,-proneDuration)
+				update_sprite(sprPlayerBodyDefaultAerialStagger,1)
 				break;
 			case vState.jumping:
 			case vState.midAir:
@@ -51,7 +46,7 @@ switch subPhase
 					//xSpd
 				xSpd -= xSpd/80;
 					//Sprite
-				update_sprite(sprPlayerBodyDefaultFlung,1)
+				update_sprite(sprPlayerBodyDefaultAerialStagger,1)
 				break
 		}
 		break;
@@ -86,6 +81,19 @@ switch subPhase
 				update_sprite(sprPlayerBodyDefaultAerialDeflect,-deflectDuration)
 				break;
 		}
+		break;
+	case subState.stunned:
+		if subPhaseTimer >= round(room_speed*stunnedDuration)
+		{
+			phased = false;
+			phase = state.base;
+			phaseTimer = 0;
+			scr_player_base_subPhaseDeterminer();
+		}
+			//xSpd
+		xSpd -= xSpd/8;
+			//Sprite
+		update_sprite(sprPlayerBodyDefaultStunned,-stunnedDuration)
 		break;
 }
 		

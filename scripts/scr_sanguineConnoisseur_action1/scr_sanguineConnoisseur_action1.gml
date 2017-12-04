@@ -45,6 +45,7 @@ switch subPhase
 				hitDamage = other.action1Sub2ProjDamage*stats.damagePower;
 				hitStagger = other.action1Sub2ProjStagger*stats.staggerPower;
 				hitKnockback = other.action1Sub2ProjKnockback;
+				hitSoundID = noone		//CHANGE//
 
 				statusType = other.action1Sub2ProjStatusType;
 				statusValue = other.action1Sub2ProjStatusValue;

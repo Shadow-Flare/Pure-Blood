@@ -5,31 +5,17 @@ if IE var moveV = InputManager.moveInputV;
 else var moveV = 0;
 
 //if abs(xSpd) > PlayerStats.moveSpeed xSpd = sign(xSpd)*PlayerStats.moveSpeed
-
-switch vPhase
+with objPlayer
 {
-	case vState.grounded:
-		if moveH == 0 
-		{
-			subPhase = subState.idle;
-			subPhaseTimer = 0;
-		}
-		else if lockOnType != lockOn.hard
-		{
-			if abs(moveH) <= 0.8
+	switch vPhase
+	{
+		case vState.grounded:
+			if moveH == 0 
 			{
-				subPhase = subState.walking;
+				subPhase = subState.idle;
 				subPhaseTimer = 0;
 			}
-			else 
-			{
-				subPhase = subState.running;
-				subPhaseTimer = 0;
-			}
-		}
-		else
-		{
-			if sign(moveH) = lockOnDir
+			else if lockOnType != lockOn.hard
 			{
 				if abs(moveH) <= 0.8
 				{
@@ -44,14 +30,30 @@ switch vPhase
 			}
 			else
 			{
-				subPhase = subState.walkingBackwards;
-				subPhaseTimer = 0;
+				if sign(moveH) = lockOnDir
+				{
+					if abs(moveH) <= 0.8
+					{
+						subPhase = subState.walking;
+						subPhaseTimer = 0;
+					}
+					else 
+					{
+						subPhase = subState.running;
+						subPhaseTimer = 0;
+					}
+				}
+				else
+				{
+					subPhase = subState.walkingBackwards;
+					subPhaseTimer = 0;
+				}
 			}
-		}
-		break;
-	case vState.midAir:
-	case vState.jumping:
-		subPhase = subState.airborne;
-		subPhaseTimer = 0;
-		break;
+			break;
+		case vState.midAir:
+		case vState.jumping:
+			subPhase = subState.airborne;
+			subPhaseTimer = 0;
+			break;
+	}
 }

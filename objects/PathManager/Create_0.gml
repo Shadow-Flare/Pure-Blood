@@ -1,0 +1,1 @@
+pathMap = ds_map_create();

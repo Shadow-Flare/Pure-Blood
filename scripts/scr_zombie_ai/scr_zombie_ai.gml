@@ -1,3 +1,9 @@
+with objPlatform 
+{
+	solidDefault = solid;
+	solid = true;
+}
+
 switch aggroPhase
 {
 	case enemyAggroState.passive:
@@ -5,20 +11,44 @@ switch aggroPhase
 		if target != noone && distance_to_object(target) <= aggroRange
 		{
 			aggroPhase = enemyAggroState.attacking;
+			pause = false;
 		}
 		else target = noone;
 		break;
 	case enemyAggroState.attacking:
 			//move / de-aggro
-		if distance_to_object(target) >= aggroRange aggroPhase = enemyAggroState.passive;
-		else if abs(target.x-x) >= 16 driveMove = sign(target.x-x);
-		else driveMove = 0;
-			//attack1
-		if abs(target.x-x) <= attack1Range && abs(target.y-y) <= 32 driveAction = 1;
-			//no attack
-		else driveAction = 0;
+		if !pause
+		{
+			if distance_to_object(target) >= aggroRange aggroPhase = enemyAggroState.passive;
+			else if abs(target.x-x) >= 16 driveMove = sign(target.x-x);
+			else driveMove = 0;
+				//attack1
+			if abs(target.x-x) <= attack1Range && abs(target.y-y) <= 32 
+			{
+				driveMove = 0;
+				pause = true;
+				pauseTimer = 0;
+			}
+				//no attack
+			else driveAction = 0;
+		}
+		else
+		{
+			if phase = state.base && subPhase = subState.idle image_speed = 4;
+			pauseTimer++;
+			if pauseTimer >= round(action1AIDelay*room_speed)
+			{
+				driveAction = 1;
+				pauseTimer = 0;
+				pause = false;
+			}
+		}
 		break;
 }
 
-if target != noone && target.y-y >= 16 dropThroughPlatforms = true;
-else dropThroughPlatforms = false;
+scr_ground_enemy_ai_basicMovementPathing();
+
+with objPlatform 
+{
+	solid = solidDefault;
+}

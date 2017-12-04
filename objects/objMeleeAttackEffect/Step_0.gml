@@ -1,9 +1,24 @@
-timer++;
-
-//destroy
-if timer == floor((attackDuration)*room_speed)
+//destroy/reset
+if attackDuration != -1
 {
-	instance_destroy();
+	timer++;
+		//destroy
+	if timer >= round(attackDuration*room_speed)
+	{
+		instance_destroy();
+	}
+}
+else
+{
+	if ds_list_size(hitList) != 0
+	{
+		timer++;
+		if timer >= round(hitListResetDuration*room_speed)
+		{
+			ds_list_clear(hitList);
+			timer = 0;
+		}
+	}
 }
 
 //frameData
@@ -14,16 +29,4 @@ if frameData != -1
 }
 else hitOn = true;
 
-//follow caster
-if follow
-{
-	if instance_exists(caster)
-	{
-		x = caster.x;
-		y = caster.y;
-	}
-	else
-	{
-		instance_destroy();
-	}
-}
+//reset hitlist if duration is infinite

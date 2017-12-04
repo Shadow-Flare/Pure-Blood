@@ -16,7 +16,7 @@ switch subPhase
 			{
 				with instance_create_depth(x+facing*action3CorpseXOffset,y+action3CorpseYOffset,depth,objBloodHoundCorpse)
 				{
-					var spd = random_range(2.5,7.5);
+					var spd = random_range(3,7.5);
 					var ang = random_range(30,60);
 					if other.facing == -1 ang = 180-ang;
 					facing = irandom(1);
@@ -34,6 +34,7 @@ switch subPhase
 		}
 		if subPhaseTimer == round(action3Duration*room_speed)
 		{
+			lastAttackHasHit = false;
 			hasDeflected = false;
 			phase = state.base;
 			scr_enemy_ground_base_subPhaseDeterminer();

@@ -94,11 +94,11 @@ if room != dest && !instance_exists(ArenaSettingsManager) && !instance_exists(ob
 switch arenaStats[9]
 {
 	case "off":
-		instance_deactivate_object(obj_platform_parent);
+		instance_deactivate_object(objPlatformParent);
 		layer_set_visible("Tiles_arena_platforms",0)
 		break;
 	case "on":
-		instance_activate_object(obj_platform_parent);
+		instance_activate_object(objPlatformParent);
 		layer_set_visible("Tiles_arena_platforms",1)
 		break;
 }

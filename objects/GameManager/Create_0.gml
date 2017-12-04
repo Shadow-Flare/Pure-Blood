@@ -8,9 +8,9 @@ enum hitState {normal, blocking, dodging};
 
 	//player
 enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, emote, dying, action1, action2, action3, action4, action5};
-enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, flung, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, stunned, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
 enum vState {grounded, midAir, jumping};
-		//weapons
+	//weapons
 enum weaponClass {sword, spear}
 enum weaponClassStats {name, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards};
 enum weaponStats {name, type, damage, strMod, dexMod, stagger, range, specialType, specialValue, uniqueAttack, misc};
@@ -39,20 +39,12 @@ enum menuCurrent {main, inventory, offhand, combos, status, settings};
 // Initialize Game
 gameState = GameState.mainMenu;
 pauseState = PauseState.normal;
-scr_console_create();
 
-lastSpawner = noone;
+currentCheckpointID = noone;
+checkpointMap = ds_map_create();
+	checkpointMap[? 0] = rmRoomX05Y50;
+	checkpointMap[? 1] = rmRoomX11Y50;
 pauseSplash = noone;
-
-//message feed
-messageFeed = ds_list_create();
-messageTimers = ds_list_create();
-messageTop = 0
-
-messageFadeDuration = 1;
-messageShowDuration = 3;
-messageDivider = 50;
-messageMovePerFrame = 1;
 
 //screen
 ini_open("settings");
@@ -80,10 +72,6 @@ if(monitorW>=displayResolutionX && monitorH>=displayResolutionY)
 }
 
 grav = 0.25;
-dL = -1;
-dR = -1;
-dU = -1;
-dD = -1;
 
 hitBoxVisuals = false;				//gets determined in "reset_effects()"
 actorBoxVisuals = false;			//gets determined in "reset_effects()"

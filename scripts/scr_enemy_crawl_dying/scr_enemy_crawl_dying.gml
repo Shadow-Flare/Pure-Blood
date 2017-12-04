@@ -7,7 +7,7 @@ subPhaseTimer++;
 switch subPhase
 {
 	case subState.none:
-	case subState.flung:
+	case subState.aerialStagger:
 		if subPhaseTimer >= round(room_speed*deathDuration)
 		{
 			isDead = true;

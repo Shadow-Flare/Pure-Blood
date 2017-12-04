@@ -23,13 +23,17 @@ with PlayerStats
 	magicalPower = 0+1*intelligence;
 	magicalStagger = 2+0.25*intelligence+0.25*willpower;
 	magicalToughness = 2+0.30*willpower;
+	
+	physicalBreakHp = 0;
+	magicalBreakHp = 0;
+	breakCooldownDuration = 1;
 
 	hp = hpMax;
 	mp = mpMax;
 
 	moveSpeed = 2;
 	defaultMoveSpeed = moveSpeed;
-	var jumpHeightVar = 2.5;								//total jump height in blocks (16x16px or 128x128)
+	var jumpHeightVar = 3;										//total jump height in blocks (16x16px or 128x128)
 	jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);		//jumpHeightVar*<blockSize>
 
 	hitEffectType = "blood";

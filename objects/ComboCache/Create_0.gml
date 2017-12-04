@@ -47,7 +47,7 @@ attackNames[? tmpId] = "Uppercut";
 attackClass[? tmpId] = weaponClass.sword;
 attackTypes[? tmpId] = 0;
 attackSound[? tmpId] = snd_sword_swing_1;
-attackAnimations[? tmpId] = sprPlayerBodyDefaultCrossbowUppercut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
+attackAnimations[? tmpId] = sprPlayerBodyDefaultOffhandUppercut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.5;
 attackCooldowns[? tmpId] = 0.1;
@@ -66,7 +66,7 @@ attackDamageTypes[? tmpId] = ds_list_create();
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.25);
 attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
+	ds_list_add(attackStaggerModifiers[? tmpId],2.8);
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],-3.75);
 attackStatusTypes[? tmpId] = ds_list_create();
@@ -172,28 +172,28 @@ attackStatusValues[? tmpId] = ds_list_create();
 tmpId++;
 attackNames[? tmpId] = "Burst";
 attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 2;
+attackTypes[? tmpId] = 1;
 attackSound[? tmpId] = snd_sword_swing_1;
 attackAnimations[? tmpId] = sprPlayerBodySwordBurst;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.8;
-attackCooldowns[? tmpId] = 0.2;
+attackDurations[? tmpId] = 0.7;
+attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],1);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 80;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],2);
+	ds_list_add(attackDamageTypes[? tmpId],0);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
+	ds_list_add(attackStaggerModifiers[? tmpId],1.5);
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],3);
 attackStatusTypes[? tmpId] = ds_list_create();
@@ -206,6 +206,7 @@ tmpId++;
 attackNames[? tmpId] = "Shove";
 attackClass[? tmpId] = weaponClass.sword;
 attackTypes[? tmpId] = 0;
+attackSound[? tmpId] = noone;
 attackAnimations[? tmpId] = sprPlayerBodySwordShove;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.6;
@@ -241,15 +242,15 @@ attackTypes[? tmpId] = 1;
 attackSound[? tmpId] = snd_sword_swing_2;
 attackAnimations[? tmpId] = sprPlayerBodySwordSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.2;
-attackCooldowns[? tmpId] = 0.4;
+attackDurations[? tmpId] = 0.35;
+attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],1);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
 	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
@@ -270,22 +271,22 @@ attackStatusValues[? tmpId] = ds_list_create();
 tmpId++;
 attackNames[? tmpId] = "Smash";
 attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 4;
+attackTypes[? tmpId] = 2;
 attackSound[? tmpId] = snd_sword_swing_4;
 attackAnimations[? tmpId] = sprPlayerBodySwordSmash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.6;
-attackCooldowns[? tmpId] = 0.4;
+attackDurations[? tmpId] = 0.7;
+attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],2);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 8;
+attackMoveDistancesX[? tmpId] = 10;
 attackDamageTypes[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageTypes[? tmpId],0);
 attackDamageModifiers[? tmpId] = ds_list_create();
@@ -303,7 +304,7 @@ attackStatusValues[? tmpId] = ds_list_create();
 tmpId++;
 attackNames[? tmpId] = "Gut";
 attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 4;
+attackTypes[? tmpId] = 2;
 attackSound[? tmpId] = snd_sword_swing_1;
 attackAnimations[? tmpId] = sprPlayerBodySwordGut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
@@ -402,7 +403,7 @@ attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
 	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 24;
@@ -432,10 +433,10 @@ attackCooldowns[? tmpId] = 0.4;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],1);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 0;
@@ -456,7 +457,7 @@ attackStatusValues[? tmpId] = ds_list_create();
 tmpId++;
 attackNames[? tmpId] = "Skewer";
 attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 2;
+attackTypes[? tmpId] = 1;
 attackSound[? tmpId] = snd_sword_swing_2;
 attackAnimations[? tmpId] = sprPlayerBodySpearSkewer;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
@@ -465,10 +466,10 @@ attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],1);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 80;
@@ -489,7 +490,7 @@ attackStatusValues[? tmpId] = ds_list_create();
 tmpId++;
 attackNames[? tmpId] = "Vault";
 attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 0;
+attackTypes[? tmpId] = 1;
 attackSound[? tmpId] = snd_sword_swing_2;
 attackAnimations[? tmpId] = sprPlayerBodySpearVault;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
@@ -501,7 +502,7 @@ attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
 	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
@@ -534,7 +535,7 @@ attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
 	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
@@ -555,7 +556,7 @@ attackStatusValues[? tmpId] = ds_list_create();
 tmpId++;
 attackNames[? tmpId] = "Juggle";
 attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 4;
+attackTypes[? tmpId] = 2;
 attackSound[? tmpId] = snd_sword_swing_2;
 attackAnimations[? tmpId] = sprPlayerBodySpearJuggle;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
@@ -564,10 +565,10 @@ attackCooldowns[? tmpId] = 0.4;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],2);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 8;
@@ -588,7 +589,7 @@ attackStatusValues[? tmpId] = ds_list_create();
 tmpId++;
 attackNames[? tmpId] = "Drill";
 attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 4;
+attackTypes[? tmpId] = 2;
 attackSound[? tmpId] = snd_sword_swing_2;
 attackAnimations[? tmpId] = sprPlayerBodySpearDrill;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
 attackFrameData[? tmpId] = -1;
@@ -598,12 +599,12 @@ attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],2);
 	ds_list_add(attackHitAudioType[? tmpId],2);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])),
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])),
 										 (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/8/**//sprite_get_number(attackAnimations[? tmpId])),
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])),
 											(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 2;
@@ -635,8 +636,8 @@ attackHitAudioType[? tmpId] = ds_list_create();
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = -40;
 attackMoveDistancesX[? tmpId] = 6;
@@ -689,15 +690,15 @@ attackClass[? tmpId] = weaponClass.sword;
 attackTypes[? tmpId] = 0;
 attackSound[? tmpId] = snd_sword_swing_1;
 attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackDurations[? tmpId] = 0.2;
-attackCooldowns[? tmpId] = 0.4;
+attackDurations[? tmpId] = 0.35;
+attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],1);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
 	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
@@ -721,7 +722,7 @@ attackClass[? tmpId] = weaponClass.sword;
 attackTypes[? tmpId] = 0;
 attackSound[? tmpId] = snd_sword_swing_4;
 attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlam;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackDurations[? tmpId] = 0.4;
+attackDurations[? tmpId] = 0.7;
 attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],2);
@@ -732,7 +733,7 @@ attackHitDurations[? tmpId] = ds_list_create();
 attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 12;
+attackMoveDistancesX[? tmpId] = 18;
 attackDamageTypes[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageTypes[? tmpId],0);
 attackDamageModifiers[? tmpId] = ds_list_create();
@@ -761,9 +762,9 @@ attackHitAudioType[? tmpId] = ds_list_create();
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
@@ -791,11 +792,11 @@ attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
 	ds_list_add(attackHitAudioType[? tmpId],2);
 attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
+	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId]));
+	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
+attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
+attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 12;
 attackDamageTypes[? tmpId] = ds_list_create();

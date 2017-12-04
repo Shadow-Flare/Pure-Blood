@@ -27,19 +27,16 @@ switch subPhase
 		update_sprite(sprPlayerBodyDefaultDying,-deathDuration)
 		break;
 		
-	case subState.flung:
+	case subState.aerialStagger:
 		switch vPhase
 		{
 			case vState.grounded:
-				if subPhaseTimer >= round(room_speed*deathDuration)
-				{
-					isDead = true;
-					actorType = actorTypes.corpse;
-				}
+				subPhase = subState.none;
+				subPhaseTimer = 0;
 					//xSpd
 				xSpd -= xSpd/8;
 					//Sprite
-				update_sprite(sprPlayerBodyDefaultDyingProne,-deathDuration)
+				update_sprite(sprPlayerBodyDefaultAerialStagger,1)
 				break;
 			case vState.jumping:
 			case vState.midAir:
@@ -47,7 +44,7 @@ switch subPhase
 					//xSpd
 				xSpd -= xSpd/80;
 					//Sprite
-				update_sprite(sprPlayerBodyDefaultFlung,1)
+				update_sprite(sprPlayerBodyDefaultAerialStagger,1)
 				break
 		}
 		break;

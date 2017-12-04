@@ -7,7 +7,7 @@
     "HTile": false,
     "VTile": false,
     "bbox_bottom": 28,
-    "bbox_left": 17,
+    "bbox_left": 36,
     "bbox_right": 55,
     "bbox_top": 12,
     "bboxmode": 2,

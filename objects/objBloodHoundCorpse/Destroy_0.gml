@@ -1,1 +1,1 @@
-sprite_delete(tempBodySprite);
+event_inherited();

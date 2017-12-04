@@ -10,7 +10,7 @@ scr_deathLotus_ai();
 #region State machines
 	
 		//vertical behavior
-	scr_enemy_crawl_vStateMachine();
+	scr_actor_crawl_vStateMachine();
 	
 		//phase (nested subPhase)
 	switch phase
@@ -47,3 +47,6 @@ scr_actor_moveWithCollisions();
 	//addional properties
 image_angle = actorDirection*90-90;
 image_xscale = facing;
+
+if actorDirection == 3 phased = false;
+else phased = true;

@@ -1,3 +1,5 @@
+if subPhaseTimer == 0 baseSpriteIndex = -4;
+
 phaseTimer++;
 subPhaseTimer++;
 
@@ -7,7 +9,6 @@ subPhaseTimer++;
 switch subPhase
 {
 	case subState.staggered:
-	case subState.flung:
 	case subState.aerialStagger:
 		if subPhaseTimer >= round(room_speed*staggeredDuration)
 		{
@@ -19,6 +20,7 @@ switch subPhase
 		xSpd -= xSpd/4;
 			//Sprite
 		update_sprite_enemy(sprBASEBodyStagger,-staggeredDuration);
+		if image_index = sprite_get_number(sprite_index)-1 image_speed = 0;
 		break;
 }
 		

@@ -4,9 +4,17 @@ subPhaseTimer++;
 switch subPhase
 {
 	case subState.actionSub1:
+			//initialize
+		if subPhaseTimer == 1
+		{
+			lastAttackHasHit = false;
+			canChangeVState = true;
+			vChangeBreak = false;
+		}
 			//reset
 		if subPhaseTimer == round(action5Duration*room_speed)
 		{
+			lastAttackHasHit = false;
 			driveAction = 2;
 			phase = state.base;
 			scr_enemy_ground_base_subPhaseDeterminer();

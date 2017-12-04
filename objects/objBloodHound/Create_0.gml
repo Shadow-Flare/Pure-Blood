@@ -1,39 +1,5 @@
-//base behaviour data
-actorType = actorTypes.enemy;
-aggroPhase = enemyAggroState.passive;
-phase = state.base;
-subPhase = subState.idle;
-vPhase = vState.midAir;
-hitPhase = hitState.normal;
+event_inherited();
 
-phaseTimer = 0;
-subPhaseTimer = 0;
-baseSpriteIndex = sprite_index;
-effectSpriteIndex = noone;
-maxFallSpeed = 5;
-xSpd = 0;
-ySpd = 0;
-facing = irandom(1);
-if facing == 0 facing = -1;
-phased = false;
-pushable = false;
-flying = false;
-onPlatform = false;
-dropThroughPlatforms = false;
-tempBodySprite = noone;
-
-bboxDefaultLeft = sprite_get_bbox_left(sprite_index);
-bboxDefaultRight = sprite_get_bbox_right(sprite_index);
-bboxDefaultTop = sprite_get_bbox_top(sprite_index);
-bboxDefaultBottom = sprite_get_bbox_bottom(sprite_index);
-
-bboxLeft = bboxDefaultLeft;
-bboxRight = bboxDefaultRight;
-bboxTop = bboxDefaultTop;
-bboxBottom = bboxDefaultBottom;
-
-if !layer_exists("lay_caches") layer_create(0,"lay_caches");
-statCache = instance_create_layer(0,0,"lay_caches",ActorStats)
 with statCache
 {
 	hpMax = 120;										//$$//
@@ -42,17 +8,15 @@ with statCache
 	damagePower = 7;									//$$//
 	staggerPower = 5;									//$$//
 	
-	physicalToughness = 12;								//$$//
+	physicalToughness = 6;								//$$//
 	magicalToughness = 8;								//$$//
+	breakCooldownDuration = 1;
 	
 	moveSpeed = 0.2;									//$$//
 	defaultMoveSpeed = moveSpeed;
 	
 	killExp = 100;
 	killGold = [0.1,4-16];
-	
-	hitEffectType = "blood";
-	hitEffectColour = "dark red";
 	
 		//Damage type resistances (as percentage; 1 = 100%)
 	damageResistances[0] = 1;			//Slash			//$$//
@@ -66,58 +30,41 @@ with statCache
 	damageResistances[8] = 1;			//Dark			//$$//
 	damageResistances[9] = 1;			//X damage		//$$//
 
-	//Special Damage initializers
-	specialDamage[0] = 0;				//Bleed
-
 	//Special resistances (100 is considered normal)
 	specialResist[0] = 100;				//Bleed			//$$//
 	
 	hp = hpMax;
 	mp = mpMax;
-	
-	isInvulnerable = false;
 }
-
-//drives
-driveJump = false;
-driveAction = 0;
-driveMove = 0;
-
-//base checks
-actionHardCooldownTimer = -1;
-hasBlocked = false;
-hasDeflected = false;
-canChangeVState = true;
-isDead = false;
-hasBeenHit = false;
-lastHitType = -1;
 
 //variables
 landingDuration = 0.7;									//&&//
 staggeredDuration = 0.5;								//$$//
-proneDuration = 0.6;									//$$//
+stunnedDuration = 0.6;									//$$//
 deflectDuration = 0.7;
+pushable = false;
+flying = false;
 
-deathDuration = 1;										//$$//
-deathFadeDuration = 2;									//$$//
+deathDuration = 2.5;
+deathFadeDuration = 3;
 
 //ai data
 aggroRange = 16*20;										//$$//
 actionHardCooldown = 0;									//$$//
 
-actionAiDelay = 2.4;
+actionAiDelay = 1.6;
 action1Range = 16*4;
 action2MinRange = 16*8;
-action2NumOf3Or4BeforeLeap = 2;
+action2NumOf1Or3Or4BeforeLeap = 2;
 action4CorpsesNeeded = 3;
-numOfAction3Or4 = 0;
+numOfAction1Or3Or4 = 0;
 
 //action data
 	//action1: Slam
 action1Animation = sprBloodHoundBodyAction1												//$$//
 action1FrameData = [0,2]
 action1Follow = true;
-action1Duration = 1.2;																	//$$//
+action1Duration = 2.4;																	//$$//
 action1AttackSoundID = noone;															//$$//
 action1HitSoundID = noone;																//$$//
 action1HitStart = action1Duration*(/**/7/**//sprite_get_number(action1Animation));		//$$//
@@ -144,9 +91,9 @@ action2Sub2Animation = sprBloodHoundBodyAction2Sub2;
 action2Sub2TargetEnemy = false;	//CHANGE THIS TO MAKE LEAP TARGET PLAYER
 action2Sub2Angle = 25;
 action2Sub2Distance = 180;
+action2Sub2AttackSoundID = noone;
 			//damage zone
-action2Sub2ZoneID = noone;
-action2Sub2ZoneAttackSoundID = noone;															//$$//
+action2Sub2ZoneID = noone;															//$$//
 action2Sub2ZoneHitSoundID = noone;																//$$//
 action2Sub2ZoneFrameData = -1;
 action2Sub2ZoneFollow = true;

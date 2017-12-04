@@ -70,10 +70,11 @@ with instance_create_depth(x,y,depth+1,objMeleeAttackEffect)
 		//change to effect string
 	var effectSpriteName = string_replace(sprite_get_name(animToUse),"Body","Effect");
 		//if uppercut
-	if attackID = -1 effectSpriteName = string_replace(effectSpriteName,"Sword","");
-		//normal
-	else effectSpriteName = string_replace(effectSpriteName,"Sword",weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.name));
-
+	if attackID = -1 
+	{
+		var tmp = string_replace(effectSpriteName,"Offhand","Crossbow"); //UPDATE THIS WITH ITEM DATA LATER
+		if asset_get_type(tmp) = asset_sprite effectSpriteName = tmp;
+	}
 		//set data
 	if asset_get_type(effectSpriteName) == asset_sprite
 	{

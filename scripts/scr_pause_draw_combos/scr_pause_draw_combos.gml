@@ -10,11 +10,18 @@ for (var i = 0; i < array_height_2d(current_menu_options); i++)
 		{
 			if sY == j
 			{
-				if sX != i draw_text(100+200*i,270+270*j,ComboCache.attackNames[? PlayerStats.activeComboIDs[i-1]]);
+				var class = weapon_get_stat(PlayerStats.heldWeapons[sY],weaponStats.type);
+				if sX != i draw_text(100+200*i,270+270*j,ComboCache.attackNames[? attack_get_id_class(i-1,vState.grounded,class)]);
 				else draw_text(100 + 200 * i, 270 + 270 * j, ComboCache.attackNames[? slot_options[sExpY]]);
 			}
 		}
-		else draw_text(100+200*i,270+270*j, current_menu_options[i, j]);
+		else
+		{
+			if current_menu_options[i, j] = "weapon 1" var text = weapon_get_stat(PlayerStats.heldWeapons[0],weaponStats.name);
+			else if current_menu_options[i, j] = "weapon 2" var text = weapon_get_stat(PlayerStats.heldWeapons[1],weaponStats.name);
+			else var text = current_menu_options[i, j];
+			draw_text(100+200*i,270+270*j, text);
+		}
 	}
 }
 
@@ -27,7 +34,8 @@ if slotExpanded
 	{
 		if sExpY != i
 		{
-			if slot_options[i] == PlayerStats.activeComboIDs[sX-1]
+			var class = weapon_get_stat(PlayerStats.heldWeapons[sY],weaponStats.type)
+			if slot_options[i] == attack_get_id_class(sX-1,vState.grounded,class)
 			{
 				draw_set_color(c_aqua);
 			}

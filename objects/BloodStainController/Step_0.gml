@@ -11,22 +11,27 @@ if (!surface_exists(tiles))
 	
 	surface_set_target(tiles);
 	
-	tileMapA = layer_tilemap_get_id(layer_get_id("tiles_foreground_a"));
-	tileMapB = layer_tilemap_get_id(layer_get_id("tiles_foreground_b"));
-	tileMapC = layer_tilemap_get_id(layer_get_id("tiles_foreground_c"));
+	var tileMapA = layer_tilemap_get_id(layer_get_id("tiles_foreground_a"));
+	var tileMapB = layer_tilemap_get_id(layer_get_id("tiles_foreground_b"));
+	var tileMapC = layer_tilemap_get_id(layer_get_id("tiles_foreground_c"));
+	var tileMapD = layer_tilemap_get_id(layer_get_id("tiles_foreground_d"));
 	draw_tilemap(tileMapA,0,0);
 	draw_tilemap(tileMapB,0,0);
 	draw_tilemap(tileMapC,0,0);
+	draw_tilemap(tileMapD,0,0);
 	
 	surface_reset_target();
 	
 	layer_set_visible(layer_get_id("Tiles_foreground_a"),0);
 	layer_set_visible(layer_get_id("Tiles_foreground_b"),0);
 	layer_set_visible(layer_get_id("Tiles_foreground_c"),0);
+	layer_set_visible(layer_get_id("Tiles_foreground_d"),0);
 }
+
 if (!surface_exists(blood)) blood = surface_create(room_width,room_height);
 if (!surface_exists(bloodyTiles)) bloodyTiles = surface_create(room_width,room_height);
 if (!surface_exists(temp)) temp = surface_create(room_width,room_height);
+
 	//hole surface
 surface_set_target(temp);
 	draw_set_colour(c_black);

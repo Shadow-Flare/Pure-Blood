@@ -7,6 +7,13 @@ update_sprite_enemy(action2Animation,-action2Duration)
 switch subPhase
 {
 	case subState.actionSub1:
+			//initialize
+		if subPhaseTimer == 1
+		{
+			lastAttackHasHit = false;
+			canChangeVState = true;
+			vChangeBreak = false;
+		}
 			//timing and attack
 		if subPhaseTimer == round(action2HitStart*room_speed)
 		{
@@ -15,6 +22,7 @@ switch subPhase
 		}
 		else if subPhaseTimer == round(action2Duration*room_speed)
 		{
+			lastAttackHasHit = false;
 			phase = state.base;
 			scr_enemy_ground_base_subPhaseDeterminer();
 			phaseTimer = 0;

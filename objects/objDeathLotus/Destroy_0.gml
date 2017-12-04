@@ -1,2 +1,1 @@
-instance_destroy(statCache);
-sprite_delete(tempBodySprite);
+event_inherited();

@@ -1,1 +1,2 @@
-spawnFrom = 0;
+spawnFrom = noone;
+ID = noone;

@@ -6,6 +6,7 @@ InputManager.startInput = false;
 instance_deactivate_all(1);
 	//Data stores
 instance_activate_object(PlayerStats);
+instance_activate_object(ItemCache);
 instance_activate_object(ComboCache);
 instance_activate_object(RoomCache);
 	//Controllers

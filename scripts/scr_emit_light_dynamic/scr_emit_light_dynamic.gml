@@ -1,89 +1,102 @@
-///scr_emit_light(resolution,lightSize,colour,alpha)
-resolution = argument0;
-lightSize = argument1;
-colour = argument2;
-alpha = argument3;
+///@arg resolution
+///@arg alpha
+///@arg lightScale
+///@arg radialBlurFactor
+var resolution = argument0;
+var alpha = argument1;
+var lightScale = argument2;
+var blur = argument3;
 
-///// INITIALIZE \\\\\
-if !variable_instance_exists(id,"occlusionMap") occlusionMap = 0;
-if !variable_instance_exists(id,"shadowMap1D") shadowMap1D = 0;
-if !variable_instance_exists(id,"lightSurface") lightSurface = 0;
-
-///// MAKE OCCLUSION \\\\\
-if !surface_exists(occlusionMap) occlusionMap = surface_create(lightSize,lightSize);
-
-///set
-surface_resize(occlusionMap,lightSize,lightSize)
-surface_set_target(occlusionMap);
-draw_clear_alpha(c_white,0);
-shader_set(shd_black);
-
+#region Tiles
+if !variable_instance_exists(id,"occlusionMapTiles") occlusionMapTiles = noone;
+if !surface_exists(occlusionMapTiles) occlusionMapTiles = surface_create(room_width,room_height);
+	
+surface_set_target(occlusionMapTiles);
+	draw_clear_alpha(c_white,0);
 	tileMapA = layer_tilemap_get_id(layer_get_id("tiles_foreground_a"));
 	tileMapB = layer_tilemap_get_id(layer_get_id("tiles_foreground_b"));
 	tileMapC = layer_tilemap_get_id(layer_get_id("tiles_foreground_c"));
-	draw_tilemap(tileMapA,-x+lightSize/2,-y+lightSize/2);
-	draw_tilemap(tileMapB,-x+lightSize/2,-y+lightSize/2);
-	draw_tilemap(tileMapC,-x+lightSize/2,-y+lightSize/2);
-
-shader_reset();
+	tileMapD = layer_tilemap_get_id(layer_get_id("tiles_foreground_d"));
+	draw_tilemap(tileMapA,0,0);
+	draw_tilemap(tileMapB,0,0);
+	draw_tilemap(tileMapC,0,0);
+	draw_tilemap(tileMapD,0,0);
 surface_reset_target();
-///reset
+#endregion
+#region Initializations
+with obj_light_parent if enabled
+{
+	///// VARIABLES \\\\\
+	if lightSize < 0 lightSize = 0;
+	if maxLightSize < 0 maxLightSize = 0;
+	col = make_color_rgb(255-color_get_red(colour),255-colour_get_green(colour),255-colour_get_blue(colour))
 
-///// MAKE 1D SHADOW MAP \\\\\
-if !surface_exists(shadowMap1D) shadowMap1D = surface_create(lightSize,1);
+	///// SURFACE VARIABLES \\\\\
+	if !variable_instance_exists(id,"occlusionMap") occlusionMap = noone;
+	if !variable_instance_exists(id,"shadowMap1D") shadowMap1D = noone;
+	
+	///// CHECK SURFACES EXIST \\\\\
+	if !surface_exists(shadowMap1D) shadowMap1D = surface_create(maxLightSize*lightScale,1);
+	if !surface_exists(occlusionMap) occlusionMap = surface_create(maxLightSize*lightScale,maxLightSize*lightScale);
 
-///set
-surface_resize(shadowMap1D,lightSize,1)
-surface_set_target(shadowMap1D);
-draw_clear_alpha(c_white,0);
+	///// CLEAR SURFACES \\\\\
+	surface_set_target(shadowMap1D);
+		draw_clear_alpha(c_white,0);
+	surface_reset_target();
+	surface_set_target(occlusionMap);
+		draw_clear_alpha(c_white,0);
+	surface_reset_target();
+}
+#endregion
+#region Occlusion maps
+shader_set(shd_black);
+	with obj_light_parent if enabled
+	{
+		if lightSize != 0
+		{			
+				///// SPRITES AND COMBINE \\\\\
+			surface_set_target(occlusionMap);
+				draw_surface_ext(other.occlusionMapTiles,(-x+lightSize/2)*lightScale*(maxLightSize/lightSize),(-y+lightSize/2)*lightScale*(maxLightSize/lightSize),lightScale*(maxLightSize/lightSize),lightScale*(maxLightSize/lightSize),0,c_white,1);
+				with objBlockParent if occlusion
+				{
+					draw_sprite_ext(sprite_index,image_index,(x-other.x+other.lightSize/2)*lightScale,(y-other.y+other.lightSize/2)*lightScale,image_xscale*lightScale*(maxLightSize/lightSize),image_yscale*lightScale*(maxLightSize/lightSize),image_angle,c_white,image_alpha)
+				}
+			surface_reset_target();
+		}
+	}
+shader_reset();
+#endregion
+#region 1D shadow maps
 shader_set(shd_cast_shadows);
-
-reso = shader_get_uniform(shd_cast_shadows,"resolution");
-shader_set_uniform_f(reso,resolution,resolution);
-size= shader_get_uniform(shd_cast_shadows,"lightSize");
-shader_set_uniform_f(size,lightSize,lightSize);
-
-draw_surface(occlusionMap,0,0);
-
+var shd_resolution = shader_get_uniform(shd_cast_shadows,"resolution");
+shader_set_uniform_f(shd_resolution,resolution,resolution);
+	with obj_light_parent if enabled
+	{
+			///// DRAW SURFACE USING CASTER SHADER \\\\\
+		surface_set_target(shadowMap1D);
+			draw_surface(occlusionMap,0,0);
+		surface_reset_target();
+	}
 shader_reset();
-surface_reset_target();
-///reset
-
-///// RENDER LIGHT ONTO A SURFACE \\\\\
-if !surface_exists(lightSurface) lightSurface = surface_create(lightSize,lightSize);
-
-///set
-surface_resize(lightSurface,lightSize,lightSize)
-surface_set_target(lightSurface);
-draw_clear_alpha(c_white,0);
+#endregion
+#region Render light onto controller surface
 shader_set(shd_render_light);
-
-reso = shader_get_uniform(shd_render_light,"resolution");
-shader_set_uniform_f(reso,resolution,resolution);
-size= shader_get_uniform(shd_render_light,"lightSize");
-shader_set_uniform_f(size,lightSize,lightSize);
-
-draw_surface_stretched(shadowMap1D,0,0,lightSize,lightSize);
-
+var shd_resolution = shader_get_uniform(shd_render_light,"resolution");
+shader_set_uniform_f(shd_resolution,resolution,resolution);
+var shd_blurFactor = shader_get_uniform(shd_render_light,"blurFactor");
+shader_set_uniform_f(shd_blurFactor,blur);
+	with obj_light_parent if enabled
+	{
+		///// DRAW LIGHT ONTO SURFACE \\\\\
+		surface_set_target(LightingController.light);
+			draw_surface_ext(
+				shadowMap1D,
+				(x-lightSize/2-camera_get_view_x(Camera.cam)+1)*lightScale,
+				(y+lightSize/2-camera_get_view_y(Camera.cam)+1)*lightScale,
+				lightSize/maxLightSize,
+				-lightSize*lightScale,
+				0,col,alpha);
+		surface_reset_target();
+	}
 shader_reset();
-surface_reset_target();
-///reset
-
-///// DRAW SURFACE \\\\\
-surface_set_target(obj_controller.light);
-//surface_set_target(occlusionMap);
-shader_set(shd_blur);
-gpu_set_blendmode(bm_normal);
-
-radius = 6
-size = shader_get_uniform(shd_blur,"size");
-shader_set_uniform_f(size,lightSize,lightSize,radius);
-draw_surface_ext(lightSurface,x-lightSize/2,y+lightSize/2,1,-1,0,colour,alpha);
-
-gpu_set_blendmode(bm_normal);
-shader_reset();
-surface_reset_target();
-
-//surface_free(occlusionMap);
-//surface_free(shadowMap1D);
-//surface_free(lightSurface);
+#endregion

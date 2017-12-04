@@ -9,7 +9,7 @@
         "5a794516-a9a8-4fd2-9495-cfb9ba463a06",
         "21eeb2c8-4290-447a-8b28-4380c53de6fd",
         "b018bb2b-3954-4c48-add0-1d53c27c2b33",
-        "f1369b37-e427-4673-a840-5636e7320419"
+        "e36cd115-3eb0-413d-b5bc-d4df7afaeccb"
     ],
     "filterType": "GMSprite",
     "folderName": "Crossbow",

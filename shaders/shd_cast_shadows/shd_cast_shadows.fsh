@@ -10,7 +10,6 @@ varying vec2 vTexCoord0;
 //uniform values
 /////uniform sampler2D u_texture;
 uniform vec2 resolution;
-uniform vec2 lightSize;
 
 //alpha threshold for our occlusion map
 const float THRESHOLD = 0.75;

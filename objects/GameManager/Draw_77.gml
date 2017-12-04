@@ -25,6 +25,7 @@ switch gameState
 					{
 						roomTo = other.transitionRoomTo;
 						roomFrom = other.transitionRoomFrom;
+						ID = other.transitionID;
 					}
 				}
 				break;

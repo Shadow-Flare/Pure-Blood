@@ -9,6 +9,9 @@ switch subPhase
 		{
 			subPhase = subState.actionSub2
 			subPhaseTimer = 0;
+			lastAttackHasHit = false;
+			canChangeVState = true;
+			vChangeBreak = false;
 				//movement burst
 			if action2Sub2TargetEnemy action2Sub2Distance = abs(target.x-x);
 			var spd = sqrt((GameManager.grav*action2Sub2Distance)/(2*dcos(action2Sub2Angle)*dsin(action2Sub2Angle)))
@@ -32,6 +35,9 @@ switch subPhase
 			//transitions
 		if vPhase = vState.grounded
 		{
+			lastAttackHasHit = false;
+			canChangeVState = true;
+			vChangeBreak = false;
 			if action2Sub2ZoneID != noone
 			{
 				instance_destroy(action2Sub2ZoneID);
@@ -55,6 +61,7 @@ switch subPhase
 		}
 		if subPhaseTimer == round(action2Sub3Duration*room_speed)
 		{
+			lastAttackHasHit = false;
 			if action2Sub3ZoneID != noone
 			{
 				instance_destroy(action2Sub3ZoneID);

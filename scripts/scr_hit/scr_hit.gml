@@ -26,7 +26,7 @@ if attackType != -1
 	var partSpeed = 1+hpLostRatio*(100*0.04)
 	if instance_exists(caster) var src = caster;
 	else var src = source;
-	scr_hit_effect(src,statCache.hitEffectType,statCache.hitEffectColour,partCount,partSpeed);
+	scr_hit_effect_blood(src,statCache.hitEffectType,statCache.hitEffectColour,partCount,partSpeed);
 	statCache.hp = clamp(statCache.hp,0,statCache.hpMax);
 }
 

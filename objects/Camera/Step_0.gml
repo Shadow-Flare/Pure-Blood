@@ -3,6 +3,7 @@ y += (yTo -y)/10;
 
 camera_set_view_pos(cam,-(camera_get_view_width(cam)/2)+x,-(camera_get_view_height(cam)/2)+y);
 
+#region State Machine
 switch phase
 {
 	case cameraState.idle:
@@ -29,8 +30,31 @@ switch phase
 		}
 		break;
 }
+#endregion
+
+xPos = round(xPos);
+yPos = round(yPos);
 
 xPos = clamp(camera_get_view_x(cam),0,room_width-camera_get_view_width(cam));
 yPos = clamp(camera_get_view_y(cam),0,room_height-camera_get_view_height(cam));
+
+#region Screen Shake
+if shakeDuration != 0
+{
+	shakeTimer++;
+	if shakeTimer >= round(shakeDuration*room_speed)
+	{
+		shakeAmount = 0;
+		shakeAmountOriginal = 0;
+		shakeDuration = 0;
+		shakeTimer = 0;
+	}
+	xPos += random_range(-shakeAmount/2,shakeAmount/2);
+	yPos += random_range(-shakeAmount/2,shakeAmount/2);
+	shakeAmount -= shakeAmountOriginal/(shakeDuration*room_speed);
+}
+#endregion
+
+
 
 camera_set_view_pos(cam,xPos,yPos);

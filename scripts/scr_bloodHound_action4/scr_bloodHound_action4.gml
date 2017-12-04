@@ -4,6 +4,13 @@ subPhaseTimer++;
 switch subPhase
 {
 	case subState.actionSub1:
+			//initialize
+		if subPhaseTimer == 1
+		{
+			lastAttackHasHit = false;
+			canChangeVState = true;
+			vChangeBreak = false;
+		}
 			//Ticks
 		if subPhaseTimer == round(action4TickTime*room_speed)
 		{
@@ -26,6 +33,7 @@ switch subPhase
 			//reset
 		if subPhaseTimer == round(action4Duration*room_speed)
 		{
+			lastAttackHasHit = false;
 			phase = state.base;
 			scr_enemy_ground_base_subPhaseDeterminer();
 			phaseTimer = 0;

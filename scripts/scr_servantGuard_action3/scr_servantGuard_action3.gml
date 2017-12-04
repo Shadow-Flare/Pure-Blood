@@ -7,6 +7,7 @@ update_sprite_enemy(action3Animation,-action3Duration)
 		//get deflected
 if hasDeflected
 {
+	lastAttackHasHit = false;
 	hasDeflected = false;
 	phase = state.hitReaction;
 	phaseTimer = 0;
@@ -16,14 +17,22 @@ if hasDeflected
 else switch subPhase
 {
 	case subState.actionSub1:
+		//initialize
+		if subPhaseTimer == 1
+		{
+			lastAttackHasHit = false;
+			canChangeVState = true;
+			vChangeBreak = false;
+		}
 			//timing and attack
 		if subPhaseTimer == round(action3HitStart*room_speed)
 		{
-			scr_enemy_attack(action3FrameData,action3Follow,action3HitDuration,action3DamageType,action3Damage*statCache.damagePower,action3Stagger*statCache.staggerPower,action3Knockback,action3StatusType,action3StatusValue,action3Pierce,action3Animation,action3SoundID)
+			scr_enemy_attack(action3FrameData,action3Follow,action3HitDuration,action3DamageType,action3Damage*statCache.damagePower,action3Stagger*statCache.staggerPower,action3Knockback,action3StatusType,action3StatusValue,action3Pierce,action3Animation,action3HitSoundID)
 			if action3AttackSoundID != noone audio_play_sound(action3AttackSoundID,10,0);
 		}
 		if subPhaseTimer == round(action3Duration*room_speed)
 		{
+			lastAttackHasHit = false;
 			hasDeflected = false;
 			phase = state.base;
 			scr_enemy_ground_base_subPhaseDeterminer();

@@ -65,29 +65,31 @@ if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev audio_play_sound(snd_menu_
 if (movedH && slotExpanded)
 {		
 	slot_options = [];
-	slot_types = PlayerStats.activeComboSlotNumbers[sX-1];
-					
-	for(var i = 0; i < PlayerStats.comboSize; i++)
+	var class = weapon_get_stat(PlayerStats.heldWeapons[sY],weaponStats.type);
+	var comboSize = PlayerStats.GCS[? class];
+	var finisherSize = PlayerStats.GFS[? class];
+	var comboSizeTotal = comboSize+finisherSize;
+	
+	for(var i = 0; i < comboSizeTotal; i++)
 	{
 		current_menu_options[i+1, sY] = i;
 	}
 					
-	num = 0;
-	for (var i = ds_map_find_first(ComboCache.attackTypes); i != ds_map_find_last(ComboCache.attackTypes); i = ds_map_find_next(ComboCache.attackTypes,i))
+	var num = 0;
+	if sX-1 < comboSize var type = 1;
+	else var type = 2;
+	for (var i = ds_map_find_first(ComboCache.attackTypes); i != undefined; i = ds_map_find_next(ComboCache.attackTypes,i))
 	{
-		for (var j = 0; j < array_length_1d(slot_types); j++)
+		if ComboCache.attackTypes[? i] == type && ComboCache.attackClass[? i] == class
 		{
-			if ComboCache.attackTypes[? i] == slot_types[j]
-			{
-				slot_options[num] = i;
-				num++;
-				break;
-			}
+			slot_options[num] = i;
+			num++;
 		}
 	}
+	
 	for (var i = 0; i < array_length_1d(slot_options); i++)
 	{
-		if slot_options[i] = PlayerStats.activeComboIDs[sX-1]
+		if slot_options[i] = attack_get_id_class(sX-1,vState.grounded,class)
 		{
 			sExpY = i;
 			break;
@@ -117,80 +119,91 @@ if (InputManager.startInput)
 if (InputManager.aInput == true)
 {
 	audio_play_sound(snd_menu_select,10,0);
-	switch selection
+	if slotExpanded == false
 	{
-		case "weapon 1":
-			slotExpanded = 1;
-			sX++;
-					
-			slot_options = [];
-			slot_types = PlayerStats.activeComboSlotNumbers[sX-1];
-					
-			for(var i = 0; i < PlayerStats.comboSize; i++)
-			{
-				current_menu_options[i+1, 0] = i;
-			}
-					
-			num = 0;
-			for (var i = ds_map_find_first(ComboCache.attackTypes); i != ds_map_find_last(ComboCache.attackTypes); i = ds_map_find_next(ComboCache.attackTypes,i))
-			{
-				for (var j = 0; j < array_length_1d(slot_types); j++)
+		switch selection
+		{
+			case "weapon 1":
+				slot_options = [];
+				slotExpanded = true;
+				sX++;
+				var class = weapon_get_stat(PlayerStats.heldWeapons[0],weaponStats.type);
+				var comboSize = PlayerStats.GCS[? class];
+				var finisherSize = PlayerStats.GFS[? class];
+				var comboSizeTotal = comboSize+finisherSize;
+	
+				for(var i = 0; i < comboSizeTotal; i++)
 				{
-					if ComboCache.attackTypes[? i] == slot_types[j]
+					current_menu_options[i+1, sY] = i;
+				}
+					
+				var num = 0;
+				if sX-1 < comboSize var type = 1;
+				else var type = 2;
+				for (var i = ds_map_find_first(ComboCache.attackTypes); i != undefined; i = ds_map_find_next(ComboCache.attackTypes,i))
+				{
+					if ComboCache.attackTypes[? i] == type && ComboCache.attackClass[? i] == class
 					{
 						slot_options[num] = i;
 						num++;
+					}
+				}
+	
+				for (var i = 0; i < array_length_1d(slot_options); i++)
+				{
+					if slot_options[i] = attack_get_id_class(sX-1,vState.grounded,class)
+					{
+						sExpY = i;
 						break;
 					}
 				}
-			}
-			for (var i = 0; i < array_length_1d(slot_options); i++)
-			{
-				if slot_options[i] = PlayerStats.activeComboIDs[sX-1]
+				movedH = 0;
+				break;
+			case "weapon 2":
+				slot_options = [];
+				slotExpanded = true;
+				sX++;
+				var class = weapon_get_stat(PlayerStats.heldWeapons[1],weaponStats.type);
+				var comboSize = PlayerStats.GCS[? class];
+				var finisherSize = PlayerStats.GFS[? class];
+				var comboSizeTotal = comboSize+finisherSize;
+	
+				for(var i = 0; i < comboSizeTotal; i++)
 				{
-					sExpY = i;
-					break;
+					current_menu_options[i+1, sY] = i;
 				}
-			}
-			break;
-		case "weapon 2":
-			slotExpanded = 1;
-			sX++;
 					
-			slot_options = [];
-			slot_types = PlayerStats.activeComboSlotNumbers[sX-1];
-					
-			for(var i = 0; i < PlayerStats.comboSize; i++)
-			{
-				current_menu_options[i+1, 1] = i;
-			}
-					
-			num = 0;
-			for (var i = ds_map_find_first(ComboCache.attackTypes); i != ds_map_find_last(ComboCache.attackTypes); i = ds_map_find_next(ComboCache.attackTypes,i))
-			{
-				for (var j = 0; j < array_length_1d(slot_types); j++)
+				var num = 0;
+				if sX-1 < comboSize var type = 1;
+				else var type = 2;
+				for (var i = ds_map_find_first(ComboCache.attackTypes); i != undefined; i = ds_map_find_next(ComboCache.attackTypes,i))
 				{
-					if ComboCache.attackTypes[? i] == slot_types[j]
+					if ComboCache.attackTypes[? i] == type && ComboCache.attackClass[? i] == class
 					{
 						slot_options[num] = i;
 						num++;
+					}
+				}
+	
+				for (var i = 0; i < array_length_1d(slot_options); i++)
+				{
+					if slot_options[i] = attack_get_id_class(sX-1,vState.grounded,class)
+					{
+						sExpY = i;
 						break;
 					}
 				}
-			}
-			for (var i = 0; i < array_length_1d(slot_options); i++)
-			{
-				if slot_options[i] = PlayerStats.activeComboIDs[sX-1]
-				{
-					sExpY = i;
-					break;
-				}
-			}
-			break;
+				movedH = 0;
+				break;
+		}
 	}
-	if slotExpanded && movedH == 0
+	else if movedH == 0
 	{
-		scr_set_combo(sX-1,slot_options[sExpY])
+		var class = weapon_get_stat(PlayerStats.heldWeapons[sY],weaponStats.type);
+		var comboSize = PlayerStats.GCS[? class];
+		if sX-1 < comboSize type = 1;
+		else type = 2;
+		scr_set_combo(class,type,sX-1,slot_options[sExpY])
 	}
 }
 

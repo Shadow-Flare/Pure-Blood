@@ -1,4 +1,6 @@
 //get needed data
+var moveH = InputManager.moveInputH;
+var moveV = InputManager.moveInputV;
 if InputManager.xInput xInputQueue = 1;
 if InputManager.yInput yInputQueue = 1;
 if InputManager.aInput aInputQueue = 1;
@@ -15,7 +17,21 @@ var groundFinisherSize = PlayerStats.GFS[? wepClass];
 var aerialComboSize = PlayerStats.ACS[? wepClass];
 var aerialFinisherSize = PlayerStats.AFS[? wepClass];
 
-	//sprite
+	//visuals
+switch attackName
+{
+	case "Burst":
+		if phaseTimer == round(attackMoveStart*room_speed)
+		{
+			var feetX = x;
+			var feetY = y+(sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index));
+			with create_effect(false,feetX,feetY,-1,sprDustL,0.4,facing,1)
+			{
+				image_alpha = 0.7;
+			}
+		}
+		break;
+}
 		//check if alt, if it is use alternative sprite
 var comboType = noone
 switch vPhase
@@ -36,7 +52,7 @@ if attackID == compareID && comboSizeToCheck%2 == attackNum%2 && attackNum < com
 {
 	animToUse = asset_get_index(sprite_get_name(animToUse)+"Alt");
 }
-		//update sprite
+	//update sprite
 update_sprite(animToUse,-(attackDuration+attackCooldown));
 
 	//attack Effect
@@ -96,13 +112,15 @@ switch vPhase
 #endregion
 
 #region change states & substates
-	if lastVState != vPhase
+	if lastVState != vPhase && subPhaseTimer != 1 && vChangeBreak
 	{
+		canChangeVState = true;
+		vChangeBreak = true;
+		lastAttackHasHit = false;
 		aerialTargetX = -4;
 		aerialTargetY = -4;	
 		hasDeflected = false;
 		phased = 0;
-		//with objPlayerAttackEffect instance_destroy();
 		phase = state.base;
 		phaseTimer = 0;
 		attackNum = -1;
@@ -113,6 +131,9 @@ switch vPhase
 					//get deflected
 		if hasDeflected
 		{
+			canChangeVState = false;
+			vChangeBreak = true;
+			lastAttackHasHit = false;
 			hasDeflected = false;
 			phase = state.hitReaction;
 			phaseTimer = 0;
@@ -133,16 +154,18 @@ switch vPhase
 				{
 					case vState.grounded:
 						#region ground attack
-							//keep attacking? (ground combo)
-						if xInputQueue && attackNum+1 != groundComboSize+groundFinisherSize
+							#region keep attacking? (ground combo)
+						if xInputQueue && attackNum+1 != groundComboSize+groundFinisherSize && lastAttackHasHit
 						{
+							canChangeVState = true;
+							vChangeBreak = true;
+							lastAttackHasHit = false;
 							switch lockOnType
 							{
 								case lockOn.soft: if distance_to_object(lockOnTarget) <= attackGroundTrackDistance facing = lockOnDir; break;
 								case lockOn.hard: facing = lockOnDir; break;							
 							}
 							phased = 0;
-							//with objPlayerAttackEffect instance_destroy();
 							attackNum++;
 							reset_queue();
 							scr_player_beginAttack(attack_get_id(attackNum,vState.grounded));
@@ -150,16 +173,19 @@ switch vPhase
 							subPhase = subState.performing;
 							subPhaseTimer = 0;
 						}
-							//perform uppercut? (mid ground combo using weapon)
-						else if yInputQueue && attackNum+1 < groundComboSize+groundFinisherSize-1
+							#endregion
+							#region perform uppercut? (mid ground combo using weapon)
+						else if yInputQueue && attackNum+1 < groundComboSize+groundFinisherSize-1 && lastAttackHasHit
 						{
+							canChangeVState = true;
+							vChangeBreak = false;
+							lastAttackHasHit = false;
 							switch lockOnType
 							{
 								case lockOn.soft: if distance_to_object(lockOnTarget) <= attackGroundTrackDistance facing = lockOnDir; break;
 								case lockOn.hard: facing = lockOnDir; break;							
 							}
 							phased = 0;
-							//with objPlayerAttackEffect instance_destroy();
 							attackNum++;
 							reset_queue();
 							scr_player_beginAttack(-1);
@@ -167,11 +193,15 @@ switch vPhase
 							subPhase = subState.performing;
 							subPhaseTimer = 0;
 						}
-							//jump? (mid ground combo/subsequent jump)
+							#endregion
+							#region jump? (mid ground combo/subsequent jump)
 						else if aInputQueue
 						{
-							phased = 0;
-							//with objPlayerAttackEffect instance_destroy();		
+							canChangeVState = true;
+							vChangeBreak = true;
+							lastAttackHasHit = false;
+							reset_queue();
+							phased = 0;		
 							ySpd = -PlayerStats.jumpPow;
 							jumpNum++;
 							phase = state.base;
@@ -179,14 +209,44 @@ switch vPhase
 							attackNum = -1;
 							scr_player_base_subPhaseDeterminer();
 						}
-							//end
+							#endregion
+							#region block/dodge
+						else if bInputQueue
+						{
+							canChangeVState = true;
+							vChangeBreak = true;
+							lastAttackHasHit = false;
+							reset_queue();
+							phased = 0;
+							attackNum = -1;
+							if moveH == 0
+							{
+								phase = state.blocking;
+								phaseTimer = 0;
+								subPhase = subState.pre;
+								subPhaseTimer = 0;
+							}
+							else
+							{
+								facing = sign(moveH);
+								phased = 1;
+								phase = state.dodging;
+								phaseTimer = 0;
+								subPhase = subState.performing;
+								subPhaseTimer = 0;
+							}
+						}
+							#endregion
+							#region end
 						else if subPhaseTimer >= round(attackCooldown*room_speed)
-						{							
+						{
+							canChangeVState = true;
+							vChangeBreak = true;
 							aerialTargetX = -4;
 							aerialTargetY = -4;	
+							lastAttackHasHit = false;
 							hasDeflected = false;
 							phased = 0;
-							//with objPlayerAttackEffect instance_destroy();
 							phase = state.base;
 							phaseTimer = 0;
 							if attackName != "Uppercut" attackHardCooldownTimer = 0; //switch on
@@ -194,16 +254,19 @@ switch vPhase
 							attackNum = -1;
 							scr_player_base_subPhaseDeterminer();
 						}
+							#endregion
 						#endregion
 						break;
 			
 					case vState.jumping:
 					case vState.midAir:
 						#region air attack
-							//keep aerial attacking?
-						if xInputQueue && attackNum+1 != aerialComboSize+aerialFinisherSize //&& effect.hasHit
+							#region keep aerial attacking?
+						if xInputQueue && attackNum+1 != aerialComboSize+aerialFinisherSize && lastAttackHasHit
 						{
-							//with objPlayerAttackEffect instance_destroy();
+							canChangeVState = false;
+							vChangeBreak = false;
+							lastAttackHasHit = false;
 							if lockOnType != lockOn.off && abs(lockOnTarget.x-x) <= attackTrackXDistance && abs(lockOnTarget.y-y) <= attackTrackYDistance
 							{
 								var dirToPlayer = sign(x-lockOnTarget.x);
@@ -217,10 +280,7 @@ switch vPhase
 								aerialTargetY = -4;	
 							}
 							attackNum++;
-							aInputQueue = 0;
-							xInputQueue = 0;
-							yInputQueue = 0;
-							bInputQueue = 0;
+							reset_queue();
 							scr_player_beginAttack(attack_get_id(attackNum,vState.midAir));
 							phaseTimer = 0;							//reset for properties
 							subPhase = subState.performing;
@@ -228,11 +288,14 @@ switch vPhase
 							if aerialTargetX == -4 && aerialTargetY == -4 ySpd = aerialAttackVertBoost;
 							else facing = lockOnDir
 						}
-							//end
+							#endregion
+							#region end
 						else if subPhaseTimer >= round(attackCooldown*room_speed)
 						{
+							canChangeVState = true;
+							vChangeBreak = true;
+							lastAttackHasHit = false;
 							hasDeflected = false;
-							//with objPlayerAttackEffect instance_destroy();
 							aerialTargetX = -4;
 							aerialTargetY = -4;	
 							phase = state.base;
@@ -240,9 +303,10 @@ switch vPhase
 							attackName = noone;
 							attackNum = -1;
 							attackHardCooldownTimer = 0; //switch on
-							if (place_meeting(x,y+1,obj_block_parent)&&!place_meeting(x,y,obj_block_parent)) vPhase = vState.grounded;
+							if (place_meeting(x,y+1,objBlockParent)&&!place_meeting(x,y,objBlockParent)) vPhase = vState.grounded;
 							scr_player_base_subPhaseDeterminer();
 						}
+							#endregion
 						#endregion
 						break;
 				}

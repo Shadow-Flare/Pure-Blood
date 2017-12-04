@@ -1,3 +1,9 @@
+with objPlatform 
+{
+	solidDefault = solid;
+	solid = true;
+}
+
 //kill zones
 if instance_exists(action2ZoneID) && !(phase == state.action2 && subPhase == subState.actionSub1)
 {
@@ -62,17 +68,22 @@ switch aggroPhase
 			else if phase == state.base && phaseTimer == round(actionAiDelay*room_speed)
 			{
 				phaseTimer = 0;
-				if abs(target.y-y) <= 32 var num = irandom(1);
-				else num = 2;
+				if abs(target.y-y) <= 32
+				{
+					var num = random(1);
+					if num < 0.30 num = 0;
+					else num = 1;
+				}
+				else num = 0;
 				switch num
 				{
+					case 0:			//do nothing
+						driveAction = 0;
+						break
 					case 1:			//action 2
 						hasBlocked = false;
 						driveAction = 2;
 						break;
-					case 2:			//do nothing
-						driveAction = 0;
-						break
 				}
 				//no attack
 			}
@@ -81,5 +92,9 @@ switch aggroPhase
 		break;
 }
 
-if target != noone && target.y-y >= 16 dropThroughPlatforms = true;
-else dropThroughPlatforms = false;
+scr_ground_enemy_ai_basicMovementPathing();
+
+with objPlatform 
+{
+	solid = solidDefault;
+}

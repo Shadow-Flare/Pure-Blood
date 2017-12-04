@@ -35,6 +35,7 @@ switch subPhase
 				statusType = other.action1ProjStatusType;
 				statusValue = other.action1ProjStatusValue;
 				pierce = other.action1ProjPierce;
+				hitSoundID = other.action1ProjHitSoundID;
 				
 				hitList = ds_list_create();
 			}

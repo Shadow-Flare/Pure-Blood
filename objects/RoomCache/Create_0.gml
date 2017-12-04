@@ -7,7 +7,7 @@ rmParallaxSpriteData = ds_map_create();
 rmParallaxSpeedData = ds_map_create();
 rmParallaxBackData = ds_map_create();
 
-darkDefault = 0.9;
+darkDefault = 0.5;
 fogDefault = 0;
 rainDefault = 0;
 defaultAudioID = noone;
@@ -19,7 +19,15 @@ parallaxBackDefault = bck_forest_fill;
 var tmp
 #region Main game
 
-tmp = rmRoom1;
+tmp = rmRoomX05Y50;
+rmDarknessData[? tmp] = 0.9;
+rmFogData[? tmp] = fogDefault;
+rmRainData[? tmp] = rainDefault;
+rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
+rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
+rmParallaxBackData[?tmp] = parallaxBackDefault
+
+tmp = rmRoomX09Y49;
 rmDarknessData[? tmp] = darkDefault;
 rmFogData[? tmp] = fogDefault;
 rmRainData[? tmp] = rainDefault;
@@ -27,7 +35,7 @@ rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
 rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
 rmParallaxBackData[?tmp] = parallaxBackDefault
 
-tmp = rmRoom2;
+tmp = rmRoomX09Y51;
 rmDarknessData[? tmp] = darkDefault;
 rmFogData[? tmp] = fogDefault;
 rmRainData[? tmp] = rainDefault;
@@ -35,7 +43,39 @@ rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
 rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
 rmParallaxBackData[?tmp] = parallaxBackDefault
 
-tmp = rmRoom3;
+tmp = rmRoomX11Y50;
+rmDarknessData[? tmp] = darkDefault;
+rmFogData[? tmp] = fogDefault;
+rmRainData[? tmp] = rainDefault;
+rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
+rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
+rmParallaxBackData[?tmp] = parallaxBackDefault
+
+tmp = rmRoomX12Y49;
+rmDarknessData[? tmp] = darkDefault;
+rmFogData[? tmp] = fogDefault;
+rmRainData[? tmp] = rainDefault;
+rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
+rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
+rmParallaxBackData[?tmp] = parallaxBackDefault
+
+tmp = rmRoomX12Y52;
+rmDarknessData[? tmp] = darkDefault;
+rmFogData[? tmp] = fogDefault;
+rmRainData[? tmp] = rainDefault;
+rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
+rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
+rmParallaxBackData[?tmp] = parallaxBackDefault
+
+tmp = rmRoomX13Y52;
+rmDarknessData[? tmp] = darkDefault;
+rmFogData[? tmp] = fogDefault;
+rmRainData[? tmp] = rainDefault;
+rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
+rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
+rmParallaxBackData[?tmp] = parallaxBackDefault
+
+tmp = rmRoomX14Y51;
 rmDarknessData[? tmp] = darkDefault;
 rmFogData[? tmp] = fogDefault;
 rmRainData[? tmp] = rainDefault;
@@ -47,7 +87,7 @@ rmParallaxBackData[?tmp] = parallaxBackDefault
 #region Arena
 
 tmp = rmArena1;
-rmDarknessData[? tmp] = darkDefault;
+rmDarknessData[? tmp] = 0.9;
 rmFogData[? tmp] = fogDefault;
 rmRainData[? tmp] = rainDefault;
 rmAmbienceAudioData[? tmp] = defaultAudioID;

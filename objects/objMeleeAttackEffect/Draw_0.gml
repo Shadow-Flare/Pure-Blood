@@ -1,3 +1,17 @@
+//follow caster
+if follow
+{
+	if instance_exists(caster)
+	{
+		x = caster.x;
+		y = caster.y;
+	}
+	else
+	{
+		instance_destroy();
+	}
+}
+
 //draw self
 draw_self();
 

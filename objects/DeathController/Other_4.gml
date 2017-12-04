@@ -1,14 +1,25 @@
-if GameManager.lastSpawner != noone
+if GameManager.currentCheckpointID != noone
 {
-	var spawner = GameManager.lastSpawner;
-	objPlayer.x = spawner.x;
-	objPlayer.y = spawner.y;
+	with objCheckpoint		//should only be one each room, will use the "first" one
+	{
+		objPlayer.x = x;
+		objPlayer.y = y;
+		with objPlayer
+		{
+			while place_free(x,y+1) y++;
+		}
+		break;
+	}
 }
 else
 {
-	var spawner = instance_find(objRoomSpawner,0);
-	objPlayer.x = spawner.x;
-	objPlayer.y = spawner.y;
+	with objRoomSpawner		//picks the first one, this is okay for horde/arena/non-standard modes
+	{
+		objPlayer.x = x;
+		objPlayer.y = y;
+		break;
+	}
+
 }
 
 with objPlayer

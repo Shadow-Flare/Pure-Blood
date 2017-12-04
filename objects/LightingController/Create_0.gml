@@ -2,4 +2,7 @@ event_inherited();
 
 darknessStr = RoomCache.rmDarknessData[? room];
 
-light = noone;
+dynamicLightReso = 128;
+lightScale = 2;
+blurRadius = 16;
+radialBlurFactor = 1;

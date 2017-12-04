@@ -1,3 +1,9 @@
+with objPlatform 
+{
+	solidDefault = solid;
+	solid = true;
+}
+
 //kill zones
 	//leap midair
 if instance_exists(action2Sub2ZoneID) && !(phase == state.action2 && subPhase == subState.actionSub2)
@@ -35,13 +41,13 @@ switch aggroPhase
 				{
 					var distance = abs(target.x-x);
 						//action 1: Slam
-					if distance <= action1Range && abs(target.y-y) <= 64 driveAction = 1;
+					if distance <= action1Range && abs(target.y-y) <= 64 {driveAction = 1; numOfAction1Or3Or4++}
 						//action 2: Leap, do scream(5) first
 					else if distance >= action2MinRange driveAction = 5;
 						//action 3/4: Fling/Puke
-					else if numOfAction3Or4 < action2NumOf3Or4BeforeLeap
+					else if numOfAction1Or3Or4 < action2NumOf1Or3Or4BeforeLeap
 					{
-						numOfAction3Or4++;
+						numOfAction1Or3Or4++;
 						var count = 0;
 						with objBloodHoundCorpse
 						{
@@ -58,9 +64,9 @@ switch aggroPhase
 				driveMove = irandom_range(-1,1);
 				if driveMove == 0 driveMove = sign(target.x-x);
 			}
-			if driveAction != 0 && driveAction != 3 && driveAction != 4
+			if driveAction != 0 && driveAction != 1 && driveAction != 3 && driveAction != 4
 			{
-				numOfAction3Or4 = 0;
+				numOfAction1Or3Or4 = 0;
 			}
 		}
 		break;
@@ -68,3 +74,10 @@ switch aggroPhase
 
 if target != noone && target.y-y >= 16 dropThroughPlatforms = true;
 else dropThroughPlatforms = false;
+
+scr_ground_enemy_ai_basicMovementPathing();
+
+with objPlatform 
+{
+	solid = solidDefault;
+}

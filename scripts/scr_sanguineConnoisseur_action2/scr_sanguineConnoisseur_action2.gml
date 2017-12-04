@@ -23,7 +23,7 @@ switch subPhase
 			subPhase = subState.actionSub3;
 			subPhaseTimer = 0;
 			with obj_block_nonSolid solid = true;
-			with obj_platform_parent solid = true;
+			with objPlatformParent solid = true;
 			repeat(128)
 			{
 				var tempX = irandom_range(0,room_width);
@@ -48,7 +48,7 @@ switch subPhase
 				}
 			}
 			with obj_block_nonSolid solid = false;
-			with obj_platform_parent solid = false;
+			with objPlatformParent solid = false;
 		}
 			//xSpd
 		xSpd -= xSpd/4;

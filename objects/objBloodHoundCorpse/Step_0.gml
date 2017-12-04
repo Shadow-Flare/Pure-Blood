@@ -10,12 +10,12 @@ switch vPhase
 		}
 			//transition
 		var isGrounded = false;
-		with obj_block_parent
+		with objBlockParent
 		{
 			if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
 			{
 				isGrounded = true;
-				if object_is_ancestor(object_index,obj_platform_parent) other.onPlatform = true;
+				if object_is_ancestor(object_index,objPlatformParent) other.onPlatform = true;
 				else other.onPlatform = false;
 				break;
 			}
@@ -45,13 +45,13 @@ switch vPhase
 		var isGrounded = false;
 		if sign(ySpd) != -1
 		{
-			with obj_block_parent
+			with objBlockParent
 			{
 				if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
 				{
 					isGrounded = true;
 					other.vPhase = vState.grounded;
-					if object_is_ancestor(object_index,obj_platform_parent) other.onPlatform = true;
+					if object_is_ancestor(object_index,objPlatformParent) other.onPlatform = true;
 					else other.onPlatform = false;
 					break;
 				}

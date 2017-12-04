@@ -4,7 +4,7 @@ GameManager.pauseState = PauseState.normal;
 var hasSpawned = false;
 with objRoomSpawner
 {
-	if spawnFrom == other.roomFrom
+	if (other.roomFrom == noone || spawnFrom == other.roomFrom) && (other.ID == noone || other.ID = ID)
 	{
 		objPlayer.phase = state.base
 		scr_player_base_subPhaseDeterminer();
@@ -17,7 +17,7 @@ with objRoomSpawner
 		break;
 	}
 }
-if !hasSpawned
+if !hasSpawned			//if no spawner with right details spawn on first spawner (idealy this should not get used)
 {
 	with objPlayer
 	{
@@ -29,6 +29,7 @@ if !hasSpawned
 		ySpd = 0;
 		xSpd = 0;
 		GameManager.lastSpawner = id;
-		hasSpawned = true; 
+		hasSpawned = true;
+		break;
 	}
 }

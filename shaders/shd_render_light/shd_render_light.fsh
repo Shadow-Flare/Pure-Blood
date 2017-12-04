@@ -1,15 +1,15 @@
 //
 // Simple passthrough fragment shader
 //
-#define PI 3.14
-
 //inputs from vertex shader
 varying vec2 vTexCoord0;
-varying vec4 vColor;
+varying lowp vec4 vColor;
 
 //uniform values
 uniform vec2 resolution;
-uniform vec2 lightSize;
+uniform float blurFactor;
+
+const float PI = 3.14159265359;
 
 //sample from the 1D distance map
 float sample(vec2 coord, float r) {
@@ -32,7 +32,7 @@ void main(void) {
 
     //we multiply the blur amount by our distance from center
     //this leads to more blurriness as the shadow "fades away"
-    float blur = (1./lightSize.x)  * smoothstep(0., 1., r); 
+    float blur = (blurFactor/resolution.x) * smoothstep(0.0, 1.0, r); 
 
     //now we use a simple gaussian blur
     float sum = 0.0;

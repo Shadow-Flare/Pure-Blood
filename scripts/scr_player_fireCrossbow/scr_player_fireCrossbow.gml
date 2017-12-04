@@ -21,6 +21,7 @@ with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCrossbowProj
 	subId = SUBID;
 	xSpd = spd*dcos(qD);
 	ySpd = -spd*dsin(qD);
+	hitSoundID = noone;			//CHANGE//
 	hitType = ComboCache.offhandSubtypeDamageTypes[? subId];
 	hitDamage = ComboCache.offhandSubtypeDamageModifiers[? subId]*PlayerStats.physicalPower;
 	hitStagger = ComboCache.offhandSubtypeStaggerModifiers[? subId]*PlayerStats.physicalStagger;

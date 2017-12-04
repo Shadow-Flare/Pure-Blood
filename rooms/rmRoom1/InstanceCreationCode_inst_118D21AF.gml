@@ -1,1 +1,0 @@
-spawnFrom = rmRoom3;

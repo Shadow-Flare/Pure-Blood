@@ -15,16 +15,7 @@ if baseSpriteIndex != argument0
 	
 	//roundup
 		//body sprite
-	if asset_get_type(bodySpriteName) == asset_sprite 
-	{
-		sprite_delete(tempBodySprite);
-		var spr = asset_get_index(bodySpriteName);
-		tempBodySprite = sprite_duplicate(spr);
-		var sprSpd = sprite_get_speed(spr)
-		sprite_set_speed(tempBodySprite,sprSpd,spritespeed_framespersecond);
-		sprite_collision_mask(tempBodySprite,false,2,bboxLeft,bboxTop,bboxRight,bboxBottom,1,255);
-		sprite_index = tempBodySprite;
-	}
+	if asset_get_type(bodySpriteName) == asset_sprite sprite_index = asset_get_index(bodySpriteName);
 	else sprite_index = sprEnemySpriteMissing;
 	
 		//speed and index reset

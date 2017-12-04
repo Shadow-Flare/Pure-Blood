@@ -4,7 +4,7 @@ var safeCheckDist = 32;
 	//nonSolid blocks
 with obj_block_nonSolid solid = true;
 var sprHeightDif = sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index);
-with obj_platform_parent
+with objPlatformParent
 {
 	if y > other.y+sprHeightDif solid = true;
 }
@@ -72,4 +72,4 @@ switch sign(xSpd)
 x+=xSpd
 
 with obj_block_nonSolid solid = false;
-with obj_platform_parent solid = false;
+with objPlatformParent solid = false;

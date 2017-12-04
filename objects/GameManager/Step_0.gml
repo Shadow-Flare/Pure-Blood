@@ -1,6 +1,3 @@
-// Console step
-scr_console_step();
-
 //pause state management + transitions
 if gameState != GameState.mainMenu
 {
@@ -14,6 +11,7 @@ if gameState != GameState.mainMenu
 				var trans =  instance_place(x,y,objRoomTransition)
 				other.transitionRoomTo = trans.roomTo;
 				other.transitionRoomFrom = room;
+				other.transitionID = trans.ID;
 				other.pauseState = PauseState.transitioning;
 			}
 

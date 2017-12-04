@@ -1,1 +1,0 @@
-scr_platform_stationary_step();

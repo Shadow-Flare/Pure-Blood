@@ -1,13 +1,10 @@
 //get needed data
-var IE = instance_exists(InputManager)
-if IE var moveH = InputManager.moveInputH;
-else var moveH = 0;
-if IE var moveV = InputManager.moveInputV;
-else var moveV = 0;
-if IE && InputManager.xInput xInputQueue = 1;
-if IE && InputManager.yInput yInputQueue = 1;
-if IE && InputManager.aInput aInputQueue = 1;
-if IE && InputManager.bInput bInputQueue = 1;
+var moveH = InputManager.moveInputH;
+var moveV = InputManager.moveInputV;
+if InputManager.xInput xInputQueue = 1;
+if InputManager.yInput yInputQueue = 1;
+if InputManager.aInput aInputQueue = 1;
+if InputManager.bInput bInputQueue = 1;
 
 #region do things
 phaseTimer++;
@@ -83,7 +80,7 @@ switch subPhase
 			subPhase = subState.landing;
 			subPhaseTimer = 0;
 			if moveH != 0 scr_player_base_subPhaseDeterminer();
-			scr_step_effect(groundTypes.stone);
+			scr_land_effect(groundTypes.stone);
 		}
 			//Sprite
 		update_sprite(sprPlayerBodyDefaultAirborne,0);
@@ -118,7 +115,7 @@ switch subPhase
 	if aInputQueue
 	{
 		reset_queue();
-		if !(sign(InputManager.moveInputV) == 1 && onPlatform)
+		if !(InputManager.moveInputV >= 0.7 && onPlatform)
 		{
 			if vPhase == vState.grounded
 			{
@@ -171,24 +168,40 @@ switch subPhase
 				case vState.grounded:
 					//perform attack based on directional inputs
 						//standing
-					if moveH == 0 && moveV == 0 scr_player_beginAttack(attack_get_id(attackNum,vState.grounded));
+					if moveH == 0 && moveV == 0
+					{
+						scr_player_beginAttack(attack_get_id(attackNum,vState.grounded));
+						vChangeBreak = true;
+					}
 					else if abs(moveV) >= abs(moveH)
 					{	
 						//Upwards
-						if sign(moveV) == -1 scr_player_beginAttack(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.uniqueAttack));
+						if sign(moveV) == -1 
+						{
+							scr_player_beginAttack(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.uniqueAttack));
+							vChangeBreak = false;
+						}
 						//Downwards
-						else scr_player_beginAttack(class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.downwards));
+						else 
+						{
+							scr_player_beginAttack(class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.downwards));
+							vChangeBreak = true;
+						}
 					}
 					else
 					{
 						//Forwards/horizontal
 						if lockOnType != lockOn.hard || sign(moveH) == lockOnDir
 						{
-							//if !place_meeting(x+ComboCache.attackMoveDistancesX[? PlayerStats.activeForwardsID],y,objActorParent) phased = 1;
 							scr_player_beginAttack(class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.forwards));
+							vChangeBreak = true;
 						}
 						//Backwards
-						else scr_player_beginAttack(class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.backwards));
+						else
+						{
+							scr_player_beginAttack(class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.backwards));
+							vChangeBreak = false;
+						}
 					}
 					break;
 				case vState.midAir:
@@ -225,12 +238,12 @@ switch subPhase
 		reset_queue();
 	}
 	
-	//to Ability
-	else if IE && InputManager.rbInput && can_use_ability()
-	{
-		phase = state.ability;
-		phaseTimer = 0;
-		subPhase = subState.none;
-		subPhaseTimer = 0;
-	}
+	////to Ability
+	//else if InputManager.rbInput && can_use_ability()
+	//{
+	//	phase = state.ability;
+	//	phaseTimer = 0;
+	//	subPhase = subState.none;
+	//	subPhaseTimer = 0;
+	//}
 #endregion

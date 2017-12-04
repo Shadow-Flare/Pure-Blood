@@ -15,8 +15,8 @@ if xp >= xpNeeded
 //update stats
 hpMax = 20+4*constitution;
 mpMax = 20+4*willpower;
-physicalPower = 0+0.5*strength+0.5*dexterity;
-physicalStagger = 0+0.25*strength;
+physicalPower = 0+0.25*strength+0.25*dexterity;
+physicalStagger = 0.5+0.05*strength;
 magicalPower = 0+1*intelligence;
 magicalStagger = 2+0.25*intelligence+0.25*willpower;
 physicalToughness = 2+0.30*constitution;

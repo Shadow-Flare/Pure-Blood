@@ -1,3 +1,9 @@
+with objPlatform 
+{
+	solidDefault = solid;
+	solid = true;
+}
+
 switch aggroPhase
 {
 	case enemyAggroState.passive:
@@ -36,4 +42,9 @@ if changeFacing
 {
 	facing = -facing;
 	changeFacing = false;
+}
+
+with objPlatform 
+{
+	solid = solidDefault;
 }

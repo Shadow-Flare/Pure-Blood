@@ -1,3 +1,9 @@
+with objPlatform 
+{
+	solidDefault = solid;
+	solid = true;
+}
+
 switch aggroPhase
 {
 	case enemyAggroState.passive:
@@ -72,5 +78,9 @@ switch aggroPhase
 		break;
 }
 
-if target != noone && target.y-y >= 16 dropThroughPlatforms = true;
-else dropThroughPlatforms = false;
+scr_ground_enemy_ai_basicMovementPathing();
+
+with objPlatform 
+{
+	solid = solidDefault;
+}

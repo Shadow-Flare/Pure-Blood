@@ -3,6 +3,12 @@
 	//melee attack cooldown
 scr_enemy_actionHardCooldown();
 
+	//hitPhase reset
+if !(phase == state.action2 && (subPhase = subState.actionSub1 || subPhase == subState.actionSub2))
+{
+	hitPhase = hitState.normal;
+}
+
 #endregion
 
 scr_servantGuard_ai();
@@ -10,7 +16,7 @@ scr_servantGuard_ai();
 #region State machines
 		
 		//vPhase
-	scr_enemy_ground_vStateMachine();
+	scr_actor_vStateMachine();
 	
 		//phase (nested subPhase)
 	switch phase

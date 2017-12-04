@@ -23,6 +23,17 @@ if baseSpriteIndex != argument0 || equipmentChange
 	weaponSpriteName = string_replace(weaponSpriteName,weaponCatStr,weaponStr);
 	weaponSpriteName = string_replace(weaponSpriteName,"Default",weaponStr);
 	
+	if phase = state.attacking && attackID == -1
+	{
+		var offhandName = "Crossbow"; //UPDATE THIS WHEN OFFHAND ITEMS ADDED
+		tmp = string_replace(bodySpriteName,"Offhand",offhandName);
+		if asset_get_type(tmp) == asset_sprite
+		{
+			bodySpriteName = tmp;
+			weaponSpriteName = string_replace(weaponSpriteName,"Offhand",offhandName);
+		}
+	}
+	
 	//	//effect sprite
 	//var effectSpriteName = string_replace(weaponSpriteName,"Weapon","Effect");
 	//if attackName == "Uppercut" 

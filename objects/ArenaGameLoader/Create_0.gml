@@ -1,3 +1,6 @@
+controllers[11] = ConsoleManager;
+controllers[10] = HudManager;
+controllers[9] = TargetManager;
 controllers[8] = PlayerStats;
 controllers[7] = AudioCache;
 controllers[6] = ItemCache;

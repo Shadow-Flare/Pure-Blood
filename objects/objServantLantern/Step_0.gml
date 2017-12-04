@@ -10,7 +10,7 @@ scr_servantLantern_ai();
 #region State machines
 	
 		//vPhase
-	scr_enemy_ground_vStateMachine();
+	scr_actor_vStateMachine();
 	
 		//phase (nested subPhase)
 	switch phase

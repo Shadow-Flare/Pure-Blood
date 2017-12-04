@@ -6,7 +6,6 @@ switch subPhase
 	case subState.actionSub1:
 			//blocking
 		hitPhase = hitState.blocking;
-		bboxRight = bboxDefaultRight + action2HitBoxShiftSub1;
 			//damage zone
 		if action2ZoneID == noone
 		{
@@ -17,7 +16,7 @@ switch subPhase
 				//transition to sub2 before attacking
 		if hasBlocked
 		{
-			bboxRight = bboxDefaultRight
+			lastAttackHasHit = false;
 			hasBlocked = false;
 			subPhase = subState.actionSub2;
 			subPhaseTimer = 0;
@@ -25,11 +24,13 @@ switch subPhase
 				//reset to base
 		else if subPhaseTimer >= round(action2DurationSub1*room_speed) || sign(target.x-x) != facing
 		{
+			lastAttackHasHit = false;
 			hasBlocked = false;
-			bboxRight = bboxDefaultRight
 			hitPhase = hitState.normal;
-			subPhase = subState.actionSub3;
+			phase = state.base;
+			scr_enemy_ground_base_subPhaseDeterminer();
 			subPhaseTimer = 0;
+			phaseTimer = 0;
 		}
 			//xSpd
 		if driveMove != 0 xSpd = driveMove*statCache.moveSpeed*(3/4);
@@ -47,6 +48,7 @@ switch subPhase
 				//reset to base & set driveAction
 		if subPhaseTimer >= round(action2DurationSub2*room_speed)
 		{
+			lastAttackHasHit = false;
 			hitPhase = hitState.normal;
 			phase = state.base;
 			scr_enemy_ground_base_subPhaseDeterminer();
@@ -59,19 +61,5 @@ switch subPhase
 		xSpd -= xSpd/4;
 			//sprite
 		update_sprite_enemy(action2AnimationSub2,-action2DurationSub2)
-		break;
-	case subState.actionSub3:
-		if subPhaseTimer == round(action2DurationSub3*room_speed)
-		{
-			phase = state.base;
-			scr_enemy_ground_base_subPhaseDeterminer();
-			subPhaseTimer = 0;
-			phaseTimer = 0;
-		}
-			//xSpd
-		xSpd -= xSpd/4;
-			//sprite
-		update_sprite_enemy(action2AnimationSub3,-action2DurationSub3)
-		break;
 		break;
 }
