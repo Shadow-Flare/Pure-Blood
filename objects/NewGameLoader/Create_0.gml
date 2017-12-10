@@ -1,14 +1,16 @@
-controllers[10] = ConsoleManager;
-controllers[9] = HudManager;
-controllers[8] = TargetManager;
-controllers[7] = PlayerStats;
-controllers[6] = AudioCache;
-controllers[5] = ItemCache;
-controllers[4] = LootCache;
-controllers[3] = RoomCache;
-controllers[2] = ComboCache;
-controllers[1] = InputManager;
-controllers[0] = EffectsManager;
+var tmpID = 12;
+tmpID--; controllers[tmpID] = ConsoleManager;
+tmpID--; controllers[tmpID] = HudManager;
+tmpID--; controllers[tmpID] = TargetManager;
+tmpID--; controllers[tmpID] = PlayerStats;
+tmpID--; controllers[tmpID] = MapManager;
+tmpID--; controllers[tmpID] = AudioCache;
+tmpID--; controllers[tmpID] = ItemCache;
+tmpID--; controllers[tmpID] = LootCache;
+tmpID--; controllers[tmpID] = RoomCache;
+tmpID--; controllers[tmpID] = ComboCache;
+tmpID--; controllers[tmpID] = InputManager;
+tmpID--; controllers[tmpID] = EffectsManager;
 
 event_inherited();
 

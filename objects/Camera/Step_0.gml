@@ -55,6 +55,4 @@ if shakeDuration != 0
 }
 #endregion
 
-
-
 camera_set_view_pos(cam,xPos,yPos);

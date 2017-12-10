@@ -238,7 +238,7 @@ draw_clear_alpha(c_white,0);
 gpu_set_blendmode_ext_sepalpha(bm_zero,bm_src_color,bm_dest_alpha,bm_dest_alpha);
 	//bar
 var scale = (hpR1-hpR2)/sprite_get_height(spr_hpAnim);
-var lb = barHp / hpPP;
+var lb = max(barHp,hpDamageDisplay) / hpPP;
 var ls = (sprite_get_width(spr_hpAnim)*scale);
 var n = lb / ls;
 
@@ -265,6 +265,38 @@ surface_set_target(topLeftSurf)
 	draw_surface(hpSurf,0,0);
 surface_reset_target();
 draw_surface_ext(topLeftSurf,0,0,topLeftResolutionScale,topLeftResolutionScale,0,c_white,1);
+#endregion
+
+#region Map
+	if hudMapEnabled
+	{
+		surface_set_target(hudMapDetails);
+			draw_clear_alpha(c_white,0);
+			var str = room_get_name(room);
+			if string_pos("rmRoom",str) != 0 && instance_exists(objPlayer)
+			{
+				var playerX = objPlayer.x/room_width;
+				var playerY = objPlayer.y/room_height;
+				
+				var cellInitialX = surface_get_width(HudManager.hudMapSurf)/2;
+				var cellInitialY = surface_get_height(HudManager.hudMapSurf)/2;
+				var cellW = HudManager.hudMapCellW;
+				var cellH = HudManager.hudMapCellH;
+				
+				var roomCellW = RoomCache.rmWidths[? room];
+				var roomCellH = RoomCache.rmHeights[? room];
+				
+				var pX = cellInitialX+roomCellW*cellW*(playerX-0.5)-1;
+				var pY = cellInitialY+roomCellH*cellH*(playerY-0.5)-1;
+				draw_sprite_ext(sprPlayerMarker,0,pX,pY,hudMapDetailScale,hudMapDetailScale,0,c_white,1);
+			}
+		surface_reset_target();
+		
+		var xi = GUIWidth-(hudMapWidth)*hudMapScale-mean(GUIWidth,GUIHeight)/20;
+		var yi = mean(GUIWidth,GUIHeight)/20;
+		draw_surface_ext(hudMapSurf,xi,yi,hudMapScale,hudMapScale,0,c_white,1);
+		draw_surface_ext(hudMapDetails,xi,yi,hudMapScale,hudMapScale,0,c_white,1);
+	}
 #endregion
 
 //messages

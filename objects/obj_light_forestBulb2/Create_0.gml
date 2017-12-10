@@ -1,6 +1,4 @@
-lifeTime = irandom(60);
-enabled = false;
-
+event_inherited();
 variance = 8;
 iterationsPerSec = 0.75;
 colour = make_color_rgb(150,150,220)

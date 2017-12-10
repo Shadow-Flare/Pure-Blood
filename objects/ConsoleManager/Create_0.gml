@@ -12,9 +12,14 @@ conLockOnType = "No Lock"
 fpsList = ds_list_create();
 
 lightTester = noone;
-boxWidth = 1000;
-boxHeight = 200;
-selectedVariable = 0;	//0 = r; 1 = g; 2 = b; 3 = radius; 4 = blurRadius; 5 = radialBlurRadius; 6 = lightScale; 7 = dynamicLightReso
+LTBoxWidth = 1200;
+LTBoxHeight = 200;
+
+ambienceTester = false;
+ATBoxWidth = 600;
+ATBoxHeight = 200;
+
+selectedVariable = 0;
 
 defaultRoomSpeed = room_speed;
 for (var i=0; i<7; i++)
@@ -37,7 +42,8 @@ helpText[3] = "clickhack"
 helpText[4] = "shutdown"
 helpText[5] = "purefps"
 helpText[6] = "lightTester"
-helpText[7] = "help   /   ?"
+helpText[7] = "ambienceTester"
+helpText[8] = "help   /   ?"
 //Messages
 helpTextM[0] = "Information:"
 helpTextM[1] = "Transfers you to <room Name>, likely will cause progression related bugs."
@@ -46,4 +52,5 @@ helpTextM[3] = "Enables/disables the ability tomove character to the clicked loc
 helpTextM[4] = "Hard shutdown of the game, will not save, will not do anything"
 helpTextM[5] = "Limit console text to only show the current fps, gives a more accurate impression since it disables other console background behaviours."
 helpTextM[6] = "Toggle Light Tester object and interface"
-helpTextM[7] = "Enable/disable help menu"
+helpTextM[7] = "Toggle Ambience Tester interface"
+helpTextM[8] = "Enable/disable help menu"

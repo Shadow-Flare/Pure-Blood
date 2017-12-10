@@ -1,0 +1,1 @@
+redraw_map_hud();

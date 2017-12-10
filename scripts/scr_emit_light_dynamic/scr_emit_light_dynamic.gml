@@ -9,19 +9,15 @@ var blur = argument3;
 
 #region Tiles
 if !variable_instance_exists(id,"occlusionMapTiles") occlusionMapTiles = noone;
-if !surface_exists(occlusionMapTiles) occlusionMapTiles = surface_create(room_width,room_height);
-	
-surface_set_target(occlusionMapTiles);
-	draw_clear_alpha(c_white,0);
-	tileMapA = layer_tilemap_get_id(layer_get_id("tiles_foreground_a"));
-	tileMapB = layer_tilemap_get_id(layer_get_id("tiles_foreground_b"));
-	tileMapC = layer_tilemap_get_id(layer_get_id("tiles_foreground_c"));
-	tileMapD = layer_tilemap_get_id(layer_get_id("tiles_foreground_d"));
-	draw_tilemap(tileMapA,0,0);
-	draw_tilemap(tileMapB,0,0);
-	draw_tilemap(tileMapC,0,0);
-	draw_tilemap(tileMapD,0,0);
-surface_reset_target();
+if !surface_exists(occlusionMapTiles) 
+{
+	occlusionMapTiles = surface_create(room_width,room_height);
+	surface_set_target(occlusionMapTiles);
+		draw_clear_alpha(c_white,0);
+		tileMapA = layer_tilemap_get_id(layer_get_id("tiles_occlusion"));
+		draw_tilemap(tileMapA,0,0);
+	surface_reset_target();
+}
 #endregion
 #region Initializations
 with obj_light_parent if enabled

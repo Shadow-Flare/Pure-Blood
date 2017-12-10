@@ -44,6 +44,7 @@ if gamepad_is_connected(0)
 	rsInputHeld = gamepad_button_check(0,gp_stickr);
 	
 	startInput = gamepad_button_check_pressed(0,gp_start);
+	backInput = gamepad_button_check_pressed(0,gp_select);
 }
 
 // Keyboard inputs
@@ -92,4 +93,5 @@ else
 	
 	//Other
 	startInput = keyboard_check_pressed(ord("F"));
+	backInput = keyboard_check_pressed(ord("E"));
 }

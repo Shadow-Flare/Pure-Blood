@@ -1,6 +1,4 @@
-lifeTime = irandom(60);
-enabled = false;
-
+event_inherited();
 variance = 16;
 iterationsPerSec = 0.25;
 flicker = 0;

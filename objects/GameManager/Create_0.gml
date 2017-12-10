@@ -42,8 +42,8 @@ pauseState = PauseState.normal;
 
 currentCheckpointID = noone;
 checkpointMap = ds_map_create();
-	checkpointMap[? 0] = rmRoomX05Y50;
-	checkpointMap[? 1] = rmRoomX11Y50;
+	checkpointMap[? 0] = rmRoomX100Y500;
+	checkpointMap[? 1] = rmRoomX107Y500;
 pauseSplash = noone;
 
 //screen
@@ -57,10 +57,10 @@ window_set_cursor(cr_none);
 
 monitorW = display_get_width();
 monitorH = display_get_height();
-monitorXOffset = ((monitorW-320)/2);
-monitorYOffset = ((monitorH-176)/2);
 displayResolutionX = 1920;
 displayResolutionY = 1080;
+monitorXOffset = ((monitorW-displayResolutionX)/2);
+monitorYOffset = ((monitorH-displayResolutionY)/2);
 GuiRX = displayResolutionX/100;
 GuiRY = displayResolutionY/100;
 

@@ -123,15 +123,35 @@ if consoleEnabled
 		//LIGHT TESTER TOGGLE
 		if commandStr == "lightTester"
 		{
+			if ambienceTester ambienceTester = false;
+			
 			if lightTester == noone || !instance_exists(lightTester)
 			{
 				lightTester = instance_create_layer(0,0,"lay_lights",obj_light_test)
+				commandRes = "light tester enabled boss";
 			}
 			else
 			{
 				instance_destroy(lightTester);
 				lightTester = noone;
+				commandRes = "light tester disabled boss";
 			}
+			
+			selection = 0;
+		}
+		//AMBIENCE TESTER TOGGLE
+		if commandStr == "ambienceTester"
+		{
+			if instance_exists(lightTester)
+			{
+				instance_destroy(lightTester);
+				lightTester = noone;
+			}
+			ambienceTester = !ambienceTester;
+			if ambienceTester commandRes = "ambience tester enabled boss";
+			else commandRes = "ambience tester disabled boss";
+			
+			selection = 0;
 		}
 		//HISTORY LOGGER
 		for(var i=0; i<7;i++)
@@ -174,6 +194,8 @@ if lightTester != noone
 	{
 		var shiftV = keyboard_check_pressed(vk_numpad8)-keyboard_check_pressed(vk_numpad2);
 		var shiftH = keyboard_check_pressed(vk_numpad6)-keyboard_check_pressed(vk_numpad4);
+		if shiftV = 0 shiftV = keyboard_check_pressed(ord("I"))-keyboard_check_pressed(ord("K"));
+		if shiftH = 0 shiftH = keyboard_check_pressed(ord("L"))-keyboard_check_pressed(ord("J"));
 		
 		if shiftH != 0
 		{
@@ -211,21 +233,91 @@ if lightTester != noone
 					LightingController.occlusionMapTiles = noone;
 					surface_free(LightingController.light);
 					LightingController.light = noone;
-					
+					with LightingController
+					{
+						var list = ["occlusionMapTiles","light","temp","temp2","temp3","cutoutTiles","cutout"]
+						for (var i = 0; i < array_length_1d(list); i++) 
+						{
+							if variable_instance_exists(id,list[i])
+							{
+								var variable = variable_instance_get(id,list[i])
+								if surface_exists(variable) surface_free(variable);
+								variable_instance_set(id,list[i],noone);
+							}
+						}
+					}
 					with obj_light_parent
 					{
-						surface_free(occlusionMap);
-						occlusionMap = noone;
-						surface_free(shadowMap1D);
-						shadowMap1D = noone;
+						var list = ["occlusionMap","shadowMap1D"]
+						for (var i = 0; i < array_length_1d(list); i++) 
+						{
+							if variable_instance_exists(id,list[i])
+							{
+								var variable = variable_instance_get(id,list[i])
+								if surface_exists(variable) surface_free(variable);
+								variable_instance_set(id,list[i],noone);
+							}
+						}
 					}
 					break;
 				case 7:	//dynamic light reso
 					LightingController.dynamicLightReso = max(LightingController.dynamicLightReso+shiftV*4,1);
+					break;
 			}
 		}
 	}
 	else lightTester = noone;
+}
+
+//AMBIENCE TESTER
+if ambienceTester
+{
+	var shiftV = keyboard_check_pressed(vk_numpad8)-keyboard_check_pressed(vk_numpad2);
+	var shiftH = keyboard_check_pressed(vk_numpad6)-keyboard_check_pressed(vk_numpad4);
+	if shiftV = 0 shiftV = keyboard_check_pressed(ord("I"))-keyboard_check_pressed(ord("K"));
+	if shiftH = 0 shiftH = keyboard_check_pressed(ord("L"))-keyboard_check_pressed(ord("J"));
+		
+	if shiftH != 0
+	{
+		selectedVariable += shiftH;
+		if selectedVariable == -1 selectedVariable = 5;
+		if selectedVariable == 6 selectedVariable = 0;
+	}
+	
+	if shiftV != 0
+	{
+		var cache = RoomCache.rmAmbientLightData[? room];
+		switch selectedVariable
+		{
+			case 0:	//red
+				cache[| 0] = make_color_rgb(clamp(colour_get_red(cache[| 0])+shiftV*5,0,255),colour_get_green(cache[| 0]),colour_get_blue(cache[| 0]));
+				break;
+			case 1:	//green
+				cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),clamp(colour_get_green(cache[| 0])+shiftV*5,0,255),colour_get_blue(cache[| 0]));
+				break;
+			case 2:	//blue
+				cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),colour_get_green(cache[| 0]),clamp(colour_get_blue(cache[| 0])+shiftV*5,0,255));
+				break;
+			case 3:	//blend
+				cache[| 1] = clamp(cache[| 1]+shiftV*0.05,0,1);
+				break;
+			case 4:	//cutout blend
+				cache[| 2] = clamp(cache[| 2]+shiftV*0.05,0,1);
+				break;
+			case 5:	//Current Room darknessStr
+				var cache = RoomCache.rmDarknessData;
+				cache[? room] = clamp(cache[? room]+shiftV*0.05,0,1);
+				LightingController.darknessStr = cache[? room];
+				break;
+		}
+		with LightingController
+		{
+			var ambienceCache = RoomCache.rmAmbientLightData[? room];
+			ambienceColour = ambienceCache[| 0];
+			ambienceBlendStr = ambienceCache[| 1];
+			ambienceCutoutStr = ambienceCache[| 2];
+		}
+	}
 }
 
 //EXTRAS

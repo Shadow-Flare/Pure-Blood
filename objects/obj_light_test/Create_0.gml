@@ -1,5 +1,6 @@
-lifeTime = irandom(60);
-enabled = false;
+event_inherited();
+
+simDepth = 1;
 
 variance = 0;
 iterationsPerSec = 0.75;

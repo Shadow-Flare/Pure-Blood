@@ -1,15 +1,17 @@
-controllers[11] = ConsoleManager;
-controllers[10] = HudManager;
-controllers[9] = TargetManager;
-controllers[8] = PlayerStats;
-controllers[7] = AudioCache;
-controllers[6] = ItemCache;
-controllers[5] = LootCache;
-controllers[4] = RoomCache;
-controllers[3] = ComboCache;
-controllers[2] = InputManager;
-controllers[1] = EffectsManager;
-controllers[0] = HordeModeController;
+var tmpID = 13;
+tmpID--; controllers[tmpID] = ConsoleManager;
+tmpID--; controllers[tmpID] = HudManager;
+tmpID--; controllers[tmpID] = TargetManager;
+tmpID--; controllers[tmpID] = PlayerStats;
+tmpID--; controllers[tmpID] = MapManager;
+tmpID--; controllers[tmpID] = AudioCache;
+tmpID--; controllers[tmpID] = ItemCache;
+tmpID--; controllers[tmpID] = LootCache;
+tmpID--; controllers[tmpID] = RoomCache;
+tmpID--; controllers[tmpID] = ComboCache;
+tmpID--; controllers[tmpID] = InputManager;
+tmpID--; controllers[tmpID] = EffectsManager;
+tmpID--; controllers[tmpID] = HordeModeController;
 
 event_inherited();
 

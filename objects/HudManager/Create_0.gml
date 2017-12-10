@@ -8,7 +8,9 @@ messageShowDuration = 3;
 messageDivider = 50;
 messageMovePerFrame = 1;
 
-//stats
+spriteTimer = 0;
+
+//TOP LEFT
 topLeftResolutionScale = 4;
 topLeftBorder = 10;
 
@@ -41,4 +43,16 @@ hpSurf = noone;
 hpSurfB = noone;
 mpSurf = noone;
 
-spriteTimer = 0;
+//Map
+hudMapWidth = surface_get_width(application_surface)/8;
+hudMapHeight = surface_get_height(application_surface)/8;
+hudMapCellW = 20;
+hudMapCellH = 11;
+hudMapCellColour = c_blue;
+hudMapScale = 2;
+hudMapDetailScale = 2;
+
+hudMapSurf = surface_create(hudMapWidth,hudMapHeight);
+hudMapDetails = surface_create(hudMapWidth,hudMapHeight);
+
+hudMapEnabled = false;
