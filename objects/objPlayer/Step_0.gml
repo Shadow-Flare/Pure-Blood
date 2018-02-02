@@ -134,6 +134,14 @@ switch lockOnType
 //needed code. Though at times multiple passive
 //codes may be needed.
 
+	#region maintain player light source
+		if !instance_exists(objLightPlayer) instance_create_layer(x,y,"lay_lights",objLightPlayer)
+		with objLightPlayer
+		{
+			x = other.x;
+			y = other.y;
+		}
+	#endregion
 	#region reset dropThroughPlatforms
 if dropThroughPlatforms && !InputManager.aInputHeld dropThroughPlatforms = false;
 	#endregion

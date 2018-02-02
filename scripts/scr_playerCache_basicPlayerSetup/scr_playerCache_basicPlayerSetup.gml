@@ -31,9 +31,9 @@ with PlayerStats
 	hp = hpMax;
 	mp = mpMax;
 
-	moveSpeed = 2;
+	moveSpeed = 1.5;
 	defaultMoveSpeed = moveSpeed;
-	var jumpHeightVar = 3;										//total jump height in blocks (16x16px or 128x128)
+	var jumpHeightVar = 3.3;										//total jump height in blocks (16x16px or 128x128)
 	jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);		//jumpHeightVar*<blockSize>
 
 	hitEffectType = "blood";
@@ -78,7 +78,20 @@ with PlayerStats
 		ownedActivatables[1,0] = 2;
 		ownedActivatables[1,1] = 3;
 	
-	//weapons
+	//inventory data
+		//items
+		
+		//weapons
+		
+		//equipments
+	
+		//Accessories
+
+		//keys
+		scr_player_obtainItem(itemType.key,keyItem.summon_stone,1);
+		//alchemy
+	
+	//weapon data
 		//main weapons
 	classComboCache = ds_map_create();
 	GCS = noone;
@@ -100,3 +113,5 @@ with PlayerStats
 	//misc
 	isInvulnerable = false;
 }
+
+GameManager.currentCheckpointID = 0;

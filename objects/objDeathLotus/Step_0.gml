@@ -42,11 +42,13 @@ xSpd = xSpdPrev;
 ySpd = ySpdPrev;
 
 scr_statusCheck();
-scr_actor_moveWithCollisions();
 
 	//addional properties
 image_angle = actorDirection*90-90;
 image_xscale = facing;
 
-if actorDirection == 3 phased = false;
-else phased = true;
+if phased == false
+{
+	if actorDirection == 3 phased = false;
+	else phased = true;
+}

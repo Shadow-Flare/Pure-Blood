@@ -28,7 +28,6 @@ else
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(NewGameLoader);
 			GameManager.gameState = GameState.inGame;
-			GameManager.currentCheckpointID = 0;
 			type = loadType.ending;
 			break;
 		case loadType.arena:
@@ -36,7 +35,6 @@ else
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(ArenaGameLoader);
 			GameManager.gameState = GameState.arena;
-			GameManager.currentCheckpointID = noone;
 			type = loadType.ending;
 			break;
 		case loadType.hordeMode:
@@ -44,7 +42,6 @@ else
 			with instance_create_layer(objPlayer.x,objPlayer.y,"Controllers",Camera) phase = cameraState.player;
 			instance_destroy(HordeModeGameLoader);
 			GameManager.gameState = GameState.hordeMode;
-			GameManager.currentCheckpointID =  noone;
 			type = loadType.ending;
 			break;
 	}

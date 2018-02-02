@@ -39,7 +39,7 @@ switch subPhase
 					{
 						tempX+=dirToTarget;
 					}
-					if !place_meeting(tempX,tempY,objActorParent) &&  (!instance_exists(target) || abs(target.x-tempX) >= action2Sub2TeleportMinDistance)
+					if !place_meeting(tempX,tempY,objActorParent) &&  (!instance_exists(target) || abs(target.x-tempX) >= action2Sub2TeleportMinDistance) && !place_meeting(tempX,tempY+1,obj_block_nonSolid)
 					{
 						x = tempX;
 						y = tempY;

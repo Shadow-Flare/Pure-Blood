@@ -140,7 +140,5 @@ with objAttackEffectParent
 	}
 }
 
-scr_actor_moveWithCollisions();
-
 	//addional properties
 image_xscale = facing;

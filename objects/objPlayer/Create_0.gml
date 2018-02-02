@@ -1,9 +1,12 @@
+event_inherited();
+
+//player enumerators
+enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, emote, dying, action1, action2, action3, action4, action5};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, stunned, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
+enum vState {grounded, midAir, jumping};
+
 statCache = PlayerStats;
 
-xSpd = 0;
-ySpd = 0;
-envXSpd = 0;
-envYSpd = 0;
 facing = 1;
 phase = state.base;
 phaseTimer = 0;

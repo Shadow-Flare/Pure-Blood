@@ -15,10 +15,12 @@ if (!surface_exists(tiles))
 	var tileMapB = layer_tilemap_get_id(layer_get_id("tiles_foreground_b"));
 	var tileMapC = layer_tilemap_get_id(layer_get_id("tiles_foreground_c"));
 	var tileMapD = layer_tilemap_get_id(layer_get_id("tiles_foreground_d"));
+	var tileMapTop = layer_tilemap_get_id(layer_get_id("tiles_foreground_top"));
 	draw_tilemap(tileMapA,0,0);
 	draw_tilemap(tileMapB,0,0);
 	draw_tilemap(tileMapC,0,0);
 	draw_tilemap(tileMapD,0,0);
+	draw_tilemap(tileMapTop,0,0);
 	
 	surface_reset_target();
 	
@@ -26,6 +28,7 @@ if (!surface_exists(tiles))
 	layer_set_visible(layer_get_id("Tiles_foreground_b"),0);
 	layer_set_visible(layer_get_id("Tiles_foreground_c"),0);
 	layer_set_visible(layer_get_id("Tiles_foreground_d"),0);
+	layer_set_visible(layer_get_id("Tiles_foreground_top"),0);
 }
 
 if (!surface_exists(blood)) blood = surface_create(room_width,room_height);

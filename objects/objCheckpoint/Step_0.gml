@@ -16,7 +16,7 @@ switch activeState
 		if place_meeting(x,y,objPlayer)
 		{
 			activeState = 1;
-			GameManager.currentCheckpointID = checkpointID;
+			if checkpointID != noone GameManager.currentCheckpointID = checkpointID;
 		}
 		sprite_index = sprCheckpointInactive;
 		break;
@@ -26,9 +26,10 @@ switch activeState
 		{
 			activeState = 2;
 		}
-		sprite_index = sprCheckpointActivating
+		sprite_index = sprCheckpointActivating;
 		image_speed = sprite_get_number(sprite_index)/(activationDuration);
 		break;
 	case 2:	//active
-		sprite_index = sprCheckpointActive
+		sprite_index = sprCheckpointActive;
+		break;
 }

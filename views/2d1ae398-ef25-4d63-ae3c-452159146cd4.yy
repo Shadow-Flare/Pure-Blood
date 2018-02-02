@@ -8,7 +8,7 @@
         "52a061fc-0293-4ade-b903-aabbe39bcb86"
     ],
     "filterType": "GMShader",
-    "folderName": "Gaussian shaders",
+    "folderName": "Gaussian blur shaders",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

@@ -10,3 +10,5 @@ timer = 0;
 
 futurePathSpeed = 0;
 futureRestart = false;
+
+delayedExtra = noone;

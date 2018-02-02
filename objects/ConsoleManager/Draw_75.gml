@@ -120,32 +120,35 @@ if lightTester != noone && instance_exists(lightTester)
 	draw_text(boxX+1/2*LTBoxWidth,boxY+0.5/3*LTBoxHeight,"Light Tester");
 	draw_text(boxX+1/2*LTBoxWidth,boxY+2.5/3*LTBoxHeight,"Press Num8, Num2, Num4 & Num6 (LRUD) to navigate.");
 		//indeces
-	draw_text(boxX+1/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Red");
-	draw_text(boxX+2/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Green");
-	draw_text(boxX+3/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Blue");
-	draw_text(boxX+4/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Radius");
-	draw_text(boxX+5/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Blur Radius");
-	draw_text(boxX+6/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Radial Blur");
-	draw_text(boxX+7/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Light Scale");
-	draw_text(boxX+8/9*LTBoxWidth,boxY+1/3*LTBoxHeight,"Dynamic Light Reso");
+	draw_text(boxX+1/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Red");
+	draw_text(boxX+2/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Green");
+	draw_text(boxX+3/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Blue");
+	draw_text(boxX+4/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Radius");
+	draw_text(boxX+5/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Sim Depth");
+	draw_text(boxX+6/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Blur Radius");
+	draw_text(boxX+7/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Radial Blur");
+	draw_text(boxX+8/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Light Scale");
+	draw_text(boxX+9/10*LTBoxWidth,boxY+1/3*LTBoxHeight,"Dynamic Light Reso");
 	
 		//data
 	if other.selectedVariable == 0 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+1/9*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.colourR);
+	draw_text(boxX+1/10*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.colourR);
 	if other.selectedVariable == 1 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+2/9*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.colourG);
+	draw_text(boxX+2/10*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.colourG);
 	if other.selectedVariable == 2 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+3/9*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.colourB);
+	draw_text(boxX+3/10*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.colourB);
 	if other.selectedVariable == 3 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+4/9*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.radius);
+	draw_text(boxX+4/10*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.radius);
 	if other.selectedVariable == 4 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+5/9*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.blurRadius);
+	draw_text(boxX+5/10*LTBoxWidth,boxY+2/3*LTBoxHeight,lightTester.simDepth);
 	if other.selectedVariable == 5 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+6/9*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.radialBlurFactor);
+	draw_text(boxX+6/10*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.blurRadius);
 	if other.selectedVariable == 6 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+7/9*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.lightScale);
+	draw_text(boxX+7/10*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.radialBlurFactor);
 	if other.selectedVariable == 7 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+8/9*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.dynamicLightReso);
+	draw_text(boxX+8/10*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.lightScale);
+	if other.selectedVariable == 8 draw_set_color(c_blue); else draw_set_colour(c_white);
+	draw_text(boxX+9/10*LTBoxWidth,boxY+2/3*LTBoxHeight,LightingController.dynamicLightReso);
 	
 	draw_set_halign(fa_left);
 }
@@ -172,31 +175,89 @@ if ambienceTester
 	
 	draw_set_halign(fa_center);
 		//title/instructions
-	draw_text(boxX+1/2*ATBoxWidth,boxY+0.5/3*ATBoxHeight,"Ambience Tester");
+	draw_text(boxX+1/2*ATBoxWidth,boxY+0.5/3*ATBoxHeight,"Ambience Tester, Page: "+string(selectedPage+1));
 	draw_text(boxX+1/2*ATBoxWidth,boxY+2.5/3*ATBoxHeight,"Press Num8, Num2, Num4 & Num6 (LRUD) to navigate.");
 		//indeces
-	draw_text(boxX+1/7*ATBoxWidth,boxY+1/3*ATBoxHeight,"Red");
-	draw_text(boxX+2/7*ATBoxWidth,boxY+1/3*ATBoxHeight,"Green");
-	draw_text(boxX+3/7*ATBoxWidth,boxY+1/3*ATBoxHeight,"Blue");
-	draw_text(boxX+4/7*ATBoxWidth,boxY+1/3*ATBoxHeight,"Blend");
-	draw_text(boxX+5/7*ATBoxWidth,boxY+1/3*ATBoxHeight,"Cutout Blend");
-	draw_text(boxX+6/7*ATBoxWidth,boxY+1/3*ATBoxHeight,"Darkness");
+	switch (selectedPage)
+	{
+		case 0:
+			draw_text(boxX+2/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Red");
+			draw_text(boxX+3/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Green");
+			draw_text(boxX+4/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Blue");
+			draw_text(boxX+5/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Blend");
+			draw_text(boxX+6/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Cutout Blend");
+			break;
+		case 1:
+			draw_text(boxX+2/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Darkness");
+			draw_text(boxX+3/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Shaft Red");
+			draw_text(boxX+4/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Shaft Blue");
+			draw_text(boxX+5/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Shaft Green");
+			draw_text(boxX+6/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Shaft Angle");
+			break;
+		case 2:
+			draw_text(boxX+2/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Shaft Blur");
+			draw_text(boxX+3/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Shaft Reso");
+			draw_text(boxX+4/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"Shaft Step Reso");
+			//draw_text(boxX+5/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"");
+			//draw_text(boxX+6/8*ATBoxWidth,boxY+1/3*ATBoxHeight,"");
+			break;
+	}
 	
 		//data
 	var ambienceCache = RoomCache.rmAmbientLightData[? room];
+	var shaftCache = RoomCache.rmSunData[? room];
+	
+	switch (selectedPage)
+	{
+		case 0:
+			if other.selectedVariable == 0 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+1/8*ATBoxWidth,boxY+2/3*ATBoxHeight,"<");
+			if other.selectedVariable == 1 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+2/8*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_red(ambienceCache[| 0]));
+			if other.selectedVariable == 2 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+3/8*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_green(ambienceCache[| 0]));
+			if other.selectedVariable == 3 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+4/8*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_blue(ambienceCache[| 0]));
+			if other.selectedVariable == 4 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+5/8*ATBoxWidth,boxY+2/3*ATBoxHeight,ambienceCache[| 1]);
+			if other.selectedVariable == 5 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+6/8*ATBoxWidth,boxY+2/3*ATBoxHeight,ambienceCache[| 2]);
+			if other.selectedVariable == 6 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+7/8*ATBoxWidth,boxY+2/3*ATBoxHeight,">");
+			break;
+		case 1:
 		
-	if other.selectedVariable == 0 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+1/7*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_red(ambienceCache[| 0]));
-	if other.selectedVariable == 1 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+2/7*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_green(ambienceCache[| 0]));
-	if other.selectedVariable == 2 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+3/7*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_blue(ambienceCache[| 0]));
-	if other.selectedVariable == 3 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+4/7*ATBoxWidth,boxY+2/3*ATBoxHeight,ambienceCache[| 1]);
-	if other.selectedVariable == 4 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+5/7*ATBoxWidth,boxY+2/3*ATBoxHeight,ambienceCache[| 2]);
-	if other.selectedVariable == 5 draw_set_color(c_blue); else draw_set_colour(c_white);
-	draw_text(boxX+6/7*ATBoxWidth,boxY+2/3*ATBoxHeight,RoomCache.rmDarknessData[? room]);
-
+			if other.selectedVariable == 0 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+1/8*ATBoxWidth,boxY+2/3*ATBoxHeight,"<");
+			if other.selectedVariable == 1 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+2/8*ATBoxWidth,boxY+2/3*ATBoxHeight,RoomCache.rmDarknessData[? room]);
+			if other.selectedVariable == 2 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+3/8*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_red(shaftCache[| 0]));
+			if other.selectedVariable == 3 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+4/8*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_green(shaftCache[| 0]));
+			if other.selectedVariable == 4 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+5/8*ATBoxWidth,boxY+2/3*ATBoxHeight,color_get_blue(shaftCache[| 0]));
+			if other.selectedVariable == 5 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+6/8*ATBoxWidth,boxY+2/3*ATBoxHeight,shaftCache[| 1]);
+			if other.selectedVariable == 6 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+7/8*ATBoxWidth,boxY+2/3*ATBoxHeight,">");
+			break;
+		case 2:
+			if other.selectedVariable == 0 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+1/8*ATBoxWidth,boxY+2/3*ATBoxHeight,"<");
+			if other.selectedVariable == 1 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+2/8*ATBoxWidth,boxY+2/3*ATBoxHeight,shaftCache[| 2]);
+			if other.selectedVariable == 2 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+3/8*ATBoxWidth,boxY+2/3*ATBoxHeight,LightingController.shaftLightReso);
+			if other.selectedVariable == 3 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+4/8*ATBoxWidth,boxY+2/3*ATBoxHeight,LightingController.shaftLightStepReso);
+			if other.selectedVariable == 4 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+5/8*ATBoxWidth,boxY+2/3*ATBoxHeight,"---");
+			if other.selectedVariable == 5 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+6/8*ATBoxWidth,boxY+2/3*ATBoxHeight,"---");
+			if other.selectedVariable == 6 draw_set_color(c_blue); else draw_set_colour(c_white);
+			draw_text(boxX+7/8*ATBoxWidth,boxY+2/3*ATBoxHeight,">");
+			break;
+	}
 	draw_set_halign(fa_left);
 }

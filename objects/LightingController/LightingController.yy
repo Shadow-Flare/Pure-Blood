@@ -5,16 +5,6 @@
     "name": "LightingController",
     "eventList": [
         {
-            "id": "a5ab6c6c-26a6-492f-8c0f-6bfb7162bcf0",
-            "modelName": "GMEvent",
-            "mvc": "1.0",
-            "IsDnD": false,
-            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 2,
-            "eventtype": 3,
-            "m_owner": "0c1572ca-993a-4d13-9280-de6472da5607"
-        },
-        {
             "id": "a55b4f19-87a3-4fc6-9c22-68990ec93cca",
             "modelName": "GMEvent",
             "mvc": "1.0",
@@ -36,6 +26,7 @@
         }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
+    "overriddenProperties": null,
     "parentObjectId": "253f21ba-9289-4712-9959-65efe0ddfc19",
     "persistent": true,
     "physicsAngularDamping": 0.1,
@@ -50,6 +41,7 @@
     "physicsShape": 1,
     "physicsShapePoints": null,
     "physicsStartAwake": true,
+    "properties": null,
     "solid": false,
     "spriteId": "00000000-0000-0000-0000-000000000000",
     "visible": true

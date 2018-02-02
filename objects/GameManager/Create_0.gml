@@ -2,27 +2,9 @@ event_inherited();
 randomize();
 
 //enum initializers
-	//actor
+	//actor enumerators
 enum actorTypes {player, ally, enemy, wild, corpse};
 enum hitState {normal, blocking, dodging};
-
-	//player
-enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, emote, dying, action1, action2, action3, action4, action5};
-enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, stunned, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
-enum vState {grounded, midAir, jumping};
-	//weapons
-enum weaponClass {sword, spear}
-enum weaponClassStats {name, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards};
-enum weaponStats {name, type, damage, strMod, dexMod, stagger, range, specialType, specialValue, uniqueAttack, misc};
-enum weaponComboTypes {groundCombo, groundFinisher, aerialCombo, aerialFinisher, extra};
-enum extraComboTypes {upwards};
-enum weaponItem
-{
-/* Swords */		gladius,
-/* Spears */		hastam
-};
-		//items
-enum itemType {weapon};
 
 	//enemies
 enum enemyAggroState {passive, attacking};

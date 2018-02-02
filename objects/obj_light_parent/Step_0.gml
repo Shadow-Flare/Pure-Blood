@@ -9,7 +9,7 @@ var camY = camera_get_view_y(Camera.cam);
 var camW = camera_get_view_width(Camera.cam);
 var camH = camera_get_view_height(Camera.cam);
 var distanceToCam = point_distance(x,y,camX,camY);
-var cameraLargestDist = sqrt(camW*camW+camH+camH);
+var cameraLargestDist = sqrt(camW*camW+camH*camH);
 
 if distanceToCam > cameraLargestDist+maxLightSize enabled = false;
 else enabled = true;

@@ -1,15 +1,49 @@
+	//weapons enumerators
+enum weaponClass {sword, spear}
+enum weaponClassStats {name, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards};
+enum weaponStats {name, type, damage, strMod, dexMod, stagger, range, specialType, specialValue, uniqueAttack, misc};
+enum weaponComboTypes {groundCombo, groundFinisher, aerialCombo, aerialFinisher, extra};
+enum extraComboTypes {upwards};
+
+	//items enumerators
+enum itemType {item, weapon, equipment, accessory, key, alchemy};
+enum itemStats {name, usable};
+enum itemItem {};
+enum weaponItem
+{
+/* Swords */		gladius,
+/* Spears */		hastam
+};
+enum equipmentItem {};
+enum accessoryItem {};
+enum keyItem
+{
+/* Usable */		summon_stone
+/* Non-Usable*/		
+};
+enum alchemyItem {};
+
 //weapon class initializer	(will have to add clauses for initialization of DSs later on if we implement base combo tweaking)
 weaponClassData = ds_map_create();
 scr_set_weaponCategoriesData(weaponClass.sword);
 scr_set_weaponCategoriesData(weaponClass.spear);
 
 //type subCache initializer
-items = ds_map_create();
-items[? itemType.weapon] = ds_map_create();
+	//enum itemType {item, weapon, equipment, accessory, key, alchemy};
+item = ds_map_create();
+item[? itemType.item] = ds_map_create();
+item[? itemType.weapon] = ds_map_create();
+item[? itemType.equipment] = ds_map_create();
+item[? itemType.accessory] = ds_map_create();
+item[? itemType.key] = ds_map_create();
+item[? itemType.alchemy] = ds_map_create();
 
 #region all items
+	#region items - not done
+var itemCache = item[? itemType.item];
+	#endregion
 	#region weapons
-var weaponCache = items[? itemType.weapon]
+var weaponCache = item[? itemType.weapon]
 		#region swords
 			#region gladius
 weaponCache[? weaponItem.gladius] = ds_map_create();
@@ -45,4 +79,35 @@ hastamCache[? weaponStats.misc] = noone;
 			#endregion
 		#endregion
 	#endregion
+	#region equipments - not done
+var equipmentCache = item[? itemType.equipment];
+	#endregion
+	#region accessories - not done
+var accessoryCache = item[? itemType.accessory];
+	#endregion
+	#region keys
+var keyCache = item[? itemType.key];
+		#region Summon Stone
+keyCache[? keyItem.summon_stone] = ds_map_create();
+var cache = keyCache[? keyItem.summon_stone];
+cache[? itemStats.name] = "Summon Stone";
+cache[? itemStats.usable] = true;
+		#endregion
+	#endregion
+	#region alchemy items - not done
+var alchemyCache = item[? itemType.alchemy];
+	#endregion
+#endregion
+
+#region Player inventory
+	#region initialize
+inventory = ds_map_create();
+inventory[? itemType.item] = ds_map_create();
+inventory[? itemType.weapon] = ds_map_create();
+inventory[? itemType.equipment] = ds_map_create();
+inventory[? itemType.accessory] = ds_map_create();
+inventory[? itemType.key] = ds_map_create();
+inventory[? itemType.alchemy] = ds_map_create();
+	#endregion
+
 #endregion

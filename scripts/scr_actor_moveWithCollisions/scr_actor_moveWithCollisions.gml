@@ -20,8 +20,54 @@ if !place_free(x,y)
 	//nonSolid blocks
 with obj_block_nonSolid solid = true;
 
-var compiledXSpd = xSpd+envXSpd;
-var compiledYSpd = ySpd+envYSpd;
+//push alteration
+if place_meeting(x,y,objActorParent) && !phased && pushable
+{
+	othActor = instance_place(x,y,objActorParent);
+	if !othActor.phased
+	{
+		//pushXSpd -= pushXSpd*(1/16);
+		//pushYSpd -= pushYSpd*(1/16);
+	}
+	else
+	{
+		pushXSpd = 0;
+		pushYSpd = 0;
+	}
+}
+else
+{
+	pushXSpd = 0;
+	pushYSpd = 0;
+}
+
+//buffers and compiled speed
+xSpd += xSpdBuffer;
+ySpd += ySpdBuffer;
+pushXSpd += pushXSpdBuffer;
+pushYSpd += pushYSpdBuffer;
+envXSpd += envXSpdBuffer;
+envYSpd += envYSpdBuffer;
+
+xSpdBuffer = xSpd % 1/6;
+ySpdBuffer = ySpd % 1/6;
+pushXSpdBuffer = pushXSpd % 1/6;
+pushYSpdBuffer = pushYSpd % 1/6;
+envXSpdBuffer = envXSpd % 1/6;
+envYSpdBuffer = envYSpd % 1/6;
+
+xSpd -= xSpdBuffer;
+ySpd -= ySpdBuffer;
+pushXSpd -= pushXSpdBuffer;
+pushYSpd -= pushYSpdBuffer;
+envXSpd -= envXSpdBuffer;
+envYSpd -= envYSpdBuffer;
+
+x = round(x*6)/6;
+y = round(y*6)/6;
+
+var compiledXSpd = xSpd+envXSpd+pushXSpd;
+var compiledYSpd = ySpd+envYSpd+pushYSpd;
 var sprHeightDif = sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index);
 
 	//platforms
@@ -41,9 +87,10 @@ else
 if !place_free(x,y+compiledYSpd) && place_free(x,y)
 {
 	if place_free(x,floor(y)) y = floor(y);
-	while(place_free(x,y+sign(compiledYSpd))) y+=sign(compiledYSpd);
+	while(place_free(x,y+sign(compiledYSpd))) y+=sign(compiledYSpd)/6;
 	ySpd = 0;
 	envYSpd = 0;
+	pushYSpd = 0;
 	compiledYSpd = 0;
 }
 
@@ -52,53 +99,31 @@ y+=compiledYSpd;
 with objPlatformParent solid = false;
 
 // do H collision check
-	//enemies
+	//actors
 if !phased
 {
-	if place_meeting(x+compiledXSpd,y,objActorParent) 
+	for (var i = 0; i < instance_number(objActorParent); i++)
 	{
-		var othActor = instance_place(x+compiledXSpd,y,objActorParent);
-		if !othActor.phased && !place_meeting(x,y,othActor)
+		var othActor = instance_find(objActorParent,i);
+		if place_meeting(x,y,othActor) && pushable == true && !othActor.phased
 		{
 			var dirToOther = sign(othActor.x-x);
 			if dirToOther = 0 dirToOther = irandom(1);
 			if dirToOther = 0 dirToOther = -1;
-			
-			if is_enemy(actorType,othActor.actorType)
-			{
-				while place_meeting(x+compiledXSpd,y,othActor) compiledXSpd-=dirToOther/10;
-			}
-			else
-			{
-				var xDistToOther = abs(othActor.x-x);
-				while xDistToOther <= 6 compiledXSpd-=dirToOther*1;
-			}
+
+			if place_meeting(x,y,othActor) pushXSpd-=dirToOther*1;
 		}
-	}
-	
-	if place_meeting(x,y,objActorParent) && pushable == true
-	{
-		for (var i = 0; i < instance_number(objActorParent); i++)
+		
+		else if place_meeting(x+compiledXSpd,y,othActor) && !place_meeting(x,y,othActor) && !othActor.phased
 		{
-			var othActor = instance_find(objActorParent,i);
-			if !othActor.phased
+			var dirToOther = sign(othActor.x-x);
+			if dirToOther = 0 dirToOther = irandom(1);
+			if dirToOther = 0 dirToOther = -1;
+
+			while place_meeting(x+compiledXSpd,y,othActor) 
 			{
-				var dirToOther = sign(othActor.x-x);
-				if dirToOther = 0 dirToOther = irandom(1);
-				if dirToOther = 0 dirToOther = -1;
-				
-				if place_meeting(x,y,othActor)
-				{
-					if is_enemy(actorType,othActor.actorType)
-					{
-						if place_meeting(x,y,othActor) compiledXSpd-=dirToOther*1;
-					}
-					else
-					{
-						var xDistToOther = abs(othActor.x-x);
-						if xDistToOther <= 6 compiledXSpd-=dirToOther*1
-					}
-				}
+				pushXSpd-=dirToOther*(1/6);
+				compiledXSpd = xSpd+envXSpd+pushXSpd;
 			}
 		}
 	}
@@ -111,9 +136,10 @@ switch sign(compiledXSpd)
 		if !place_free(floor(x+compiledXSpd),y)
 		{
 			if place_free(floor(x),y) x = floor(x);
-			while(place_free(x+sign(compiledXSpd),y)) x+=sign(compiledXSpd);
+			while(place_free(x+sign(compiledXSpd),y)) x+=sign(compiledXSpd)/6;
 			xSpd = 0;
 			envXSpd = 0;
+			pushXSpd = 0;
 			compiledXSpd = 0;
 		}
 		break;
@@ -121,9 +147,10 @@ switch sign(compiledXSpd)
 		if !place_free(ceil(x+compiledXSpd),y)
 		{
 			if place_free(ceil(x),y) x = ceil(x);
-			while(place_free(x+sign(compiledXSpd),y)) x+=sign(compiledXSpd);
+			while(place_free(x+sign(compiledXSpd),y)) x+=sign(compiledXSpd/6);
 			xSpd = 0;
 			envXSpd = 0;
+			pushXSpd = 0;
 			compiledXSpd = 0;
 		}
 		break;

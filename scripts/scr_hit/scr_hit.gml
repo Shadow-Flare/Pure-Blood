@@ -26,7 +26,15 @@ if attackType != -1
 	var partSpeed = 1+hpLostRatio*(100*0.04)
 	if instance_exists(caster) var src = caster;
 	else var src = source;
+		//blood pixels
 	scr_hit_effect_blood(src,statCache.hitEffectType,statCache.hitEffectColour,partCount,partSpeed);
+		//Flash
+	with instance_create_layer(x,y,"lay_lights",objLightHitFlash)
+	{
+		duration = 0.1;
+		colour = make_color_rgb(255,150,150);
+	}
+		//roundup hp
 	statCache.hp = clamp(statCache.hp,0,statCache.hpMax);
 }
 

@@ -16,7 +16,7 @@ LTBoxWidth = 1200;
 LTBoxHeight = 200;
 
 ambienceTester = false;
-ATBoxWidth = 600;
+ATBoxWidth = 1000;
 ATBoxHeight = 200;
 
 selectedVariable = 0;

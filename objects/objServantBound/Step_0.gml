@@ -36,7 +36,6 @@ scr_servantBound_ai();
 
 scr_hitCheck();
 scr_statusCheck();
-scr_actor_moveWithCollisions();
 
 	//addional properties
 image_xscale = facing;

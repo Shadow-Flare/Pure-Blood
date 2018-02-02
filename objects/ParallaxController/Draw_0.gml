@@ -1,4 +1,4 @@
-		//bck layers
+	//front layers
 for(var i = 0; i < array_length_1d(paraSprites); i++)
 {
 	var sprS = paraSpeeds[i];

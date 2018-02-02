@@ -1,3 +1,5 @@
+event_inherited();
+
 //base behaviour data
 actorType = actorTypes.enemy;
 aggroPhase = enemyAggroState.passive;
@@ -10,10 +12,6 @@ phaseTimer = 0;
 subPhaseTimer = 0;
 baseSpriteIndex = sprite_index;
 maxFallSpeed = 5;
-xSpd = 0;
-ySpd = 0;
-envXSpd = 0;
-envYSpd = 0;
 facing = irandom(1);
 if facing == 0 facing = -1;
 phased = false;

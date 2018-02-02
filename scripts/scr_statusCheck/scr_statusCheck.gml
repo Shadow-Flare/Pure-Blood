@@ -1,7 +1,7 @@
 //begin dying
 if phase != state.dying && statCache.hp <= 0
 {
-	scr_enemy_drops();
+	//scr_enemy_drops();
 	phased = 1;
 	actorType = actorTypes.corpse;
 	phase = state.dying;

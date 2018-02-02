@@ -1,6 +1,6 @@
 event_inherited();
 
-simDepth = 1;
+simDepth = 0.5;
 
 variance = 0;
 iterationsPerSec = 0.75;
@@ -16,3 +16,8 @@ maxLightSize = radius+variance;
 
 lightSize = radius;
 sizeMod = 0;
+
+canFollow = true;
+
+instance_deactivate_object(obj_light_parent);
+instance_activate_object(self);

@@ -151,7 +151,8 @@ if consoleEnabled
 			if ambienceTester commandRes = "ambience tester enabled boss";
 			else commandRes = "ambience tester disabled boss";
 			
-			selection = 0;
+			selection = 1;
+			selectedPage = 0;
 		}
 		//HISTORY LOGGER
 		for(var i=0; i<7;i++)
@@ -200,8 +201,8 @@ if lightTester != noone
 		if shiftH != 0
 		{
 			selectedVariable += shiftH;
-			if selectedVariable == -1 selectedVariable = 7;
-			if selectedVariable == 8 selectedVariable = 0;
+			if selectedVariable == -1 selectedVariable = 8;
+			if selectedVariable == 9 selectedVariable = 0;
 		}
 		
 		if shiftV != 0
@@ -220,14 +221,17 @@ if lightTester != noone
 				case 3:	//radius
 					lightTester.radius = max(lightTester.radius+shiftV*20*1,0);
 					break;
-				case 4:	//blurRadius
+				case 4: //depth
+					lightTester.simDepth = clamp(lightTester.simDepth+shiftV*0.05,0,1);
+					break;
+				case 5:	//blurRadius
 					LightingController.blurRadius = max(LightingController.blurRadius+shiftV*1,0);
 					break;
-				case 5:	//radialBlurFactor
+				case 6:	//radialBlurFactor
 					LightingController.radialBlurFactor = max(LightingController.radialBlurFactor+shiftV*0.2,0);
 					break;
-				case 6:	//light scale
-					LightingController.lightScale = max(LightingController.lightScale+shiftV*1,1);
+				case 7:	//light scale
+					LightingController.lightScale = clamp(LightingController.lightScale+shiftV*5,1,6);
 					
 					surface_free(LightingController.occlusionMapTiles);
 					LightingController.occlusionMapTiles = noone;
@@ -235,7 +239,7 @@ if lightTester != noone
 					LightingController.light = noone;
 					with LightingController
 					{
-						var list = ["occlusionMapTiles","light","temp","temp2","temp3","cutoutTiles","cutout"]
+						var list = ["occlusionMapTiles","light","light2","temp","temp2","temp3","temp4","temp5","cutoutTiles","cutout","normalMap","normalMapCamera","specularMap","specularMapCamera"]
 						for (var i = 0; i < array_length_1d(list); i++) 
 						{
 							if variable_instance_exists(id,list[i])
@@ -260,7 +264,7 @@ if lightTester != noone
 						}
 					}
 					break;
-				case 7:	//dynamic light reso
+				case 8:	//dynamic light reso
 					LightingController.dynamicLightReso = max(LightingController.dynamicLightReso+shiftV*4,1);
 					break;
 			}
@@ -280,34 +284,93 @@ if ambienceTester
 	if shiftH != 0
 	{
 		selectedVariable += shiftH;
-		if selectedVariable == -1 selectedVariable = 5;
-		if selectedVariable == 6 selectedVariable = 0;
+		if selectedVariable == -1 selectedVariable = 6;
+		if selectedVariable == 7 selectedVariable = 0;
 	}
 	
 	if shiftV != 0
 	{
 		var cache = RoomCache.rmAmbientLightData[? room];
-		switch selectedVariable
+		switch selectedPage
 		{
-			case 0:	//red
-				cache[| 0] = make_color_rgb(clamp(colour_get_red(cache[| 0])+shiftV*5,0,255),colour_get_green(cache[| 0]),colour_get_blue(cache[| 0]));
+			case 0: //Page 1
+				switch selectedVariable
+				{
+					case 0: //Page Left
+						selectedPage = 2;
+					case 1:	//red
+						cache[| 0] = make_color_rgb(clamp(colour_get_red(cache[| 0])+shiftV*5,0,255),colour_get_green(cache[| 0]),colour_get_blue(cache[| 0]));
+						break;
+					case 2:	//green
+						cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),clamp(colour_get_green(cache[| 0])+shiftV*5,0,255),colour_get_blue(cache[| 0]));
+						break;
+					case 3:	//blue
+						cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),colour_get_green(cache[| 0]),clamp(colour_get_blue(cache[| 0])+shiftV*5,0,255));
+						break;
+					case 4:	//blend
+						cache[| 1] = clamp(cache[| 1]+shiftV*0.05,0,1);
+						break;
+					case 5:	//cutout blend
+						cache[| 2] = clamp(cache[| 2]+shiftV*0.05,0,1);
+						break;
+					case 6: //Page Right
+						selectedPage = 1;
+				}
 				break;
-			case 1:	//green
-				cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),clamp(colour_get_green(cache[| 0])+shiftV*5,0,255),colour_get_blue(cache[| 0]));
+			case 1: //Page 2
+				switch selectedVariable
+				{
+					case 0: //Page Left
+						selectedPage = 0;
+					case 1:	//Current Room darknessStr
+						var cache = RoomCache.rmDarknessData;
+						cache[? room] = clamp(cache[? room]+shiftV*0.05,0,1);
+						LightingController.darknessStr = cache[? room];
+						break;
+					case 2:	//Light Shaft Red
+						var cache = RoomCache.rmSunData[? room];
+						cache[| 0] = make_color_rgb(clamp(colour_get_red(cache[| 0])+shiftV*5,0,255),colour_get_green(cache[| 0]),colour_get_blue(cache[| 0]));
+						break;
+					case 3:	//Light Shaft Blue
+						var cache = RoomCache.rmSunData[? room];
+						cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),clamp(colour_get_green(cache[| 0])+shiftV*5,0,255),colour_get_blue(cache[| 0]));
+						break;
+					case 4:	//Light Shaft Green
+						var cache = RoomCache.rmSunData[? room];
+						cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),colour_get_green(cache[| 0]),clamp(colour_get_blue(cache[| 0])+shiftV*5,0,255));
+						break;
+					case 5:	//Light Shaft Angle
+						var cache = RoomCache.rmSunData[? room];
+						cache[| 1] = clamp(cache[| 1]+shiftV*5,0,360);
+						break;
+					case 6: //Page Right
+						selectedPage = 2;
+				}
 				break;
-			case 2:	//blue
-				cache[| 0] = make_color_rgb(colour_get_red(cache[| 0]),colour_get_green(cache[| 0]),clamp(colour_get_blue(cache[| 0])+shiftV*5,0,255));
-				break;
-			case 3:	//blend
-				cache[| 1] = clamp(cache[| 1]+shiftV*0.05,0,1);
-				break;
-			case 4:	//cutout blend
-				cache[| 2] = clamp(cache[| 2]+shiftV*0.05,0,1);
-				break;
-			case 5:	//Current Room darknessStr
-				var cache = RoomCache.rmDarknessData;
-				cache[? room] = clamp(cache[? room]+shiftV*0.05,0,1);
-				LightingController.darknessStr = cache[? room];
+			case 2: //Page 3
+				switch selectedVariable
+				{
+					case 0: //Page Left
+						selectedPage = 1;
+					case 1:	//Shaft radial blur1
+						var cache = RoomCache.rmSunData[? room];
+						cache[| 2] = max(cache[| 2]+shiftV*0.05,0);
+						break;
+					case 2:	//shaft reso
+						LightingController.shaftLightReso += shiftV*16;
+						break;
+					case 3:	//shaft linear reso
+						LightingController.shaftLightStepReso += shiftV*16;
+						break;
+					case 4:	//nothing
+						//
+						break;
+					case 5:	//nothing
+						//
+						break;
+					case 6: //Page Right
+						selectedPage = 0;
+				}
 				break;
 		}
 		with LightingController

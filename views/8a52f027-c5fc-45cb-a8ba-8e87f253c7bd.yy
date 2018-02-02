@@ -5,7 +5,6 @@
     "name": "8a52f027-c5fc-45cb-a8ba-8e87f253c7bd",
     "children": [
         "1f8acba9-79d5-46b3-ae62-9495dc52b64e",
-        "c11b1230-0650-40dc-897f-b9d98e481de2",
         "4a91ca90-830a-4548-b7ed-ae9d420b2acd",
         "dfa010ae-367e-4bfd-a224-147a2f1d27ac",
         "fc99f58e-4f77-4886-98e2-64ba92dcff3a",
@@ -21,7 +20,7 @@
         "689ff51a-64bc-4369-b86a-5e2a9511e4b5"
     ],
     "filterType": "GMScript",
-    "folderName": "Entity Scripts",
+    "folderName": "Actor Scripts",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

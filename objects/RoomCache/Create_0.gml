@@ -9,16 +9,37 @@ rmAmbientLightData = ds_map_create();		//list[colour,blend,cutoutBlend]
 rmParallaxSpriteData = ds_map_create();		//sprite
 rmParallaxSpeedData = ds_map_create();		//speed
 rmParallaxBackData = ds_map_create();		//background
+rmSunData = ds_map_create();				//list[colour,angle]
+#endregion
 
-darkDefault = 0.5;
-fogDefault = 0;
-rainDefault = 0;
+#region defaults
+	#region default default
+defaultDark = 0.5;
+defaultFog = 0;
+defaultRain = 0;
 defaultAudioID = noone;
 defaultAmbientLight = ds_list_create();
 	ds_list_add(defaultAmbientLight,make_colour_rgb(0,0,0),0,0);
-parallaxSpriteDefault[0] = bck_forest;
-parallaxSpeedDefault[0] = 0.6;
-parallaxBackDefault = bck_forest_fill;
+defaultParallaxSprite[0] = bck_forest;	//temp
+defaultParallaxSpeed[0] = 0.6;			//temp
+defaultParallaxBack = bck_forest_fill;	//temp
+defaultSunDir = ds_list_create();
+	ds_list_add(defaultSunDir,make_colour_rgb(0,0,0),undefined,1);
+	#endregion
+	#region forest default
+forestDark = 0.75;
+forestFog = 0;
+forestRain = 0;
+forestAudioID = sndCityAmbience;	//temp
+forestAmbientLight = ds_list_create();
+	ds_list_add(forestAmbientLight,make_color_rgb(20,160,20),0.1,0.05);
+forestParallaxSprite[0] = bck_forest;
+forestParallaxSpeed[0] = 0.6;
+forestParallaxBack = bck_forest_fill;
+forestSunDir = ds_list_create();
+	ds_list_add(forestSunDir,make_colour_rgb(0,0,0),undefined,1);
+//	ds_list_add(rmSunData[? tmp],make_colour_rgb(255,206,66),0,1);
+	#endregion
 #endregion
 
 var tmp
@@ -27,146 +48,236 @@ var tmp
 tmp = rmRoomX100Y500;
 rmWidths[? tmp] = 5;
 rmHeights[? tmp] = 1;
-rmDarknessData[? tmp] = 1;
-rmAmbientLightData[? tmp] = ds_list_create();
-	ds_list_add(rmAmbientLightData[? tmp],make_color_rgb(20,160,20),0.1,0.05);
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
 
 tmp = rmRoomX105Y499;
 rmWidths[? tmp] = 2;
 rmHeights[? tmp] = 2;
-rmDarknessData[? tmp] = darkDefault;
-rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
 
 tmp = rmRoomX105Y501;
 rmWidths[? tmp] = 2;
 rmHeights[? tmp] = 1;
-rmDarknessData[? tmp] = darkDefault;
-rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
 
 tmp = rmRoomX107Y500;
 rmWidths[? tmp] = 1;
 rmHeights[? tmp] = 1;
-rmDarknessData[? tmp] = darkDefault;
-rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
 
 tmp = rmRoomX108Y499;
 rmWidths[? tmp] = 1;
 rmHeights[? tmp] = 3;
-rmDarknessData[? tmp] = darkDefault;
-rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
+
+tmp = rmRoomX109Y500;
+rmWidths[? tmp] = 2;
+rmHeights[? tmp] = 1;
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
+
+tmp = rmRoomX109Y501;
+rmWidths[? tmp] = 1;
+rmHeights[? tmp] = 1;
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
+
+tmp = rmRoomX111Y500;
+rmWidths[? tmp] = 1;
+rmHeights[? tmp] = 1;
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
+
+tmp = rmRoomX112Y499;
+rmWidths[? tmp] = 2;
+rmHeights[? tmp] = 2;
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
 
 tmp = rmRoomX108Y502;
 rmWidths[? tmp] = 1;
 rmHeights[? tmp] = 1;
-rmDarknessData[? tmp] = darkDefault;
-rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
 
 tmp = rmRoomX109Y502;
 rmWidths[? tmp] = 1;
 rmHeights[? tmp] = 1;
-rmDarknessData[? tmp] = darkDefault;
-rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
 
 tmp = rmRoomX110Y501;
 rmWidths[? tmp] = 2;
 rmHeights[? tmp] = 2;
-rmDarknessData[? tmp] = darkDefault;
+rmDarknessData[? tmp] = forestDark;
+rmFogData[? tmp] = forestFog;
+rmRainData[? tmp] = forestRain;
+rmAmbienceAudioData[? tmp] = forestAudioID;
+rmAmbientLightData[? tmp] = forestAmbientLight;
+rmParallaxSpriteData[? tmp] = forestParallaxSprite;
+rmParallaxSpeedData[? tmp] = forestParallaxSpeed;
+rmParallaxBackData[? tmp] = forestParallaxBack;
+rmSunData[? tmp] = forestSunDir;
+
+tmp = rmRoomX900Y900;
+rmWidths[? tmp] = 2;
+rmHeights[? tmp] = 2;
+rmDarknessData[? tmp] = defaultDark;
 rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmFogData[? tmp] = defaultFog;
+rmRainData[? tmp] = defaultRain;
+rmParallaxSpriteData[? tmp] = defaultParallaxSprite;
+rmParallaxSpeedData[? tmp] = defaultParallaxSpeed;
+rmParallaxBackData[?tmp] = defaultParallaxBack;
+rmSunData[? tmp] = ds_list_create();
+	ds_list_add(rmSunData[? tmp],make_colour_rgb(255,206,66),300,1);
 
 #endregion
 #region Arena
 
 tmp = rmArena1;
-rmDarknessData[? tmp] = 0.6;
+rmWidths[? tmp] = 1;
+rmHeights[? tmp] = 1;
+rmDarknessData[? tmp] = defaultDark;
 rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmAmbienceAudioData[? tmp] = defaultAudioID;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmFogData[? tmp] = defaultFog;
+rmRainData[? tmp] = defaultRain;
+rmParallaxSpriteData[? tmp] = defaultParallaxSprite;
+rmParallaxSpeedData[? tmp] = defaultParallaxSpeed;
+rmParallaxBackData[?tmp] = defaultParallaxBack;
+rmSunData[? tmp] = defaultSunDir;
 
 tmp = rmArena2;
-rmDarknessData[? tmp] = darkDefault;
+rmWidths[? tmp] = 2;
+rmHeights[? tmp] = 2;
+rmDarknessData[? tmp] = defaultDark;
 rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmAmbienceAudioData[? tmp] = defaultAudioID;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmFogData[? tmp] = defaultFog;
+rmRainData[? tmp] = defaultRain;
+rmParallaxSpriteData[? tmp] = defaultParallaxSprite;
+rmParallaxSpeedData[? tmp] = defaultParallaxSpeed;
+rmParallaxBackData[?tmp] = defaultParallaxBack;
+rmSunData[? tmp] = defaultSunDir;
 
 tmp = rmArena3;
-rmDarknessData[? tmp] = darkDefault;
+rmWidths[? tmp] = 2;
+rmHeights[? tmp] = 2;
+rmDarknessData[? tmp] = defaultDark;
 rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = 2;
-rmRainData[? tmp] = rainDefault;
-rmAmbienceAudioData[? tmp] = defaultAudioID;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmFogData[? tmp] = defaultFog;
+rmRainData[? tmp] = defaultRain;
+rmParallaxSpriteData[? tmp] = defaultParallaxSprite;
+rmParallaxSpeedData[? tmp] = defaultParallaxSpeed;
+rmParallaxBackData[?tmp] = defaultParallaxBack;
+rmSunData[? tmp] = defaultSunDir;
 
 tmp = rmArena4;
-rmDarknessData[? tmp] = darkDefault;
+rmWidths[? tmp] = 3;
+rmHeights[? tmp] = 3;
+rmDarknessData[? tmp] = defaultDark;
 rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = 1;
-rmAmbienceAudioData[? tmp] = defaultAudioID;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault
+rmFogData[? tmp] = defaultFog;
+rmRainData[? tmp] = defaultRain;
+rmParallaxSpriteData[? tmp] = defaultParallaxSprite;
+rmParallaxSpeedData[? tmp] = defaultParallaxSpeed;
+rmParallaxBackData[?tmp] = defaultParallaxBack;
+rmSunData[? tmp] = defaultSunDir;
 
 #endregion
 #region Horde Mode
 
 tmp = rmHorde1;
-rmDarknessData[? tmp] = darkDefault;
+rmWidths[? tmp] = 3;
+rmHeights[? tmp] = 3;
+rmDarknessData[? tmp] = defaultDark;
 rmAmbientLightData[? tmp] = defaultAmbientLight;
-rmFogData[? tmp] = fogDefault;
-rmRainData[? tmp] = rainDefault;
-rmAmbienceAudioData[? tmp] = sndCityAmbience;
-rmParallaxSpriteData[? tmp] = parallaxSpriteDefault;
-rmParallaxSpeedData[? tmp] = parallaxSpeedDefault;
-rmParallaxBackData[?tmp] = parallaxBackDefault;
+rmFogData[? tmp] = defaultFog;
+rmRainData[? tmp] = defaultRain;
+rmParallaxSpriteData[? tmp] = defaultParallaxSprite;
+rmParallaxSpeedData[? tmp] = defaultParallaxSpeed;
+rmParallaxBackData[?tmp] = defaultParallaxBack;
+rmSunData[? tmp] = defaultSunDir;
 
 #endregion

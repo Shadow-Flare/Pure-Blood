@@ -24,11 +24,19 @@ if path != noone
 	}
 	else
 	{	
+		if path_position == 0 || path_position == 1
+		{
+			path_speed = 0;
+			path_start(path,pathSpeedDefault,pathEndAction,true);
+		}
+		if path_position*len+path_speed >= len
+		{
+			path_speed = len-path_position*len;
+		}
+		
 		xSpdSim = path_get_x(path,((path_position*len+path_speed)/len)%1)-x;
 		ySpdSim = path_get_y(path,((path_position*len+path_speed)/len)%1)-y;
 	}
-	
-
 }
 else
 {

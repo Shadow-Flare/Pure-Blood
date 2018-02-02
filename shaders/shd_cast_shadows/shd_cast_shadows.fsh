@@ -35,7 +35,8 @@ void main(void) {
         //if we've hit an opaque fragment (occluder), then get new distance
         //if the new distance is below the current, then we'll use that for our ray
         float caster = data.a;
-        if (caster > THRESHOLD) {
+        if (caster > THRESHOLD)
+		{
             distance = min(distance, dst);
             //NOTE: we could probably use "break" or "return" here
         }

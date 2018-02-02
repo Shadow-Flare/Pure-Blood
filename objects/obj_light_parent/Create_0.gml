@@ -1,10 +1,10 @@
 lifeTime = irandom(60);
-enabled = false;
+enabled = true;
 variance = 8;
 iterationsPerSec = 0.75;
 colour = make_color_rgb(225,150,100);
 radius = 200;
-simDepth = irandom(255);
+simDepth = 0.6;
 
 maxLightSize = radius+variance;
 
