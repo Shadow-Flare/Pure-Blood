@@ -23,7 +23,10 @@ if (InputManager.aInput == true)
 	switch selection
 	{
 		case "Items":
-			
+			menu = menuCurrent.items;
+			current_menu_options = menu_items;
+			sX = 0;
+			sY = 0;
 			break;
 		case "Weapons":
 			

@@ -6,6 +6,9 @@ switch menu
 	case menuCurrent.inventory:
 		scr_pause_step_inventory();
 		break;
+	case menuCurrent.items:
+		scr_pause_step_items();
+		break;
 	case menuCurrent.offhand:
 		scr_pause_step_offhand();
 		break;

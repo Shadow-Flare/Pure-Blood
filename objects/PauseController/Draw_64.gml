@@ -20,6 +20,9 @@ switch menu
 	case menuCurrent.inventory:
 		scr_pause_draw_inventory();
 		break;
+	case menuCurrent.items:
+		scr_pause_draw_items();
+		break;
 	case menuCurrent.offhand:
 		scr_pause_draw_offhand();
 		break;

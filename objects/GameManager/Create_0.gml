@@ -16,7 +16,6 @@ enum PauseState {normal, paused, transitioning, death};
 	//misc
 enum attackTypes {melee, projectile};
 enum groundTypes {stone, grass};
-enum menuCurrent {main, inventory, offhand, combos, status, settings};
 
 // Initialize Game
 gameState = GameState.mainMenu;

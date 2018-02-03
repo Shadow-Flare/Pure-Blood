@@ -26,7 +26,8 @@
         "d945ae21-e322-4143-adce-ea2b3a00483f",
         "a764ae9b-874f-44f2-8d66-19181d211597",
         "6d235d43-696f-4bd4-94b7-2dfc16debb55",
-        "ffe27b7d-658d-4a0d-8b04-c7cd520646a6"
+        "ffe27b7d-658d-4a0d-8b04-c7cd520646a6",
+        "26756964-247f-487e-ac47-4896ee25bb6e"
     ],
     "filterType": "GMScript",
     "folderName": "Technicals",
