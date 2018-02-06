@@ -5,13 +5,15 @@
     "name": "78c7e446-c1ca-4e9a-9e4c-ab71d6339cc2",
     "children": [
         "d9a68038-8f33-4d0e-a0de-f1cb11048054",
+        "00d0fa12-1703-4843-afb4-0a41858d5ae1",
         "445d4f68-7db2-4901-92ba-b31e571213c3",
-        "f4ecdca7-5da0-4285-ac71-d986beb5bfa8",
-        "00cf7b57-94c3-40d5-abdd-10c0e477fd31",
-        "21f58de2-5160-4674-93b8-8224de55d2fa",
-        "dbc7da7d-0895-490f-91cf-2b588f369911",
-        "2b49db4f-6fcd-461a-a0f7-9cabc0ca19aa",
-        "d077c884-aafb-4d62-9920-9b87ab3888a1"
+        "e1ea4362-e353-4424-be4a-5064aa44ad11",
+        "7a24f799-8eae-4e8c-a39b-f7dd0f181c25",
+        "81271cfb-343f-4e6e-ad6d-6bbce0b00915",
+        "2bf3b91b-1174-41d5-ac8d-fe886b9e78aa",
+        "64f99d0e-6a60-4820-9fa2-5a5ff5a63b49",
+        "c827a76b-64c1-4bd7-8b91-72054e925d0a",
+        "83a7fcc4-d2fa-4e8c-8ca8-68083cf47f3b"
     ],
     "filterType": "GMSprite",
     "folderName": "Inventory",

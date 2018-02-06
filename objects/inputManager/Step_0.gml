@@ -28,7 +28,7 @@ if gamepad_is_connected(0)
 	lbInputHeld = gamepad_button_check(0,gp_shoulderl);
 	rtInputHeld = gamepad_button_check(0,gp_shoulderrb);
 	ltInputHeld = gamepad_button_check(0,gp_shoulderlb);
-	
+
 	//D-Pad
 	dLInput = gamepad_button_check_pressed(0,gp_padl);
 	dRInput = gamepad_button_check_pressed(0,gp_padr);

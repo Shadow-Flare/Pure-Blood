@@ -20,15 +20,15 @@ switch menu
 	case menuCurrent.inventory:
 		scr_pause_draw_inventory();
 		break;
-	case menuCurrent.items:
-		scr_pause_draw_items();
+	case menuCurrent.weaponry:
+		scr_pause_draw_weaponry();
 		break;
-	case menuCurrent.offhand:
-		scr_pause_draw_offhand();
+	case menuCurrent.equipment:
+		scr_pause_draw_equipment();
 		break;
-	case menuCurrent.combos:
-		scr_pause_draw_combos();
-		break;
+	//case menuCurrent.abilities:
+	//	scr_pause_draw_abilities();
+	//	break;
 	case menuCurrent.status:
 		scr_pause_draw_status();
 		break;

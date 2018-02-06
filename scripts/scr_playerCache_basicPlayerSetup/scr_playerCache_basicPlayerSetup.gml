@@ -84,11 +84,16 @@ with PlayerStats
 		//weapons
 		
 		//equipments
-	
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.arrow,20);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.bomb,3);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.grappling_hook,1);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.shovel,1);
 		//Accessories
 
 		//keys
-		scr_player_obtainItem(itemType.key,keyItem.summon_stone,1);
+		scr_player_inventory_manage(itemType.key,keyItem.summon_stone,1);
+		scr_player_inventory_manage(itemType.key,keyItem.hearthstone,1);
+		scr_player_inventory_manage(itemType.key,keyItem.wooden_key,1);
 		//alchemy
 	
 	//weapon data

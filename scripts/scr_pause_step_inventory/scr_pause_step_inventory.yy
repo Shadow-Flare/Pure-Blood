@@ -1,5 +1,5 @@
 {
-    "id": "c767e5bb-6d32-40c3-b36a-0371b3b8e8fa",
+    "id": "8814898a-e229-4f08-ac2c-0e0fc7a932ca",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "scr_pause_step_inventory",

@@ -28,13 +28,35 @@ if (InputManager.aInput == true)
 			current_menu_options = menu_inventory;
 			sX = 0;
 			sY = 0;
+			selection = 0;
 			break;
-		case "Combos":
+		case "Weaponry":
 			slotExpanded = 0;
-			menu = menuCurrent.combos;
-			current_menu_options = menu_combos;
+			menu = menuCurrent.weaponry;
+			current_menu_options = menu_weaponry;
 			sX = 0;
 			sY = 0;
+			break;
+		case "Equipment":
+			menu = menuCurrent.equipment;
+			current_menu_options = menu_equipment;
+			sX = 0;
+			sY = 0;
+			for(var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
+			{
+				for(var j = 0; j < array_length_2d(PlayerStats.ownedSubtypes,i)+1; j++)
+				{
+					if j == 0 current_menu_options[i, 0] = PlayerStats.ownedOffhands[i]
+				else if j != 0 current_menu_options[i, j] = PlayerStats.ownedSubtypes[i,j-1];
+				}
+			}
+			break;
+		case "Abilities":
+			//menu = menuCurrent.abilities;
+			//current_menu_options = menu_abilities;
+			//sX = 0;
+			//sY = 0;
+			//selection = 0;
 			break;
 		case "Status":
 			menu = menuCurrent.status;
@@ -53,7 +75,7 @@ if (InputManager.aInput == true)
 			break;
 		case "Settings":
 			menu = menuCurrent.settings
-			current_menu_options = menu_options;
+			current_menu_options = menu_settings;
 			sX = 0;
 			sY = 0;
 			break;

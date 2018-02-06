@@ -98,28 +98,28 @@ var equipmentCache = item[? itemType.equipment];
 equipmentCache[? equipmentItem.bomb] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.bomb];
 cache[? itemStats.name] = "Bomb";
-cache[? itemStats.icon] = spr_icon_bomb;
+cache[? itemStats.icon] = spr_icon_item_equipment_bomb;
 cache[? itemStats.description] = "i go BOOOOOOOOOM";
 			#endregion
 			#region Arrow
 equipmentCache[? equipmentItem.arrow] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.arrow];
 cache[? itemStats.name] = "Arrow";
-cache[? itemStats.icon] = spr_icon_arrow;
+cache[? itemStats.icon] = spr_icon_item_equipment_arrow;
 cache[? itemStats.description] = "if used right, im sharp and pointy";
 			#endregion
 			#region Grappling Hook
 equipmentCache[? equipmentItem.grappling_hook] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.grappling_hook];
 cache[? itemStats.name] = "Grappling Hook";
-cache[? itemStats.icon] = spr_icon_grappling_hook;
+cache[? itemStats.icon] = spr_icon_item_equipment_grappling_hook;
 //cache[? itemStats.description] = "when using me don't go weeeeeeeeeeee";
 			#endregion
 			#region Shovel
 equipmentCache[? equipmentItem.shovel] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.shovel];
 cache[? itemStats.name] = "Shovel";
-cache[? itemStats.icon] = spr_icon_shovel;
+cache[? itemStats.icon] = spr_icon_item_equipment_shovel;
 cache[? itemStats.description] = "i'm pretty much useless... sorry. ajsdlka jhsdklJH SADLKWJBE FKA W NDBCLSK XJGHCLIASDJHGM. abns dkAJSHD; Kajhd;kJDS HK;D FBN.bsd LK.ASJ GHDLKasjhd.";
 			#endregion
 	#endregion
@@ -133,7 +133,7 @@ keyCache[? keyItem.summon_stone] = ds_map_create();
 var cache = keyCache[? keyItem.summon_stone];
 cache[? itemStats.name] = "Summon Stone";
 cache[? itemStats.usable] = true;
-cache[? itemStats.icon] = spr_icon_summon_stone;
+cache[? itemStats.icon] = spr_icon_item_key_summon_stone;
 cache[? itemStats.description] = "A stone that does some summoning or something.";
 		#endregion
 		#region Wooden Key
@@ -141,7 +141,7 @@ keyCache[? keyItem.wooden_key] = ds_map_create();
 var cache = keyCache[? keyItem.wooden_key];
 cache[? itemStats.name] = "Wooden Key";
 cache[? itemStats.usable] = false;
-cache[? itemStats.icon] = spr_icon_wooden_key;
+cache[? itemStats.icon] = spr_icon_item_key_wooden_key;
 cache[? itemStats.description] = "might be a simple key but it unlocks a world of wonders";
 		#endregion
 		#region Hearthstone
@@ -149,7 +149,7 @@ keyCache[? keyItem.hearthstone] = ds_map_create();
 var cache = keyCache[? keyItem.hearthstone];
 cache[? itemStats.name] = "Hearthstone";
 cache[? itemStats.usable] = true;
-cache[? itemStats.icon] = spr_icon_hearthstone;
+cache[? itemStats.icon] = spr_icon_item_key_hearthstone;
 cache[? itemStats.description] = "copy righted from WoW. I have no originality";
 		#endregion
 	#endregion
