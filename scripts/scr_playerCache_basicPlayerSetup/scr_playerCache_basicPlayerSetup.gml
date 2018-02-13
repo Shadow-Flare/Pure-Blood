@@ -17,6 +17,7 @@ with PlayerStats
 
 	hpMax = 20+4*constitution;
 	mpMax = 20+4*willpower;
+	apMax = 10+1*cunning;
 	physicalPower = 0+0.5*strength+0.5*dexterity;
 	physicalStagger = 0+0.25*strength;
 	physicalToughness = 2+0.30*constitution;
@@ -28,6 +29,7 @@ with PlayerStats
 	magicalBreakHp = 0;
 	breakCooldownDuration = 1;
 
+	ap = 0;
 	hp = hpMax;
 	mp = mpMax;
 
@@ -95,6 +97,12 @@ with PlayerStats
 		scr_player_inventory_manage(itemType.key,keyItem.hearthstone,1);
 		scr_player_inventory_manage(itemType.key,keyItem.wooden_key,1);
 		//alchemy
+	
+	//ability data
+		scr_player_giveallabilities();
+		//combat
+		//movement
+		//support
 	
 	//weapon data
 		//main weapons

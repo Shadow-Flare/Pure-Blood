@@ -7,11 +7,7 @@ selection = current_menu_options[sX,sY];
 
 if (InputManager.startInput)
 {
-	instance_activate_all();
-	InputManager.startInput = false;
-	GameManager.pauseState = PauseState.normal;
-	surface_free(GameManager.pauseSplash);
-	instance_destroy();
+	endingPause = true;
 }
 
 #endregion
@@ -29,6 +25,8 @@ if (InputManager.aInput == true)
 			sX = 0;
 			sY = 0;
 			selection = 0;
+			slot_options = [];
+			movedH = true;
 			break;
 		case "Weaponry":
 			slotExpanded = 0;
@@ -52,11 +50,13 @@ if (InputManager.aInput == true)
 			}
 			break;
 		case "Abilities":
-			//menu = menuCurrent.abilities;
-			//current_menu_options = menu_abilities;
-			//sX = 0;
-			//sY = 0;
-			//selection = 0;
+			menu = menuCurrent.abilities;
+			current_menu_options = menu_abilities;
+			sX = 0;
+			sY = 0;
+			selection = 0;
+			slot_options = [];
+			movedH = true;
 			break;
 		case "Status":
 			menu = menuCurrent.status;
@@ -91,27 +91,7 @@ if (InputManager.aInput == true)
 if InputManager.bInput == true
 {
 	audio_play_sound(snd_menu_back,10,0);
-	ini_open("settings");
-		var vSyncSetting = ini_read_real("effects","vsync",true)
-		if GameManager.vSyncToggle != vSyncSetting
-		{
-			GameManager.vSyncToggle = vSyncSetting;
-			display_reset(0,GameManager.vSyncToggle);
-		}
-	ini_close();
-	instance_activate_all();
-	InputManager.bInput = false;
-	GameManager.pauseState = PauseState.normal;
-	surface_free(GameManager.pauseSplash);
-	instance_destroy();
+	endingPause = true;
 }
 
-#endregion
-
-#region end game
-if endingGame
-{
-	room_goto(rmMainMenu);
-	instance_destroy(all);
-}
 #endregion

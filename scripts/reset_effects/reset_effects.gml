@@ -5,6 +5,7 @@ instance_activate_object(BloodStainController);
 instance_activate_object(RainController);
 instance_activate_object(FogController);
 instance_activate_object(ParallaxController);
+instance_activate_object(ParticleController);
 
 //create effect controllers
 	//room dependant
@@ -33,9 +34,15 @@ GameManager.hitBoxVisuals = ini_read_real("effects","hitBoxVisuals",false)
 		//Actor Hit Boxes
 GameManager.actorBoxVisuals = ini_read_real("effects","actorBoxVisuals",false) 
 
+		//particle Effects
+instance_destroy(ParticleController);
+instance_create_layer(0,0,"lay_technicals",ParticleController);
+
+		//parallax
 instance_destroy(ParallaxController);
 instance_create_depth(0,0,0,ParallaxController);
 
+		//ambience (audio)
 instance_destroy(AmbienceController);
 instance_create_layer(0,0,"lay_technicals",AmbienceController);
 

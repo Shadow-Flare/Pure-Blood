@@ -52,6 +52,7 @@ if (InputManager.aInput == true)
 	instance_deactivate_object(RainController);
 	instance_deactivate_object(FogController);
 	instance_deactivate_object(ParallaxController);
+	instance_deactivate_object(ParticleController);
 }
 
 #endregion

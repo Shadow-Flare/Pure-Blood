@@ -18,7 +18,7 @@ if argument1 = "blood"
 	var angleVar = random_range(-10,10)
 	for (var i = 0; i < random_range(argument3-irandom(2),argument3+irandom(2));i++)
 	{
-		if argument2 = "dark red" var colour = make_color_rgb(random_range(106,156),32,32);
+		if argument2 = "dark red" var colour = make_color_rgb(random_range(60,190),32,32);
 		var part = instance_create_depth(Sx+random_range(-4,4),Sy+random_range(-4,4),depth+1,obj_blood)
 		part.image_blend = colour;
 		var theta = angle+angleVar+random_range(-25,25)

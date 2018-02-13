@@ -1,0 +1,2 @@
+boundEffect = noone;
+initialized = false;

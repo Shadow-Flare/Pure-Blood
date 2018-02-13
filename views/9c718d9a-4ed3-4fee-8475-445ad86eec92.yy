@@ -4,15 +4,8 @@
     "mvc": "1.1",
     "name": "9c718d9a-4ed3-4fee-8475-445ad86eec92",
     "children": [
-        "1ad8abf0-bf89-427b-86c4-cc7e694eecb8",
-        "dda3b114-7a5f-41ff-bba9-76698bca49a7",
-        "020fb4b9-d1c3-4ded-8751-86cc912d124d",
-        "2f544807-23c4-4659-9ec4-96c9732fc4ec",
-        "c7458710-d61e-4534-b08e-543b1f9b7da3",
-        "0f237895-6b88-4664-b9cd-6b457d61ef94",
-        "80484ad7-aa35-44a3-b725-d83b80568698",
-        "63c3dc7d-e291-499f-ba4d-3a1db116edf1",
-        "ec0bffa9-61b7-4516-9cee-e80c328b7e78"
+        "5b3297be-63dd-40ba-8a94-69e3ae3fd666",
+        "508ad4ec-d627-491f-a1af-2c1f2cde68db"
     ],
     "filterType": "GMSprite",
     "folderName": "Icons",

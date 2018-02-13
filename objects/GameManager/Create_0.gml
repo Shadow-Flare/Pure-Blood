@@ -45,12 +45,9 @@ monitorYOffset = ((monitorH-displayResolutionY)/2);
 GuiRX = displayResolutionX/100;
 GuiRY = displayResolutionY/100;
 
-if(monitorW>=displayResolutionX && monitorH>=displayResolutionY)
-{
-	surface_resize(application_surface,displayResolutionX,displayResolutionY)
-	monitorXOffset=(monitorW-displayResolutionX)/2;
-	monitorYOffset=(monitorH-displayResolutionY)/2;
-}
+surface_resize(application_surface,displayResolutionX,displayResolutionY)
+appSurfModX = monitorW/displayResolutionX;
+appSurfModY = monitorH/displayResolutionY;
 
 grav = 0.25;
 

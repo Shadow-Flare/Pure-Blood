@@ -10,7 +10,8 @@
         "eace4b6c-cfba-4b92-9613-0f3de9139b4e",
         "c80a1a6f-92ea-4235-a1ad-a152ca374f6f",
         "3893da79-fc74-4e51-9d49-e50f1d2e3c38",
-        "0b70b955-ca77-4db5-8370-3b23d6180c1a"
+        "0b70b955-ca77-4db5-8370-3b23d6180c1a",
+        "a7f1c0db-53d7-4796-a3a4-bf39a7571367"
     ],
     "filterType": "GMObject",
     "folderName": "Effect Controllers",

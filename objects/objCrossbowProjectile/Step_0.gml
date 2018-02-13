@@ -31,36 +31,6 @@ if ComboCache.offhandSubtypeNames[? subId] = "Normal Bolts"
 else if ComboCache.offhandSubtypeNames[? subId] = "Flaming Bolts"
 {
 	trailColour = make_color_rgb(226,88,34);
-		
-	pSys = part_system_create();
-	part_system_depth(pSys,depth-1);
-	pEmitter = part_emitter_create(pSys);
-		
-	pFire = part_type_create();
-	part_type_sprite(pFire,spr_fire,0,0,1);
-	part_type_size(pFire,0.5,1,-0.025,0);
-	part_type_orientation(pFire,0,360,2,0,0);
-	part_type_colour3(pFire,c_orange,c_red,c_black);
-	part_type_alpha3(pFire,1,1,0);
-	part_type_blend(pFire,1);
-	part_type_direction(pFire,85,95,0,0);
-	part_type_speed(pFire,1,5,-0.1,0);
-	part_type_life(pFire,25,35);
-		
-	pEmber = part_type_create();
-	part_type_sprite(pEmber,spr_ember,0,0,1);
-	part_type_size(pEmber,0.5,0.75,-0.001,0);
-	part_type_orientation(pEmber,0,360,0.05,0,0);
-	part_type_colour2(pEmber,c_orange,c_red);
-	part_type_alpha2(pEmber,1,0);
-	part_type_blend(pEmber,1);
-	part_type_direction(pEmber,55,125,0,20);
-	part_type_speed(pEmber,3,5,0,0);
-	part_type_life(pEmber,45,75);
-	
-	part_emitter_region(pSys,pEmitter,xPrev+random_range(-4,4),x+random_range(-4,4),yPrev+random_range(-4,4),y+random_range(-4,4),ps_shape_line,ps_distr_linear);
-	part_emitter_burst(pSys,pEmitter,pFire,2);
-	part_emitter_burst(pSys,pEmitter,pEmber,-20);
 }
 else if ComboCache.offhandSubtypeNames[? subId] = "Frozen Bolts"
 {

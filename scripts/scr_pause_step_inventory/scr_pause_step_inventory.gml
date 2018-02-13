@@ -27,13 +27,14 @@ if  (moveTimer == 0) ||
 
 		if (sY >= array_length_2d(current_menu_options,sX) ) sY = array_length_2d(current_menu_options,sX) - 1;
 
-			//vertical movement
-		if (absVInput > 0.5 && !horInputMoreThanVert) sY += sign(InputManager.moveInputV);
-		else if InputManager.dDInput sY++;
-		else if InputManager.dUInput sY--;
 		
-		if (sY < 0) sY = array_length_2d(current_menu_options,sX) - 1;
-		else if (sY >= array_length_2d(current_menu_options,sX)) sY = 0;
+		//	//vertical movement
+		//if (absVInput > 0.5 && !horInputMoreThanVert) sY += sign(InputManager.moveInputV);
+		//else if InputManager.dDInput sY++;
+		//else if InputManager.dUInput sY--;
+		
+		//if (sY < 0) sY = array_length_2d(current_menu_options,sX) - 1;
+		//else if (sY >= array_length_2d(current_menu_options,sX)) sY = 0;
 	}
 	else
 	{
@@ -42,7 +43,7 @@ if  (moveTimer == 0) ||
 		else if InputManager.dUInput sExpY--;
 			
 		if (sExpY >= array_length_1d(slot_options)) sExpY = 0;
-		else if (sExpY < 0) {sY = 0; sExpY = 0;}
+		else if (sExpY < 0) sExpY = array_length_1d(slot_options)-1;
 	}
 }
 
@@ -59,48 +60,37 @@ if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev audio_play_sound(snd_menu_
 //select
 selection = current_menu_options[sX,sY];
 
+//modify scroll
+while (sExpY > inventoryPanelScroll + inventoryPanelNum - 1) inventoryPanelScroll++;
+while (sExpY < inventoryPanelScroll) inventoryPanelScroll--;
+
 #region Get Data
 	//maxItems
 var maxItems = 0;
 var inventoryCache = ItemCache.inventory;
-if (selection != tabType.all)
+var typeCache = inventoryCache[? selection];
+maxItems = ds_map_size(typeCache);
+if (maxItems == 0)
 {
-	var typeCache = inventoryCache[? selection-1];
-	maxItems = ds_map_size(typeCache);
-	if (maxItems == 0)
-	{
-		maxItems = 1;
-	}
-}
-else
-{
-	for (var i = 0; i < 6; i++)
-	{
-		var typeCache = inventoryCache[? i];
-		maxItems += ds_map_size(typeCache);
-	}
-	if (maxItems == 0)
-	{
-		maxItems = 1;
-	}
+	maxItems = 1;
 }
 #endregion
 
 #region gather new slot data on horizontal change
 if (movedH)
 {		
+	abilityPanelScroll = 0;
+	sExpY = 0;
 	slot_options = [];
-	if (selection != tabType.all)
+	var itemID = ds_map_find_first(typeCache);
+	var count = 0;
+	while (itemID != undefined)
 	{
-		var itemID = ds_map_find_first(typeCache);
-		var count = 0;
-		while (itemID != undefined)
-		{
-			slot_options[count] = itemID;
-			itemID = ds_map_find_next(typeCache,itemID);
-			count++;
-		}
+		slot_options[count] = itemID;
+		itemID = ds_map_find_next(typeCache,itemID);
+		count++;
 	}
+	movedH = false;
 }
 #endregion
 
@@ -116,46 +106,33 @@ if (InputManager.startInput)
 }
 
 #endregion
-#region (A)			Select (diabled)
-
-//if (InputManager.aInput == true)
-//{
-//	audio_play_sound(snd_menu_select,10,0);
-//	switch selection
-//	{
-//		case "Items":
-			
-//			break;
-//		case "Weapons":
-			
-//			break;
-//		case "Offhand Equipment":
-//			menu = menuCurrent.offhand;
-//			current_menu_options = menu_offhand_equipment;
-//			sX = 0;
-//			sY = 0;
-//			for(var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
-//			{
-//				for(var j = 0; j < array_length_2d(PlayerStats.ownedSubtypes,i)+1; j++)
-//				{
-//					if j == 0 current_menu_options[i, 0] = PlayerStats.ownedOffhands[i]
-//				else if j != 0 current_menu_options[i, j] = PlayerStats.ownedSubtypes[i,j-1];
-//				}
-//			}
-//			break;
-//	}
-//}
-
+#region (A)			Select
+if (InputManager.aInput)
+{
+	if sY == 0
+	{
+		sY++;
+		audio_play_sound(snd_menu_select,10,0);
+	}
+	else
+	{
+		
+	}
+}
 #endregion
 #region (B)			Cancel
 
 if InputManager.bInput == true
 {
+	if sY == 0
+	{
+		menu = menuCurrent.main;
+		current_menu_options = menu_main;
+		sX = 0;
+		sY = 0;
+	}
+	else sY = 0;
 	audio_play_sound(snd_menu_back,10,0);
-	menu = menuCurrent.main;
-	current_menu_options = menu_main;
-	sX = 0;
-	sY = 0;
 }
 
 #endregion

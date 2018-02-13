@@ -11,21 +11,28 @@ var y2 = argument3;
 var type = argument4;
 var scale = argument5;
 
-if x1 > x2 || y1 > y2
+if x1 > x2
 {
-	show_debug_message("Textbox draw failed")
-	return undefined;
+	var temp = x1;
+	x1 = x2;
+	x2 = temp;
+}
+if y1 > y2
+{
+	var temp = y1;
+	y1 = y2;
+	y2 = temp;
 }
 
 switch type
 {
 	case 0:
-		var textSprite = spr_textbox_1;
+		var textSprite = spr_textbox_0;
 		break;
 }
 
 var spriteW = sprite_get_width(textSprite)*scale;
-var spriteH = sprite_get_width(textSprite)*scale;
+var spriteH = sprite_get_height(textSprite)*scale;
 if x1+spriteW >= x2 x2 = x1+spriteW;
 if y1+spriteH >= y2 y2 = y1+spriteH;
 var width = abs(x2-x1);

@@ -4,7 +4,8 @@ enum combatAbility {combo_plus, finisher_plus, aerial_plus, devastator_plus, aer
 enum movementAbility {double_jump, high_jump, glide};
 enum supportAbility{exp_plus, hp_scan, mp_scan};
 
-enum abilityStats {name, description, icon, cost, maxNum}
+enum abilityStats {name, description, icon, cost, maxNum};
+enum playerAbilityStats {numberOwned, numberActivated};
 
 #region all abilities
 	#region Initializer
@@ -14,7 +15,7 @@ ability[? abilityType.movement] = ds_map_create();
 ability[? abilityType.support] = ds_map_create();
 	#endregion
 	#region combat
-var combatCache = ability[? abilityType.combat] = ds_map_create();
+var combatCache = ability[? abilityType.combat];
 		#region Combo Plus
 combatCache[? combatAbility.combo_plus] = ds_map_create();
 var cache = combatCache[? combatAbility.combo_plus];
@@ -71,7 +72,7 @@ cache[? abilityStats.maxNum] = 2;
 		#endregion
 	#endregion
 	#region movement
-var movementCache = ability[? abilityType.movement] = ds_map_create();
+var movementCache = ability[? abilityType.movement];
 		#region Double Jump
 movementCache[? movementAbility.double_jump] = ds_map_create();
 var cache = movementCache[? movementAbility.double_jump];
@@ -101,7 +102,7 @@ cache[? abilityStats.maxNum] = 1;
 		#endregion
 	#endregion
 	#region support
-var supportCache = ability[? abilityType.support] = ds_map_create();
+var supportCache = ability[? abilityType.support];
 		#region Exp Plus
 supportCache[? supportAbility.exp_plus] = ds_map_create();
 var cache = supportCache[? supportAbility.exp_plus];

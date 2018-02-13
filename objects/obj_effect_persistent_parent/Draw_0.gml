@@ -1,0 +1,1 @@
+if initialized event_perform_object(boundEffect,ev_draw,0);

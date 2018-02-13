@@ -2,7 +2,7 @@
 if hitOn image_angle = point_direction(x-xSpd,y-ySpd,x,y)-90
 
 //trail && effects
-scr_draw_trail(hitOn,trailDuration,trailNumberOfTrails,trailNumberOfPoints,trailColour,trailSizeRatio,trailVariance);
+scr_draw_trail(hitOn,trailDuration,trailNumberOfTrails,trailNumberOfPoints,trailColour,trailSizeRatio,trailVariance,1,0);
 if ComboCache.offhandSubtypeNames[? subId] = "Frozen Bolts"
 {
 	gpu_set_blendmode(bm_add);

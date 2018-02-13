@@ -1,5 +1,5 @@
 	//draw application surface
-draw_surface_ext(application_surface,monitorXOffset,monitorYOffset,1,1,0,c_white,1);
+draw_surface_ext(application_surface,0,0,appSurfModX,appSurfModY,0,c_white,1);
 
 switch gameState
 {
