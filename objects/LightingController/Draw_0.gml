@@ -206,6 +206,53 @@ if shaftAngle != undefined
 	#endregion
 }
 #endregion
+	#region glow lighting
+		#region set layers
+	var layerNames = ["Tiles_background_a","Tiles_background_b","Tiles_background_c","Tiles_background_d","Tiles_background_e",
+					  "Tiles_foreground_a","Tiles_foreground_b","Tiles_foreground_c","Tiles_foreground_d","Tiles_foreground_e"];
+	var tileLayers = [];
+	var count = 0;
+	for (var i = 0; i < array_length_1d(layerNames); i++)
+	{
+		var layerIDToCheck = layer_get_id(layerNames[i]);
+		if layerIDToCheck != -1
+		{
+			tileLayers[count] = layerIDToCheck;
+			count++;
+		}
+	}
+		#endregion
+		#region construct base glow map
+		if (!variable_instance_exists(id,"glowMap") || !surface_exists(glowMap))
+		{
+			glowMap = surface_create(room_width,room_height);
+			surface_set_target(glowMap);
+			draw_clear(make_color_rgb(0,0,0));
+			for (var i = 0; i < array_length_1d(tileLayers); i++)
+			{
+				var tilemapID = layer_tilemap_get_id(tileLayers[i])
+				var tileW = tilemap_get_tile_width(tilemapID);
+				var tileH = tilemap_get_tile_width(tilemapID);
+				var tilesetID = tilemap_get_tileset(tilemapID);
+				var tilesetNormalID = tilesetID+3;
+				tilemap_tileset(tilemapID,tilesetNormalID);
+				for(var j = 0; j < tilemap_get_width(tilemapID); j++)
+				{
+					for (var k = 0; k < tilemap_get_height(tilemapID); k++)
+					{
+						var tile = tilemap_get(tilemapID,j,k);
+						draw_tile(tilesetNormalID,tile,tilemap_get_frame(tilemapID),tileW*j,tileH*k);
+					}
+				}
+				tilemap_tileset(tilemapID,tilesetID);
+			}
+			surface_reset_target();
+		}
+		#endregion
+		#region draw light using glow
+			ERROR
+		#endregion
+	#endregion
 
 	#region Apply Gausian filters to light (horiz./Vert.)
 	if !variable_instance_exists(id,"temp") || !surface_exists(temp)

@@ -10,3 +10,6 @@ maxLightSize = radius+variance;
 
 lightSize = radius;
 sizeMod = 0;
+
+occlusionMap = noone;
+shadowMap1D = noone;

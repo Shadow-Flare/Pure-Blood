@@ -1,5 +1,7 @@
 with ParticleController
 {
+	var radius = other.radius;
+	var intensity = other.intensity;
 	if !part_system_exists(pSysLightning)
 	{
 		pSysLightning = part_system_create();
@@ -11,22 +13,31 @@ with ParticleController
 	if other.enabled
 	{
 		part_type_direction(other.pSpark,0,360,0,0);
-		part_emitter_burst(pSysLightning,pEmitterLightning,other.pSpark,-16);
-		part_emitter_burst(pSysLightning,pEmitterLightning,other.pLum,1);
+		part_type_size(other.pSpark,1*intensity,1.5*intensity,-0.025*intensity,0);
+		part_type_size(other.pLum,0,0,0.008*intensity,0.5*intensity);
+		part_type_speed(other.pSpark,1*intensity,2*intensity,-0.02*intensity,0);
+		part_type_speed(other.pLum,0.6*intensity,0.7*intensity,-0.02*intensity,0);
+		part_emitter_burst(pSysLightning,pEmitterLightning,other.pSpark,-16*min(1/intensity,999));
+		part_emitter_burst(pSysLightning,pEmitterLightning,other.pLum,1*intensity);
 		other.sparkTimer++;
 		if other.sparkTimer >= other.sparkDuration*room_speed
 		{
 			var dir = random(360);
 			part_type_direction(other.pSpark,dir-25,dir+25,0,0);
-			part_emitter_burst(pSysLightning,pEmitterLightning,other.pSpark,6);
+			part_emitter_burst(pSysLightning,pEmitterLightning,other.pSpark,6*intensity);
 			other.sparkTimer = 0;
 			other.sparkDuration = random_range(other.sparkDurationMin,other.sparkDurationMax);
 		}
 	}
-	else if other.timer == round(1*room_speed)
+	if other.burst
 	{
-		part_emitter_burst(pSysLightning,pEmitterLightning,other.pLum,10);
-		part_emitter_burst(pSysLightning,pEmitterLightning,other.pSpark,18);
+		other.burst = false;
+		part_type_size(other.pSpark,1*intensity,1.5*intensity,-0.025*intensity,0);
+		part_type_size(other.pLum,0,0,0.008*intensity,0.5*intensity);
+		part_type_speed(other.pSpark,1*intensity,2*intensity,-0.02*intensity,0);
+		part_type_speed(other.pLum,0.6*intensity,0.7*intensity,-0.02*intensity,0);
+		part_emitter_burst(pSysLightning,pEmitterLightning,other.pLum,10*intensity);
+		part_emitter_burst(pSysLightning,pEmitterLightning,other.pSpark,18*intensity);
 		other.trailForce = true;
 		other.trailTimer = 0;
 	}
@@ -49,5 +60,5 @@ if trailForce = true
 }
 	
 surface_set_target(ParticleController.lightningPixSurf);	
-	scr_draw_trail(trailEnable,2,0.25,30,c_orange,2,16+trailVarMod,1-trailAlphaMod,2);
+	scr_draw_trail(trailEnable,max(round(2*intensity),1),0.25,30,c_orange,2,round((16+trailVarMod)*intensity),1-trailAlphaMod,2,1);
 surface_reset_target();

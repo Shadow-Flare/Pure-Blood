@@ -16,8 +16,9 @@ var TRAILSIZERATIO = argument5;
 var TRAILVARIANCE = argument6;
 var TRAILALPHA = argument7;
 var TRAILJITTER = argument8;
+var TRAILTYPE = argument9;
 if !variable_instance_exists(id,"trailTimer") trailTimer = 0;
-if !variable_instance_exists(id,"vTrail")
+if !variable_instance_exists(id,"vTrail") || array_height_2d(vTrail) != TRAILNUMBEROFTRAILS || array_length_2d(vTrail,0) != TRAILNUMBEROFPOINTS
 {
 	vTrail = [];
 	for (var i = 0; i < TRAILNUMBEROFTRAILS; i++)
@@ -65,6 +66,20 @@ if TRAILJITTER != 0
 }
 
 gpu_set_blendmode(bm_add);
+//determine sprite
+var SPR = noone;
+var SPREND = noone;
+switch TRAILTYPE
+{
+	case 0:
+		SPR = spr_pixel;
+		argument5*=3;
+		break;
+	case 1:
+		SPR = sprLightningMid;
+		SPREND = sprLightningEnd;
+		break;
+}
 //use points
 for(var i = 0; i < TRAILNUMBEROFTRAILS; i++)
 {
@@ -99,9 +114,9 @@ for(var i = 0; i < TRAILNUMBEROFTRAILS; i++)
 			var angle = point_direction(lineX1,lineY1,lineX2,lineY2);
 			var dist = point_distance(lineX1,lineY1,lineX2,lineY2);
 			var scale = TRAILSIZERATIO/6
-			draw_sprite_ext(sprLightningEnd,0,lineX1,lineY1,scale,scale,angle,TRAILCOLOUR,TRAILALPHA);
-			draw_sprite_ext(sprLightningMid,0,lineX1,lineY1,dist,scale,angle,TRAILCOLOUR,TRAILALPHA);
-			draw_sprite_ext(sprLightningEnd,0,lineX2,lineY2,-scale,scale,angle,TRAILCOLOUR,TRAILALPHA);
+			if SPREND != noone draw_sprite_ext(SPREND,0,lineX1,lineY1,scale,scale,angle,TRAILCOLOUR,TRAILALPHA);
+			if SPR != noone    draw_sprite_ext(SPR   ,0,lineX1,lineY1,dist,scale,angle,TRAILCOLOUR,TRAILALPHA);
+			if SPREND != noone draw_sprite_ext(SPREND,0,lineX2,lineY2,-scale,scale,angle,TRAILCOLOUR,TRAILALPHA);
 		}
 		TRAILSIZERATIO -= TSRInitial/(TRAILNUMBEROFPOINTS-1);
 		TRAILALPHA -= TAInitial/(TRAILNUMBEROFPOINTS-1);

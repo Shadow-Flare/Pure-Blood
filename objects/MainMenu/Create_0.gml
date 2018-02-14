@@ -26,7 +26,7 @@ sY = 0;
 moveTimer = 0;
 
 //effect tester
-with instance_create_depth(0,0,depth,obj_effect_persistent_menuFollow) boundEffect = obj_effect_base_fire;
+with instance_create_depth(0,0,depth,obj_effect_persistent_mouseFollow) boundEffect = obj_effect_base_fire;
 //effect1 = instance_create_depth(room_width*1/4,room_height/2,depth,obj_particle_effect_fire);
 //effect2 = instance_create_depth(room_width/2,room_height/2,depth,obj_particle_effect_ice);
 //effect3 = instance_create_depth(room_width*3/4,room_height/2,depth,obj_particle_effect_lightning);

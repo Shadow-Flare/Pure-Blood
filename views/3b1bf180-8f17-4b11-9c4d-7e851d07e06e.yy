@@ -6,7 +6,8 @@
     "children": [
         "ea60447b-c844-4e47-95f7-fa723aee6002",
         "f1f3b644-6443-4c5a-bee6-6a4f4d72c0e1",
-        "0ea89305-c8d4-4c8a-8f61-19217fda7a38"
+        "0ea89305-c8d4-4c8a-8f61-19217fda7a38",
+        "7af85f90-efad-4ccb-bc6f-900bc5493546"
     ],
     "filterType": "GMSprite",
     "folderName": "Manor Entrance Base",

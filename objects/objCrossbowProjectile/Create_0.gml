@@ -5,7 +5,6 @@ hasHit = 0;
 hitOn = 1;
 target = noone;
 phaseOut = 0;
-type = "proj"
 
 trailTimer = 0;
 trailDuration = 1;
@@ -21,8 +20,6 @@ for (var i = 0; i < trailNumberOfTrails; i++)
 }
 trailNumberOfTrails = 1;
 
-new = 1;
-pSys = 0;
-pEmitter = 0;
-sparkTime = 0.3;
-sparkTimer = 0;
+effect = noone;
+boundEffect = noone;
+new = true;
