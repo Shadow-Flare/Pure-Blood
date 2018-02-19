@@ -25,15 +25,14 @@ with objAttackEffectParent
 			{
 					//stats
 				if stats.isInvulnerable == false scr_hit(attack,attack.hitSoundID,attack.hitType,attack.hitDamage,attack.statusType,attack.statusValue,enemy);
-					//determine reaction: Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
 				switch attack.hitType
 				{
-					case 0: case 1: case 2:
+					case damageType.slash: case damageType.blunt: case damageType.pierce: case damageType.none:
 						var breakToughness = stats.physicalToughness;
 						if attack.hitStagger >= 0 stats.physicalBreakHp+=attack.hitStagger;
 						var breakHp = stats.physicalBreakHp;
 						break;
-					case 3: case 4: case 5: case 6: case 7: case 8:
+					case damageType.fire: case damageType.ice: case damageType.lightning: case damageType.arcane: case damageType.light: case damageType.dark: case damageType.pure:
 						var breakToughness = stats.magicalToughness;
 						if attack.hitStagger >= 0 stats.physicalBreakHp+=attack.hitStagger;
 						var breakHp = stats.magicalBreakHp;
@@ -63,7 +62,7 @@ with objAttackEffectParent
 				//else if attack.hitStagger <= toughness && attack.hitStagger != -1 var reaction = 0;		//nothing
 				//else if attack.hitStagger <= toughness*2 || attack.hitStagger == -1 reaction = 1;		//stagger
 				//else reaction = 2;	
-				//react
+					//react
 				switch reaction
 				{
 					case 0:						//nothing

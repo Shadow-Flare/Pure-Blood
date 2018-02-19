@@ -18,21 +18,6 @@ with statCache
 	killExp = 6;
 	killGold = [0.1,4-16];
 	
-		//Damage type resistances (as percentage; 1 = 100%)
-	damageResistances[0] = 1;			//Slash			//$$//
-	damageResistances[1] = 1;			//Blunt			//$$//
-	damageResistances[2] = 1;			//Pierce		//$$//
-	damageResistances[3] = 1;			//Fire			//$$//
-	damageResistances[4] = 1;			//Ice			//$$//
-	damageResistances[5] = 1;			//Lightning		//$$//
-	damageResistances[6] = 1;			//Arcane		//$$//
-	damageResistances[7] = 1;			//Light			//$$//
-	damageResistances[8] = 1;			//Dark			//$$//
-	damageResistances[9] = 1;			//X damage		//$$//
-
-	//Special resistances (100 is considered normal)
-	specialResist[0] = 100;				//Bleed			//$$//
-	
 	hp = hpMax;
 	mp = mpMax; 
 }
@@ -64,18 +49,18 @@ image_angle = 0;
 action1Animation = sprDeathLotusBodyAction1;
 action1AttackSoundID = noone;
 action1Duration = 1;
-	action1ProjCreateTime = action1Duration*(/**/4/**//sprite_get_number(action1Animation));
-	action1ProjCreateXOffset = 0;
-	action1ProjCreateYOffset = 0;
-	action1ProjCreateSpeed = 4;
-	action1ProjDamageType = 2;
-	action1ProjDamage = 1;
-	action1ProjStagger = 1;
-	action1ProjKnockback = 4;
-	action1ProjStatusType = -1;
-	action1ProjStatusValue = 0;
-	action1ProjPierce = false;
-	action1ProjHitSoundID = noone;
+action1ProjCreateTime = action1Duration*(/**/4/**//sprite_get_number(action1Animation));
+action1ProjCreateXOffset = 0;
+action1ProjCreateYOffset = 0;
+action1ProjCreateSpeed = 4;
+action1ProjDamageType = damageType.pierce;
+action1ProjDamage = 1;
+action1ProjStagger = 1;
+action1ProjKnockback = 4;
+action1ProjStatusType = specialType.none;
+action1ProjStatusValue = 0;
+action1ProjPierce = false;
+action1ProjHitSoundID = noone;
 
 	//action2: turn
 action2Animation = sprDeathLotusBodyAction2;

@@ -33,8 +33,6 @@ with attackEffect
 	timer = 0;
 	facing = enemy.facing;
 	
-	hitList = ds_list_create();
-	
 		//audio
 	hitSoundID = argument11;
 		//get sprite

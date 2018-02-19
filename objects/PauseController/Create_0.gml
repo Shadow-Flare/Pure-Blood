@@ -1,3 +1,6 @@
+var surfW = surface_get_width(application_surface);
+var surfH = surface_get_height(application_surface);
+
 event_inherited();
 
 	//switch enum initializers
@@ -81,6 +84,10 @@ slotExpanded = 0;
 endingGame = false;
 endingPause = false;
 
+	//Pretend data for testing that should be removed
+PRETENDDATATRINKETNUM = 10;
+PRETENDDATATRINKETANGLEMOD = 0;
+
 #region Inventory Data
 	//scroll
 inventoryPanelScroll = 0;
@@ -104,7 +111,6 @@ inventoryTabY = 0.14;
 inventoryTabYSelectMod = -0.03;
 inventoryTabSelectionSprite = spr_item_tab_selection;
 	//textbox data
-inventoryTextbox1 = noone;
 inventoryTextbox1Type = 0;
 inventoryTextbox1Scale = 4;
 inventoryTextbox1X1 = 0.1;
@@ -112,19 +118,19 @@ inventoryTextbox1Y1 = 0.15;
 inventoryTextbox1X2 = 0.45-4/1920;
 inventoryTextbox1Y2 = 0.9;
 inventoryTextbox1Mod = noone;
-inventoryTextbox1Colour = [0,0,1];
+inventoryTextbox1Colour = c_blue;
 	//scroll bar
 inventoryScrollBarX = inventoryTextbox1X1 - 0.04;
 inventoryScrollBarY1 = inventoryTextbox1Y1;
 inventoryScrollBarY2 = inventoryTextbox1Y2;
 inventoryScrollBarType = 0;
 inventoryScrollBarScale = 4;
-inventoryScrollBarColour = make_colour_rgb(0,0,255);
+inventoryScrollBarColour = c_blue;
 inventoryScrollCursorSprite = spr_scrollcursor_0;
 inventoryScrollCursorColour = make_colour_rgb(64,64,255);
 	//panel data
 inventoryPanelSprite = spr_item_panel;
-inventoryPanelBlend = make_color_rgb(inventoryTextbox1Colour[0]*255,inventoryTextbox1Colour[1]*255,inventoryTextbox1Colour[2]*255);
+inventoryPanelBlend = inventoryTextbox1Colour;
 inventoryPanelX = inventoryTextbox1X1 + 0.06;
 inventoryPanelYBegin = inventoryTextbox1Y1 + 0.03;
 inventoryPanelYEnd = inventoryTextbox1Y2 - 0.03;
@@ -145,6 +151,81 @@ inventoryDescriptionY = 0.3;
 inventoryDescriptionSep = 0.02;
 inventoryDescriptionWidth = 0.3;
 #endregion
+#region Equipment Data
+	//text boxes
+var eTBoxDefaultType = 0;
+var eTBoxDefaultScale = 4;
+var eTBoxDefaultColour = c_blue;
+		//main Boxes
+var eMainTBoxDefaultW = surfH*0.15;
+var eMainTBoxDefaultH = eMainTBoxDefaultW;
+			//Head
+equipmentHeadX1 = surfW*0.3;
+equipmentHeadY1 = surfH*0.2;
+equipmentHeadX2 = equipmentHeadX1+eMainTBoxDefaultW;
+equipmentHeadY2 = equipmentHeadY1+eMainTBoxDefaultH;
+equipmentHeadType = eTBoxDefaultType;
+equipmentHeadScale = eTBoxDefaultScale;
+equipmentHeadColour = eTBoxDefaultColour;
+			//Chest
+equipmentChestX1 = surfW*0.3;
+equipmentChestY1 = surfH*0.4;
+equipmentChestX2 = equipmentChestX1+eMainTBoxDefaultW;
+equipmentChestY2 = equipmentChestY1+eMainTBoxDefaultH;
+equipmentChestType = eTBoxDefaultType;
+equipmentChestScale = eTBoxDefaultScale;
+equipmentChestColour = eTBoxDefaultColour;
+			//Legs
+equipmentLegsX1 = surfW*0.3;
+equipmentLegsY1 = surfH*0.6;
+equipmentLegsX2 = equipmentLegsX1+eMainTBoxDefaultW;
+equipmentLegsY2 = equipmentLegsY1+eMainTBoxDefaultH;
+equipmentLegsType = eTBoxDefaultType;
+equipmentLegsScale = eTBoxDefaultScale;
+equipmentLegsColour = eTBoxDefaultColour;
+			//Main 1
+equipmentMain1X1 = surfW*0.21;
+equipmentMain1Y1 = surfH*0.45;
+equipmentMain1X2 = equipmentMain1X1+eMainTBoxDefaultW;
+equipmentMain1Y2 = equipmentMain1Y1+eMainTBoxDefaultH;
+equipmentMain1Type = eTBoxDefaultType;
+equipmentMain1Scale = eTBoxDefaultScale;
+equipmentMain1Colour = eTBoxDefaultColour;
+			//Main 2
+equipmentMain2X1 = surfW*0.12;
+equipmentMain2Y1 = surfH*0.45;
+equipmentMain2X2 = equipmentMain2X1+eMainTBoxDefaultW;
+equipmentMain2Y2 = equipmentMain2Y1+eMainTBoxDefaultH;
+equipmentMain2Type = eTBoxDefaultType;
+equipmentMain2Scale = eTBoxDefaultScale;
+equipmentMain2Colour = eTBoxDefaultColour;
+			//Off 1
+equipmentOff1X1 = surfW*0.39;
+equipmentOff1Y1 = surfH*0.45;
+equipmentOff1X2 = equipmentOff1X1+eMainTBoxDefaultW;
+equipmentOff1Y2 = equipmentOff1Y1+eMainTBoxDefaultH;
+equipmentOff1Type = eTBoxDefaultType;
+equipmentOff1Scale = eTBoxDefaultScale;
+equipmentOff1Colour = eTBoxDefaultColour;
+			//Off 2
+equipmentOff2X1 = surfW*0.48;
+equipmentOff2Y1 = surfH*0.45;
+equipmentOff2X2 = equipmentOff2X1+eMainTBoxDefaultW;
+equipmentOff2Y2 = equipmentOff2Y1+eMainTBoxDefaultH;
+equipmentOff2Type = eTBoxDefaultType;
+equipmentOff2Scale = eTBoxDefaultScale;
+equipmentOff2Colour = eTBoxDefaultColour;
+			//Trinkets
+equipmentTrinketsCenterX = surfW*0.3+surfH*(0.15*0.5);
+equipmentTrinketsCenterY = surfH*0.5;
+equipmentTrinketsRadius = surfH*0.42;
+equipmentTrinketsWidth = eMainTBoxDefaultW;
+equipmentTrinketsHeight = eMainTBoxDefaultH;
+equipmentTrinketsType = eTBoxDefaultType;
+equipmentTrinketsScale = eTBoxDefaultScale;
+equipmentTrinketsColour = eTBoxDefaultColour;
+
+#endregion
 #region ability Data
 abilityPanelScroll = 0;
 abilityPanelNum = 10;
@@ -164,7 +245,6 @@ abilityTabY = 0.14;
 abilityTabYSelectMod = -0.03;
 abilityTabSelectionSprite = spr_ability_tab_selection;
 	//textbox data
-abilityTextbox1 = noone;
 abilityTextbox1Type = 0;
 abilityTextbox1Scale = 4;
 abilityTextbox1X1 = 0.1;
@@ -172,14 +252,14 @@ abilityTextbox1Y1 = 0.15;
 abilityTextbox1X2 = 0.45-4/1920;
 abilityTextbox1Y2 = 0.9;
 abilityTextbox1Mod = noone;
-abilityTextbox1Colour = [0,0,1];
+abilityTextbox1Colour = c_blue;
 	//scroll bar
 abilityScrollBarX = abilityTextbox1X1 - 0.04;
 abilityScrollBarY1 = abilityTextbox1Y1;
 abilityScrollBarY2 = abilityTextbox1Y2;
 abilityScrollBarType = 0;
 abilityScrollBarScale = 4;
-abilityScrollBarColour = make_colour_rgb(0,0,255);
+abilityScrollBarColour = c_blue;
 abilityScrollCursorSprite = spr_scrollcursor_0;
 abilityScrollCursorColour = make_colour_rgb(64,64,255);
 	//AP display
@@ -187,7 +267,7 @@ abilityApDisplayX = abilityCategoryTextX;
 abilityApDisplayY = abilityTextbox1Y2+0.03;
 	//panel data
 abilityPanelSprite = spr_item_panel;
-abilityPanelBlend = make_color_rgb(abilityTextbox1Colour[0]*255,abilityTextbox1Colour[1]*255,abilityTextbox1Colour[2]*255);
+abilityPanelBlend = abilityTextbox1Colour;
 abilityPanelX = abilityTextbox1X1 + 0.06;
 abilityPanelYBegin = abilityTextbox1Y1 + 0.03;
 abilityPanelYEnd = abilityTextbox1Y2 - 0.03;

@@ -65,23 +65,29 @@ with statCache
 	hitEffectType = "blood";
 	hitEffectColour = "dark red";
 	
-		//Damage type resistances (as percentage; 1 = 100%)
-	damageResistances[0] = 1;			//Slash
-	damageResistances[1] = 1;			//Blunt
-	damageResistances[2] = 1;			//Pierce
-	damageResistances[3] = 1;			//Fire
-	damageResistances[4] = 1;			//Ice
-	damageResistances[5] = 1;			//Lightning
-	damageResistances[6] = 1;			//Arcane
-	damageResistances[7] = 1;			//Light
-	damageResistances[8] = 1;			//Dark
-	damageResistances[9] = 1;			//X damage
+		//Damage type resistances (as percentage; 1 = 100% of damage is recieved)
+	damageResistances[damageType.slash] = 1;
+	damageResistances[damageType.blunt] = 1;
+	damageResistances[damageType.pierce] = 1;
+	damageResistances[damageType.fire] = 1;
+	damageResistances[damageType.ice] = 1;
+	damageResistances[damageType.lightning] = 1;
+	damageResistances[damageType.arcane] = 1;
+	damageResistances[damageType.light] = 1;
+	damageResistances[damageType.dark] = 1;
+	damageResistances[damageType.pure] = 1;			//should allways be 1
+
+	//Special activation check, all initially false
+	specialHasActivated[specialType.bleed] = false	
+
+	//Special Cooldowns (seconds)
+	specialCooldowns[specialType.bleed] = 6	
 
 	//Special Damage initializers
-	specialDamage[0] = 0;				//Bleed
+	specialDamages[0] = 0;						//Bleed
 
 	//Special resistances (100 is considered normal)
-	specialResist[0] = 100;				//Bleed
+	specialResistances[0] = 100;				//Bleed
 	
 	hp = hpMax;
 	mp = mpMax;

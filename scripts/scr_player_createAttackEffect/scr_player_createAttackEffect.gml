@@ -14,6 +14,7 @@ with instance_create_depth(x,y,depth+1,objMeleeAttackEffect)
 	attackAnimation = other.attackAnimation;
 
 		//STATS
+		attackType = ComboCache.attackTypes[? attackID];
 		attackDuration = ds_list_find_value(ComboCache.attackHitDurations[? attackID],hitNum);
 		hitType = ds_list_find_value(ComboCache.attackDamageTypes[? attackID],hitNum);
 		hitDamage = ds_list_find_value(ComboCache.attackDamageModifiers[? attackID],hitNum) * PlayerStats.physicalPower;
@@ -25,16 +26,25 @@ with instance_create_depth(x,y,depth+1,objMeleeAttackEffect)
 		
 		hitSoundID = noone;
 		var hitAudioType = ds_list_find_value(ComboCache.attackHitAudioType[? attackID],hitNum);
-		var wholeCache = AudioCache.audioHitCache[| hitAudioType];
-		var subtypeCache = wholeCache[| hitType];
-		var size = ds_list_size(subtypeCache);
-		if size != 0
+		if hitAudioType == undefined
 		{
-			var num = irandom_range(0,size-1)
-			hitSoundID = subtypeCache[| num]
+				//vvv this will likely need to change
+			if attackType = 2 var type = 2;
+			else var type = 1;
+			var wholeCache = AudioCache.audioHitCache[| type];
+			var subtypeCache = wholeCache[| hitType];
+			var size = ds_list_size(subtypeCache);
+			if size != 0
+			{
+				var num = irandom_range(0,size-1)
+				hitSoundID = subtypeCache[| num]
+			}
 		}
-	
-	hitList = ds_list_create();
+		else if hitAudioType < 0
+		{
+			//add misc sounds here
+			hitSoundID = noone;
+		}
 	
 	//Set
 	timer = 0;

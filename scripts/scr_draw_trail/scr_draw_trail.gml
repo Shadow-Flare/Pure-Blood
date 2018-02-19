@@ -7,6 +7,7 @@
 ///@arg TRAILVARIANCE;
 ///@arg TRAILALPHA;
 ///@arg TRAILJITTER;
+///@arg TRAILTYPE;
 var ADDNEWPOINT = argument0;
 var TRAILNUMBEROFTRAILS = argument1;
 var TRAILDURATION = argument2;				//seconds
@@ -30,7 +31,7 @@ if !variable_instance_exists(id,"vTrail") || array_height_2d(vTrail) != TRAILNUM
 trailTimer++;
 
 //set points
-if floor(trailTimer%((TRAILDURATION*room_speed)/TRAILNUMBEROFPOINTS)) == 0			//shift list and add points if active
+if floor(trailTimer%ceil((TRAILDURATION*room_speed)/TRAILNUMBEROFPOINTS)) == 0			//shift list and add points if active
 {
 	for(var i = 0; i < TRAILNUMBEROFTRAILS; i++)
 	{
@@ -72,8 +73,8 @@ var SPREND = noone;
 switch TRAILTYPE
 {
 	case 0:
-		SPR = spr_pixel;
-		argument5*=3;
+		SPR = sprLightningMid;
+		//argument5*=3/2;
 		break;
 	case 1:
 		SPR = sprLightningMid;

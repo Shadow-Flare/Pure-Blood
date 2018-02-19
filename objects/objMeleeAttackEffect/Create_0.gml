@@ -8,3 +8,5 @@ frameData = -1;
 hitListResetDuration = 1.6;
 
 soundPlayed = false;
+
+hitList = ds_list_create();

@@ -7,54 +7,54 @@ audioHitCache[| 2] = ds_list_create();
 
 	//light
 var cacheLight = audioHitCache[| 0];
-cacheLight[| 0] = ds_list_create();			//slash
-cacheLight[| 1] = ds_list_create();			//blunt
-cacheLight[| 2] = ds_list_create();			//pierce
-cacheLight[| 3] = ds_list_create();			//fire
-cacheLight[| 4] = ds_list_create();			//ice
-cacheLight[| 5] = ds_list_create();			//lightning
-cacheLight[| 6] = ds_list_create();			//arcane
-cacheLight[| 7] = ds_list_create();			//light
-cacheLight[| 8] = ds_list_create();			//dark
-cacheLight[| 9] = ds_list_create();			//X damage
+cacheLight[| damageType.slash] = ds_list_create();			//slash
+cacheLight[| damageType.blunt] = ds_list_create();			//blunt
+cacheLight[| damageType.pierce] = ds_list_create();			//pierce
+cacheLight[| damageType.fire] = ds_list_create();			//fire
+cacheLight[| damageType.ice] = ds_list_create();			//ice
+cacheLight[| damageType.lightning] = ds_list_create();		//lightning
+cacheLight[| damageType.arcane] = ds_list_create();			//arcane
+cacheLight[| damageType.light] = ds_list_create();			//light
+cacheLight[| damageType.dark] = ds_list_create();			//dark
+cacheLight[| damageType.pure] = ds_list_create();			//pure
 
 	//medium
 var cacheMedium = audioHitCache[| 1];
-cacheMedium[| 0] = ds_list_create();		//slash
-cacheMedium[| 1] = ds_list_create();		//blunt
-cacheMedium[| 2] = ds_list_create();		//pierce
-cacheMedium[| 3] = ds_list_create();		//fire
-cacheMedium[| 4] = ds_list_create();		//ice
-cacheMedium[| 5] = ds_list_create();		//lightning
-cacheMedium[| 6] = ds_list_create();		//arcane
-cacheMedium[| 7] = ds_list_create();		//light
-cacheMedium[| 8] = ds_list_create();		//dark
-cacheMedium[| 9] = ds_list_create();		//X damage
+cacheMedium[| damageType.slash] = ds_list_create();			//slash
+cacheMedium[| damageType.blunt] = ds_list_create();			//blunt
+cacheMedium[| damageType.pierce] = ds_list_create();		//pierce
+cacheMedium[| damageType.fire] = ds_list_create();			//fire
+cacheMedium[| damageType.ice] = ds_list_create();			//ice
+cacheMedium[| damageType.lightning] = ds_list_create();		//lightning
+cacheMedium[| damageType.arcane] = ds_list_create();		//arcane
+cacheMedium[| damageType.light] = ds_list_create();			//light
+cacheMedium[| damageType.dark] = ds_list_create();			//dark
+cacheMedium[| damageType.pure] = ds_list_create();			//pure
 
 	//heavy
 var cacheHeavy = audioHitCache[| 2];
-cacheHeavy[| 0] = ds_list_create();			//slash
-cacheHeavy[| 1] = ds_list_create();			//blunt
-cacheHeavy[| 2] = ds_list_create();			//pierce
-cacheHeavy[| 3] = ds_list_create();			//fire
-cacheHeavy[| 4] = ds_list_create();			//ice
-cacheHeavy[| 5] = ds_list_create();			//lightning
-cacheHeavy[| 6] = ds_list_create();			//arcane
-cacheHeavy[| 7] = ds_list_create();			//light
-cacheHeavy[| 8] = ds_list_create();			//dark
-cacheHeavy[| 9] = ds_list_create();			//X damage
+cacheHeavy[| damageType.slash] = ds_list_create();			//slash
+cacheHeavy[| damageType.blunt] = ds_list_create();			//blunt
+cacheHeavy[| damageType.pierce] = ds_list_create();			//pierce
+cacheHeavy[| damageType.fire] = ds_list_create();			//fire
+cacheHeavy[| damageType.ice] = ds_list_create();			//ice
+cacheHeavy[| damageType.lightning] = ds_list_create();		//lightning
+cacheHeavy[| damageType.arcane] = ds_list_create();			//arcane
+cacheHeavy[| damageType.light] = ds_list_create();			//light
+cacheHeavy[| damageType.dark] = ds_list_create();			//dark
+cacheHeavy[| damageType.pure] = ds_list_create();			//pure
 
 	//slash
 		//light
 var slashLight = cacheLight[| 0];
 
 		//medium
-var slashMedium = cacheMedium[| 0];
+var slashMedium = cacheMedium[| damageType.slash];
 slashMedium[| 0] = snd_slash_hit_medium_1;
 slashMedium[| 1] = snd_slash_hit_medium_2;
 
 		//heavy
-var slashHeavy = cacheHeavy[| 0];
+var slashHeavy = cacheHeavy[| damageType.slash];
 slashHeavy[| 0] = snd_slash_hit_heavy_1;
 #endregion
 

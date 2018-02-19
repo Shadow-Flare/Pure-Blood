@@ -18,21 +18,6 @@ with statCache
 	killExp = 4
 	killGold = [0.1,4,16]
 	
-		//Damage type resistances (as percentage; 1 = 100%)
-	damageResistances[0] = 1;			//Slash			//$$//
-	damageResistances[1] = 1;			//Blunt			//$$//
-	damageResistances[2] = 1;			//Pierce		//$$//
-	damageResistances[3] = 1;			//Fire			//$$//
-	damageResistances[4] = 1;			//Ice			//$$//
-	damageResistances[5] = 1;			//Lightning		//$$//
-	damageResistances[6] = 1;			//Arcane		//$$//
-	damageResistances[7] = 1;			//Light			//$$//
-	damageResistances[8] = 1;			//Dark			//$$//
-	damageResistances[9] = 1;			//X damage		//$$//
-
-	//Special resistances (100 is considered normal)
-	specialResist[0] = 100;				//Bleed			//$$//
-	
 	hp = hpMax;
 	mp = mpMax;
 	
@@ -71,10 +56,10 @@ action1MoveBurst = 5;
 action1Move = 0;																		
 action1MoveStart = action1Duration*(/**/9/**//sprite_get_number(action1Animation))		
 action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))																		
-action1DamageType = 2;																	
+action1DamageType = damageType.slash;																	
 action1Damage = 1;																		
 action1Stagger = 1.8;																		
 action1Knockback = 3;																	
-action1StatusType = -1;																	
+action1StatusType = damageType.none;																	
 action1StatusValue = 0;																	
 action1Pierce = false;																	

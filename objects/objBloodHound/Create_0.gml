@@ -18,21 +18,6 @@ with statCache
 	killExp = 100;
 	killGold = [0.1,4-16];
 	
-		//Damage type resistances (as percentage; 1 = 100%)
-	damageResistances[0] = 1;			//Slash			//$$//
-	damageResistances[1] = 1;			//Blunt			//$$//
-	damageResistances[2] = 1;			//Pierce		//$$//
-	damageResistances[3] = 1;			//Fire			//$$//
-	damageResistances[4] = 1;			//Ice			//$$//
-	damageResistances[5] = 1;			//Lightning		//$$//
-	damageResistances[6] = 1;			//Arcane		//$$//
-	damageResistances[7] = 1;			//Light			//$$//
-	damageResistances[8] = 1;			//Dark			//$$//
-	damageResistances[9] = 1;			//X damage		//$$//
-
-	//Special resistances (100 is considered normal)
-	specialResist[0] = 100;				//Bleed			//$$//
-	
 	hp = hpMax;
 	mp = mpMax;
 }
@@ -73,7 +58,7 @@ action1MoveBurst = 3;																	//$$//
 action1Move = 0;																		//$$//
 action1MoveStart = action1Duration*(/**/6/**//sprite_get_number(action1Animation));		//$$//
 action1MoveDuration = action1Duration*(/**/0/**//sprite_get_number(action1Animation));	//$$//
-action1DamageType = 2;																	//$$//
+action1DamageType = damageType.blunt;																	//$$//
 action1Damage = 1;																		//$$//
 action1Stagger = 1;																		//$$//
 action1Knockback = 12;																	//$$//
@@ -98,11 +83,11 @@ action2Sub2ZoneHitSoundID = noone;																//$$//
 action2Sub2ZoneFrameData = -1;
 action2Sub2ZoneFollow = true;
 action2Sub2ZoneDuration = -1
-action2Sub2ZoneDamageType = 1;
+action2Sub2ZoneDamageType = damageType.blunt;
 action2Sub2ZoneDamage = 0.3;
 action2Sub2ZoneStagger = 0;
 action2Sub2ZoneKnockback = 1.5;
-action2Sub2ZoneStatusType = -1;
+action2Sub2ZoneStatusType = specialType.none;
 action2Sub2ZoneStatusValue = 0;
 action2Sub2ZonePierce = true;
 		//sub3: Landing
@@ -116,11 +101,11 @@ action2Sub3ZoneHitSoundID = noone;																//$$//
 action2Sub3ZoneFrameData = [0,1]
 action2Sub3ZoneFollow = false;
 action2Sub3ZoneDuration = -1
-action2Sub3ZoneDamageType = 1;
+action2Sub3ZoneDamageType = damageType.slash;
 action2Sub3ZoneDamage = 0.3;
 action2Sub3ZoneStagger = 0;
 action2Sub3ZoneKnockback = 1.5;
-action2Sub3ZoneStatusType = -1;
+action2Sub3ZoneStatusType = specialType.none;
 action2Sub3ZoneStatusValue = 0;
 action2Sub3ZonePierce = true;
 	
@@ -138,11 +123,11 @@ action3MoveBurst = 0																	//$$//
 action3Move = 0;																		//$$//
 action3MoveStart = action3Duration*(/**/0/**//sprite_get_number(action3Animation));
 action3MoveDuration = action3Duration*(/**/0/**//sprite_get_number(action3Animation));
-action3DamageType = 2;																	//$$//
+action3DamageType = damageType.slash;																	//$$//
 action3Damage = 1;																		//$$//
 action3Stagger = 1;																		//$$//
 action3Knockback = 12;																	//$$//
-action3StatusType = -1;																	//$$//
+action3StatusType = specialType.none;																	//$$//
 action3StatusValue = 0;																	//$$//
 action3Pierce = true;
 		//corpses

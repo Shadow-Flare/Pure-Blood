@@ -104,6 +104,9 @@ blockingDurationPost = 0.05;
 blockingDurationReaction = 0.4;
 hasBlocked = false;
 
+canMoveDefend = true;
+canMoveDefendTimer = 0;
+canMoveDefendCooldown = 0.4;
 dodgeDistance = 16*3.5;				//16*<number of blocks>		//(before "xSpd-=xSpd/4" slowdown)
 dodgeDurationPerforming = 0.2;
 dodgeDurationPost = 0.2;

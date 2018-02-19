@@ -52,7 +52,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.5;
 attackCooldowns[? tmpId] = 0.1;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -62,7 +62,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 2
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.25);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -70,20 +70,20 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],-3.75);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],damageType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
 
 //GROUND COMBO VARIABLES
 //Attack Types:
-//	0: non-typical, used for utilities like counter attacks && directional attacks
+//	0: non-typical,	used for utilities like counter attacks && directional attacks
 //	1: all slots
 //	2: initial
 //	3: middle
 //	4: finisher
-//Attacks:
-//1: Sword (# indicates a non selectable attack)
+//Attacks:		(# indicates a non selectable attack)
+//1: Sword
 //		00: #Counter
 //		01: #Skyward Slice
 //		02: #Earthen Release
@@ -113,7 +113,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.4;
 attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -123,7 +123,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 20;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],1.3);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -131,7 +131,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],5);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -146,7 +146,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.8;
 attackCooldowns[? tmpId] = 0.4;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -156,7 +156,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 0;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],2);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.blunt);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -164,7 +164,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],4);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
@@ -179,7 +179,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.7;
 attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -189,7 +189,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 80;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -197,7 +197,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],3);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
@@ -212,7 +212,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.6;
 attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -222,7 +222,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],1);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.blunt);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.2);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -230,7 +230,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],4);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -245,7 +245,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.35;
 attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -255,7 +255,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],1);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -263,7 +263,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],2);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);				
 #endregion
@@ -278,7 +278,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.7;
 attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],2);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -288,7 +288,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 10;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],2.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -296,7 +296,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],6);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -311,8 +311,8 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 2;
 attackCooldowns[? tmpId] = 0;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],0
-										   ,2);
+	ds_list_add(attackHitAudioType[? tmpId],undefined
+										   ,undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])),
 										 (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
@@ -324,7 +324,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 2;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],2,2);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce,damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.5,0.1);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -332,7 +332,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],0,2.5);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1,0);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none,specialType.bleed);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0,130);	
 #endregion
@@ -347,7 +347,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.6;
 attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -357,7 +357,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = -2.5*16;
 attackMoveDistancesX[? tmpId] = 0;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.3);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -365,7 +365,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],-1);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -398,7 +398,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.4;
 attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -408,7 +408,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 24;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],1.3);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -416,7 +416,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],5);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -431,7 +431,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.8;
 attackCooldowns[? tmpId] = 0.4;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -441,7 +441,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 0;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],2);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -449,7 +449,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],4);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
@@ -464,7 +464,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.8;
 attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -474,7 +474,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 80;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],2);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -482,7 +482,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],3);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
@@ -497,7 +497,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.6;
 attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -507,7 +507,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],1);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.2);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -515,7 +515,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],4);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -530,7 +530,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.2;
 attackCooldowns[? tmpId] = 0.4;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -540,7 +540,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],1);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -548,7 +548,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],2);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);				
 #endregion
@@ -563,7 +563,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.6;
 attackCooldowns[? tmpId] = 0.4;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],2);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -573,7 +573,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 8;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],1);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],2.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -581,7 +581,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],10);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -596,8 +596,8 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 2;
 attackCooldowns[? tmpId] = 0;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],2);
-	ds_list_add(attackHitAudioType[? tmpId],2);
+	ds_list_add(attackHitAudioType[? tmpId],undefined,
+											undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])),
 										 (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
@@ -609,7 +609,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 2;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],2,2);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce,damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.5,0.1);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -617,7 +617,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],0,2.5);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1,0);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none,0);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0,130);	
 #endregion
@@ -632,7 +632,7 @@ attackFrameData[? tmpId] = -1;
 attackDurations[? tmpId] = 0.6;
 attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -642,7 +642,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = -40;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.3);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -650,7 +650,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],-1);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -693,7 +693,7 @@ attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlash;		//not used in script
 attackDurations[? tmpId] = 0.35;
 attackCooldowns[? tmpId] = 0.2;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -703,7 +703,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -711,7 +711,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],0.6);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -725,7 +725,7 @@ attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlam;		//not used in script,
 attackDurations[? tmpId] = 0.7;
 attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],2);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -735,7 +735,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 18;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],2.2);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -743,7 +743,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],4.5);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
@@ -758,7 +758,7 @@ attackAnimations[? tmpId] = sprPlayerBodySpearAerialPoke;		//not used in script,
 attackDurations[? tmpId] = 0.2;
 attackCooldowns[? tmpId] = 0.4;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],1);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -768,7 +768,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 6;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],0);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],0.8);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -776,7 +776,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],0.6);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);	
 #endregion
@@ -790,7 +790,7 @@ attackAnimations[? tmpId] = sprPlayerBodySpearAerialCrash;		//not used in script
 attackDurations[? tmpId] = 0.4;
 attackCooldowns[? tmpId] = 0.3;
 attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],2);
+	ds_list_add(attackHitAudioType[? tmpId],undefined);
 attackHitStarts[? tmpId] = ds_list_create();
 	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
 attackHitDurations[? tmpId] = ds_list_create();
@@ -800,7 +800,7 @@ attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId]
 attackMoveDistancesY[? tmpId] = 0;
 attackMoveDistancesX[? tmpId] = 12;
 attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],1);
+	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
 attackDamageModifiers[? tmpId] = ds_list_create();
 	ds_list_add(attackDamageModifiers[? tmpId],2.2);
 attackStaggerModifiers[? tmpId] = ds_list_create();
@@ -808,7 +808,7 @@ attackStaggerModifiers[? tmpId] = ds_list_create();
 attackKnockbacks[? tmpId] = ds_list_create();
 	ds_list_add(attackKnockbacks[? tmpId],4.5);
 attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],-1);
+	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
 attackStatusValues[? tmpId] = ds_list_create();
 	ds_list_add(attackStatusValues[? tmpId],0);		
 #endregion
@@ -862,45 +862,45 @@ offhandNames[? tmpId] = "Crossbow";
 	//subtypes
   var tmpIdTwo = 0;		//0: Normal Bolts
 		offhandSubtypeNames[? tmpIdTwo] = "Normal Bolts";					//Name	
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 1;							//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.pierce;			//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;					//damage modifier, multiplicative
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;							//Status Type (-1:None|0:Bleed)
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;							//Status Type (-1:None|0:Bleed)
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;							//Status Value (NEED BASED ON PLAYER STAT IMPLEMENTATION)
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;					//stagger modifier, multiplicative
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;							//physics knockback on a heavy stagger attack
 		offhandSubtypeManaCosts[? tmpIdTwo] = 0;							//mana cost per use
 		tmpIdTwo++;		//1: Flaming Bolts
 		offhandSubtypeNames[? tmpIdTwo] = "Flaming Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 3;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.fire;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.2;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;
 		offhandSubtypeManaCosts[? tmpIdTwo] = 2;
 		tmpIdTwo++;		//2: Frozen Bolts
 		offhandSubtypeNames[? tmpIdTwo] = "Frozen Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 4;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.ice;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;					
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;						
 		offhandSubtypeManaCosts[? tmpIdTwo] = 3;
 		tmpIdTwo++;		//3: Charged Bolts
 		offhandSubtypeNames[? tmpIdTwo] = "Charged Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 5;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.lightning;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.4;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;				
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;				
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;			
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;	
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;					
 		offhandSubtypeManaCosts[? tmpIdTwo] = 4;
 		tmpIdTwo++;		//4: Serrated Bolts
 		offhandSubtypeNames[? tmpIdTwo] = "Serrated Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 0;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.slash;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = 0;					
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.bleed;					
 		offhandSubtypeStatusValues[? tmpIdTwo] = 20;				
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;						
@@ -927,45 +927,45 @@ offhandNames[? tmpId] = "Spells"
 	//Subtypes
 		tmpIdTwo++;		//5: Blaze
 		offhandSubtypeNames[? tmpIdTwo] = "Blaze"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 3;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.fire;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.8;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
 		offhandSubtypeManaCosts[? tmpIdTwo] = 4;
 		tmpIdTwo++;		//6: Frost
 		offhandSubtypeNames[? tmpIdTwo] = "Frost"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 4;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.ice;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
 		offhandSubtypeManaCosts[? tmpIdTwo] = 5;
 		tmpIdTwo++;		//7: Spark
 		offhandSubtypeNames[? tmpIdTwo] = "Spark"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 5;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.lightning;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1.2;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
 		offhandSubtypeManaCosts[? tmpIdTwo] = 6;
 		tmpIdTwo++;		//8: Leech
 		offhandSubtypeNames[? tmpIdTwo] = "Leech"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 8;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.dark;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.7;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
 		offhandSubtypeManaCosts[? tmpIdTwo] = 8;
 		tmpIdTwo++;		//9: Osmose
 		offhandSubtypeNames[? tmpIdTwo] = "Osmose"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = 6;
+		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.arcane;
 		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = -1;					
+		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
 		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
 		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
 		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	

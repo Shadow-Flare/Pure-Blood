@@ -40,9 +40,10 @@ switch subPhase
 		{
 			phase = state.base;
 			phaseTimer = 0;
+			subPhaseTimer = 0;
 			phased = 0;
 			dodging = 0;
-			subPhaseTimer = 0;
+			canMoveDefend = false;
 			scr_player_base_subPhaseDeterminer();
 		}
 		break;

@@ -58,23 +58,7 @@ var scrollYMod = abs(inventoryScrollBarY2-inventoryScrollBarY1-(sprite_get_heigh
 draw_sprite_ext(inventoryScrollCursorSprite,0,surfW*inventoryScrollBarX,surfH*(inventoryScrollBarY1+scrollYMod),inventoryScrollBarScale,inventoryScrollBarScale,0,inventoryScrollCursorColour,1);
 
 	//backing
-if !surface_exists(inventoryTextbox1) inventoryTextbox1 = surface_create(surfW,surfH);
-surface_set_target(inventoryTextbox1);
-	scr_draw_textbox(surfW*inventoryTextbox1X1,surfH*inventoryTextbox1Y1,surfW*inventoryTextbox1X2,surfH*inventoryTextbox1Y2,0,4);
-surface_reset_target()
-
-if !surface_exists(inventoryTextbox1Mod) inventoryTextbox1Mod = surface_create(surfW,surfH);
-surface_set_target(inventoryTextbox1Mod);
-	shader_set(shd_textbox_recolor);
-	var shd_newColor = shader_get_uniform(shd_textbox_recolor,"newColor");
-	var shd_vertData = shader_get_uniform(shd_textbox_recolor,"vertData");
-	shader_set_uniform_f(shd_newColor,inventoryTextbox1Colour[0],inventoryTextbox1Colour[1],inventoryTextbox1Colour[2],1);
-	shader_set_uniform_f(shd_vertData,inventoryTextbox1Y1-0.1,inventoryTextbox1Y2+0.1);
-		draw_surface(inventoryTextbox1,0,0);
-	shader_reset();
-surface_reset_target()
-
-draw_surface(inventoryTextbox1Mod,0,0);
+scr_draw_textbox(surfW*inventoryTextbox1X1,surfH*inventoryTextbox1Y1,surfW*inventoryTextbox1X2,surfH*inventoryTextbox1Y2,0,4,inventoryTextbox1Colour);
 	
 	//panels
 var panelSep = (inventoryPanelYEnd-inventoryPanelYBegin-(sprite_get_height(inventoryPanelSprite)*inventoryPanelScale)/surfH)/(inventoryPanelNum-1);

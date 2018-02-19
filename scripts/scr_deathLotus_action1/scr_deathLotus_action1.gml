@@ -36,8 +36,6 @@ switch subPhase
 				statusValue = other.action1ProjStatusValue;
 				pierce = other.action1ProjPierce;
 				hitSoundID = other.action1ProjHitSoundID;
-				
-				hitList = ds_list_create();
 			}
 			if action1AttackSoundID != noone audio_play_sound(action1AttackSoundID,10,0);
 		}

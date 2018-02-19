@@ -28,5 +28,3 @@ if frameData != -1
 	else hitOn = false;
 }
 else hitOn = true;
-
-//reset hitlist if duration is infinite

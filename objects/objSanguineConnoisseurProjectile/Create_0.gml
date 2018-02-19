@@ -17,3 +17,5 @@ explodeScale = 6;
 
 image_xscale = initialScale;
 image_yscale = image_xscale;
+
+hitList = ds_list_create();

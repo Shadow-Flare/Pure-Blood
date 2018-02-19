@@ -138,7 +138,7 @@ switch subPhase
 			subPhase = subState.pre;
 			subPhaseTimer = 0;
 		}
-		else
+		else if canMoveDefend
 		{
 			facing = sign(moveH);
 			phased = 1;

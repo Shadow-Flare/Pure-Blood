@@ -53,23 +53,7 @@ var scrollYMod = abs(abilityScrollBarY2-abilityScrollBarY1-(sprite_get_height(ab
 draw_sprite_ext(abilityScrollCursorSprite,0,surfW*abilityScrollBarX,surfH*(abilityScrollBarY1+scrollYMod),abilityScrollBarScale,abilityScrollBarScale,0,abilityScrollCursorColour,1);
 
 	//backing
-if !surface_exists(abilityTextbox1) abilityTextbox1 = surface_create(surfW,surfH);
-surface_set_target(abilityTextbox1);
-	scr_draw_textbox(surfW*abilityTextbox1X1,surfH*abilityTextbox1Y1,surfW*abilityTextbox1X2,surfH*abilityTextbox1Y2,abilityTextbox1Type,abilityTextbox1Scale);
-surface_reset_target()
-
-if !surface_exists(abilityTextbox1Mod) abilityTextbox1Mod = surface_create(surfW,surfH);
-surface_set_target(abilityTextbox1Mod);
-	shader_set(shd_textbox_recolor);
-	var shd_newColor = shader_get_uniform(shd_textbox_recolor,"newColor");
-	var shd_vertData = shader_get_uniform(shd_textbox_recolor,"vertData");
-	shader_set_uniform_f(shd_newColor,abilityTextbox1Colour[0],abilityTextbox1Colour[1],abilityTextbox1Colour[2],1);
-	shader_set_uniform_f(shd_vertData,abilityTextbox1Y1-0.1,abilityTextbox1Y2+0.1);
-		draw_surface(abilityTextbox1,0,0);
-	shader_reset();
-surface_reset_target()
-
-draw_surface(abilityTextbox1Mod,0,0);
+scr_draw_textbox(surfW*abilityTextbox1X1,surfH*abilityTextbox1Y1,surfW*abilityTextbox1X2,surfH*abilityTextbox1Y2,abilityTextbox1Type,abilityTextbox1Scale,abilityTextbox1Colour);
 	
 	//panels
 var panelSep = (abilityPanelYEnd-abilityPanelYBegin-(sprite_get_height(abilityPanelSprite)*abilityPanelScale)/surfH)/(abilityPanelNum-1);

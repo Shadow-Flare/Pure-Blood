@@ -1,19 +1,19 @@
 ///@arg source
 ///@arg attackType
 ///@arg attackPower
-///@arg specialType
-///@arg specialPower
+///@arg specType
+///@arg specPower
 ///@arg caster
 
 var source = argument0;
 var audioID = argument1;
 var attackType = argument2;
 var attackPower = argument3;
-var specialType = argument4;
-var specialPower = argument5;
+var specType = argument4;
+var specPower = argument5;
 var caster = argument6;
 
-if attackType != -1
+if attackType != damageType.none
 {
 		//audio
 	if audioID != noone audio_play_sound(audioID,10,0)
@@ -38,7 +38,7 @@ if attackType != -1
 	statCache.hp = clamp(statCache.hp,0,statCache.hpMax);
 }
 
-if specialType != -1
+if specType != specialType.none
 {
-	statCache.specialDamage[specialType] = clamp(statCache.specialDamage[specialType]-specialPower,0,statCache.specialResistances[specialType])
+	statCache.specialDamages[specType] += specPower;
 }

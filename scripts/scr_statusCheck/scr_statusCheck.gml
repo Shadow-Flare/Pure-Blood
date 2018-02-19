@@ -10,9 +10,10 @@ if phase != state.dying && statCache.hp <= 0
 	subPhaseTimer = 0;
 }
 
-//break
+//guaged hp management
 with statCache
-{
+{	
+		//break
 	if physicalBreakHp != 0 || magicalBreakHp != 0
 	{
 		if other.hasFlung var spdMod = 6;
@@ -32,5 +33,30 @@ with statCache
 	{
 		other.hasStaggered = false;
 		other.hasFlung = false;
+	}
+		//special status
+	for(var i = 0; i < array_length_1d(specialResistances); i++)
+	{
+			//activations
+		if specialDamages[i] >= specialResistances[i]
+		{
+			switch i
+			{
+				case specialType.bleed:
+					scr_hit(noone,noone,damageType.pure,hpMax*0.3,specialType.none,0,noone);
+					break;
+			}
+		}
+			//break hp management
+		if specialDamages[i] != 0
+		{			
+			if other.specialHasActivated[i] var spdMod = 6;
+			else var spdMod = 1;
+		
+			var specialSpd = (specialResistances[i]/(specialCooldowns[i]*room_speed))*spdMod;
+		
+			specialDamages[i] -= physSpd;
+			if specialDamages[i] < 0 specialDamages[i] = 0;
+		}
 	}
 }

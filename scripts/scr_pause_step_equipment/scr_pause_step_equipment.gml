@@ -1,17 +1,17 @@
-scr_menu_navigate();
+//scr_menu_navigate();
 
 #region move to top on hor change
 
-if movedH
-{
-	sY = 0;
-	movedH = 0;
-}
+//if movedH
+//{
+//	sY = 0;
+//	movedH = 0;
+//}
 
 #endregion
 
-//select
-selection = current_menu_options[sX,sY];
+////select
+//selection = current_menu_options[sX,sY];
 
 #region (start)		Unpause
 
@@ -27,20 +27,20 @@ if (InputManager.startInput)
 #endregion
 #region (A)			Select
 
-if (InputManager.aInput == true)
-{
-	audio_play_sound(snd_menu_select,10,0);
-	if sY == 0 
-	{
-		PlayerStats.activeOffhandID = selection;
-		PlayerStats.activeOffhandSubtypeID = current_menu_options[sX,1];
-	}
-	else
-	{
-		PlayerStats.activeOffhandSubtypeID = selection;
-		PlayerStats.activeOffhandID = current_menu_options[sX,0];
-	}
-}
+//if (InputManager.aInput == true)
+//{
+//	audio_play_sound(snd_menu_select,10,0);
+//	if sY == 0 
+//	{
+//		PlayerStats.activeOffhandID = selection;
+//		PlayerStats.activeOffhandSubtypeID = current_menu_options[sX,1];
+//	}
+//	else
+//	{
+//		PlayerStats.activeOffhandSubtypeID = selection;
+//		PlayerStats.activeOffhandID = current_menu_options[sX,0];
+//	}
+//}
 
 #endregion
 #region (B)			Cancel

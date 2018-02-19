@@ -3,9 +3,14 @@ event_inherited();
 enum mainTransType {none, newGame, arena, hordeMode, ex}
 enum loadType {none, newGame, arena, hordeMode, ending}
 
+enum damageType {none,slash,blunt,pierce,fire,ice,lightning,arcane,light,dark,pure};
+enum specialType {none, bleed};
+
 instance_create_depth(0,0,0,InputManager);
 if !instance_exists(GameManager) instance_create_depth(0,0,0,GameManager);
 with instance_create_depth(0,0,0,Camera) phase = cameraState.idle;
+
+backMusic = audio_play_sound(snd_music_titleTheme,10,1);
 
 transType = mainTransType.none;
 transDur = 1.5;

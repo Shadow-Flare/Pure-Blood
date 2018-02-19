@@ -185,6 +185,17 @@ if offhandHardCooldownTimer != -1
 	}
 }
 	#endregion
+	#region Move defend cooldown
+	if !canMoveDefend
+	{
+		canMoveDefendTimer++;
+		if canMoveDefendTimer >= round(canMoveDefendCooldown*room_speed)
+		{
+			canMoveDefend = true;
+			canMoveDefendTimer = 0;
+		}
+	}
+	#endregion
 	#region reset hitPhase
 switch hitPhase
 {

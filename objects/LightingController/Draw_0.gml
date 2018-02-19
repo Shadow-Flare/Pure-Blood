@@ -20,11 +20,58 @@ frameNum++;
 #endregion
 
 #region Shadow based lighting
-	#region Draw Dynamic lights
-	if !variable_instance_exists(id,"light") || !surface_exists(light)
+if !variable_instance_exists(id,"light") || !surface_exists(light)
+{
+	light = surface_create((camW+2)*lightScale,(camH+2)*lightScale);
+}
+
+	#region set tilemaps to draw on cutout
+	var layerNames = ["Tiles_background_a","Tiles_background_b","Tiles_background_c","Tiles_background_d","Tiles_background_e",
+					  "Tiles_foreground_a","Tiles_foreground_b","Tiles_foreground_c","Tiles_foreground_d","Tiles_foreground_e"];
+	var tileLayers = [];
+	var count = 0;
+	for (var i = 0; i < array_length_1d(layerNames); i++)
 	{
-		light = surface_create((camW+2)*lightScale,(camH+2)*lightScale);
+		var layerIDToCheck = layer_get_id(layerNames[i]);
+		if layerIDToCheck != -1
+		{
+			tileLayers[count] = layerIDToCheck;
+			count++;
+		}
 	}
+	#endregion
+	#region Generate cutout tiles
+	if !variable_instance_exists(id,"cutoutTiles") || !surface_exists(cutoutTiles)
+	{
+		cutoutTiles = surface_create(room_width,room_height);	
+	}
+	surface_set_target(cutoutTiles);
+		draw_clear_alpha(c_black,0);
+		for (var i = 0; i < array_length_1d(tileLayers); i++)
+		{
+			var tilemapID = layer_tilemap_get_id(tileLayers[i])
+			draw_tilemap(tilemapID,0,0);
+		}
+	surface_reset_target();
+	#endregion
+	#region Add cutout tiles and instance based cutters to cutout (every frame)
+	if !variable_instance_exists(id,"cutout") || !surface_exists(cutout)
+	{
+		cutout = surface_create(surface_get_width(light),surface_get_height(light));
+	}
+	surface_set_target(cutout);
+		draw_clear(c_black);
+		gpu_set_blendmode(bm_subtract);
+		shader_set(shd_white);
+			draw_surface_ext(cutoutTiles,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
+			with objActorParent draw_sprite_ext(sprite_index,image_index,(x+1-camX)*other.lightScale,(y+1-camY)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
+			with objPlatformMovingParent draw_sprite_ext(sprite_index,image_index,(x+1-camX)*other.lightScale,(y+1-camY)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
+		shader_reset();
+		gpu_set_blendmode(bm_normal);
+	surface_reset_target();
+	#endregion
+
+	#region Draw Dynamic lights
 	if !variable_instance_exists(id,"light2") || !surface_exists(light2)
 	{
 		light2 = surface_create(surface_get_width(light),surface_get_height(light));
@@ -206,53 +253,6 @@ if shaftAngle != undefined
 	#endregion
 }
 #endregion
-	#region glow lighting
-		#region set layers
-	var layerNames = ["Tiles_background_a","Tiles_background_b","Tiles_background_c","Tiles_background_d","Tiles_background_e",
-					  "Tiles_foreground_a","Tiles_foreground_b","Tiles_foreground_c","Tiles_foreground_d","Tiles_foreground_e"];
-	var tileLayers = [];
-	var count = 0;
-	for (var i = 0; i < array_length_1d(layerNames); i++)
-	{
-		var layerIDToCheck = layer_get_id(layerNames[i]);
-		if layerIDToCheck != -1
-		{
-			tileLayers[count] = layerIDToCheck;
-			count++;
-		}
-	}
-		#endregion
-		#region construct base glow map
-		if (!variable_instance_exists(id,"glowMap") || !surface_exists(glowMap))
-		{
-			glowMap = surface_create(room_width,room_height);
-			surface_set_target(glowMap);
-			draw_clear(make_color_rgb(0,0,0));
-			for (var i = 0; i < array_length_1d(tileLayers); i++)
-			{
-				var tilemapID = layer_tilemap_get_id(tileLayers[i])
-				var tileW = tilemap_get_tile_width(tilemapID);
-				var tileH = tilemap_get_tile_width(tilemapID);
-				var tilesetID = tilemap_get_tileset(tilemapID);
-				var tilesetNormalID = tilesetID+3;
-				tilemap_tileset(tilemapID,tilesetNormalID);
-				for(var j = 0; j < tilemap_get_width(tilemapID); j++)
-				{
-					for (var k = 0; k < tilemap_get_height(tilemapID); k++)
-					{
-						var tile = tilemap_get(tilemapID,j,k);
-						draw_tile(tilesetNormalID,tile,tilemap_get_frame(tilemapID),tileW*j,tileH*k);
-					}
-				}
-				tilemap_tileset(tilemapID,tilesetID);
-			}
-			surface_reset_target();
-		}
-		#endregion
-		#region draw light using glow
-			ERROR
-		#endregion
-	#endregion
 
 	#region Apply Gausian filters to light (horiz./Vert.)
 	if !variable_instance_exists(id,"temp") || !surface_exists(temp)
@@ -282,53 +282,6 @@ if shaftAngle != undefined
 		shader_set_uniform_f(shd_resolution,surface_get_width(temp),surface_get_height(temp));
 		draw_surface(temp,0,0);
 	shader_reset();
-	surface_reset_target();
-	#endregion
-	
-	#region set tilemaps to draw on cutout
-	var layerNames = ["Tiles_background_a","Tiles_background_b","Tiles_background_c","Tiles_background_d","Tiles_background_e",
-					  "Tiles_foreground_a","Tiles_foreground_b","Tiles_foreground_c","Tiles_foreground_d","Tiles_foreground_e"];
-	var tileLayers = [];
-	var count = 0;
-	for (var i = 0; i < array_length_1d(layerNames); i++)
-	{
-		var layerIDToCheck = layer_get_id(layerNames[i]);
-		if layerIDToCheck != -1
-		{
-			tileLayers[count] = layerIDToCheck;
-			count++;
-		}
-	}
-	#endregion
-	
-	#region Generate cutout tiles texture (only once per load/texture deletion)
-	if !variable_instance_exists(id,"cutoutTiles") || !surface_exists(cutoutTiles)
-	{
-		cutoutTiles = surface_create(room_width,room_height);
-		surface_set_target(cutoutTiles);
-			draw_clear_alpha(c_black,0);
-			for (var i = 0; i < array_length_1d(tileLayers); i++)
-			{
-				var tilemapID = layer_tilemap_get_id(tileLayers[i])
-				draw_tilemap(tilemapID,0,0);
-			}
-		surface_reset_target();
-	}
-	#endregion
-	#region Add cutout tiles and instance based cutters to cutout (every frame)
-	if !variable_instance_exists(id,"cutout") || !surface_exists(cutout)
-	{
-		cutout = surface_create(surface_get_width(light),surface_get_height(light));
-	}
-	surface_set_target(cutout);
-		draw_clear(c_black);
-		gpu_set_blendmode(bm_subtract);
-		shader_set(shd_white);
-			draw_surface_ext(cutoutTiles,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
-			with objActorParent draw_sprite_ext(sprite_index,image_index,(x+1-camX)*other.lightScale,(y+1-camY)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
-			with objPlatformMovingParent draw_sprite_ext(sprite_index,image_index,(x+1-camX)*other.lightScale,(y+1-camY)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
-		shader_reset();
-		gpu_set_blendmode(bm_normal);
 	surface_reset_target();
 	#endregion
 	
@@ -553,6 +506,104 @@ if normalMappingEnabled
 }
 #endregion
 
+#region glow lighting
+	#region set layers
+var layerNames = ["Tiles_background_a","Tiles_background_b","Tiles_background_c","Tiles_background_d","Tiles_background_e",
+					"Tiles_foreground_a","Tiles_foreground_b","Tiles_foreground_c","Tiles_foreground_d","Tiles_foreground_e"];
+var tileLayers = [];
+var count = 0;
+for (var i = 0; i < array_length_1d(layerNames); i++)
+{
+	var layerIDToCheck = layer_get_id(layerNames[i]);
+	if layerIDToCheck != -1
+	{
+		tileLayers[count] = layerIDToCheck;
+		count++;
+	}
+}
+	#endregion
+	#region construct base glow map and cut out
+	if (!variable_instance_exists(id,"glowMap") || !surface_exists(glowMap))
+	{
+		glowMap = surface_create(room_width,room_height);
+	}
+		if (!variable_instance_exists(id,"glowMap2") || !surface_exists(glowMap2))
+	{
+		glowMap2 = surface_create(surface_get_width(light),surface_get_width(light));
+	}
+	surface_set_target(glowMap);
+		draw_clear(c_black);
+		for (var i = 0; i < array_length_1d(tileLayers); i++)
+		{
+			var tilemapID = layer_tilemap_get_id(tileLayers[i]);
+			var tilemapFrame = tilemap_get_frame(tilemapID);
+			var tileW = tilemap_get_tile_width(tilemapID);
+			var tileH = tilemap_get_tile_width(tilemapID);
+			var tilesetID = tilemap_get_tileset(tilemapID);
+			var tilesetNormalID = tilesetID+3;
+			tilemap_tileset(tilemapID,tilesetNormalID);
+			for(var j = 0; j < tilemap_get_width(tilemapID); j++)
+			{
+				for (var k = 0; k < tilemap_get_height(tilemapID); k++)
+				{
+					var tile = tilemap_get(tilemapID,j,k);
+					var tileInd = tile_get_index(tile);
+					draw_tile(tilesetNormalID,tile,tilemapFrame,tileW*j,tileH*k);
+				}
+			}
+			tilemap_tileset(tilemapID,tilesetID);
+		}
+		gpu_set_blendmode_ext(bm_zero,bm_src_color);
+			draw_surface(cutoutTiles,0,0);
+		gpu_set_blendmode(bm_normal);
+	surface_reset_target();
+	surface_set_target(glowMap2);
+		draw_clear(make_color_rgb(0,0,0));
+		draw_surface_ext(glowMap,(1-camX)*lightScale,(1-camY)*lightScale,lightScale,lightScale,0,c_white,1.0);
+			shader_set(shd_white);
+			with all
+			{
+				if visible && sprite_index != -1 draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
+			}
+			shader_reset();
+	surface_reset_target();
+	#endregion
+	#region draw light using glow
+	if (!variable_instance_exists(id,"glowMapTemp") || !surface_exists(glowMapTemp))
+	{
+		glowMapTemp = surface_create(surface_get_width(light),surface_get_width(light));
+	}
+	if (!variable_instance_exists(id,"glowMapTemp2") || !surface_exists(glowMapTemp2))
+	{
+		glowMapTemp2 = surface_create(surface_get_width(light),surface_get_width(light));
+	}
+	surface_set_target(glowMapTemp);
+		draw_clear_alpha(c_white,0);
+		shader_set(shd_gaussianGlow_vertical);
+			var shd_radius = shader_get_uniform(shd_gaussianGlow_vertical,"blur_amount");
+			shader_set_uniform_f(shd_radius,glowBlurRadius);
+			var shd_resolution = shader_get_uniform(shd_gaussianGlow_vertical,"resolution");
+			shader_set_uniform_f(shd_resolution,surface_get_width(glowMapTemp),surface_get_height(glowMapTemp));
+			var shd_glowBoost = shader_get_uniform(shd_gaussianGlow_vertical,"glow_boost");
+			shader_set_uniform_f(shd_glowBoost,glowBoost);
+			draw_surface(glowMap2,0,0);
+		shader_reset();
+	surface_reset_target();
+	surface_set_target(glowMapTemp2);
+		draw_clear_alpha(c_white,0);
+		shader_set(shd_gaussianGlow_horizontal);
+			var shd_radius = shader_get_uniform(shd_gaussianGlow_horizontal,"blur_amount");
+			shader_set_uniform_f(shd_radius,glowBlurRadius);
+			var shd_resolution = shader_get_uniform(shd_gaussianGlow_horizontal,"resolution");
+			shader_set_uniform_f(shd_resolution,surface_get_width(glowMapTemp),surface_get_height(glowMapTemp));
+			var shd_glowBoost = shader_get_uniform(shd_gaussianGlow_horizontal,"glow_boost");
+			shader_set_uniform_f(shd_glowBoost,glowBoost);
+			draw_surface(glowMapTemp,0,0);
+		shader_reset();
+	surface_reset_target();
+	#endregion
+#endregion
+
 #region inversion and darkness application
 	if !variable_instance_exists(id,"temp5") || !surface_exists(temp5)
 	{
@@ -569,6 +620,9 @@ if normalMappingEnabled
 		shader_set(shd_white);
 			draw_surface_ext(cutout,0,0,1,1,0,col,1);
 		shader_reset();
+		gpu_set_blendmode_ext_sepalpha(bm_zero,bm_inv_src_color,bm_zero,bm_one);
+			draw_surface(glowMapTemp2,0,0);
+		gpu_set_blendmode(bm_normal);
 	surface_reset_target();
 #endregion
 

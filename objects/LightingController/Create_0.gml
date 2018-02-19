@@ -11,6 +11,10 @@ lightScale = 6;
 blurRadius = 4;
 radialBlurFactor = 1;
 
+glowBoost = 3.2;
+glowBlurRadius = 2;
+
+
 shaftLightReso = 1024;
 shaftLightStepReso = 1024;
 shaftRadialBlurFactor = 1;

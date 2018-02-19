@@ -18,21 +18,6 @@ with statCache
 	killExp = 8;
 	killGold = [0.1,4-16]
 	
-		//Damage type resistances (as percentage; 1 = 100%)
-	damageResistances[0] = 1;			//Slash			//$$//
-	damageResistances[1] = 1;			//Blunt			//$$//
-	damageResistances[2] = 1;			//Pierce		//$$//
-	damageResistances[3] = 1;			//Fire			//$$//
-	damageResistances[4] = 1;			//Ice			//$$//
-	damageResistances[5] = 1;			//Lightning		//$$//
-	damageResistances[6] = 1;			//Arcane		//$$//
-	damageResistances[7] = 1;			//Light			//$$//
-	damageResistances[8] = 1;			//Dark			//$$//
-	damageResistances[9] = 1;			//X damage		//$$//
-
-	//Special resistances (100 is considered normal)
-	specialResist[0] = 100;				//Bleed			//$$//
-	
 	hp = hpMax;
 	mp = mpMax;
 }
@@ -67,11 +52,11 @@ action1MoveBurst = 3;																	//$$//
 action1Move = 0;																		//$$//
 action1MoveStart = action1Duration*(/**/4/**//sprite_get_number(action1Animation))		//$$//
 action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))	//$$//
-action1DamageType = 1;																	//$$//
+action1DamageType = damageType.blunt;																	//$$//
 action1Damage = 0.8;
 action1Stagger = 0.8;
 action1Knockback = 4;																	//$$//
-action1StatusType = -1;																	//$$//
+action1StatusType = specialType.none;																	//$$//
 action1StatusValue = 0;																	//$$//
 action1Pierce = false;																	//$$//
 
@@ -88,10 +73,10 @@ action2MoveBurst = 0;																	//$$//
 action2Move = 0;																		//$$//
 action2MoveStart = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
 action2MoveDuration = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
-action2DamageType = 3;
+action2DamageType = damageType.fire;
 action2Damage = 1.2;																	//$$//
 action2Stagger = 1.2;																	//$$//
 action2Knockback = 5;																	//$$//
-action2StatusType = -1;																	//$$//
+action2StatusType = specialType.none;																	//$$//
 action2StatusValue = 0;																	//$$//
 action2Pierce = false;																	//$$//

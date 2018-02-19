@@ -19,21 +19,6 @@ with statCache
 	killExp = 2
 	killGold = [0.1,4-16]
 	
-		//Damage type resistances (as percentage; 1 = 100%)
-	damageResistances[0] = 1;			//Slash			//$$//
-	damageResistances[1] = 1;			//Blunt			//$$//
-	damageResistances[2] = 1;			//Pierce		//$$//
-	damageResistances[3] = 0;			//Fire
-	damageResistances[4] = 1;			//Ice			//$$//
-	damageResistances[5] = 1;			//Lightning		//$$//
-	damageResistances[6] = 1;			//Arcane		//$$//
-	damageResistances[7] = 1;			//Light			//$$//
-	damageResistances[8] = 1;			//Dark			//$$//
-	damageResistances[9] = 1;			//X damage		//$$//
-
-	//Special resistances (100 is considered normal)
-	specialResist[0] = 100;				//Bleed			//$$//
-	
 	hp = hpMax;
 	mp = mpMax;
 }
@@ -68,10 +53,10 @@ action1Follow = false;
 action1Duration = 0.7;
 action1AttackSoundID = noone;															//$$//
 action1HitSoundID = noone;																//$$//
-action1DamageType = 3;
+action1DamageType = damageType.fire;
 action1Damage = 1;
 action1Stagger = 1;
 action1Knockback = 4;
-action1StatusType = -1;
+action1StatusType = specialType.none;
 action1StatusValue = 0;
 action1Pierce = 1;

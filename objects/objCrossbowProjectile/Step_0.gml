@@ -57,12 +57,15 @@ if hitOn
 {
 	if !place_free(x+xSpd,y+ySpd)
 	{
+		image_index = irandom(sprite_get_number(sprite_index));
 		var xvar = xSpd/(abs(xSpd)+abs(ySpd));
 		var yvar = ySpd/(abs(xSpd)+abs(ySpd));
 		while place_free(x+xvar,y+yvar) {x += xvar; y+= yvar};
+		x+= xvar*3;
+		y+= yvar*3;
 		xSpd = 0;
 		ySpd = 0;
-		hitOn = 0;
+		hitOn = 2;
 		with effect
 		{
 			radius = 3;
@@ -79,28 +82,43 @@ if hitOn
 if lifeTime >= room_speed*7 instance_destroy();
 
 //stick in target
-if target != noone && instance_exists(target)
+if !ds_list_empty(hitList) && instance_exists(hitList[| 0])
 {
-	if image_index == 0 image_index = irandom_range(1,sprite_get_number(sprite_index));
-	depth = target.depth-1
-	hitOn = 0;
-	x = target.x+relX;
-	y = target.y+relY;
-	if target.facing != targetFacingPrev
+	if targetFacingPrev == 0
 	{
-		targetFacingPrev = target.facing
+		targetFacingPrev = hitList[| 0].facing;
+		relX = hitList[| 0].x-x;
+		relY = -(hitList[| 0].y-y);
+		while abs(relX) > 4 relX -= sign(hitList[| 0].x-x)
+		while abs(relY) > 4 relY += sign(hitList[| 0].y-y)
+		hitOn = 0;
+		with effect
+		{
+			radius = 3;
+			intensity = 0.5;
+			burst = true;
+			enabled = false;
+		}
+	}
+	if image_index == 0 image_index = irandom_range(1,sprite_get_number(sprite_index));
+	depth = hitList[| 0].depth-1
+	x = hitList[| 0].x+relX;
+	y = hitList[| 0].y+relY;
+	if hitList[| 0].facing != targetFacingPrev
+	{
+		targetFacingPrev = hitList[| 0].facing
 		relX *= -1;
 		image_yscale*= -1
 		if image_angle <= 180 image_angle = 180 - image_angle;
 		else image_angle = 360 - (image_angle-180);
 	}
-	if target.phase == "dying" || target.phase == "dyingProne" phaseOut = 1;
+	if hitList[| 0].phase == state.dying phaseOut = 1;
 }
 
 //destroy early if stuck target dies
 if phaseOut
 {
 	lifeTime+=19;
-	target = noone;
+	ds_list_clear(hitList);
 	if lifeTime < room_speed*5 lifeTime = room_speed*5;
 }

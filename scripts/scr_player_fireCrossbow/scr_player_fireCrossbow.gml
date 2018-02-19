@@ -10,8 +10,9 @@ else var w = 1;
 var SUBID = PlayerStats.activeOffhandSubtypeID;
 var qD = argument0+random_range(-2,2);
 var spd = crossbowBoltInitialSpeed;
-var projectileXStrt = x+facing*5+(16*dcos(qD)+facing*(2*dcos(qD+90)));
-var projectileYStrt = y-5-(16*dsin(qD)+facing*(2*dsin(qD+90)));
+var projectileXStrt = x+facing*3+(16*dcos(qD)+facing*(2*dcos(qD+90)));
+var projectileYStrt = y-6-(16*dsin(qD)+facing*(2*dsin(qD+90)));
+if argument0 > 90 || argument0 < 270 projectileYStrt+=2;
 
 with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCrossbowProjectile)
 {
@@ -29,6 +30,4 @@ with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCrossbowProj
 	statusType = ComboCache.offhandSubtypeStatusTypes[? subId];
 	statusValue = ComboCache.offhandSubtypeStatusValues[? subId];
 	pierce = false;
-	
-	hitList = ds_list_create();
 }
