@@ -46,13 +46,13 @@ mpSurf = noone;
 //Map
 hudMapWidth = surface_get_width(application_surface)/8;
 hudMapHeight = surface_get_height(application_surface)/8;
-hudMapCellW = 20;
-hudMapCellH = 11;
-hudMapCellColour = c_blue;
-hudMapScale = 2;
+
+hudMapBorderColour = c_white;
+hudMapBorderWidth = 2;
+hudMapPixelScale = 2;
 hudMapDetailScale = 2;
 
-hudMapSurf = surface_create(hudMapWidth,hudMapHeight);
+hudMapSurf = noone;
 hudMapDetails = surface_create(hudMapWidth,hudMapHeight);
 
 hudMapEnabled = false;

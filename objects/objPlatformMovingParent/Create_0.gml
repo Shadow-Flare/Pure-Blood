@@ -1,6 +1,8 @@
 event_inherited();
 
 path = noone;
+enabled = noone;
+ID = noone;
 
 pathSpeedDefault = 1;
 pathEndAction = path_action_stop

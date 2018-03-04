@@ -13,7 +13,7 @@ with instance_create_depth(0,0,0,Camera) phase = cameraState.idle;
 backMusic = audio_play_sound(snd_music_titleTheme,10,1);
 
 transType = mainTransType.none;
-transDur = 1.5;
+transDur = 0.75;
 transTimer = 0;
 
 selection = 0;

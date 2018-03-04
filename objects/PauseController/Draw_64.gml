@@ -32,6 +32,9 @@ switch menu
 	case menuCurrent.status:
 		scr_pause_draw_status();
 		break;
+	case menuCurrent.map:
+		scr_pause_draw_map();
+		break;
 	case menuCurrent.settings:
 		scr_pause_draw_settings();
 		break;

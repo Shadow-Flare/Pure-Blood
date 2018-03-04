@@ -36,3 +36,4 @@ rsInput = 0;
 rsInputHeld = 0;
 	
 startInput = 0;
+backInput = 0;

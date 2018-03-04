@@ -46,7 +46,7 @@ if  (moveTimer == 0) ||
 		if (sX == 0)
 		{
 			slotExpanded = 0;
-			current_menu_options = menu_combos;
+			current_menu_options = menu_weaponry;
 		}
 	}
 }

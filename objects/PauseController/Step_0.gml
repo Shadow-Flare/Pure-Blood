@@ -18,6 +18,9 @@ switch menu
 	case menuCurrent.status:
 		scr_pause_step_status();
 		break;
+	case menuCurrent.map:
+		scr_pause_step_map();
+		break;
 	case menuCurrent.settings:
 		scr_pause_step_settings();
 		break;

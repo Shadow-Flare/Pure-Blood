@@ -15,8 +15,7 @@
         "a3e05a95-5429-489f-8912-c3f938328086",
         "b7214283-6e7e-4c83-86db-b965ba1107c7",
         "ed69c888-9989-4d75-b6c6-76efe29b0573",
-        "a272c114-a342-4e25-bd49-0890c4a52b66",
-        "860184c9-c906-499c-85b0-217cccef8c9f"
+        "a272c114-a342-4e25-bd49-0890c4a52b66"
     ],
     "filterType": "GMSprite",
     "folderName": "editor sprites",

@@ -52,7 +52,7 @@ if shakeDuration != 0
 }
 #endregion
 
-//xPos = round(xPos*6)/6;
-//yPos = round(yPos*6)/6;
+xPosFinal = xPos+forceX;
+yPosFinal = yPos+forceY;
 
-camera_set_view_pos(cam,xPos,yPos);
+camera_set_view_pos(cam,xPosFinal,yPosFinal);

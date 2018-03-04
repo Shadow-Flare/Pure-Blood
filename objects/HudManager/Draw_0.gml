@@ -1,1 +1,0 @@
-//draw_self();		//<== dont do this

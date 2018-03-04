@@ -1,14 +1,3 @@
-//get needed data
-var IE = instance_exists(InputManager)
-if IE var moveH = InputManager.moveInputH;
-else var moveH = 0;
-if IE var moveV = InputManager.moveInputV;
-else var moveV = 0;
-if IE && InputManager.xInput xInputQueue = 1;
-if IE && InputManager.yInput yInputQueue = 1;
-if IE && InputManager.aInput aInputQueue = 1;
-if IE && InputManager.bInput bInputQueue = 1;
-
 phaseTimer++;
 subPhaseTimer++;
 
@@ -31,7 +20,7 @@ switch PlayerStats.activeOffhandID
 					case subState.pre:
 						if subPhaseTimer >= round(crossbowDurationPre*room_speed)
 						{ 
-							if IE && InputManager.yInputHeld
+							if InputManager.yInputHeld && canAct
 							{
 								subPhase = subState.aim;
 								subPhaseTimer = 0;
@@ -90,11 +79,11 @@ switch PlayerStats.activeOffhandID
 						break;
 		
 					case subState.aim:
-						var h = InputManager.moveInputH;
-						var v = InputManager.moveInputV;
+						var h = moveH;
+						var v = moveV;
 						if !(h==0 && v==0) aimAngle = point_direction(0,0,h,v);
 						facing = (aimAngle<90||aimAngle>270)? 1:-1;
-						if !IE || !InputManager.yInputHeld
+						if !InputManager.yInputHeld || !canAct
 						{
 							scr_player_fireCrossbow(aimAngle);
 							subPhase = subState.fire
@@ -113,7 +102,7 @@ switch PlayerStats.activeOffhandID
 					case subState.holding:
 						if yInputQueue
 						{
-							if !IE || !InputManager.yInputHeld
+							if !InputManager.yInputHeld || !canAct
 							{
 								reset_queue();
 								if lockOnType != lockOn.off 

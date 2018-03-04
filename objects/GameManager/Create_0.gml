@@ -39,15 +39,15 @@ window_set_cursor(cr_none);
 monitorW = display_get_width();
 monitorH = display_get_height();
 displayResolutionX = 1920;
-displayResolutionY = 1080;
-monitorXOffset = ((monitorW-displayResolutionX)/2);
-monitorYOffset = ((monitorH-displayResolutionY)/2);
+displayResolutionY = 1056;
 GuiRX = displayResolutionX/100;
 GuiRY = displayResolutionY/100;
 
+appSurfYBorder = 12;
+
 surface_resize(application_surface,displayResolutionX,displayResolutionY)
 appSurfModX = monitorW/displayResolutionX;
-appSurfModY = monitorH/displayResolutionY;
+appSurfModY = (monitorH-appSurfYBorder*2)/displayResolutionY;
 
 grav = 0.25;
 

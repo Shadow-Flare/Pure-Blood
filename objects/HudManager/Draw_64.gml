@@ -268,20 +268,25 @@ draw_surface_ext(topLeftSurf,0,0,topLeftResolutionScale,topLeftResolutionScale,0
 #endregion
 
 #region Map
-	if hudMapEnabled
+	var str = room_get_name(room);
+	if hudMapEnabled && string_pos("rmRoom",str) != 0
 	{
+		if !surface_exists(hudMapSurf) hudMapSurf = surface_create(hudMapWidth,hudMapHeight);
+		if !surface_exists(hudMapDetails) hudMapDetails = surface_create(hudMapWidth,hudMapHeight);
 		surface_set_target(hudMapDetails);
-			draw_clear_alpha(c_white,0);
-			var str = room_get_name(room);
-			if string_pos("rmRoom",str) != 0 && instance_exists(objPlayer)
+			draw_clear_alpha(hudMapBorderColour,1.0);
+			gpu_set_blendmode(bm_subtract);
+				draw_rectangle(hudMapBorderWidth,hudMapBorderWidth,hudMapWidth-hudMapBorderWidth-1,hudMapHeight-hudMapBorderWidth-1,0)
+			gpu_set_blendmode(bm_normal);
+			if instance_exists(objPlayer)
 			{
 				var playerX = objPlayer.x/room_width;
 				var playerY = objPlayer.y/room_height;
 				
 				var cellInitialX = surface_get_width(HudManager.hudMapSurf)/2;
 				var cellInitialY = surface_get_height(HudManager.hudMapSurf)/2;
-				var cellW = HudManager.hudMapCellW;
-				var cellH = HudManager.hudMapCellH;
+				var cellW = MapManager.mapCellW*hudMapPixelScale;
+				var cellH = MapManager.mapCellH*hudMapPixelScale;
 				
 				var roomCellW = RoomCache.rmWidths[? room];
 				var roomCellH = RoomCache.rmHeights[? room];
@@ -292,14 +297,26 @@ draw_surface_ext(topLeftSurf,0,0,topLeftResolutionScale,topLeftResolutionScale,0
 			}
 		surface_reset_target();
 		
-		var xi = GUIWidth-(hudMapWidth)*hudMapScale-mean(GUIWidth,GUIHeight)/20;
+		var xi = GUIWidth-(hudMapWidth)*hudMapPixelScale-mean(GUIWidth,GUIHeight)/20;
 		var yi = mean(GUIWidth,GUIHeight)/20;
-		draw_surface_ext(hudMapSurf,xi,yi,hudMapScale,hudMapScale,0,c_white,1);
-		draw_surface_ext(hudMapDetails,xi,yi,hudMapScale,hudMapScale,0,c_white,1);
+		
+		surface_set_target(hudMapSurf);
+			var roomX = int64(string_copy(str,8,3));
+			var roomY = int64(string_copy(str,12,3));
+			var roomW = RoomCache.rmWidths[? room];
+			var roomH = RoomCache.rmHeights[? room];
+			draw_clear_alpha(c_white,0.0);
+			var xM = hudMapWidth/2-(roomX+0.5*roomW)*hudMapPixelScale*MapManager.mapCellW;
+			var yM = hudMapHeight/2-(roomY+0.5*roomH)*hudMapPixelScale*MapManager.mapCellH;
+			draw_surface_ext(MapManager.mapSurface,xM,yM,hudMapPixelScale,hudMapPixelScale,0,c_white,1.0);
+		surface_reset_target();
+		
+		draw_surface_ext(hudMapSurf,xi,yi,hudMapPixelScale,hudMapPixelScale,0,c_white,1);
+		draw_surface_ext(hudMapDetails,xi,yi,hudMapPixelScale,hudMapPixelScale,0,c_white,1);
 	}
 #endregion
 
-//messages
+#region messages
 if ds_list_size(messageFeed) != 0
 {
 	var deleteMessage = false;
@@ -331,8 +348,17 @@ if ds_list_size(messageFeed) != 0
 		messageTop += messageDivider;
 	}
 }
+#endregion
 			
-//level up indication
+//interaction button TESTER
+if instance_exists(objPlayer) && objPlayer.interactionInstance != noone
+{
+	var x1 = (objPlayer.x-camera_get_view_x(Camera.cam))/320;
+	var y1 = (objPlayer.y-24-camera_get_view_y(Camera.cam))/176
+	draw_sprite_ext(spr_b_prompt,floor(current_time/60),x1*GUIWidth,y1*GUIHeight,4,4,0,c_white,1.0);
+}
+			
+//level up indication TESTER
 if PlayerStats.statPoints != 0 draw_circle_color(20,20,15,c_yellow,c_yellow,false);
 
 //equipment

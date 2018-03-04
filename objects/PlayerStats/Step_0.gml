@@ -23,7 +23,10 @@ magicalStagger = 2+0.25*intelligence+0.25*willpower;
 physicalToughness = 2+0.30*constitution;
 magicalToughness = 2+0.30*willpower;
 
-//update AP
+jumpHeightVar = jumpHeightVarInitial+scr_player_ability_get(abilityType.movement,movementAbility.high_jump,playerAbilityStats.numberActivated);
+jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);							//jumpHeightVar*<blockSize>
+
+	//update AP
 ap = 0;
 for (var i = 0; i < ds_map_size(AbilityCache.playerAbilities); i++)
 	{
@@ -38,4 +41,16 @@ for (var i = 0; i < ds_map_size(AbilityCache.playerAbilities); i++)
 		}
 		abilityID = ds_map_find_next(typeCache,abilityID);
 	}
+}
+
+	//update combo lengths
+GCPrev = GCSMod; GFPrev = GFSMod; ACPrev = ACSMod; AFPrev = AFSMod;
+GCSMod = scr_player_ability_get(abilityType.combat,combatAbility.combo_plus,playerAbilityStats.numberActivated);
+GFSMod = scr_player_ability_get(abilityType.combat,combatAbility.finisher_plus,playerAbilityStats.numberActivated);
+ACSMod = scr_player_ability_get(abilityType.combat,combatAbility.aerial_plus,playerAbilityStats.numberActivated);
+AFSMod = scr_player_ability_get(abilityType.combat,combatAbility.devastator_plus,playerAbilityStats.numberActivated);
+if GCPrev!=GCSMod || GFPrev!=GFSMod || ACPrev!=ACSMod || AFPrev!=AFSMod
+{
+	var class = weapon_get_stat(currentWeaponID,weaponStats.type);
+	scr_resetComboData(class);
 }

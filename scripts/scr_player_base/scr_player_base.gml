@@ -1,11 +1,3 @@
-//get needed data
-var moveH = InputManager.moveInputH;
-var moveV = InputManager.moveInputV;
-if InputManager.xInput xInputQueue = 1;
-if InputManager.yInput yInputQueue = 1;
-if InputManager.aInput aInputQueue = 1;
-if InputManager.bInput bInputQueue = 1;
-
 #region do things
 phaseTimer++;
 subPhaseTimer++;
@@ -77,6 +69,8 @@ switch subPhase
 		if vPhase = vState.grounded
 		{
 			jumpNum = 0;
+			glideTimer = 0;
+			canGlide = true;
 			subPhase = subState.landing;
 			subPhaseTimer = 0;
 			if moveH != 0 scr_player_base_subPhaseDeterminer();
@@ -90,7 +84,7 @@ switch subPhase
 		if moveH != 0 && abs(xSpd) < PlayerStats.moveSpeed xSpd = clamp(xSpd+moveH*PlayerStats.moveSpeed/15,-PlayerStats.moveSpeed,PlayerStats.moveSpeed);
 		else xSpd -= xSpd/16;
 			//ySpd
-		if vPhase = vState.jumping && !InputManager.aInputHeld ySpd -= ySpd/8;
+		if vPhase = vState.jumping && (!InputManager.aInputHeld || !canAct) ySpd -= ySpd/8;
 		break;
 		
 	case subState.landing:
@@ -115,7 +109,7 @@ switch subPhase
 	if aInputQueue
 	{
 		reset_queue();
-		if !(InputManager.moveInputV >= 0.7 && onPlatform)
+		if !(moveV >= 0.7 && onPlatform)
 		{
 			if vPhase == vState.grounded
 			{
@@ -123,29 +117,55 @@ switch subPhase
 				ySpd = -PlayerStats.jumpPow;
 				jumpNum++;
 			}
+			else if jumpNum < scr_player_ability_get(abilityType.movement,movementAbility.double_jump,playerAbilityStats.numberActivated)+1 && abs(ySpd) <= 2
+			{
+				vPhase = vState.jumping;
+				ySpd = -PlayerStats.jumpPow*0.85;
+				jumpNum++;
+			}
 		}
 		else dropThroughPlatforms = true;
 	}
+	
+	//glide
+	if InputManager.aInputHeld && scr_player_ability_get(abilityType.movement,movementAbility.glide,playerAbilityStats.numberActivated) == 1 && canGlide && canAct
+	{
+		var prev = ySpd;
+		ySpd = min(ySpd,0);
+		if prev != ySpd glideTimer++
+		if glideTimer >= round(glideDuration*room_speed)
+		{
+			glideTimer = 0;
+			canGlide = 0;
+		}
+	}
 
-	//to blocking
+	//to blocking/interaction
 	else if bInputQueue && vPhase == vState.grounded
 	{
 		reset_queue();
-		if moveH == 0
+		if interactionInstance == noone
 		{
-			phase = state.blocking;
-			phaseTimer = 0;
-			subPhase = subState.pre;
-			subPhaseTimer = 0;
+			if moveH == 0
+			{
+				phase = state.blocking;
+				phaseTimer = 0;
+				subPhase = subState.pre;
+				subPhaseTimer = 0;
+			}
+			else if canMoveDefend
+			{
+				facing = sign(moveH);
+				phased = 1;
+				phase = state.dodging;
+				phaseTimer = 0;
+				subPhase = subState.performing;
+				subPhaseTimer = 0;
+			}
 		}
-		else if canMoveDefend
+		else
 		{
-			facing = sign(moveH);
-			phased = 1;
-			phase = state.dodging;
-			phaseTimer = 0;
-			subPhase = subState.performing;
-			subPhaseTimer = 0;
+			interactionInstance.used = true;
 		}
 	}
 	
@@ -239,7 +259,7 @@ switch subPhase
 	}
 	
 	////to Ability
-	//else if InputManager.rbInput && can_use_ability()
+	//else if InputManager.rbInput && can_use_ability() && canAct
 	//{
 	//	phase = state.ability;
 	//	phaseTimer = 0;

@@ -4,7 +4,7 @@ var surfH = surface_get_height(application_surface);
 event_inherited();
 
 	//switch enum initializers
-enum menuCurrent {main, inventory, weaponry, equipment, abilities, status, settings};
+enum menuCurrent {main, inventory, weaponry, equipment, abilities, status, map, settings};
 enum inventoryTabType {item, weapon, equipment, accessory, key, alchemy};
 enum abilityTabType {combat, movement, support};
 
@@ -18,6 +18,7 @@ instance_activate_object(objCacheParent);
 instance_activate_object(GameManager);
 instance_activate_object(InputManager);
 instance_activate_object(EffectsManager);
+instance_activate_object(MapManager);
 
 //format menus
 menu_main[0, 0] = "Inventory";
@@ -25,8 +26,9 @@ menu_main[0, 1] = "Weaponry";
 menu_main[0, 2] = "Equipment";
 menu_main[0, 3] = "Status";
 menu_main[0, 4] = "Abilities";
-menu_main[0, 5] = "Settings";
-menu_main[0, 6] = "Return to main menu";
+menu_main[0, 5] = "Map";
+menu_main[0, 6] = "Settings";
+menu_main[0, 7] = "Return to main menu";
 
 menu_inventory[0, 0] = inventoryTabType.item;
 menu_inventory[1, 0] = inventoryTabType.weapon;
@@ -41,9 +43,10 @@ menu_inventory[3, 1] = inventoryTabType.accessory;
 menu_inventory[4, 1] = inventoryTabType.key;
 menu_inventory[5, 1] = inventoryTabType.alchemy;
 
-menu_weaponry[0, 0] = "weapon 1"
-menu_weaponry[0, 1] = "weapon 2"
-menu_weaponry[0, 2] = "equipment"
+menu_weaponry[0, 0] = "weapon 1";
+menu_weaponry[0, 1] = "weapon 2";
+menu_weaponry[0, 2] = "offhand 1";
+menu_weaponry[0, 3] = "offhand 2";
 
 menu_equipment[0, 0] = "" //fill this horizontally with all owned offhands
 
@@ -226,7 +229,7 @@ equipmentTrinketsScale = eTBoxDefaultScale;
 equipmentTrinketsColour = eTBoxDefaultColour;
 
 #endregion
-#region ability Data
+#region Ability Data
 abilityPanelScroll = 0;
 abilityPanelNum = 10;
 	//category title
@@ -289,4 +292,26 @@ abilityDescriptionX = 0.6;
 abilityDescriptionY = 0.3;
 abilityDescriptionSep = 0.02;
 abilityDescriptionWidth = 0.3;
+#endregion
+#region Map Data
+mapCursorX = 0;
+mapCursorY = 0;
+mapCursorXDisplay = mapCursorX;
+mapCursorYDisplay = mapCursorY;
+mapZoomLevel = 1;
+mapZoomLevelDisplay = mapZoomLevel;
+mapPixelScale = 4;
+
+mapViewSurface = noone;
+mapViewBase = noone;
+mapViewDetails = noone;
+
+mapHudViewportX1 = 0.1;
+mapHudViewportY1 = 0.1*surfW/surfH;
+mapHudViewportX2 = 1-0.1;
+mapHudViewportY2 = 1-0.1*surfW/surfH;
+mapHudViewportBorderWidth = 4;
+mapHudViewportBorderColour = c_orange;
+mapHudViewportBaseTransparency = 0.6;
+mapHudViewportBaseColour = c_black;
 #endregion

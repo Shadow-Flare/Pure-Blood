@@ -52,19 +52,19 @@ cache[? abilityStats.icon] = undefined;
 cache[? abilityStats.cost] = 5;
 cache[? abilityStats.maxNum] = 2;
 		#endregion
-		#region Aerial Defense
+		#region Aerial Defense *
 combatCache[? combatAbility.aerial_defense] = ds_map_create();
 var cache = combatCache[? combatAbility.aerial_defense];
-cache[? abilityStats.name] = "Aerial Defense";
+cache[? abilityStats.name] = "Aerial Defense *";
 cache[? abilityStats.description] = "Enables a mid-air version of your defense action. Press @B while mid-air to perform it. Defensive action whilst mid-air typically have a cooldown.";
 cache[? abilityStats.icon] = undefined;
 cache[? abilityStats.cost] = 2;
 cache[? abilityStats.maxNum] = 1;
 		#endregion
-		#region Critical Boost
+		#region Critical Boost *
 combatCache[? combatAbility.critical_boost] = ds_map_create();
 var cache = combatCache[? combatAbility.critical_boost];
-cache[? abilityStats.name] = "Critical Boost";
+cache[? abilityStats.name] = "Critical Boost *";
 cache[? abilityStats.description] = "Boosts damage on a critical hit by 50%.";
 cache[? abilityStats.icon] = undefined;
 cache[? abilityStats.cost] = 3;
@@ -103,10 +103,10 @@ cache[? abilityStats.maxNum] = 1;
 	#endregion
 	#region support
 var supportCache = ability[? abilityType.support];
-		#region Exp Plus
+		#region Exp Plus *
 supportCache[? supportAbility.exp_plus] = ds_map_create();
 var cache = supportCache[? supportAbility.exp_plus];
-cache[? abilityStats.name] = "Exp Plus";
+cache[? abilityStats.name] = "Exp Plus *";
 cache[? abilityStats.description] = "Boosts experience gains by 25% from all sources. Extra copies of this ability stack multiplicatively.";
 cache[? abilityStats.icon] = undefined;
 cache[? abilityStats.cost] = 5;

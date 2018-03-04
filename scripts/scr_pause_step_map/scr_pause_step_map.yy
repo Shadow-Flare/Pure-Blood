@@ -1,8 +1,8 @@
 {
-    "id": "ffe27b7d-658d-4a0d-8b04-c7cd520646a6",
+    "id": "a5c5e8ca-3816-44d7-88a6-c4a70b3f312c",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "redraw_map_hud",
+    "name": "scr_pause_step_map",
     "IsCompatibility": false,
     "IsDnD": false
 }

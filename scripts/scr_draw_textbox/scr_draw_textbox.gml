@@ -16,8 +16,8 @@ var blend = argument6;
 var surfW = surface_get_width(application_surface);
 var surfH = surface_get_height(application_surface);
 
-if !variable_instance_exists(id,"texboxTempSurface") texboxTempSurface = surface_create(surfW,surfH);
-if !variable_instance_exists(id,"texboxTempSurfaceMod") texboxTempSurfaceMod = surface_create(surfW,surfH);
+if !variable_instance_exists(id,"texboxTempSurface") || !surface_exists(texboxTempSurface) texboxTempSurface = surface_create(surfW,surfH);
+if !variable_instance_exists(id,"texboxTempSurfaceMod") || !surface_exists(texboxTempSurfaceMod) texboxTempSurfaceMod = surface_create(surfW,surfH);
 
 if x1 > x2
 {

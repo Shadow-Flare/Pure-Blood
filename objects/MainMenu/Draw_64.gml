@@ -19,7 +19,7 @@ for (var i = 0; i < array_height_2d(current_menu_options); i++)
 
 if transType != mainTransType.none
 {
-	var modifier = transTimer/(room_speed*transDur)
+	var modifier = transTimer/(room_speed*transDur*0.75)
 	draw_set_colour(c_black);
 	draw_set_alpha(modifier);
 	draw_rectangle(0,0,surface_get_width(application_surface),surface_get_height(application_surface),0);

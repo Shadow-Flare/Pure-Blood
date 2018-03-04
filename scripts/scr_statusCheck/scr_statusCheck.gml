@@ -40,17 +40,23 @@ with statCache
 			//activations
 		if specialDamages[i] >= specialResistances[i]
 		{
+			specialDamages[i] = 0;
 			switch i
 			{
 				case specialType.bleed:
-					scr_hit(noone,noone,damageType.pure,hpMax*0.3,specialType.none,0,noone);
+					var dam = hpMax*0.3;
+					with other
+					{
+						scr_hit(noone,noone,damageType.pure,dam,specialType.none,0,noone);
+						scr_hit_effect_blood(id,statCache.hitEffectType,statCache.hitEffectColour,75,2.22);
+					}
 					break;
 			}
 		}
 			//break hp management
 		if specialDamages[i] != 0
 		{			
-			if other.specialHasActivated[i] var spdMod = 6;
+			if specialHasActivated[i] var spdMod = 6;
 			else var spdMod = 1;
 		
 			var specialSpd = (specialResistances[i]/(specialCooldowns[i]*room_speed))*spdMod;

@@ -1,5 +1,4 @@
 #region lock-on
-
 if !canChangeTarget
 {
 	var h = InputManager.targetInputH;
@@ -46,7 +45,7 @@ switch lockOnType
 			lockOnDir = sign(lockOnTarget.x-x);
 			if lockOnDir = 0 lockOnDir = 1;
 		}
-		if InputManager.rsInput && lockOnType == lockOn.soft lockOnType = lockOn.hard;
+		if InputManager.rsInput && lockOnType == lockOn.soft && canAct lockOnType = lockOn.hard;
 		break;
 	case lockOn.hard:
 		lockOnDir = sign(lockOnTarget.x-x);
@@ -55,35 +54,33 @@ switch lockOnType
 		{
 			lockOnTarget = noone;
 			lockOnType = lockOn.off;
+			break;
 		}		
 		if gamepad_is_connected(0)
 		{
 			//target switch
-			if lockOnType = lockOn.hard
+			var h = InputManager.targetInputH;
+			var v = InputManager.targetInputV;
+			if canChangeTarget && !(h==0&&v==0) && canAct
 			{
-				var h = InputManager.targetInputH;
-				var v = InputManager.targetInputV;
-				if canChangeTarget && !(h==0&&v==0)
+				var minDist = -1;
+				if h <= 0 && abs(h)>=abs(v) {var maxAngle = 225; var minAngle = 135;}
+				else if h > 0 && abs(h)>=abs(v) {var maxAngle = 45; var minAngle = 315;}
+				else if v < 0 && abs(v)>=abs(h) {var maxAngle = 135; var minAngle = 45;}
+				else if v >= 0 && abs(v)>= abs(h) {var maxAngle = 315; var minAngle = 225;}
+				with objEnemyParent
 				{
-					var minDist = -1;
-					if h <= 0 && abs(h)>=abs(v) {var maxAngle = 225; var minAngle = 135;}
-					else if h > 0 && abs(h)>=abs(v) {var maxAngle = 45; var minAngle = 315;}
-					else if v < 0 && abs(v)>=abs(h) {var maxAngle = 135; var minAngle = 45;}
-					else if v >= 0 && abs(v)>= abs(h) {var maxAngle = 315; var minAngle = 225;}
-					with objEnemyParent
+					var searchAngle = point_direction(other.lockOnTarget.x,other.lockOnTarget.y,x,y)
+					if other.lockOnTarget != id && ((searchAngle > minAngle && searchAngle < maxAngle)||(minAngle == 315 && (searchAngle < 45 || minAngle > 315))) && (distance_to_object(other.lockOnTarget)<minDist||minDist==-1) && distance_to_object(other) < other.hardLockRange
 					{
-						var searchAngle = point_direction(other.lockOnTarget.x,other.lockOnTarget.y,x,y)
-						if other.lockOnTarget != id && ((searchAngle > minAngle && searchAngle < maxAngle)||(minAngle == 315 && (searchAngle < 45 || minAngle > 315))) && (distance_to_object(other.lockOnTarget)<minDist||minDist==-1) && distance_to_object(other) < other.hardLockRange
-						{
-							minDist = distance_to_object(other.lockOnTarget);
-							other.potentialId = id;
-						}
+						minDist = distance_to_object(other.lockOnTarget);
+						other.potentialId = id;
 					}
-					if minDist != -1
-					{
-						lockOnTarget = potentialId;
-						canChangeTarget = 0;
-					}
+				}
+				if minDist != -1
+				{
+					lockOnTarget = potentialId;
+					canChangeTarget = 0;
 				}
 			}
 			if !canChangeTarget
@@ -93,7 +90,7 @@ switch lockOnType
 		}
 		else
 		{
-			if hardLockOn && InputManager.keyboardTargetChangeInput
+			if  InputManager.keyboardTargetChangeInput && canAct
 			{
 				var stopIt = 0;
 				var targetList = [];
@@ -123,7 +120,7 @@ switch lockOnType
 				lockOnTarget = targetList[lockOnIndex]
 			}
 		}
-		if InputManager.rsInput lockOnType = lockOn.soft;
+		if InputManager.rsInput && canAct lockOnType = lockOn.soft;
 		break;
 }
 
@@ -143,7 +140,7 @@ switch lockOnType
 		}
 	#endregion
 	#region reset dropThroughPlatforms
-if dropThroughPlatforms && !InputManager.aInputHeld dropThroughPlatforms = false;
+if dropThroughPlatforms && (!InputManager.aInputHeld || !canAct) dropThroughPlatforms = false;
 	#endregion
 	#region targets (only ropeshot atm, stuff will probably be added)
 ropeShotTarget = noone;
@@ -210,13 +207,37 @@ switch hitPhase
 		break;
 }
 	#endregion
+	#region determine interactionPossible
+		interactionInstance = noone;
+		with instance_nearest(x,y,objInteractableParent) if playerCanUse
+		{
+			other.interactionInstance = id;
+		}
+	#endregion
 
 #endregion
 
 #region State mechanisms
 
 scr_actor_vStateMachine();
-	
+
+	#region get needed inputs
+if canAct
+{
+	moveH = InputManager.moveInputH;
+	moveV = InputManager.moveInputV;
+	if InputManager.xInput xInputQueue = 1;
+	if InputManager.yInput yInputQueue = 1;
+	if InputManager.aInput aInputQueue = 1;
+	if InputManager.bInput bInputQueue = 1;
+}
+else
+{
+	moveH = 0;
+	moveV = 0;
+	reset_queue();
+}
+	#endregion
 	#region Phase State Machine (nested subPhase)
 switch phase
 {
@@ -252,7 +273,6 @@ switch phase
 scr_hitCheck();
 scr_statusCheck();
 scr_player_equipmentChange();
-//scr_actor_moveWithCollisions();
 
 	//addional properties
 image_xscale = facing;

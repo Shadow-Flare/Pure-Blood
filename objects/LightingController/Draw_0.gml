@@ -64,8 +64,22 @@ if !variable_instance_exists(id,"light") || !surface_exists(light)
 		gpu_set_blendmode(bm_subtract);
 		shader_set(shd_white);
 			draw_surface_ext(cutoutTiles,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
-			with objActorParent draw_sprite_ext(sprite_index,image_index,(x+1-camX)*other.lightScale,(y+1-camY)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
-			with objPlatformMovingParent draw_sprite_ext(sprite_index,image_index,(x+1-camX)*other.lightScale,(y+1-camY)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
+			with objActorParent
+			{
+					draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+					if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
+					{
+						draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+					}
+			}
+			with objBlockParent if visible
+			{
+				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+			}
+			with objInteractableParent if visible
+			{
+				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+			}
 		shader_reset();
 		gpu_set_blendmode(bm_normal);
 	surface_reset_target();
@@ -399,20 +413,24 @@ if normalMappingEnabled
 	}
 	surface_set_target(normalMapCamera);
 		draw_surface_ext(normalMap,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
+		shader_set(shd_white);
 		with objActorParent
 		{
-			shader_set(shd_white);
 				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 				if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
 				{
 					draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 				}
-			shader_reset();
 		}
 		with objBlockParent if visible
 		{
 			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 		}
+		with objInteractableParent if visible
+		{
+			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+		}
+		shader_reset();
 	surface_reset_target();
 	
 	if (!variable_instance_exists(id,"specularMap") || !surface_exists(specularMap))
@@ -441,20 +459,24 @@ if normalMappingEnabled
 	}
 	surface_set_target(specularMapCamera);
 		draw_surface_ext(specularMap,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
+		shader_set(shd_white);
 		with objActorParent
 		{
-			shader_set(shd_white);
 				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
 				if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
 				{
 					draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
 				}
-			shader_reset();
 		}
 		with objBlockParent if visible
 		{
 			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
 		}
+		with objInteractableParent if visible
+		{
+			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
+		}
+		shader_reset();
 	surface_reset_target();
 	#endregion
 	
@@ -526,36 +548,38 @@ for (var i = 0; i < array_length_1d(layerNames); i++)
 	if (!variable_instance_exists(id,"glowMap") || !surface_exists(glowMap))
 	{
 		glowMap = surface_create(room_width,room_height);
+		surface_set_target(glowMap);
+			draw_clear(c_black);
+			for (var i = 0; i < array_length_1d(tileLayers); i++)
+			{
+				var tilemapID = layer_tilemap_get_id(tileLayers[i]);
+				var tilemapFrame = tilemap_get_frame(tilemapID);
+				var tileW = tilemap_get_tile_width(tilemapID);
+				var tileH = tilemap_get_tile_width(tilemapID);
+				var tilesetID = tilemap_get_tileset(tilemapID);
+				var tilesetNormalID = tilesetID+3;
+				tilemap_tileset(tilemapID,tilesetNormalID);
+				for(var j = 0; j < tilemap_get_width(tilemapID); j++)
+				{
+					for (var k = 0; k < tilemap_get_height(tilemapID); k++)
+					{
+						var tile = tilemap_get(tilemapID,j,k);
+						var tileInd = tile_get_index(tile);
+						draw_tile(tilesetNormalID,tile,tilemapFrame,tileW*j,tileH*k);
+					}
+				}
+				tilemap_tileset(tilemapID,tilesetID);
+			}
+			gpu_set_blendmode_ext(bm_zero,bm_src_color);
+				draw_surface(cutoutTiles,0,0);
+			gpu_set_blendmode(bm_normal);
+		surface_reset_target();
 	}
-		if (!variable_instance_exists(id,"glowMap2") || !surface_exists(glowMap2))
+	if (!variable_instance_exists(id,"glowMap2") || !surface_exists(glowMap2))
 	{
 		glowMap2 = surface_create(surface_get_width(light),surface_get_width(light));
 	}
 	surface_set_target(glowMap);
-		draw_clear(c_black);
-		for (var i = 0; i < array_length_1d(tileLayers); i++)
-		{
-			var tilemapID = layer_tilemap_get_id(tileLayers[i]);
-			var tilemapFrame = tilemap_get_frame(tilemapID);
-			var tileW = tilemap_get_tile_width(tilemapID);
-			var tileH = tilemap_get_tile_width(tilemapID);
-			var tilesetID = tilemap_get_tileset(tilemapID);
-			var tilesetNormalID = tilesetID+3;
-			tilemap_tileset(tilemapID,tilesetNormalID);
-			for(var j = 0; j < tilemap_get_width(tilemapID); j++)
-			{
-				for (var k = 0; k < tilemap_get_height(tilemapID); k++)
-				{
-					var tile = tilemap_get(tilemapID,j,k);
-					var tileInd = tile_get_index(tile);
-					draw_tile(tilesetNormalID,tile,tilemapFrame,tileW*j,tileH*k);
-				}
-			}
-			tilemap_tileset(tilemapID,tilesetID);
-		}
-		gpu_set_blendmode_ext(bm_zero,bm_src_color);
-			draw_surface(cutoutTiles,0,0);
-		gpu_set_blendmode(bm_normal);
 	surface_reset_target();
 	surface_set_target(glowMap2);
 		draw_clear(make_color_rgb(0,0,0));

@@ -1,7 +1,7 @@
 #region Up: change offhand equpment/subtype
 
 //Up input change
-if (InputManager.dUInput)
+if (InputManager.dUInput && canAct)
 {
 	dUInputTimer = 0;
 }
@@ -9,7 +9,7 @@ if (InputManager.dUInput)
 if (dUInputTimer != -1)
 {
 	dUInputTimer++;
-	if (!InputManager.dUInputHeld)
+	if (!InputManager.dUInputHeld || !canAct)
 	{
 		if phase != state.offhand && phase != state.ability
 		{
@@ -69,7 +69,7 @@ if (dUInputTimer != -1)
 #region Left: change held weapon
 
 	#region code without hold function (active)
-if InputManager.dLInput
+if InputManager.dLInput && canAct
 {
 	for (var i = 0; i < array_length_1d(PlayerStats.heldWeapons); i++)
 	{
@@ -87,7 +87,7 @@ if InputManager.dLInput
 }
 	#endregion
 	#region code with hold function (inactive)
-//if (InputManager.dLInput)
+//if (InputManager.dLInput && canAct)
 //{
 //	dLInputTimer = 0;
 //}
@@ -95,7 +95,7 @@ if InputManager.dLInput
 //if dLInputTimer != -1
 //{
 //	dLInputTimer++;
-//	if (!InputManager.dLInputHeld)
+//	if (!InputManager.dLInputHeld || !canAct)
 //	{
 //		if phase != state.attacking //&& phase != hooked
 //		{
@@ -125,7 +125,7 @@ if InputManager.dLInput
 #endregion
 #region Right: change active ability
 
-if (InputManager.dRInput)
+if (InputManager.dRInput && canAct)
 {
 	dRInputTimer = 0;
 }
@@ -133,7 +133,7 @@ if (InputManager.dRInput)
 if dRInputTimer != -1
 {
 	dRInputTimer++;
-	if (!InputManager.dRInputHeld)
+	if (!InputManager.dRInputHeld || !canAct)
 	{
 		if phase != state.ability //&& phase != hooked
 		{

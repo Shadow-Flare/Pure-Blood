@@ -84,10 +84,10 @@ with statCache
 	specialCooldowns[specialType.bleed] = 6	
 
 	//Special Damage initializers
-	specialDamages[0] = 0;						//Bleed
+	specialDamages[specialType.bleed] = 0;						//Bleed
 
 	//Special resistances (100 is considered normal)
-	specialResistances[0] = 100;				//Bleed
+	specialResistances[specialType.bleed] = 100;				//Bleed
 	
 	hp = hpMax;
 	mp = mpMax;

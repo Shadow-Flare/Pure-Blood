@@ -1,11 +1,3 @@
-//get needed data
-var moveH = InputManager.moveInputH;
-var moveV = InputManager.moveInputV;
-if InputManager.xInput xInputQueue = 1;
-if InputManager.yInput yInputQueue = 1;
-if InputManager.aInput aInputQueue = 1;
-if InputManager.bInput bInputQueue = 1;
-
 #region do things
 phaseTimer++;
 subPhaseTimer++;

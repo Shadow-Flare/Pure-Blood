@@ -7,6 +7,9 @@ enum vState {grounded, midAir, jumping};
 
 statCache = PlayerStats;
 
+canAct = true;
+interactionInstance = noone;
+
 facing = 1;
 phase = state.base;
 phaseTimer = 0;
@@ -56,7 +59,7 @@ lockOnTarget = noone;
 softLockRange = 260;
 hardLockRange = 320;
 lockImageTimer = 0;
-canChangeTarget = 1;
+canChangeTarget = true;
 
 aimAngle = 0;
 
@@ -111,6 +114,10 @@ dodgeDistance = 16*3.5;				//16*<number of blocks>		//(before "xSpd-=xSpd/4" slo
 dodgeDurationPerforming = 0.2;
 dodgeDurationPost = 0.2;
 
+glideTimer = 0;
+glideDuration = 0.8;	//seconds
+canGlide = 1;
+
 staggeredDuration = 0.9;
 stunnedDuration = 1;
 deflectDuration = 0.7;
@@ -125,3 +132,5 @@ dRInputTimer = -1;
 dDInputTimer = -1;
 
 reset_queue();
+moveH = 0;
+moveV = 0;

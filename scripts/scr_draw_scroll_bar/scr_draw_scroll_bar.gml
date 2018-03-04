@@ -1,6 +1,6 @@
-///@arg xStart[0-1]
-///@arg y1[0-1]
-///@arg y2[0-1]
+///@arg xStart
+///@arg y1
+///@arg y2
 ///@arg type
 ///@arg scale
 ///@arg colour

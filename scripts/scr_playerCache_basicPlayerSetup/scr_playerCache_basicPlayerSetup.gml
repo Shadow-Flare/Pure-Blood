@@ -35,7 +35,9 @@ with PlayerStats
 
 	moveSpeed = 1.5;
 	defaultMoveSpeed = moveSpeed;
-	var jumpHeightVar = 3.3;										//total jump height in blocks (16x16px or 128x128)
+	
+	jumpHeightVarInitial = 3.3;											//total jump height in blocks (16x16px or 128x128)
+	jumpHeightVar = jumpHeightVarInitial
 	jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);		//jumpHeightVar*<blockSize>
 
 	hitEffectType = "blood";
@@ -112,6 +114,11 @@ with PlayerStats
 	
 	//weapon data
 		//main weapons
+	GCSMod = 0;
+	GFSMod = 0;
+	ACSMod = 0;
+	AFSMod = 0;
+		
 	classComboCache = ds_map_create();
 	GCS = noone;
 	GFS = noone;
