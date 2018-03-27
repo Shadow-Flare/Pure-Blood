@@ -1,987 +1,917 @@
-#region INITIALIZER
-attackNames = ds_map_create();
-attackClass = ds_map_create();
-attackTypes = ds_map_create();
-attackSound = ds_map_create();
-attackAnimations = ds_map_create();
-attackFrameData = ds_map_create();
-attackDurations = ds_map_create();
-attackCooldowns = ds_map_create();
-attackHitAudioType = ds_map_create();
-attackHitStarts = ds_map_create();
-attackHitDurations = ds_map_create();
-attackMoveStart = ds_map_create();
-attackMoveDuration = ds_map_create();
-attackMoveDistancesY = ds_map_create();
-attackMoveDistancesX = ds_map_create();
-attackXOffsets = ds_map_create();
-attackYOffsets = ds_map_create();
-attackWidths = ds_map_create();
-attackHeights = ds_map_create();
-attackDamageTypes = ds_map_create();
-attackDamageModifiers = ds_map_create();
-attackStaggerModifiers = ds_map_create();
-attackKnockbacks = ds_map_create();
-attackStatusTypes = ds_map_create();
-attackStatusValues = ds_map_create();
+#region enum Initialisers
+	//Class Enumerators
+enum weaponClass {crossbow, grimoire, sword, spear};
+enum weaponClassStats {name, isMain, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards};
+enum playerClassStats {level, xp, xpNeeded};
 
-classNames = ds_map_create();
-groundComboLengths = ds_map_create();
-groundFinisherLengths = ds_map_create();
-aerialComboLengths = ds_map_create();
-aerialFinisherLengths = ds_map_create();
-groundComboDefault = ds_map_create();
-groundFinisherDefault = ds_map_create();
-aerialComboDefault = ds_map_create();
-aerialFinisherDefault = ds_map_create();
-counterIDs = ds_map_create();
-upwardsIDs = ds_map_create();
-downwardsIDs = ds_map_create();
-forwardsIDs = ds_map_create();
-backwardsIDs = ds_map_create();
+	//Main Weapon Enumerators
+enum weaponStats {type, strMod, conMod, dexMod, cunMod, intMod, wisMod, range, specialType, specialValue, uniqueAttack};
+enum weaponComboTypes {groundCombo, groundFinisher, aerialCombo, aerialFinisher, technical, unique};
+enum comboSpecial {none, blink};
+enum extraComboTypes {upwards};
+enum comboStats {name, class, type, sound, specials, animation, frameData, duration, cooldown, hitSoundType, hitStart, hitDuration, moveStart, moveDuration, moveDistX, moveDistY, damType, damMod, forMod, knockback, specType, specDam};
+enum comboID 
+{
+/* Sword */	sword_counter, sword_earthen_release, sword_burst, sword_shove, sword_slice, sword_blinkstrike, sword_smash, sword_gut, sword_skyward_slice, sword_slash, sword_slam,
+/* Spear */	spear_counter, spear_spin, spear_skewer, spear_vault, spear_stab, spear_juggle, spear_drill, spear_drive, spear_poke, spear_crash,
+/* misc  */ misc_uppercut
+}
+
+	//Offhand Weapon Enumerators
+enum offhandStats {name};
+enum offhandSubtypeStats {name, ammoItem, manaCost, offhandType, damType, damVal, forVal, knockback, specType, specVal};
+enum offhandSubtypeID
+{
+/* crossbow */		crossbow_normal, crossbow_fire, crossbow_ice, crossbow_lightning, crossbow_serrated,
+/* grimoire */		grimoire_blaze, grimoire_frost, grimoire_spark, grimoire_drain, grimoire_osmose
+}
+	//Offhand Active Ability Enumerators
+enum activeAbilityStats {name, manaCost, offhandType};
+enum activeAbilityID
+{
+/* crossbow */		crossbow_rope_shot, crossbow_shrapnel_shot,
+/* grimoire */		grimoire_mine, grimoire_aura
+}
 #endregion
 
-#region #-01 Uppercut:					template for uppercut
-var tmpId = -1;
-attackNames[? tmpId] = "Uppercut";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_1;
-attackAnimations[? tmpId] = sprPlayerBodyDefaultOffhandUppercut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.5;
-attackCooldowns[? tmpId] = 0.1;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 2
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.25);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],2.8);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],-3.75);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],damageType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);		
+#region All Weapon Classes
+class = ds_map_create();
+	#region Main hand
+		#region Sword
+	class[? weaponClass.sword] = ds_map_create();
+	var cache = class[? weaponClass.sword];
+	cache[? weaponClassStats.name] = "Sword";
+	cache[? weaponClassStats.isMain] = true;
+	cache[? weaponClassStats.groundComboLength] = 3;
+	cache[? weaponClassStats.groundFinisherLength] = 1;
+	cache[? weaponClassStats.aerialComboLength] = 3;
+	cache[? weaponClassStats.aerialFinisherLength] = 1;
+	cache[? weaponClassStats.groundComboDefault] = comboID.sword_slice;
+	cache[? weaponClassStats.groundFinisherDefault] = comboID.sword_smash;
+	cache[? weaponClassStats.aerialComboDefault] = comboID.sword_slash;
+	cache[? weaponClassStats.aerialFinisherDefault] = comboID.sword_slam;
+	cache[? weaponClassStats.counter] = comboID.sword_counter;
+	cache[? weaponClassStats.downwards] = comboID.sword_earthen_release;
+	cache[? weaponClassStats.forwards] = comboID.sword_burst;
+	cache[? weaponClassStats.backwards] = comboID.sword_shove;
+		#endregion
+		#region Spear
+	class[? weaponClass.spear] = ds_map_create();
+	var cache = class[? weaponClass.spear];
+	cache[? weaponClassStats.name] = "Spear";
+	cache[? weaponClassStats.isMain] = true;
+	cache[? weaponClassStats.groundComboLength] = 2;
+	cache[? weaponClassStats.groundFinisherLength] = 1;
+	cache[? weaponClassStats.aerialComboLength] = 4;
+	cache[? weaponClassStats.aerialFinisherLength] = 1;
+	cache[? weaponClassStats.groundComboDefault] = comboID.spear_stab;
+	cache[? weaponClassStats.groundFinisherDefault] = comboID.spear_drill;
+	cache[? weaponClassStats.aerialComboDefault] = comboID.spear_poke;
+	cache[? weaponClassStats.aerialFinisherDefault] = comboID.spear_crash;
+	cache[? weaponClassStats.counter] = comboID.spear_counter;
+	cache[? weaponClassStats.downwards] = comboID.spear_spin;
+	cache[? weaponClassStats.forwards] = comboID.spear_skewer;
+	cache[? weaponClassStats.backwards] = comboID.spear_vault;
+		#endregion
+	#endregion
+	#region Offhand
+		#region Crossbow
+	class[? weaponClass.crossbow] = ds_map_create();
+	var cache = class[? weaponClass.crossbow];
+	cache[? weaponClassStats.name] = "Crossbow";
+	cache[? weaponClassStats.isMain] = false;
+		#endregion
+		#region Grimoire
+	class[? weaponClass.grimoire] = ds_map_create();
+	var cache = class[? weaponClass.grimoire];
+	cache[? weaponClassStats.name] = "Grimoire";
+	cache[? weaponClassStats.isMain] = false;
+		#endregion
+	#endregion
+#endregion
+#region All Weapon Combos
+combo = ds_map_create();
+	#region Sword
+		//Ground
+			//Tech
+		#region Counter
+combo[? comboID.sword_counter] = ds_map_create();
+var cache = combo[? comboID.sword_counter];
+cache[? comboStats.name] = "Counter";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordCounter;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+		#region Earthen Release
+combo[? comboID.sword_earthen_release] = ds_map_create();
+var cache = combo[? comboID.sword_earthen_release];
+cache[? comboStats.name] = "Earthen Release";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordEarthenRelease;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.8;
+cache[? comboStats.cooldown] = 0.4;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 0;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.blunt);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.8);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],4);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+		#region Burst
+combo[? comboID.sword_burst] = ds_map_create();
+var cache = combo[? comboID.sword_burst];
+cache[? comboStats.name] = "Burst";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = snd_sword_swing_1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordBurst;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.7;
+cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 80;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.pierce);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.6);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.5);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],3);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+		#region Shove
+combo[? comboID.sword_shove] = ds_map_create();
+var cache = combo[? comboID.sword_shove];
+cache[? comboStats.name] = "Shove";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordShove;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.6;
+cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 6;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.blunt);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.2);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],2.5);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],4);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+			//Uniques
+		#region Skyward Slice
+combo[? comboID.sword_skyward_slice] = ds_map_create();
+var cache = combo[? comboID.sword_skyward_slice];
+cache[? comboStats.name] = "Skyward Slice";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.unique;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordSkywardSlice;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.6;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 8;
+cache[? comboStats.moveDistY] = -2.5*16;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.5);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],-1);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+			//Combo
+		#region Slice
+combo[? comboID.sword_slice] = ds_map_create();
+var cache = combo[? comboID.sword_slice];
+cache[? comboStats.name] = "Slice";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.groundCombo;
+cache[? comboStats.sound] = snd_sword_swing_2;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduratio
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.3;
+cache[? comboStats.cooldown] = 0.4;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 10;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],2);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+			//Finisher
+		#region Smash
+combo[? comboID.sword_smash] = ds_map_create();
+var cache = combo[? comboID.sword_smash];
+cache[? comboStats.name] = "Smash";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.groundFinisher;
+cache[? comboStats.sound] = snd_sword_swing_4;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordSmash;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.7;
+cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 10;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],2.8);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],4);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],6);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+		#region Gut
+combo[? comboID.sword_gut] = ds_map_create();
+var cache = combo[? comboID.sword_gut];
+cache[? comboStats.name] = "Gut";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.groundFinisher;
+cache[? comboStats.sound] = snd_sword_swing_1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordGut;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 1.3;
+cache[? comboStats.cooldown] = 0;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined,
+																								  undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])),
+																							  (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/8/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])),
+																								 (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 2;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.pierce,
+																							 damageType.pierce);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.5,
+																							0.1);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],2,
+																							4);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0,
+																							   2.5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none,
+																							  specialType.bleed);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0,
+																							 130);
+		#endregion
+		//Aerial
+			//Tech
+			//Combo
+		#region Slash
+combo[? comboID.sword_slash] = ds_map_create();
+var cache = combo[? comboID.sword_slash];
+cache[? comboStats.name] = "Slash";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.aerialCombo;
+cache[? comboStats.sound] = snd_sword_swing_1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordAerialSlash;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.35;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 6;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.8);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.25);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0.6);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+		#region Blinkstrike
+combo[? comboID.sword_blinkstrike] = ds_map_create();
+var cache = combo[? comboID.sword_blinkstrike];
+cache[? comboStats.name] = "Blinkstrike";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.aerialCombo;
+cache[? comboStats.sound] = snd_sword_swing_2;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.blink);
+cache[? comboStats.animation] = sprPlayerBodySwordAerialSlash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduratio
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.3;
+cache[? comboStats.cooldown] = 0.15;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 6;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0.6);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+			//finisher
+		#region Slam
+combo[? comboID.sword_slam] = ds_map_create();
+var cache = combo[? comboID.sword_slam];
+cache[? comboStats.name] = "Slam";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.aerialFinisher;
+cache[? comboStats.sound] = snd_sword_swing_4;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordAerialSlam;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.6;
+cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 18;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],2.2);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],4);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],4.5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+	#endregion
+	#region Spear
+		//Ground
+			//Tech
+		#region Counter
+combo[? comboID.spear_counter] = ds_map_create();
+var cache = combo[? comboID.spear_counter];
+cache[? comboStats.name] = "Counter";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearCounter;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+		#region Spin
+combo[? comboID.spear_spin] = ds_map_create();
+var cache = combo[? comboID.spear_spin];
+cache[? comboStats.name] = "Spin";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearSpin;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+		#region Skewer
+combo[? comboID.spear_skewer] = ds_map_create();
+var cache = combo[? comboID.spear_skewer];
+cache[? comboStats.name] = "Skewer";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearSkewer;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+		#region Vault
+combo[? comboID.spear_vault] = ds_map_create();
+var cache = combo[? comboID.spear_vault];
+cache[? comboStats.name] = "Vault";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearVault;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+			//Unique
+		#region Drive
+combo[? comboID.spear_drive] = ds_map_create();
+var cache = combo[? comboID.spear_drive];
+cache[? comboStats.name] = "Drive";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.unique;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearDrive;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+	#endregion
+			//Combo
+		#region Stab
+combo[? comboID.spear_stab] = ds_map_create();
+var cache = combo[? comboID.spear_stab];
+cache[? comboStats.name] = "Stab";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.groundCombo;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearStab;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+			//Finisher
+		#region Drill
+combo[? comboID.spear_drill] = ds_map_create();
+var cache = combo[? comboID.spear_drill];
+cache[? comboStats.name] = "Drill";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.groundFinisher;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearDrill;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+		#region Juggle
+combo[? comboID.spear_juggle] = ds_map_create();
+var cache = combo[? comboID.spear_juggle];
+cache[? comboStats.name] = "Juggle";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.groundFinisher;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearJuggle;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+		//Aerial
+			//Tech
+			//Combo
+		#region Poke
+combo[? comboID.spear_poke] = ds_map_create();
+var cache = combo[? comboID.spear_poke];
+cache[? comboStats.name] = "Poke";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.aerialCombo;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearAerialPoke;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+			//Finisher
+		#region Crash
+combo[? comboID.spear_crash] = ds_map_create();
+var cache = combo[? comboID.spear_crash];
+cache[? comboStats.name] = "Crash";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.aerialFinisher;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearAerialCrash;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+	#endregion
+	#region Misc
+		#region Uppercut Template
+combo[? comboID.misc_uppercut] = ds_map_create();
+var cache = combo[? comboID.misc_uppercut];
+cache[? comboStats.name] = "Uppercut";
+cache[? comboStats.class] = weaponClass.sword;		//???
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = snd_sword_swing_1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyDefaultOffhandUppercut;
+cache[? comboStats.frameData] = -1;
+cache[? comboStats.duration] = 0.5;
+cache[? comboStats.cooldown] = 0.1;
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 2;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.25);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],2.8);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],-3.75);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+		#endregion
+	#endregion
+#endregion
+#region All Offhand Classes
+offhandClass = ds_map_create();
+	#region Crossbow
+offhandClass[? weaponClass.crossbow] = ds_map_create();
+var cache = offhandClass[? weaponClass.crossbow];
+cache[? offhandStats.name] = "Crossbow";
+	#endregion
+	#region Grimoire
+offhandClass[? weaponClass.grimoire] = ds_map_create();
+var cache = offhandClass[? weaponClass.grimoire];
+cache[? offhandStats.name] = "Grimoire";
+	#endregion
+#endregion
+#region All Offhand Subtypes
+subtype = ds_map_create();
+	#region crossbow
+		#region normal bolts
+subtype[? offhandSubtypeID.crossbow_normal] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.crossbow_normal];
+subCache[? offhandSubtypeStats.name] = "Normal Bolts";
+subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
+subCache[? offhandSubtypeStats.manaCost] = 0;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
+subCache[? offhandSubtypeStats.damType] = damageType.blunt;
+subCache[? offhandSubtypeStats.damVal] = 1.0;
+subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.knockback] = 3;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region fire bolts
+subtype[? offhandSubtypeID.crossbow_fire] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.crossbow_fire];
+subCache[? offhandSubtypeStats.name] = "Fire Bolts";
+subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
+subCache[? offhandSubtypeStats.manaCost] = 4;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
+subCache[? offhandSubtypeStats.damType] = damageType.fire;
+subCache[? offhandSubtypeStats.damVal] = 0.85;
+subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.knockback] = 3;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region ice bolts
+subtype[? offhandSubtypeID.crossbow_ice] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.crossbow_ice];
+subCache[? offhandSubtypeStats.name] = "Ice Bolts";
+subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
+subCache[? offhandSubtypeStats.manaCost] = 5;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
+subCache[? offhandSubtypeStats.damType] = damageType.ice;
+subCache[? offhandSubtypeStats.damVal] = 0.85;
+subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.knockback] = 3;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region lightning bolts
+subtype[? offhandSubtypeID.crossbow_lightning] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.crossbow_lightning];
+subCache[? offhandSubtypeStats.name] = "Lightning Bolts";
+subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
+subCache[? offhandSubtypeStats.manaCost] = 6;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
+subCache[? offhandSubtypeStats.damType] = damageType.lightning;
+subCache[? offhandSubtypeStats.damVal] = 0.85;
+subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.knockback] = 3;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region serrated bolts
+subtype[? offhandSubtypeID.crossbow_serrated] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.crossbow_serrated];
+subCache[? offhandSubtypeStats.name] = "Serrated Bolts";
+subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
+subCache[? offhandSubtypeStats.manaCost] = 3;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
+subCache[? offhandSubtypeStats.damType] = damageType.slash;
+subCache[? offhandSubtypeStats.damVal] = 0.6;
+subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.knockback] = 3;
+subCache[? offhandSubtypeStats.specType] = specialType.bleed;
+subCache[? offhandSubtypeStats.specVal] = 20;
+		#endregion
+	#endregion
+	#region grimoire
+		#region blaze
+subtype[? offhandSubtypeID.grimoire_blaze] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.grimoire_blaze];
+subCache[? offhandSubtypeStats.name] = "Blaze";
+subCache[? offhandSubtypeStats.ammoItem] = noone;
+subCache[? offhandSubtypeStats.manaCost] = 16;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
+subCache[? offhandSubtypeStats.damType] = damageType.fire;
+subCache[? offhandSubtypeStats.damVal] = 0.8;
+subCache[? offhandSubtypeStats.forVal] = 1.2;
+subCache[? offhandSubtypeStats.knockback] = 6;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region frost
+subtype[? offhandSubtypeID.grimoire_frost] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.grimoire_frost];
+subCache[? offhandSubtypeStats.name] = "Frost";
+subCache[? offhandSubtypeStats.ammoItem] = noone;
+subCache[? offhandSubtypeStats.manaCost] = 20;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
+subCache[? offhandSubtypeStats.damType] = damageType.ice;
+subCache[? offhandSubtypeStats.damVal] = 1.0;
+subCache[? offhandSubtypeStats.forVal] = 1.2;
+subCache[? offhandSubtypeStats.knockback] = 6;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region spark
+subtype[? offhandSubtypeID.grimoire_spark] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.grimoire_spark];
+subCache[? offhandSubtypeStats.name] = "Spark";
+subCache[? offhandSubtypeStats.ammoItem] = noone;
+subCache[? offhandSubtypeStats.manaCost] = 24;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
+subCache[? offhandSubtypeStats.damType] = damageType.lightning;
+subCache[? offhandSubtypeStats.damVal] = 1.2;
+subCache[? offhandSubtypeStats.forVal] = 1.2;
+subCache[? offhandSubtypeStats.knockback] = 6;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region drain
+subtype[? offhandSubtypeID.grimoire_drain] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.grimoire_drain];
+subCache[? offhandSubtypeStats.name] = "Drain";
+subCache[? offhandSubtypeStats.ammoItem] = noone;
+subCache[? offhandSubtypeStats.manaCost] = 32;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
+subCache[? offhandSubtypeStats.damType] = damageType.dark;
+subCache[? offhandSubtypeStats.damVal] = 0.3;
+subCache[? offhandSubtypeStats.forVal] = 0.7;
+subCache[? offhandSubtypeStats.knockback] = 3;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+		#region osmose
+subtype[? offhandSubtypeID.grimoire_osmose] = ds_map_create();
+var subCache = subtype[? offhandSubtypeID.grimoire_osmose];
+subCache[? offhandSubtypeStats.name] = "Osmose";
+subCache[? offhandSubtypeStats.ammoItem] = noone;
+subCache[? offhandSubtypeStats.manaCost] = 2;
+subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
+subCache[? offhandSubtypeStats.damType] = damageType.slash;
+subCache[? offhandSubtypeStats.damVal] = 0.5;
+subCache[? offhandSubtypeStats.forVal] = 0.4;
+subCache[? offhandSubtypeStats.knockback] = 2;
+subCache[? offhandSubtypeStats.specType] = specialType.none;
+subCache[? offhandSubtypeStats.specVal] = 0;
+		#endregion
+	#endregion
+#endregion
+#region All Offhand Active Abilities
+activeAbility = ds_map_create();
+	#region Crossbow
+		#region Rope Shot
+activeAbility[? activeAbilityID.crossbow_rope_shot] = ds_map_create();
+var cache = activeAbility[? activeAbilityID.crossbow_rope_shot];
+cache[? activeAbilityStats.name] = "Rope Shot"
+cache[? activeAbilityStats.manaCost] = 0;
+cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
+		#endregion
+		#region Shrapnel Shot
+activeAbility[? activeAbilityID.crossbow_shrapnel_shot] = ds_map_create();
+var cache = activeAbility[? activeAbilityID.crossbow_shrapnel_shot];
+cache[? activeAbilityStats.name] = "Shrapnel Shot"
+cache[? activeAbilityStats.manaCost] = 12;
+cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
+		#endregion
+	#endregion
+	#region Grimoire
+		#region Mine
+activeAbility[? activeAbilityID.grimoire_mine] = ds_map_create();
+var cache = activeAbility[? activeAbilityID.grimoire_mine];
+cache[? activeAbilityStats.name] = "Mine"
+cache[? activeAbilityStats.manaCost] = 18;
+cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;
+		#endregion
+		#region Aura
+activeAbility[? activeAbilityID.grimoire_aura] = ds_map_create();
+var cache = activeAbility[? activeAbilityID.grimoire_aura];
+cache[? activeAbilityStats.name] = "Aura"
+cache[? activeAbilityStats.manaCost] = 24;
+cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;
+		#endregion
+	#endregion
 #endregion
 
-//GROUND COMBO VARIABLES
-//Attack Types:
-//	0: non-typical,	used for utilities like counter attacks && directional attacks
-//	1: all slots
-//	2: initial
-//	3: middle
-//	4: finisher
-//Attacks:		(# indicates a non selectable attack)
-//1: Sword
-//		00: #Counter
-//		01: #Skyward Slice
-//		02: #Earthen Release
-//		03: #Burst
-//		04: #Shove
-//		05: Slice (Has alternate animation)
-//		06: Smash
-//		07: Gut
-//2: Spear
-//		08:	#Counter
-//		09:	#Drive
-//		10: #Spin
-//		11: #Skewer
-//		12: #Vault
-//		13: Poke
-//		14: Juggle
-//		15: Drill
-
-#region #000 Sword Counter:			Counter attack - flows into rest of combo afterwards.
-tmpId++;
-attackNames[? tmpId] = "Sword Counter";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = noone;
-attackAnimations[? tmpId] = sprPlayerBodySwordCounter;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.4;
-attackCooldowns[? tmpId] = 0.2;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 20;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],1.3);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],5);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
+#region Player Class Data
+playerClass = ds_map_create();
 #endregion
-#region #001 Earthen Release:		Downwards attack - attack to both sides of player with moderate reach, low damage and high stagger.
-tmpId++;
-attackNames[? tmpId] = "Earthen Release";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = noone;
-attackAnimations[? tmpId] = sprPlayerBodySwordEarthenRelease;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.8;
-attackCooldowns[? tmpId] = 0.4;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 0;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.blunt);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],4);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);		
+#region Player Weapon Combos
+playerCombo = ds_map_create();
 #endregion
-#region #002 Burst:					Forwards attack - flows into rest of combo.
-tmpId++;
-attackNames[? tmpId] = "Burst";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 1;
-attackSound[? tmpId] = snd_sword_swing_1;
-attackAnimations[? tmpId] = sprPlayerBodySwordBurst;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.7;
-attackCooldowns[? tmpId] = 0.3;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 80;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.5);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],3);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);		
+#region Player Offhand Subtypes
+playerOffhandSubtype = ds_map_create();
 #endregion
-#region #003 Shove:					Backwards attack - slow attack pushing enemy backwards.
-tmpId++;
-attackNames[? tmpId] = "Shove";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = noone;
-attackAnimations[? tmpId] = sprPlayerBodySwordShove;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.6;
-attackCooldowns[? tmpId] = 0.3;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 6;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.blunt);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.2);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],2.5);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],4);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-#region #004 Slice:					Fast basic strike.
-tmpId++;
-attackNames[? tmpId] = "Slice";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 1;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySwordSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.35;
-attackCooldowns[? tmpId] = 0.2;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 6;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],1);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],2);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);				
-#endregion
-#region #005 Smash:					Heavy knockback attack.
-tmpId++;
-attackNames[? tmpId] = "Smash";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 2;
-attackSound[? tmpId] = snd_sword_swing_4;
-attackAnimations[? tmpId] = sprPlayerBodySwordSmash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.7;
-attackCooldowns[? tmpId] = 0.3;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 10;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],2.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],4);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],6);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-#region #006 Gut:					Bleed inducing finisher, attemps to knock down opponent on second hit.
-tmpId++;
-attackNames[? tmpId] = "Gut";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 2;
-attackSound[? tmpId] = snd_sword_swing_1;
-attackAnimations[? tmpId] = sprPlayerBodySwordGut;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 1.3;
-attackCooldowns[? tmpId] = 0;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined
-										   ,undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])),
-										 (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/8/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])),
-											(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 2;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce,damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.5,0.1);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],2,4);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],0,2.5);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none,specialType.bleed);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0,130);	
-#endregion
-#region #007 Skyward Slice:			unique weapon attack - slash upwards while jumping, is a more effective uppercut.
-tmpId++;
-attackNames[? tmpId] = "Skyward Slice";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = noone;
-attackAnimations[? tmpId] = sprPlayerBodySwordSkywardSlice;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.6;
-attackCooldowns[? tmpId] = 0.2;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = -2.5*16;
-attackMoveDistancesX[? tmpId] = 0;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.3);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],-1);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
+#region Player Offhand Abilities
+playerActiveAbility = ds_map_create();
 #endregion
 
-#region Sword Base ID List:
-var tmpClassID = weaponClass.sword;
-classNames[? tmpClassID] = "Sword";
-groundComboLengths[? tmpClassID] = 3;
-groundFinisherLengths[? tmpClassID] = 1;
-aerialComboLengths[? tmpClassID] = 3;
-aerialFinisherLengths[? tmpClassID] = 1;
-groundComboDefault[? tmpClassID] = 4;
-groundFinisherDefault[? tmpClassID] = 5;
-aerialComboDefault[? tmpClassID] = 16;
-aerialFinisherDefault[? tmpClassID] = 17;
-counterIDs[? tmpClassID] = 0;
-downwardsIDs[? tmpClassID] = 1;
-forwardsIDs[? tmpClassID] = 2;
-backwardsIDs[? tmpClassID] = 3;
+#region Misc
+	#region Specials initializers
+			//Blink
+		blinkRange = 16*4;
+		blinkAnimationStart = spr_blink_start;
+		blinkAnimationEnd = spr_blink_end;
+		blinkSound = snd_blink
+	#endregion
 #endregion
-
-#region #008 Spear Counter:			Counter attack - flows into rest of combo afterwards.
-tmpId++;
-attackNames[? tmpId] = "Spear Counter";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearCounter;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.4;
-attackCooldowns[? tmpId] = 0.2;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 24;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],1.3);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],5);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-#region #009 Spin:					Downwards attack - attack to both sides of player with moderate reach, low damage and high stagger.
-tmpId++;
-attackNames[? tmpId] = "Spin";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearSpin;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.8;
-attackCooldowns[? tmpId] = 0.4;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 0;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],4);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);		
-#endregion
-#region #010 Skewer:				Forwards attack - flows into rest of combo.
-tmpId++;
-attackNames[? tmpId] = "Skewer";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 1;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearSkewer;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.8;
-attackCooldowns[? tmpId] = 0.2;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 80;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.3);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],3);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);		
-#endregion
-#region #011 Vault:					Backwards attack - flip backwards, landing a light hit in the process.
-tmpId++;
-attackNames[? tmpId] = "Vault";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 1;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearVault;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.6;
-attackCooldowns[? tmpId] = 0.3;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 6;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.2);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],2.5);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],4);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-#region #012 Stab:					Fast basic strike.
-tmpId++;
-attackNames[? tmpId] = "Stab";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 1;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearStab;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.2;
-attackCooldowns[? tmpId] = 0.4;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 6;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],1);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],2);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);				
-#endregion
-#region #013 Juggle:				hits twice, does not uppercut, suitable against mid-air enemies.
-tmpId++;
-attackNames[? tmpId] = "Juggle";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 2;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearJuggle;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.6;
-attackCooldowns[? tmpId] = 0.4;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 8;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],2.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],4);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],10);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-#region #014 Drill:					multi-hit extra-long range stab.
-tmpId++;
-attackNames[? tmpId] = "Drill";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 2;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearDrill;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 2;
-attackCooldowns[? tmpId] = 0;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined,
-											undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])),
-										 (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])),
-											(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 2;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce,damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.5,0.1);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],2,4);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],0,2.5);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none,0);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0,130);	
-#endregion
-#region #015 Drive:					unique weapon attack - stab upwards while jumping.
-tmpId++;
-attackNames[? tmpId] = "Drive";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearDrive;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackFrameData[? tmpId] = -1;
-attackDurations[? tmpId] = 0.6;
-attackCooldowns[? tmpId] = 0.2;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = -40;
-attackMoveDistancesX[? tmpId] = 6;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.3);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],-1);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-
-#region Spear ID List:
-var tmpClassID = weaponClass.spear;
-classNames[? tmpClassID] = "Spear";
-groundComboLengths[? tmpClassID] = 2;
-groundFinisherLengths[? tmpClassID] = 1;
-aerialComboLengths[? tmpClassID] = 4;
-aerialFinisherLengths[? tmpClassID] = 1;
-groundComboDefault[? tmpClassID] = 12;
-groundFinisherDefault[? tmpClassID] = 14;
-aerialComboDefault[? tmpClassID] = 18;
-aerialFinisherDefault[? tmpClassID] = 19;
-counterIDs[? tmpClassID] = 8;
-upwardsIDs[? tmpClassID] = 9;
-downwardsIDs[? tmpClassID] = 10;
-forwardsIDs[? tmpClassID] = 11;
-backwardsIDs[? tmpClassID] = 12;
-#endregion
-
-//AERIAL COMBO VARIABLES
-//Attacks:
-//1: Sword
-//		0: Basic (HAS ALTERNATE ANIMATION)
-//		1: Slam
-
-//aerial class ID lists
-//Sword: (0)Slash (1)Slam
-//Spear: (0)Poke (1)Slam
-
-#region #016 Slash:					Fast basic strike.
-tmpId++;
-attackNames[? tmpId] = "Slash";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_1;
-attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackDurations[? tmpId] = 0.35;
-attackCooldowns[? tmpId] = 0.2;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 6;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],0.6);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-#region #017 Slam:					Heavy knockback attack.
-tmpId++;
-attackNames[? tmpId] = "Slam";
-attackClass[? tmpId] = weaponClass.sword;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_4;
-attackAnimations[? tmpId] = sprPlayerBodySwordAerialSlam;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackDurations[? tmpId] = 0.7;
-attackCooldowns[? tmpId] = 0.3;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/3/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/2/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/4/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 18;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.slash);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],2.2);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],4);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],4.5);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);		
-#endregion
-
-#region #018 Poke:					Fast basic strike.
-tmpId++;
-attackNames[? tmpId] = "Poke";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearAerialPoke;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackDurations[? tmpId] = 0.2;
-attackCooldowns[? tmpId] = 0.4;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 6;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],0.8);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],1.25);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],0.6);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);	
-#endregion
-#region #019 Crash:					Heavy knockback attack with downwards movement
-tmpId++;
-attackNames[? tmpId] = "Crash";
-attackClass[? tmpId] = weaponClass.spear;
-attackTypes[? tmpId] = 0;
-attackSound[? tmpId] = snd_sword_swing_2;
-attackAnimations[? tmpId] = sprPlayerBodySpearAerialCrash;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduration
-attackDurations[? tmpId] = 0.4;
-attackCooldowns[? tmpId] = 0.3;
-attackHitAudioType[? tmpId] = ds_list_create();
-	ds_list_add(attackHitAudioType[? tmpId],undefined);
-attackHitStarts[? tmpId] = ds_list_create();
-	ds_list_add(attackHitStarts[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackHitDurations[? tmpId] = ds_list_create();
-	ds_list_add(attackHitDurations[? tmpId],(attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId])))
-attackMoveStart[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/0/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDuration[? tmpId] = (attackDurations[? tmpId]+attackCooldowns[? tmpId])*(/**/1/**//sprite_get_number(attackAnimations[? tmpId]));
-attackMoveDistancesY[? tmpId] = 0;
-attackMoveDistancesX[? tmpId] = 12;
-attackDamageTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageTypes[? tmpId],damageType.pierce);
-attackDamageModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackDamageModifiers[? tmpId],2.2);
-attackStaggerModifiers[? tmpId] = ds_list_create();
-	ds_list_add(attackStaggerModifiers[? tmpId],4);
-attackKnockbacks[? tmpId] = ds_list_create();
-	ds_list_add(attackKnockbacks[? tmpId],4.5);
-attackStatusTypes[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusTypes[? tmpId],specialType.none);
-attackStatusValues[? tmpId] = ds_list_create();
-	ds_list_add(attackStatusValues[? tmpId],0);		
-#endregion
-
-#region INITIALIZER
-	offhandNames = ds_map_create();
-	
-	offhandSubtypeNames = ds_map_create();
-	offhandSubtypeDamageTypes = ds_map_create();
-	offhandSubtypeDamageModifiers = ds_map_create();
-	offhandSubtypeStatusTypes = ds_map_create();
-	offhandSubtypeStatusValues = ds_map_create();
-	offhandSubtypeStaggerModifiers = ds_map_create();
-	offhandSubtypeKnockbacks = ds_map_create();
-	offhandSubtypeManaCosts = ds_map_create();
-	
-	offhandActivatableNames = ds_map_create();
-	offhandActivatableDurations = ds_map_create();
-	offhandActivatableCooldowns = ds_map_create();
-#endregion
-
-//EQUIPMENT & SPELLS
-	//Equipments:
-		//0:	Crossbow
-		//1:	Spells
-	//SubTypes:
-		//Crossbow:
-			//0:	Normal Bolts
-			//1:	Flaming Bolts
-			//2:	Frozen Bolts
-			//3:	Charged Bolts
-			//4:	Serrated Bolts
-		//Spells:
-			//5:	Blaze
-			//6:	Frost
-			//7:	Spark
-			//8:	Leech
-			//9:	Osmose
-	//Activatables:
-		//Crossbow:
-			//0: Rope Shot
-			//1: Shrapnel Burst
-		//Spell:
-			//2: Mine
-			//3: Shell
-			//4: Aura
-		
-//0: Crossbow
-tmpId = 0;
-offhandNames[? tmpId] = "Crossbow";
-	//subtypes
-  var tmpIdTwo = 0;		//0: Normal Bolts
-		offhandSubtypeNames[? tmpIdTwo] = "Normal Bolts";					//Name	
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.pierce;			//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;					//damage modifier, multiplicative
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;							//Status Type (-1:None|0:Bleed)
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;							//Status Value (NEED BASED ON PLAYER STAT IMPLEMENTATION)
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;					//stagger modifier, multiplicative
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;							//physics knockback on a heavy stagger attack
-		offhandSubtypeManaCosts[? tmpIdTwo] = 0;							//mana cost per use
-		tmpIdTwo++;		//1: Flaming Bolts
-		offhandSubtypeNames[? tmpIdTwo] = "Flaming Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.fire;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.2;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;
-		offhandSubtypeManaCosts[? tmpIdTwo] = 2;
-		tmpIdTwo++;		//2: Frozen Bolts
-		offhandSubtypeNames[? tmpIdTwo] = "Frozen Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.ice;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;					
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;						
-		offhandSubtypeManaCosts[? tmpIdTwo] = 3;
-		tmpIdTwo++;		//3: Charged Bolts
-		offhandSubtypeNames[? tmpIdTwo] = "Charged Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.lightning;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.4;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;				
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;			
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;	
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;					
-		offhandSubtypeManaCosts[? tmpIdTwo] = 4;
-		tmpIdTwo++;		//4: Serrated Bolts
-		offhandSubtypeNames[? tmpIdTwo] = "Serrated Bolts";
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.slash;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.3;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.bleed;					
-		offhandSubtypeStatusValues[? tmpIdTwo] = 20;				
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;						
-		offhandSubtypeManaCosts[? tmpIdTwo] = 3;
-	//activatables
-  var tmpIdThree = 0;	//0: Rope Shot
-		offhandActivatableNames[? tmpIdThree] = "Rope Shot";
-		offhandActivatableDurations[? tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
-		tmpIdThree++;	//1: Shrapnel Burst
-		offhandActivatableNames[? tmpIdThree] = "Shrapnel Burst";
-		offhandActivatableDurations[? tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
-		
-crossbowId = tmpId;
-crossbowSubId = 0;
-crossbowSubSize = tmpIdTwo;
-crossbowActiveId = 0;
-crossbowActiveSize = tmpIdThree;
-
-//1: Spells
-tmpId++;
-offhandNames[? tmpId] = "Spells"
-	//Subtypes
-		tmpIdTwo++;		//5: Blaze
-		offhandSubtypeNames[? tmpIdTwo] = "Blaze"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.fire;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.8;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[? tmpIdTwo] = 4;
-		tmpIdTwo++;		//6: Frost
-		offhandSubtypeNames[? tmpIdTwo] = "Frost"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.ice;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[? tmpIdTwo] = 5;
-		tmpIdTwo++;		//7: Spark
-		offhandSubtypeNames[? tmpIdTwo] = "Spark"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.lightning;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1.2;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[? tmpIdTwo] = 6;
-		tmpIdTwo++;		//8: Leech
-		offhandSubtypeNames[? tmpIdTwo] = "Leech"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.dark;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 0.7;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[? tmpIdTwo] = 8;
-		tmpIdTwo++;		//9: Osmose
-		offhandSubtypeNames[? tmpIdTwo] = "Osmose"
-		offhandSubtypeDamageTypes[? tmpIdTwo] = damageType.arcane;
-		offhandSubtypeDamageModifiers[? tmpIdTwo] = 1;
-		offhandSubtypeStatusTypes[? tmpIdTwo] = specialType.none;					
-		offhandSubtypeStatusValues[? tmpIdTwo] = 0;				
-		offhandSubtypeStaggerModifiers[? tmpIdTwo] = 0.2;			
-		offhandSubtypeKnockbacks[? tmpIdTwo] = 5;	
-		offhandSubtypeManaCosts[? tmpIdTwo] = 2;
-	//activatables
-		tmpIdThree++;	//2: Mine
-		offhandActivatableNames[? tmpIdThree] = "Mine";
-		offhandActivatableDurations[? tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
-		tmpIdThree++;	//4: Aura
-		offhandActivatableNames[? tmpIdThree] = "Aura";
-		offhandActivatableDurations[? tmpIdThree] = 0.4;
-		offhandActivatableCooldowns[? tmpIdThree] = 0.2;
-		
-spellId = tmpId;
-spellSubId = crossbowSubId+crossbowSubSize;
-spellSubSize = tmpIdThree-crossbowSubSize;
-spellActiveId = crossbowActiveId+crossbowActiveSize;
-spellActiveSize = tmpIdThree-crossbowActiveSize;

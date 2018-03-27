@@ -58,7 +58,7 @@ with ArenaController
 				break;
 			case 6:
 				enemyValues[i,0] = "Flying Skeleton"
-				enemyValues[i,4] = obj_flying_skeleton
+				enemyValues[i,4] = objFlyingSkeleton
 				break;
 		}
 
@@ -76,16 +76,14 @@ with ArenaController
 
 	//stats
 	enemyID = 0;
-	arenaStats[0] = enemyValues[0,0];			//Enemy Name
-	arenaStats[1] = 0;							//Enemy Number
-	arenaStats[2] = enemyValues[0,1];			//Enemy Maximum Hp
-	arenaStats[3] = enemyValues[0,2];			//Enemy Physical Strength
-	arenaStats[4] = enemyValues[0,3];			//Enemy Invulnerability
-	arenaStats[5] = PlayerStats.hpMax;				//Player Maximum Hp
-	arenaStats[6] = PlayerStats.physicalPower;		//Player Physical Strength
-	arenaStats[7] = PlayerStats.isInvulnerable;		//Player Invulnerability
-	arenaStats[8] = "Manor: Small";				//Arena Name
-	arenaStats[9] = "off";						//hook points
-	arenaStats[10] = "off";						//platforms
+	arenaStats[0] = enemyValues[enemyID,0];			//Enemy Name
+	arenaStats[1] = enemyID;							//Enemy Number
+	arenaStats[2] = enemyValues[enemyID,1];			//Enemy Maximum Hp
+	arenaStats[3] = enemyValues[enemyID,2];			//Enemy Physical Power
+	arenaStats[4] = enemyValues[enemyID,3];			//Enemy Invulnerability
+	arenaStats[5] = PlayerStats.isInvulnerable;		//Player Invulnerability
+	arenaStats[6] = "Manor: Small";				//Arena Name
+	arenaStats[7] = "off";						//hook points
+	arenaStats[8] = "off";						//platforms
 }
 #endregion

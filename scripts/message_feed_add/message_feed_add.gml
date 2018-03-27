@@ -2,5 +2,5 @@
 
 var str = argument0;
 
-ds_list_add(GameManager.messageFeed,str);
-ds_list_add(GameManager.messageTimers,0);
+ds_list_add(HudManager.messageFeed,str);
+ds_list_add(HudManager.messageTimers,0);

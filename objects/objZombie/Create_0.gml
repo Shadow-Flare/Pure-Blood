@@ -2,13 +2,13 @@ event_inherited();
 
 with statCache
 {
-	hpMax = 20;											
+	hpMax = 40;											
 	mpMax = 0;											
 	
 	damagePower = 7;									
 	staggerPower = 3;									
 	
-	physicalToughness = 1.2;								
+	physicalToughness = 1.8;								
 	magicalToughness = 1;		
 	breakCooldownDuration = 2;
 	

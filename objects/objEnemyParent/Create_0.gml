@@ -33,6 +33,9 @@ hasBeenUppercut = false;
 hasStaggered = false;
 hasFlung = false;
 
+//base data
+pushable = true;
+
 //drives
 driveJump = false;
 driveAction = 0;

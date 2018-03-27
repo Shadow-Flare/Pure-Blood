@@ -1,7 +1,7 @@
 event_inherited();
 
 //player enumerators
-enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, emote, dying, action1, action2, action3, action4, action5};
+enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, itemUse, emote, dying, action1, action2, action3, action4, action5};
 enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, stunned, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
 enum vState {grounded, midAir, jumping};
 
@@ -65,6 +65,12 @@ aimAngle = 0;
 
 jumpNum = 0;
 
+usedItemSlotIndex = 0;
+usedItemIndex = 0;
+usedItemSprite = noone;
+usedItemAnimDuration = 0;
+usedItemUseDuration = 0;
+
 offhandHardCooldown = 0.2;
 offhandHardCooldownTimer = -1;
 offhandAimGraphicDistance = 64;
@@ -77,7 +83,7 @@ crossbowDurationAerialPre = 0.2;
 crossbowDurationAerialFire = 0.25;
 crossbowDurationAerialHolding = 0.2;
 crossbowAerialBounce = -0.3;
-crossbowBoltInitialSpeed = 10;
+crossbowBoltInitialSpeed = 16;
 
 ropeShotDurationPre = 0.2;
 ropeShotDurationFire = 0.25;

@@ -10,3 +10,7 @@ envXSpd = 0;
 envYSpd = 0;
 envXSpdBuffer = 0;
 envYSpdBuffer = 0;
+
+playerCanUse = false;
+used = false;
+useRange = 16;

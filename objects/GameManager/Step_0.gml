@@ -2,22 +2,19 @@
 if gameState != GameState.mainMenu
 {
 	if pauseState == PauseState.normal 
-	{
-			//DIALOG TESTER
-		if InputManager.backInput && CutsceneManager.dialogCurrentState == dialogState.closed with CutsceneManager
-		{
-			dialogCurrentState = dialogState.opening;
-
-			dialogIndex = 0;
-			dialogIndexSub = 0;
-			dialogCurrentType = dialogType.choice;
-
-			var cache = DialogCache.choices[| dialogIndex];
-			ds_list_copy(dialogChoiceOptions,cache[| dialogIndexSub]);
-		}
-	
+	{		
 		with objPlayer
 		{		
+			//determine BattleState
+			other.battlePhase = battleState.peace;
+			with objEnemyParent
+			{
+				if distance_to_object(objPlayer) < GameManager.battlePhaseRange
+				{
+					GameManager.battlePhase = battleState.battle;
+					break;
+				}
+			}
 			//control manager
 			if CutsceneManager.playerCanActDialog && CutsceneManager.playerCanActCutscene
 			{

@@ -38,6 +38,7 @@ with objAttackEffectParent
 						var breakHp = stats.magicalBreakHp;
 						break;
 				}
+				if phase == state.hitReaction && subPhase == subState.aerialStagger breakToughness /= 2;
 					//determine reaction
 						//stagger guaranteed [1]
 				if attack.hitStagger == -1 reaction = 1;
@@ -78,11 +79,10 @@ with objAttackEffectParent
 						if phase == state.hitReaction && subPhase == subState.aerialStagger
 						{
 								//reset timer
-							subPhaseTimer -= 0.4*room_speed;
-							if subPhaseTimer <= 0 subPhaseTimer = 0;
+							subPhaseTimer = 0;
 								//movement
 							xSpd = attack.hitKnockback*dirNum;
-							ySpd = 0;
+							ySpd = -attack.hitKnockback;
 						}
 						else
 						{
@@ -138,6 +138,8 @@ with objAttackEffectParent
 						subPhase = subState.aerialStagger;
 						subPhaseTimer = 0;
 						hasBeenUppercut = true;
+						stats.physicalBreakHp = 0;
+						stats.magicalBreakHp = 0;
 						//movement
 						ySpd = attack.hitKnockback;
 						xSpd = dirNum*1;

@@ -21,8 +21,8 @@ switch selection
 	case inventoryTabType.equipment:
 		catName = "Equipment";
 		break;
-	case inventoryTabType.accessory:
-		catName = "Accessories";
+	case inventoryTabType.rune:
+		catName = "Runes";
 		break;
 	case inventoryTabType.key:
 		catName = "Key Items";

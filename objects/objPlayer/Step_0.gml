@@ -144,7 +144,7 @@ if dropThroughPlatforms && (!InputManager.aInputHeld || !canAct) dropThroughPlat
 	#endregion
 	#region targets (only ropeshot atm, stuff will probably be added)
 ropeShotTarget = noone;
-switch PlayerStats.activeOffhandActivatableID
+switch PlayerStats.currentOffhandActivatableID
 {
 		//rope shot
 	case 0:
@@ -209,8 +209,15 @@ switch hitPhase
 	#endregion
 	#region determine interactionPossible
 		interactionInstance = noone;
-		with instance_nearest(x,y,objInteractableParent) if playerCanUse
+		var dist = noone;
+		with objInteractableParent if playerCanUse && (dist == noone || distance_to_object(other) < dist)
 		{
+			dist = distance_to_object(other)
+			other.interactionInstance = id;
+		}
+		with objActorParent if playerCanUse && (dist == noone || distance_to_object(other) < dist)
+		{
+			dist = distance_to_object(other)
 			other.interactionInstance = id;
 		}
 	#endregion
@@ -261,6 +268,9 @@ switch phase
 		break;
 	case state.hitReaction:
 		scr_player_hitReaction();
+		break;
+	case state.itemUse:
+		scr_player_itemUse();
 		break;
 	case state.dying:
 		scr_player_dying();

@@ -17,9 +17,14 @@ enum PauseState {normal, paused, transitioning, death};
 enum attackTypes {melee, projectile};
 enum groundTypes {stone, grass};
 
+enum battleState {peace, battle};
+
 // Initialize Game
 gameState = GameState.mainMenu;
 pauseState = PauseState.normal;
+battlePhase = battleState.peace;
+
+battlePhaseRange = 180;		//pixels
 
 currentCheckpointID = noone;
 checkpointMap = ds_map_create();

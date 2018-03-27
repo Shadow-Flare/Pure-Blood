@@ -5,8 +5,9 @@ event_inherited();
 
 	//switch enum initializers
 enum menuCurrent {main, inventory, weaponry, equipment, abilities, status, map, settings};
-enum inventoryTabType {item, weapon, equipment, accessory, key, alchemy};
+enum inventoryTabType {item, weapon, equipment, rune, key, alchemy};
 enum abilityTabType {combat, movement, support};
+enum equipmentSlot {rune,head,chest,legs,main1,main2,off1,off2,item};
 
 InputManager.startInput = false;
 
@@ -18,6 +19,7 @@ instance_activate_object(objCacheParent);
 instance_activate_object(GameManager);
 instance_activate_object(InputManager);
 instance_activate_object(EffectsManager);
+instance_activate_object(AmbienceController);
 instance_activate_object(MapManager);
 
 //format menus
@@ -33,22 +35,19 @@ menu_main[0, 7] = "Return to main menu";
 menu_inventory[0, 0] = inventoryTabType.item;
 menu_inventory[1, 0] = inventoryTabType.weapon;
 menu_inventory[2, 0] = inventoryTabType.equipment;
-menu_inventory[3, 0] = inventoryTabType.accessory;
+menu_inventory[3, 0] = inventoryTabType.rune;
 menu_inventory[4, 0] = inventoryTabType.key;
 menu_inventory[5, 0] = inventoryTabType.alchemy;
 menu_inventory[0, 1] = inventoryTabType.item;
 menu_inventory[1, 1] = inventoryTabType.weapon;
 menu_inventory[2, 1] = inventoryTabType.equipment;
-menu_inventory[3, 1] = inventoryTabType.accessory;
+menu_inventory[3, 1] = inventoryTabType.rune;
 menu_inventory[4, 1] = inventoryTabType.key;
 menu_inventory[5, 1] = inventoryTabType.alchemy;
 
-menu_weaponry[0, 0] = "weapon 1";
-menu_weaponry[0, 1] = "weapon 2";
-menu_weaponry[0, 2] = "offhand 1";
-menu_weaponry[0, 3] = "offhand 2";
+menu_weaponry[0, 0] = "" //Fill this with all known weapon classes
 
-menu_equipment[0, 0] = "" //fill this horizontally with all owned offhands
+menu_equipment[0, 0] = "" //formality
 
 menu_abilities[0, 0] = abilityTabType.combat;
 menu_abilities[1, 0] = abilityTabType.movement;
@@ -87,10 +86,6 @@ slotExpanded = 0;
 endingGame = false;
 endingPause = false;
 
-	//Pretend data for testing that should be removed
-PRETENDDATATRINKETNUM = 10;
-PRETENDDATATRINKETANGLEMOD = 0;
-
 #region Inventory Data
 	//scroll
 inventoryPanelScroll = 0;
@@ -103,7 +98,7 @@ inventoryTabSprites = ds_list_create();
 inventoryTabSprites[| 0] = spr_item_tab_item;
 inventoryTabSprites[| 1] = spr_item_tab_weapon;
 inventoryTabSprites[| 2] = spr_item_tab_equipment;
-inventoryTabSprites[| 3] = spr_item_tab_accessory;
+inventoryTabSprites[| 3] = spr_item_tab_rune;
 inventoryTabSprites[| 4] = spr_item_tab_key;
 inventoryTabSprites[| 5] = spr_item_tab_alchemy;
 	//tab data
@@ -154,14 +149,121 @@ inventoryDescriptionY = 0.3;
 inventoryDescriptionSep = 0.02;
 inventoryDescriptionWidth = 0.3;
 #endregion
+#region Weaponry Data
+weaponryGroundComboSelected = true;
+weaponryComboList = ds_list_create();
+weaponryExpandValue = 0;
+weaponryExpandDuration = 0.25;	//seconds
+
+	//class textbox Text data
+weaponryClassDetailSurfBorderWidth = 4*8;
+weaponryClassNameFont = fnt_menu;
+draw_set_font(fnt_menu);
+weaponryClassNameHeight = string_height(" ");
+weaponryComboNameFont = fnt_dialog;
+draw_set_font(fnt_menu);
+weaponryComboNameHeight = string_height(" ");
+
+	//text boxes
+		//classes
+weaponryClassTextboxSelectionColour = c_red;
+
+weaponryClassTextboxX = 0.05*surfW;
+weaponryClassTextboxY = 0.05*surfW;
+weaponryClassTextboxHeight = weaponryClassNameHeight+weaponryClassDetailSurfBorderWidth*2;
+weaponryClassTextboxExpandedHeight = 0.4*surfH-weaponryClassTextboxHeight;
+weaponryClassTextboxYSep = weaponryClassTextboxHeight;
+weaponryClassTextboxWidth = 0.6*surfW;
+weaponryClassTextboxScale = 4;
+weaponryClassTextboxType = 0;
+weaponryClassTextboxMainColour = c_blue;
+weaponryClassTextboxOffColour = c_yellow;
+
+	//surfaces
+weaponryClassDetailSurf = surface_create(weaponryClassTextboxWidth,weaponryClassTextboxExpandedHeight)
+weaponryClassDetailSurfStencil = surface_create(weaponryClassTextboxWidth,weaponryClassTextboxExpandedHeight);
+
+	//class textbox data 2
+weaponrySExpYDisplayDifference = 0;
+weaponrySExpYDisplayShiftDuration = 0.1;
+weaponryComboY = weaponryClassTextboxHeight+weaponryClassDetailSurfBorderWidth;
+weaponryComboX = weaponryClassTextboxWidth/6;
+weaponryComboYSep = (weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight-weaponryClassDetailSurfBorderWidth-weaponryComboNameHeight)/3;		//switch class name height for some combo name height if using different fonts
+weaponryComboXSep = weaponryClassTextboxWidth/6;
+weaponryComboYExpSep = weaponryComboNameHeight*1.2;
+
+#endregion
 #region Equipment Data
+	//surfaces
+sXDisplay = 0;
+equipmentSurfaceMinAlpha = 0.3;
+equipmentFadeDuration = 0.4;		//seconds
+equipmentSelectionItemType = itemType.equipment;
+
+equipmentSurfaceMain = noone;
+equipmentSurfaceMainAlpha = 0;
+equipmentSurfaceRunes = noone;
+equipmentSurfaceRunesAlpha = 0;
+equipmentSurfaceInfo = noone;
+equipmentSurfaceInfoAlpha = 0;
+equipmentSurfaceSlot = noone;
+equipmentSurfaceSlotAlpha = 0;
+	//general
+equipCanMove = true;
+equipmentSlotCache = ds_list_create();
+equipmentStatsCache = ds_list_create();
+equipmentPlayerEquipAlt = ds_map_create();
+equipmentPlayerEquipAltStats = ds_map_create();
+equipmentPlayerEquipAlt[? equipmentSlot.rune] = ds_list_create();
 	//text boxes
 var eTBoxDefaultType = 0;
 var eTBoxDefaultScale = 4;
 var eTBoxDefaultColour = c_blue;
+		//player stats Boxes
+equipmentPlayerStatsX1 = surfW*0.65;
+equipmentPlayerStatsY1 = surfW*0.03;
+equipmentPlayerStatsX2 = surfW*0.97;
+equipmentPlayerStatsY2 = surfH*0.65;
+equipmentPlayerStatsType = eTBoxDefaultType;
+equipmentPlayerStatsScale = eTBoxDefaultScale;
+equipmentPlayerStatsColour = make_colour_rgb(50,18,122);
+equipmentPlayerStatsPage = 0;
+equipmentPlayerStatsPageMax = 5;
+
+equipmentPlayerStatsTextColumn1X = equipmentPlayerStatsX1+surfW*0.02;
+equipmentPlayerStatsTextColumn1Y1 = equipmentPlayerStatsY1+surfW*0.02;
+equipmentPlayerStatsTextColumn1Y2 = equipmentPlayerStatsY2-surfW*0.02;
+equipmentPlayerStatsTextColumn2X = equipmentPlayerStatsX2-surfW*0.02;
+equipmentPlayerStatsTextColumn2Y1 = equipmentPlayerStatsTextColumn1Y1;
+equipmentPlayerStatsTextColumn2Y2 = equipmentPlayerStatsTextColumn1Y2;
+equipmentPlayerStatsTextEntries = 11;
+		//equipmentStats Boxes
+equipmentItemStatsX1 = surfW*0.65;
+equipmentItemStatsY1 = surfH*0.65;
+equipmentItemStatsX2 = surfW*0.97;
+equipmentItemStatsY2 = surfH-surfW*0.03;
+equipmentItemStatsType = eTBoxDefaultType;
+equipmentItemStatsScale = eTBoxDefaultScale;
+equipmentItemStatsColour = make_colour_rgb(50,18,122);
+
+equipmentItemStatsTextX = equipmentItemStatsX1+surfW*0.02;
+equipmentItemStatsTextY1 = equipmentItemStatsY1+surfW*0.02;
+equipmentItemStatsTextY2 = equipmentItemStatsY2-surfW*0.02;
+
+equipmentItemStatsTextFont = fnt_menu;
+equipmentItemStatsTextMaxEntriesHor = 2;
+equipmentItemStatsTextMaxEntriesVer = 5+1;		//#+1, where # is the amount of possible datas vertically.
+draw_set_font(equipmentItemStatsTextFont);
+var strHeight = string_height("");
+equipmentItemStatsTextBorderGap = surfW*0.02;
+equipmentItemStatsTextHorizontalSeparation = (equipmentItemStatsX2-equipmentItemStatsX1-2*equipmentItemStatsTextBorderGap)/equipmentItemStatsTextMaxEntriesHor;
+equipmentItemStatsTextVerticalSeparation = (equipmentItemStatsY2-equipmentItemStatsY1-2*equipmentItemStatsTextBorderGap-strHeight)/equipmentItemStatsTextMaxEntriesVer;
 		//main Boxes
 var eMainTBoxDefaultW = surfH*0.15;
 var eMainTBoxDefaultH = eMainTBoxDefaultW;
+equipmentSelectionColour = c_red;
+runeAngleMod = 0;
+equipmentIconScale = 6;
 			//Head
 equipmentHeadX1 = surfW*0.3;
 equipmentHeadY1 = surfH*0.2;
@@ -218,16 +320,32 @@ equipmentOff2Y2 = equipmentOff2Y1+eMainTBoxDefaultH;
 equipmentOff2Type = eTBoxDefaultType;
 equipmentOff2Scale = eTBoxDefaultScale;
 equipmentOff2Colour = eTBoxDefaultColour;
-			//Trinkets
-equipmentTrinketsCenterX = surfW*0.3+surfH*(0.15*0.5);
-equipmentTrinketsCenterY = surfH*0.5;
-equipmentTrinketsRadius = surfH*0.42;
-equipmentTrinketsWidth = eMainTBoxDefaultW;
-equipmentTrinketsHeight = eMainTBoxDefaultH;
-equipmentTrinketsType = eTBoxDefaultType;
-equipmentTrinketsScale = eTBoxDefaultScale;
-equipmentTrinketsColour = eTBoxDefaultColour;
+			//Runes
+equipmentRunesCenterX = surfW*0.3+surfH*(0.15*0.5);
+equipmentRunesCenterY = surfH*0.5;
+equipmentRunesRadius = surfH*0.42;
+equipmentRunesWidth = eMainTBoxDefaultW;
+equipmentRunesHeight = eMainTBoxDefaultH;
+equipmentRunesType = eTBoxDefaultType;
+equipmentRunesScale = eTBoxDefaultScale;
+equipmentRunesColour = eTBoxDefaultColour;
 
+			//Items
+equipmentItemCenterX = equipmentRunesCenterX;
+equipmentItemCenterY = surfH*0.9;
+equipmentItemWidth = eMainTBoxDefaultW;
+equipmentItemHeight = eMainTBoxDefaultH;
+equipmentItemHorSep = surfW*0.1;
+equipmentItemType = eTBoxDefaultType;
+equipmentItemScale = eTBoxDefaultScale;
+equipmentItemColour = eTBoxDefaultColour;
+
+	//Expanded slot Text box
+equipmentSlotTypeIsHor = true;
+equipmentSlotSep = surfW*0.075;
+equipmentSlotNum = 4;			// either side, total visible = this*2+1, alpha = zero at this+1 distance.
+equipmentSlotExpandedNew = false;
+equipmentSlotActiveItem = noone;
 #endregion
 #region Ability Data
 abilityPanelScroll = 0;

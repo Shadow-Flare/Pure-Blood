@@ -13,6 +13,9 @@ var type = argument4;
 var scale = argument5;
 var blend = argument6;
 
+var prevAlpha = draw_get_alpha();
+draw_set_alpha(1);
+
 var surfW = surface_get_width(application_surface);
 var surfH = surface_get_height(application_surface);
 
@@ -76,4 +79,6 @@ surface_set_target(texboxTempSurfaceMod);
 	shader_reset();
 surface_reset_target();
 
-draw_surface(texboxTempSurfaceMod,0,0);
+draw_surface_ext(texboxTempSurfaceMod,0,0,1,1,0,c_white,prevAlpha);
+
+draw_set_alpha(prevAlpha);

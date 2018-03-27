@@ -35,7 +35,7 @@ if phase == "timer"
 			caster = other;
 			hitOn = 1;
 			hasHit = 0;
-			hitType = global.offhandSubtypeDamageTypes[global.activeOffhandSubtypeID]
+			hitType = global.offhandSubtypeDamageTypes[global.currentOffhandSubtypeID]
 			hitDamage = 2 //CHANGE
 			hitStagger = 0;
 			hitKnockback = 0;

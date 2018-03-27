@@ -8,22 +8,23 @@ with PlayerStats
 	xpNeeded = 10*power(level+1,2);
 	gold = 0;
 
-	strength = 5;
-	constitution = 5;
-	dexterity = 5;
-	cunning = 5;				//now unused
-	intelligence = 5;
-	willpower = 5;
+	strengthBase = 5;
+	constitutionBase = 5;
+	dexterityBase = 5;
+	cunningBase = 5;
+	intelligenceBase = 5;
+	willpowerBase = 5;
+	
+	strength = strengthBase;
+	constitution = constitutionBase;
+	dexterity = dexterityBase;
+	cunning = cunningBase;
+	intelligence = intelligenceBase;
+	willpower = willpowerBase;
 
 	hpMax = 20+4*constitution;
 	mpMax = 20+4*willpower;
 	apMax = 10+1*cunning;
-	physicalPower = 0+0.5*strength+0.5*dexterity;
-	physicalStagger = 0+0.25*strength;
-	physicalToughness = 2+0.30*constitution;
-	magicalPower = 0+1*intelligence;
-	magicalStagger = 2+0.25*intelligence+0.25*willpower;
-	magicalToughness = 2+0.30*willpower;
 	
 	physicalBreakHp = 0;
 	magicalBreakHp = 0;
@@ -36,17 +37,20 @@ with PlayerStats
 	moveSpeed = 1.5;
 	defaultMoveSpeed = moveSpeed;
 	
+	runeSizeBase = 4;
+	runeSize = runeSizeBase;
+	
 	jumpHeightVarInitial = 3.3;											//total jump height in blocks (16x16px or 128x128)
 	jumpHeightVar = jumpHeightVarInitial
-	jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);		//jumpHeightVar*<blockSize>
+	jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);				//jumpHeightVar*<blockSize>
 
 	hitEffectType = "blood";
 	hitEffectColour = "dark red";
 
-	//Damage type resistances (as percentage; 1 = 100% of damage is recieved)
-	damageResistances[damageType.slash] = 1;
-	damageResistances[damageType.blunt] = 1;
-	damageResistances[damageType.pierce] = 1;
+	//Damage type resistances (magic: as percentage; 1 = 100% of damage is recieved | Physical: 0 = 0 reduc; reduction is subtraction based)
+	damageResistances[damageType.slash] = 0;
+	damageResistances[damageType.blunt] = 0;
+	damageResistances[damageType.pierce] = 0;
 	damageResistances[damageType.fire] = 1;
 	damageResistances[damageType.ice] = 1;
 	damageResistances[damageType.lightning] = 1;
@@ -62,58 +66,67 @@ with PlayerStats
 	specialCooldowns[specialType.bleed] = 6	
 
 	//Special Damage initializers
-	specialDamages[0] = 0;						//Bleed
+	specialDamages[specialType.bleed] = 0;						//Bleed
 
 	//Special resistances (100 is considered normal)
-	specialResistances[0] = 100;				//Bleed
-
-	//owned stuff
-	upgradeHasDoubleJump = 0;
-	upgradeHasHover = 0;
-	upgradeHasAerialDodge = 0;
-
-	ownedOffhands[0] = 0;
-		ownedSubtypes[0,0] = 0;
-		ownedSubtypes[0,1] = 1;
-		ownedSubtypes[0,2] = 2;
-		ownedSubtypes[0,3] = 3;
-		ownedSubtypes[0,4] = 4;
-		ownedActivatables[0,0] = 0;
-	ownedOffhands[1] = 1;
-		ownedSubtypes[1,0] = 5;
-		ownedSubtypes[1,1] = 6;
-		ownedSubtypes[1,2] = 7;
-		ownedSubtypes[1,3] = 8;
-		ownedSubtypes[1,4] = 9;
-		ownedActivatables[1,0] = 2;
-		ownedActivatables[1,1] = 3;
+	specialResistances[specialType.bleed] = 100;				//Bleed
 	
-	//inventory data
+	//equipment data
+		var equipCache = ItemCache.equipment
+		var runeList = equipCache[? equipmentSlot.rune];
+		ds_list_clear(runeList);
+		repeat(PlayerStats.runeSize) ds_list_add(runeList,noone);
+		equipCache[? equipmentSlot.head] = equipmentItem.iron_helmet;
+		equipCache[? equipmentSlot.chest] = equipmentItem.iron_chestplate;
+		equipCache[? equipmentSlot.legs] = equipmentItem.chainmail_leggings;
+		equipCache[? equipmentSlot.main1] = weaponItem.gladius;
+		equipCache[? equipmentSlot.main2] = weaponItem.hastam;
+		equipCache[? equipmentSlot.off1] = weaponItem.crossbow;
+		equipCache[? equipmentSlot.off2] = weaponItem.spell_book;
+
+	//inventory and owned stuff data
 		//items
-		
-		//weapons
-		
-		//equipments
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.arrow,20);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.bomb,3);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.grappling_hook,1);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.shovel,1);
-		//Accessories
+			//items
+		scr_player_inventory_manage(itemType.item,itemItem.crossbow_bolt,30);
+		scr_player_inventory_manage(itemType.item,itemItem.summon_stone,1);
+		scr_player_inventory_manage(itemType.item,itemItem.hearthstone,1);
+			//weapons
+		scr_player_inventory_manage(itemType.weapon,weaponItem.gladius,1);
+		scr_player_inventory_manage(itemType.weapon,weaponItem.hastam,1);
+		scr_player_inventory_manage(itemType.weapon,weaponItem.crossbow,1);
+		scr_player_inventory_manage(itemType.weapon,weaponItem.spell_book,1);
+			//equipments
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.iron_helmet,1);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.bassinet,1);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.red_bandanna,1);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.iron_chestplate,1);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.chainmail_leggings,1);
+			//Runes
+		scr_player_inventory_manage(itemType.rune,runeItem.dagaz,1);
+		scr_player_inventory_manage(itemType.rune,runeItem.lagaz,1);
+		scr_player_inventory_manage(itemType.rune,runeItem.kaunan,1);
 
-		//keys
-		scr_player_inventory_manage(itemType.key,keyItem.summon_stone,1);
-		scr_player_inventory_manage(itemType.key,keyItem.hearthstone,1);
+			//keys
 		scr_player_inventory_manage(itemType.key,keyItem.wooden_key,1);
-		//alchemy
+			//alchemy
 	
-	//ability data
+		//combos
+		scr_player_giveallcombos();
+
+		//offhand subtypes
+		scr_player_givealloffhandsubtypes();
+
+		//active ability
+		scr_player_giveallactiveabilities();
+		
+	//passive ability data
 		scr_player_giveallabilities();
 		//combat
 		//movement
 		//support
 	
-	//weapon data
-		//main weapons
+	//weapon & active data
+		//main weapon combos
 	GCSMod = 0;
 	GFSMod = 0;
 	ACSMod = 0;
@@ -127,14 +140,45 @@ with PlayerStats
 	scr_resetComboData(weaponClass.sword);
 	scr_resetComboData(weaponClass.spear);
 	
-	heldWeapons[0] = weaponItem.gladius;			//start with gladius equipped in slot 1
-	heldWeapons[1] = weaponItem.hastam;				//start with hastam equipped in slot 2
-	currentWeaponID = heldWeapons[0];				//start with slot 1 weapon held
+		//initial data
+	currentWeaponID = ItemCache.equipment[? equipmentSlot.main1];				//gladius
+	currentOffhandID = ItemCache.equipment[? equipmentSlot.off1];				//crossbow
+	currentOffhandSubtypeID = 0;												//first index??
+	currentOffhandActivatableID = 0;											//first index??
 	
-		//offhands
-	scr_set_offhand(0);			//crossbow
-	scr_set_offhand_sub(0);		//normal
-	scr_set_offhand_active(0);	//ropeshot
+	currentWeaponIndex = 0;
+	currentOffhandIndex = 0;
+	currentOffhandSubtypeIndex = 0;
+	currentOffhandActivatableIndex = 0;
+	
+	subtypeCache = ds_list_create();
+	activeCache = ds_list_create();
+	#region initial update of offhand Subtypes and activatables
+		//subtypes
+	ds_list_clear(subtypeCache);
+	var cache = ComboCache.subtype;
+	var subID = ds_map_find_first(cache);
+	while subID != undefined
+	{
+		if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == PlayerStats.currentOffhandID
+		{
+			ds_list_add(subtypeCache,subID);
+		}
+		subID = ds_map_find_next(cache,subID);
+	}
+		//actives
+	ds_list_clear(activeCache);
+	var cache = ComboCache.activeAbility;
+	var subID = ds_map_find_first(cache);
+	while subID != undefined
+	{
+		if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == PlayerStats.currentOffhandID
+		{
+			ds_list_add(activeCache,subID);
+		}
+		subID = ds_map_find_next(cache,subID);
+	}
+	#endregion
 	
 	//misc
 	isInvulnerable = false;

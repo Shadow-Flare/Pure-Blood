@@ -17,6 +17,13 @@ with ItemCache
 		return undefined;
 	}
 	var stat = specificItemCache[?itemStat];
+
+//undefined sprite clause
+if itemStat == itemStats.icon && stat == undefined
+{
+	stat = spr_icon_item_undefined;
+}
+
 //finalise stat (return)
 	return stat;
 }

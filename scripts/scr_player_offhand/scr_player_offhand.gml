@@ -7,10 +7,10 @@ else if moveH != 0 && vPhase == vState.grounded facing = sign(moveH);
 	//Sub states
 #region sub States
 
-switch PlayerStats.activeOffhandID
+switch PlayerStats.currentOffhandID
 {	
 	//Crossbow
-	case 0:	
+	case weaponClass.crossbow:	
 		switch vPhase
 		{
 			case vState.grounded:

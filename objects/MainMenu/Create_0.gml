@@ -30,34 +30,5 @@ sX = 0;
 sY = 0;
 moveTimer = 0;
 
-//effect tester
-with instance_create_depth(0,0,depth,obj_effect_persistent_mouseFollow) boundEffect = obj_effect_base_fire;
-//effect1 = instance_create_depth(room_width*1/4,room_height/2,depth,obj_particle_effect_fire);
-//effect2 = instance_create_depth(room_width/2,room_height/2,depth,obj_particle_effect_ice);
-//effect3 = instance_create_depth(room_width*3/4,room_height/2,depth,obj_particle_effect_lightning);
-//for (var i = 4; i < 10; i++)
-//{
-//	var type = irandom(2);
-//	switch type
-//	{
-//		case 0:
-//			type = obj_particle_effect_fire_menu;
-//			break;
-//		case 1:
-//			type = obj_particle_effect_ice_menu;
-//			break;
-//		case 2:
-//			type = obj_particle_effect_lightning_menu;
-//			break;
-//	}
-//	var effect = instance_create_depth(room_width/2,room_height/2,depth,type);
-//	with effect
-//	{
-//		radius = 24*i*0.3;
-//		var modifier = irandom(1);
-//		if modifier == 0 modifier = -1;
-//		angleDelta *= modifier;
-//		angle = random(360);
-//	}
-////}
-//instance_create_depth(room_width/2,room_height/2,depth,obj_particle_effect_fire_menuFollow);
+	//effect tester
+//with instance_create_depth(0,0,depth,obj_effect_persistent_mouseFollow) boundEffect = obj_effect_base_fire;

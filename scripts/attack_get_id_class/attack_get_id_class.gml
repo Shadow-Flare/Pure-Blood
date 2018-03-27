@@ -1,5 +1,6 @@
 ///@arg attackNum(VAR)
 ///@arg vState(ENUM)
+///@arg class(ENUM)
 var attNum = argument0;
 var vSt = argument1;
 var class = argument2;

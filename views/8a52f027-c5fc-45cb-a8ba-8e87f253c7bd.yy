@@ -17,7 +17,8 @@
         "c0ed24bd-7f01-40ef-9c79-760dc4a04b6c",
         "c73fe793-765b-4b5f-9c67-d6b9ad5b68d4",
         "a24d1a43-a841-4a88-b0c6-a8c816244a2f",
-        "689ff51a-64bc-4369-b86a-5e2a9511e4b5"
+        "689ff51a-64bc-4369-b86a-5e2a9511e4b5",
+        "379f48ae-c52e-4baf-89f8-be20174640e4"
     ],
     "filterType": "GMScript",
     "folderName": "Actor Scripts",

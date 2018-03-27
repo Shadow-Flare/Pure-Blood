@@ -39,6 +39,7 @@ if endingPause
 	ini_close();
 	instance_activate_all();
 	InputManager.bInput = false;
+	InputManager.startInput = false;
 	GameManager.pauseState = PauseState.normal;
 	surface_free(GameManager.pauseSplash);
 	instance_destroy();
@@ -48,10 +49,10 @@ if endingPause
 #region end game
 if endingGame
 {
-	room_goto(rmMainMenu);
-	instance_deactivate_object(GameManager);
-	instance_destroy(all);
-	instance_activate_object(GameManager);
-	GameManager.pauseState = PauseState.normal;
+	instance_destroy(AmbienceController);
+	GameManager.transitionRoomTo = rmMainMenu;
+	GameManager.transitionRoomFrom = room;
+	GameManager.transitionID = 0;
+	GameManager.pauseState = PauseState.transitioning;
 }
 #endregion

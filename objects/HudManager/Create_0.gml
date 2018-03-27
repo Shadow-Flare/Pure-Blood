@@ -1,3 +1,7 @@
+showHud = true;
+hudFadeDuration = 0.6; //seconds
+hudAlpha = 0;
+
 //message feed
 messageFeed = ds_list_create();
 messageTimers = ds_list_create();

@@ -43,7 +43,7 @@ instance_destroy(ParallaxController);
 instance_create_depth(0,0,0,ParallaxController);
 
 		//ambience (audio)
-instance_destroy(AmbienceController);
+//instance_destroy(AmbienceController);
 instance_create_layer(0,0,"lay_technicals",AmbienceController);
 
 ini_close();

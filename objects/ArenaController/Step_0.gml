@@ -57,17 +57,11 @@ with enemy statCache.physicalPower = other.arenaStats[3];
 //Enemy Invulnerability
 with enemy statCache.isInvulnerable = other.arenaStats[4];
 
-//Player Maximum Hp
-PlayerStats.hpMax = other.arenaStats[5];
-
-//Player Physical Strength
-PlayerStats.physicalPower = other.arenaStats[6];
-
 //Player Invulnerability
-PlayerStats.isInvulnerable = other.arenaStats[7];
+PlayerStats.isInvulnerable = other.arenaStats[5];
 
 //Arena Number
-switch arenaStats[8]
+switch arenaStats[6]
 {
 	case "Manor: Small":
 		dest = rmArena1;
@@ -91,7 +85,7 @@ if room != dest && !instance_exists(ArenaSettingsManager) && !instance_exists(ob
 }
 
 //Arena platforms
-switch arenaStats[9]
+switch arenaStats[7]
 {
 	case "off":
 		instance_deactivate_object(objPlatformParent);
@@ -104,7 +98,7 @@ switch arenaStats[9]
 }
 
 //Arena hook points
-switch arenaStats[10]
+switch arenaStats[8]
 {
 	case "off":
 		instance_deactivate_object(objGrappleParent);

@@ -1,347 +1,159 @@
-//inputs
-if gamepad_is_connected(0)
-{
-	gamepad_set_axis_deadzone(0,0.3);
-	moveHInput = gamepad_axis_value(0, gp_axislh);
-	moveVInput = gamepad_axis_value(0, gp_axislv);
-	aInput = gamepad_button_check_pressed(0,gp_face1);
-	bInput = gamepad_button_check_pressed(0,gp_face2);
-	xInput = gamepad_button_check_pressed(0,gp_face3);
-	yInput = gamepad_button_check_pressed(0,gp_face4);
-	lInput = gamepad_button_check(0,gp_padl);
-	rInput = gamepad_button_check(0,gp_padr);
-	uInput = gamepad_button_check(0,gp_padu);
-	dInput = gamepad_button_check(0,gp_padd);
-	startInput = gamepad_button_check_pressed(0,gp_start);
-}
-else
-{
-	moveHInput = 0;
-	moveVInput = 0;
-	lInput = keyboard_check(vk_left);
-	rInput = keyboard_check(vk_right);
-	uInput = keyboard_check(vk_up);
-	dInput = keyboard_check(vk_down);
-	aInput = keyboard_check_pressed(ord("Z"));
-	xInput = keyboard_check_pressed(ord("X"));
-	bInput = keyboard_check_pressed(ord("C"));
-	yInput = keyboard_check_pressed(ord("V"));
-	startInput = keyboard_check_pressed(ord("F"));
-}
+//checks
+var absHInput = abs(InputManager.moveInputH);
+var absVInput = abs(InputManager.moveInputV);
+var horInputMoreThanVert = absHInput >= absVInput;
+var sXPrev = sX;
+var sYPrev = sY;
+var sExpXPrev = sExpX;
 
-//move left/right/up/down
-	//horizontal
-if  moveTimer == 0 || 
-	(moveTimer >= ceil(0.3*room_speed) && moveTimer < ceil(1.0*room_speed) && floor(moveTimer%(ceil(0.35*room_speed))) == 0) ||
-	(moveTimer >= ceil(1.0*room_speed) && floor(moveTimer%(ceil((1/10)*room_speed))) == 0)
+#region Determine movement
+var vInput = 0, hInput = 0;
+if  (moveTimer == 0) || 
+	(moveTimer >= ceil(0.3 * room_speed) && moveTimer < ceil(1.0 * room_speed) && floor(moveTimer % (ceil(0.35 * room_speed))) == 0) ||
+	(moveTimer >= ceil(1.0 * room_speed) && floor(moveTimer%(ceil((1 / 10) * room_speed))) == 0)
 {
-	movedH = 0;
-	if (moveHInput > 0.5 && abs(moveHInput) >= abs(moveVInput)) || rInput {sX++; movedH = 1;}
-	if (moveHInput < -0.5 && abs(moveHInput) >= abs(moveVInput)) || lInput {sX--; movedH = 1;}
-	if sX < 0  sX = 0;
-	else if sX >= array_height_2d(current_menu_options) sX = array_height_2d(current_menu_options) - 1;
-	if sY >= array_length_2d(current_menu_options,sX) sY = array_length_2d(current_menu_options,sX)-1;
-		//vertical
-	if expandedNum == 0
+	if (absHInput > 0.5 && horInputMoreThanVert) hInput = sign(InputManager.moveInputH);
+	else 
 	{
-		if (moveVInput > 0.5 && abs(moveVInput) > abs(moveHInput)) || dInput sY++;
-		if (moveVInput < -0.5 && abs(moveVInput) > abs(moveHInput)) || uInput sY--;
-		if sY < 0 sY = array_length_2d(current_menu_options,sX) - 1;
-		else if sY >= array_length_2d(current_menu_options,sX) sY = 0;
+		if InputManager.dRInput hInput++;
+		if InputManager.dLInput hInput--;
 	}
-	if expandedNum != 0
+
+	if (absVInput > 0.5 && !horInputMoreThanVert) vInput = sign(InputManager.moveInputV);
+	else
 	{
-		if (moveVInput > 0.5 && abs(moveVInput) > abs(moveHInput)) || dInput sExpY++;
-		if (moveVInput < -0.5 && abs(moveVInput) > abs(moveHInput)) || uInput sExpY--;
-		if sExpY >= array_length_1d(slotOptions) sExpY = array_length_1d(slotOptions)-1;
-		if sExpY < 0 sExpY = 0;
-		if sX == 0
-		{
-			expandedNum = 0;
-			current_menu_options = menu_main;
-		}
+		if InputManager.dDInput vInput++;
+		if InputManager.dUInput vInput--;
 	}
 }
 
-if (abs(moveHInput) > 0.5 || abs(moveVInput) > 0.5 || lInput || rInput || uInput || dInput)
+if (absHInput > 0.5 || absVInput > 0.5 || InputManager.dLInput || InputManager.dRInput || InputManager.dUInput || InputManager.dDInput)
 {
 	moveTimer++;
 }
 else moveTimer = 0;
-
-if movedH && (expandedNum != 0)
+#endregion
+#region Apply Movement
+if !slotExpanded
 {
-	for (var i = 0; i < maxEnemies+1; i++)
-	{
-		slotOptions[i] = i;
-	}
-	for (var i = 0; i < array_length_1d(slotOptions); i++)
-	{
-		if slotOptions[i] == ArenaController.arenaStats[1]
-		{
-			sExpY = i;
-			break;
-		}
-	}
+	sX = clamp(sX+hInput,0,array_height_2d(current_menu_options));
+	sY = clamp(sY+vInput,0,array_length_2d(current_menu_options,sX));
 }
+else
+{
+	sExpX = clamp(sExpX+hInput,0,array_length_1d(slotOptions));
+}
+#endregion
 
-//select
 selection = current_menu_options[sX,sY];
 
-if aInput == 1
+#region (A)			Select
+if InputManager.aInput == 1
 {
 	switch current_menu
 	{
 		case "main menu":
-			switch selection
+			if !slotExpanded 
 			{
-				case "Enemy: ":
-					expandedNum = 1;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					slotOptions = ArenaController.enemyList;
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
+				switch selection
+				{
+					case "Enemy: ":
+						slotExpanded = true;
+						slotOptions = [];	
+						slotOptions = ArenaController.enemyList;
+						break;
+					case "Enemy Number: ":
+						slotExpanded = true;
+						slotOptions = [];				
+						for (var i = 0; i < maxEnemies+1; i++)
 						{
-							sExpY = i;
-							break;
+							slotOptions[i] = i;
 						}
-					}
-					break;
-				case "Enemy Number: ":
-					expandedNum = 2;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					for (var i = 0; i < maxEnemies+1; i++)
-					{
-						slotOptions[i] = i;
-					}
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
+						break;
+					case "Enemy Maximum Hp: ":
+						slotExpanded = true;
+						slotOptions = [];	
+						for (var i = 0; i < maxEnemyHp+1; i++)
 						{
-							sExpY = i;
-							break;
+							slotOptions[i] = i;
 						}
-					}
-					break;
-				case "Enemy Maximum Hp: ":
-					expandedNum = 3;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					for (var i = 0; i < maxEnemyHp+1; i++)
-					{
-						slotOptions[i] = i;
-					}
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
+						break;
+					case "Enemy Physical Strength: ":
+						slotExpanded = true;
+						slotOptions = [];
+						for (var i = 0; i < maxEnemyPhysicalStrength+1; i++)
 						{
-							sExpY = i;
-							break;
+							slotOptions[i] = i;
 						}
-					}
-					break;
-				case "Enemy Physical Strength: ":
-					expandedNum = 4;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					for (var i = 0; i < maxEnemyPhysicalStrength+1; i++)
-					{
-						slotOptions[i] = i;
-					}
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
+						break;
+					case "Enemy Invulnerability: ":
+						slotExpanded = true;
+						slotOptions = [];	
+						slotOptions[0] = false;
+						slotOptions[1] = true;
+						break;
+					case "Player Invulnerability: ":
+						slotExpanded = true;
+						slotOptions = [];	
+						slotOptions[0] = false;
+						slotOptions[1] = true;
+						break;
+					case "Change Arena: ":
+						slotExpanded = true;
+						slotOptions = [];	
+						slotOptions[0] = "Manor: Small";
+						slotOptions[1] = "Dungeon: Large";
+						slotOptions[2] = "Forest: Large with pitfalls";
+						slotOptions[3] = "Town: Small, Flat and borderless";
+						break;
+					case "Platforms Enabled: ":
+						slotExpanded = true;
+						slotOptions = [];	
+						slotOptions[0] = false;
+						slotOptions[1] = true;
+						break;
+					case "Hook Points Enabled: ":
+						slotExpanded = true;
+						slotOptions = [];	
+						slotOptions[0] = false;
+						slotOptions[1] = true;
+						break;
+					case "Heal all entities":
+						with PlayerStats
 						{
-							sExpY = i;
-							break;
+							hp = hpMax;
+							mp = mpMax;
 						}
-					}
-					break;
-				case "Enemy Invulnerability: ":
-					expandedNum = 5;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					slotOptions[0] = false;
-					slotOptions[1] = true;
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
+						with ActorStats
 						{
-							sExpY = i;
-							break;
+							hp = hpMax;
+							mp = mpMax;						
 						}
-					}
-					break;
-				case "Player Maximum Hp: ":
-					expandedNum = 6;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					for (var i = 0; i < maxPlayerHp+1; i++)
+						break;
+					case "Remove all enemies":
+						instance_activate_object(ArenaController.enemy)
+						with ArenaController.enemy instance_destroy();
+						break;
+					case "Exit":
+						instance_activate_all();
+						instance_destroy();
+						surface_free(global.pauseSplash);
+						break;
+				}
+				if slotExpanded for (var i = 0; i < array_length_1d(slotOptions); i++)
+				{
+					if slotOptions[i] == ArenaController.arenaStats[sY]
 					{
-						slotOptions[i] = i;
+						sExpX = i;
+						break;
 					}
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
-						{
-							sExpY = i;
-							break;
-						}
-					}
-					break;
-				case "Player Physical Strength: ":
-					expandedNum = 7;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					for (var i = 0; i < maxPlayerPhysicalStrength+1; i++)
-					{
-						slotOptions[i] = i;
-					}
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
-						{
-							sExpY = i;
-							break;
-						}
-					}
-					break;
-				case "Player Invulnerability: ":
-					expandedNum = 8;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					slotOptions[0] = false;
-					slotOptions[1] = true;
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
-						{
-							sExpY = i;
-							break;
-						}
-					}
-					break;
-				case "Change Arena: ":
-					expandedNum = 9;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					slotOptions[0] = "Manor: Small";
-					slotOptions[1] = "Dungeon: Large";
-					slotOptions[2] = "Forest: Large with pitfalls";
-					slotOptions[3] = "Town: Small, Flat and borderless";
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
-						{
-							sExpY = i;
-							break;
-						}
-					}
-					break;
-				case "Platforms: ":
-					expandedNum = 10;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					slotOptions[0] = "off";
-					slotOptions[1] = "on";
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
-						{
-							sExpY = i;
-							break;
-						}
-					}
-					break;
-				case "Hook Points: ":
-					expandedNum = 11;
-					sX++;
-					
-					movedH=1;
-					slotOptions = [];	
-										
-					num = 0;
-					slotOptions[0] = "off";
-					slotOptions[1] = "on";
-					for (var i = 0; i < array_length_1d(slotOptions); i++)
-					{
-						if slotOptions[i] == ArenaController.arenaStats[expandedNum-1]
-						{
-							sExpY = i;
-							break;
-						}
-					}
-					break;
-				case "Heal all entities":
-					with PlayerStats
-					{
-						hp = hpMax;
-						mp = mpMax;
-					}
-					with ActorStats
-					{
-						hp = hpMax;
-						mp = mpMax;						
-					}
-					break;
-				case "Remove all enemies":
-					instance_activate_object(ArenaController.enemy)
-					with ArenaController.enemy instance_destroy();
-					break;
-				case "Exit":
-					instance_activate_all();
-					instance_destroy();
-					surface_free(global.pauseSplash);
-					break;
+				}
 			}
-			if expandedNum != 0 && movedH == 0
+			else
 			{
-				ArenaController.arenaStats[sY] = slotOptions[sExpY];
-				menu_main[sX,sY] = slotOptions[sExpY];
-				if expandedNum == 1
+				var newValue = slotOptions[sExpX]
+				ArenaController.arenaStats[sY] = newValue;
+				if sY == 0
 				{
 					with ArenaController
 					{
@@ -349,7 +161,7 @@ if aInput == 1
 						with enemy instance_destroy();
 						instance_activate_object(objMeleeAttackEffect);
 						with objMeleeAttackEffect instance_destroy();
-						var s = other.slotOptions[other.sExpY]
+						var s = other.slotOptions[other.sExpX]
 						for(var i = 0; i < ArenaController.numberOfEnemies; i++)
 						{
 							if s = enemyValues[i,0]
@@ -360,78 +172,47 @@ if aInput == 1
 							enemyID = 0;
 						}
 						arenaStats[0] = enemyValues[enemyID,0];			//Enemy Name
-						arenaStats[1] = 1;							//Enemy Number
+						arenaStats[1] = 1;								//Enemy Number
 						arenaStats[2] = enemyValues[enemyID,1];			//Enemy Maximum Hp
 						arenaStats[3] = enemyValues[enemyID,2];			//Enemy Physical Strength
 						arenaStats[4] = enemyValues[enemyID,3];			//Enemy Invulnerability
 					}
-					for (var i = 0; i < array_length_1d(ArenaController.arenaStats); i++)
-					{
-						menu_main[ 1, i] = ArenaController.arenaStats[i];
-					}
 				}
-				current_menu_options = menu_main;
-				expandedNum = 0;
-				sX = 0;
+				slotExpanded = false;
 			}
 			break;
 	}
 }
-
-//back
-if bInput == 1
+#endregion
+#region (B)			Cancel
+if InputManager.bInput == 1
 {
 	switch current_menu
 	{
 		case "main menu":
-			if expandedNum != 0
+			if slotExpanded
 			{
-				expandedNum = 0;
-				sX = 0;
+				slotExpanded = false;
 			}
 			else
 			{
-				unpause = 1;
+				unpause = true;
 			}
 			break;
 	}
 }
-
-//un-pause
-if startInput
+#endregion
+#region (Start)		Un-pause
+if InputManager.startInput
 {
 	unpause = 1;
 }
+#endregion
 
+#region execute unpause
 if unpause
 {
-	global.paused = 0;
-	surface_free(global.pauseSplash);
 	instance_activate_all();
-		//Arena platforms
-	switch ArenaController.arenaStats[9]
-	{
-		case "off":
-			instance_deactivate_object(objPlatformParent);
-			layer_set_visible("Tiles_arena_platforms",0)
-			break;
-		case "on":
-			instance_activate_object(objPlatformParent);
-			layer_set_visible("Tiles_arena_platforms",1)
-			break;
-	}
-
-	//Arena hook points
-	switch ArenaController.arenaStats[10]
-	{
-		case "off":
-			instance_deactivate_object(objGrappleParent);
-			layer_set_visible("Tiles_arena_hookPoints",0)
-			break;
-		case "on":
-			instance_activate_object(objGrappleParent);
-			layer_set_visible("Tiles_arena_hookPoints",1)
-			break;
-	}
 	instance_destroy();
 }
+#endregion

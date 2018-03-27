@@ -26,6 +26,8 @@ else
 		case loadType.newGame:
 			instance_create_layer(72,145,"lay_player",objPlayer);
 			with Camera phase = cameraState.player;
+			Camera.xPos = objPlayer.x;
+			Camera.yPos = objPlayer.y;
 			instance_destroy(NewGameLoader);
 			GameManager.gameState = GameState.inGame;
 			type = loadType.ending;
@@ -33,6 +35,8 @@ else
 		case loadType.arena:
 			instance_create_layer( 48,128,"lay_player",objPlayer);
 			with Camera phase = cameraState.player;
+			Camera.xPos = objPlayer.x;
+			Camera.yPos = objPlayer.y;
 			instance_destroy(ArenaGameLoader);
 			GameManager.gameState = GameState.arena;
 			type = loadType.ending;
@@ -40,6 +44,8 @@ else
 		case loadType.hordeMode:
 			instance_create_layer(384,316,"lay_player",objPlayer);
 			with Camera phase = cameraState.player;
+			Camera.xPos = objPlayer.x;
+			Camera.yPos = objPlayer.y;
 			instance_destroy(HordeModeGameLoader);
 			GameManager.gameState = GameState.hordeMode;
 			type = loadType.ending;

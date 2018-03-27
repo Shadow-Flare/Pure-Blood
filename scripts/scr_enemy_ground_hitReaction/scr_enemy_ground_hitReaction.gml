@@ -25,15 +25,6 @@ switch subPhase
 			case vState.midAir:
 				subPhase = subState.aerialStagger;
 				subPhaseTimer = 0;
-					//ySpd
-				if hasBeenUppercut && subPhaseTimer <= round(room_speed*0.7) && ySpd >= -1 && ySpd <= 1
-				{
-					ySpd -= GameManager.grav*(1) //0 grav
-					ySpd -= ySpd/20;
-				}
-					//xSpd
-				if hasBeenUppercut xSpd -= xSpd/12;
-				else xSpd -= xSpd/60;
 				break;
 		}
 			//Sprite
@@ -53,7 +44,7 @@ switch subPhase
 					//ySpd
 				if hasBeenUppercut && subPhaseTimer <= round(room_speed*0.7) && ySpd >= -1 && ySpd <= 1
 				{
-					ySpd -= GameManager.grav*(1) //0 grav
+					ySpd -= GameManager.grav*(1) //0% grav
 					ySpd -= ySpd/20;
 				}
 					//xSpd

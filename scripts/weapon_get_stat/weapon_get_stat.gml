@@ -4,7 +4,8 @@ var wep = argument0;
 var statType = argument1;
 
 var itemWeaponsCache = ItemCache.item[? itemType.weapon];
-var weaponStatCache = itemWeaponsCache[? wep];
+var itemCache = itemWeaponsCache[? wep];
+var weaponStatCache = itemCache[? itemStats.weaponData];
 
 var stat = weaponStatCache[? statType];
 

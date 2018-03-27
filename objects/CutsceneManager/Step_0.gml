@@ -5,11 +5,13 @@ var selectInput = InputManager.aInput;
 switch dialogCurrentState
 {
 	case dialogState.closed:
+		showHud = true;
 		dialogDraw = false;
 		interactionActive = false;
 		playerCanActDialog = true;
 		break;
 	case dialogState.opening:
+		showHud = false;
 		dialogDraw = true;
 		interactionActive = false;
 		playerCanActDialog = false;
@@ -21,6 +23,7 @@ switch dialogCurrentState
 		}
 		break;
 	case dialogState.closing:
+		showHud = true;
 		dialogDraw = true;
 		interactionActive = false;
 		playerCanActDialog = false;
@@ -32,6 +35,7 @@ switch dialogCurrentState
 		}
 		break;
 	case dialogState.dialog:
+		showHud = false;
 		dialogDraw = true;
 		interactionActive = true;
 		playerCanActDialog = false;

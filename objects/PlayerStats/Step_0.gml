@@ -1,4 +1,4 @@
-//level up
+#region level up
 if xp >= xpNeeded
 {
 	message_feed_add("Level Up");
@@ -11,22 +11,165 @@ if xp >= xpNeeded
 	hp = hpMax;
 	mp = mpMax;
 }
+#endregion
+#region manage & gather equipment data
+	//reset
+ds_map_clear(equipmentStats);
+for(var i = 0; i < itemEffects.LENGTH; i++) equipmentStats[? i] = 0;
+	//scan and get
+var equipID = ds_map_find_first(ItemCache.equipment);
+while equipID != undefined
+{
+	if ItemCache.equipment[? equipID] == undefined ItemCache.equipment[? equipID] = noone;
+	if equipID != equipmentSlot.item
+	{
+		var itemID = ItemCache.equipment[? equipID];
+		if itemID != noone && itemID != undefined
+		{
+			if equipID == equipmentSlot.rune
+			{
+				var runeCache = itemID;
+				keyType = itemType.rune;
+				var cache = ItemCache.item[? keyType];
+				for (var i = 0; i < ds_list_size(runeCache); i++)
+				{
+					var itemID = runeCache[| i];
+					if itemID != noone && itemID != undefined
+					{
+						var itemCache = cache[? itemID];
+						var effectCache = itemCache[? itemStats.effectsCache];
+						var effectID = ds_map_find_first(effectCache);
+						while effectID != undefined
+						{
+							equipmentStats[? effectID] += effectCache[? effectID];
+							effectID = ds_map_find_next(effectCache,effectID);
+						}
+					}
+				}
+			}
+			else
+			{
+				switch equipID
+				{
+					case equipmentSlot.head:
+					case equipmentSlot.chest:
+					case equipmentSlot.legs:
+						var keyType = itemType.equipment;
+						break;
+					case equipmentSlot.main1:
+					case equipmentSlot.main2:
+					case equipmentSlot.off1:
+					case equipmentSlot.off2:
+						var keyType = itemType.weapon;
+						break;
+				}
+				var equipMain = [equipmentSlot.main1,equipmentSlot.main2];
+				var equipOff = [equipmentSlot.off1,equipmentSlot.off2];
+				var mainSlot = equipMain[PlayerStats.currentWeaponIndex];
+				var offSlot = equipOff[PlayerStats.currentOffhandIndex];
+				if keyType != itemType.weapon || equipID == mainSlot || equipID = offSlot
+				{
+					var cache = ItemCache.item[? keyType];
+					var itemCache = cache[? itemID];
+					var effectCache = itemCache[? itemStats.effectsCache];
+					var effectID = ds_map_find_first(effectCache);
+					while effectID != undefined
+					{
+						equipmentStats[? effectID] += effectCache[? effectID];
+						effectID = ds_map_find_next(effectCache,effectID);
+					}
+				}
+			}
+		}
+	}
+	equipID = ds_map_find_next(ItemCache.equipment,equipID);
+}
+#endregion
+#region manage offhand Subtypes and activatables
+	//subtypes
+ds_list_clear(subtypeCache);
+var cache = ComboCache.subtype;
+var subID = ds_map_find_first(cache);
+while subID != undefined
+{
+	if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == currentOffhandID
+	{
+		ds_list_add(subtypeCache,subID);
+	}
+	subID = ds_map_find_next(cache,subID);
+}
+ds_list_sort(subtypeCache,true);
+	//actives
+ds_list_clear(activeCache);
+var cache = ComboCache.activeAbility;
+var subID = ds_map_find_first(cache);
+while subID != undefined
+{
+	if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == currentOffhandID
+	{
+		ds_list_add(activeCache,subID);
+	}
+	subID = ds_map_find_next(cache,subID);
+}
+ds_list_sort(activeCache,true);
+#endregion
+#region update stats (has a mirror in the equipment menu draw event, translate all changes there too, but using the variables allready there, manage and gather equipment data on line 15 here should be mirrored too)
+var hpMaxPrev = hpMax;	//these dont have to be mirrored, donest really matter either way
+var mpMaxPrev = mpMax;
 
-//update stats
-hpMax = 20+4*constitution;
-mpMax = 20+4*willpower;
-apMax = 10+1*cunning;
-physicalPower = 0+0.25*strength+0.25*dexterity;
-physicalStagger = 0.5+0.05*strength;
-magicalPower = 0+1*intelligence;
-magicalStagger = 2+0.25*intelligence+0.25*willpower;
-physicalToughness = 2+0.30*constitution;
-magicalToughness = 2+0.30*willpower;
+strength = strengthBase+equipmentStats[? itemEffects.str];
+constitution = constitutionBase+equipmentStats[? itemEffects.con];
+dexterity = dexterityBase+equipmentStats[? itemEffects.dex];
+cunning = cunningBase+equipmentStats[? itemEffects.cun];
+intelligence = intelligenceBase+equipmentStats[? itemEffects.int];
+willpower = willpowerBase+equipmentStats[? itemEffects.wil];
+
+hpMax = 20+4*constitution+equipmentStats[? itemEffects.hp];
+mpMax = 20+4*willpower+equipmentStats[? itemEffects.mp];
+apMax = 10+1*cunning+equipmentStats[? itemEffects.ap];
+
+damageResistances[damageType.slash] = equipmentStats[? itemEffects.slashDef];
+damageResistances[damageType.pierce] = equipmentStats[? itemEffects.pierceDef];
+damageResistances[damageType.blunt] = equipmentStats[? itemEffects.bluntDef];
+
+damageResistances[damageType.fire] = 1+equipmentStats[? itemEffects.fireRes]+0.01*willpower;
+damageResistances[damageType.ice] = 1+equipmentStats[? itemEffects.iceRes]+0.01*willpower;
+damageResistances[damageType.lightning] = 1+equipmentStats[? itemEffects.lightningRes]+0.01*willpower;
+damageResistances[damageType.arcane] = 1+equipmentStats[? itemEffects.arcaneRes]+0.03*willpower-0.02*intelligence;
+damageResistances[damageType.light] = 1+equipmentStats[? itemEffects.lightRes]+0.01*willpower;
+damageResistances[damageType.dark] = 1+equipmentStats[? itemEffects.darkRes]+0.01*willpower;
+
+specialResistances[specialType.bleed] = 100+3*constitution+1.5*intelligence;
+
+alacrity = dexterity*0.33333+cunning*0.1+equipmentStats[? itemEffects.alacrity];
+memory = intelligence*0.66666+equipmentStats[? itemEffects.memory];
+
+physicalPower = 0+0.25*strength+0.25*dexterity+equipmentStats[? itemEffects.physPow];
+physicalStagger = 0.5+0.05*strength+equipmentStats[? itemEffects.physFor];
+physicalToughness = 2+0.30*constitution+equipmentStats[? itemEffects.physTough];
+
+magicalPower = 0+1*intelligence+equipmentStats[? itemEffects.magPow];
+magicalStagger = 2+0.25*intelligence+0.25*willpower+equipmentStats[? itemEffects.magFor];
+magicalToughness = 2+0.30*willpower+equipmentStats[? itemEffects.magTough];
+
+physicalDefense = (damageResistances[damageType.slash]+damageResistances[damageType.blunt]+damageResistances[damageType.pierce])/3;
 
 jumpHeightVar = jumpHeightVarInitial+scr_player_ability_get(abilityType.movement,movementAbility.high_jump,playerAbilityStats.numberActivated);
 jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);							//jumpHeightVar*<blockSize>
-
-	//update AP
+#endregion
+#region scale hp/mp values with max changes
+if hpMax != hpMaxPrev
+{
+	var ratio = hp/hpMaxPrev
+	hp = hpMax*ratio;
+}
+if mpMax != mpMaxPrev
+{
+	var ratio = mp/mpMaxPrev
+	mp = mpMax*ratio;
+}
+#endregion
+#region update AP
 ap = 0;
 for (var i = 0; i < ds_map_size(AbilityCache.playerAbilities); i++)
 	{
@@ -42,8 +185,8 @@ for (var i = 0; i < ds_map_size(AbilityCache.playerAbilities); i++)
 		abilityID = ds_map_find_next(typeCache,abilityID);
 	}
 }
-
-	//update combo lengths
+#endregion
+#region update combo lengths
 GCPrev = GCSMod; GFPrev = GFSMod; ACPrev = ACSMod; AFPrev = AFSMod;
 GCSMod = scr_player_ability_get(abilityType.combat,combatAbility.combo_plus,playerAbilityStats.numberActivated);
 GFSMod = scr_player_ability_get(abilityType.combat,combatAbility.finisher_plus,playerAbilityStats.numberActivated);
@@ -54,3 +197,4 @@ if GCPrev!=GCSMod || GFPrev!=GFSMod || ACPrev!=ACSMod || AFPrev!=AFSMod
 	var class = weapon_get_stat(currentWeaponID,weaponStats.type);
 	scr_resetComboData(class);
 }
+#endregion

@@ -1,13 +1,13 @@
 ///@arg Angle
 
-if mp >= ComboCache.offhandSubtypeManaCosts[ComboCache.activeOffhandSubtypeID]
+if mp >= ComboCache.offhandSubtypeManaCosts[ComboCache.currentOffhandSubtypeID]
 {
-	mp -= ComboCache.offhandSubtypeManaCosts[ComboCache.activeOffhandSubtypeID];
+	mp -= ComboCache.offhandSubtypeManaCosts[ComboCache.currentOffhandSubtypeID];
 	var w = 0;
 }
 else var w = 1;
 
-var SUBID = ComboCache.activeOffhandSubtypeID;
+var SUBID = ComboCache.currentOffhandSubtypeID;
 var qD = argument0+random_range(-2,2);
 var spd = crossbowBoltInitialSpeed;
 var projectileXStrt = x+facing*41+(8*16*dcos(qD)+facing*(8*2.5*dcos(qD+90)));

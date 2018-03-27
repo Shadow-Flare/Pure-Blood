@@ -11,6 +11,7 @@ wantsToRun = noone;
 playerCanActDialog = true;
 playerCanActCutscene = true;
 interactionActive = false;
+showHud = true;
 
 dialogIndex = noone;
 dialogIndexSub = noone;

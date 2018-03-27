@@ -14,18 +14,18 @@ with instance_create_depth(x,y,depth+1,objMeleeAttackEffect)
 	attackAnimation = other.attackAnimation;
 
 		//STATS
-		attackType = ComboCache.attackTypes[? attackID];
-		attackDuration = ds_list_find_value(ComboCache.attackHitDurations[? attackID],hitNum);
-		hitType = ds_list_find_value(ComboCache.attackDamageTypes[? attackID],hitNum);
-		hitDamage = ds_list_find_value(ComboCache.attackDamageModifiers[? attackID],hitNum) * PlayerStats.physicalPower;
-		hitStagger = ds_list_find_value(ComboCache.attackStaggerModifiers[? attackID],hitNum) * PlayerStats.physicalStagger;
-		hitKnockback = ds_list_find_value(ComboCache.attackKnockbacks[? attackID],hitNum);
-		statusType = ds_list_find_value(ComboCache.attackStatusTypes[? attackID],hitNum);
-		statusValue = ds_list_find_value(ComboCache.attackStatusValues[? attackID],hitNum);
+		attackType = ds_list_find_value(combo_get_stat(attackID,comboStats.damType),hitNum);
+		attackDuration = ds_list_find_value(combo_get_stat(attackID,comboStats.hitDuration),hitNum);
+		hitType = ds_list_find_value(combo_get_stat(attackID,comboStats.damType),hitNum);
+		hitDamage = ds_list_find_value(combo_get_stat(attackID,comboStats.damMod),hitNum) * PlayerStats.physicalPower;
+		hitStagger = ds_list_find_value(combo_get_stat(attackID,comboStats.forMod),hitNum) * PlayerStats.physicalStagger;
+		hitKnockback = ds_list_find_value(combo_get_stat(attackID,comboStats.knockback),hitNum);
+		statusType = ds_list_find_value(combo_get_stat(attackID,comboStats.specType),hitNum);
+		statusValue = ds_list_find_value(combo_get_stat(attackID,comboStats.specDam),hitNum);
 		pierce = 0;
 		
 		hitSoundID = noone;
-		var hitAudioType = ds_list_find_value(ComboCache.attackHitAudioType[? attackID],hitNum);
+		var hitAudioType = ds_list_find_value(combo_get_stat(attackID,comboStats.hitSoundType),hitNum);
 		if hitAudioType == undefined
 		{
 				//vvv this will likely need to change
@@ -83,7 +83,7 @@ with instance_create_depth(x,y,depth+1,objMeleeAttackEffect)
 	if attackID = -1 
 	{
 		var tmp = string_replace(effectSpriteName,"Offhand","Crossbow"); //UPDATE THIS WITH ITEM DATA LATER
-		if asset_get_type(tmp) = asset_sprite effectSpriteName = tmp;
+		if asset_get_type(tmp) == asset_sprite effectSpriteName = tmp;
 	}
 		//set data
 	if asset_get_type(effectSpriteName) == asset_sprite
@@ -98,4 +98,4 @@ with instance_create_depth(x,y,depth+1,objMeleeAttackEffect)
 }
 
 //audio
-audio_play_sound(ComboCache.attackSound[? attackID],10,0);
+audio_play_sound(combo_get_stat(attackID,comboStats.sound),10,0);

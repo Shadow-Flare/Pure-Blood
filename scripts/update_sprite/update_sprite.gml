@@ -6,7 +6,7 @@ if baseSpriteIndex != argument0 || equipmentChange
 	//change equipchange clause
 	equipmentChange = false;
 	
-	var weaponStr = weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.name);
+	var weaponStr = item_get_data(itemType.weapon,PlayerStats.currentWeaponID,itemStats.name);
 	var weaponCatStr = class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.name);
 
 	//baseSprite update
@@ -23,7 +23,7 @@ if baseSpriteIndex != argument0 || equipmentChange
 	weaponSpriteName = string_replace(weaponSpriteName,weaponCatStr,weaponStr);
 	weaponSpriteName = string_replace(weaponSpriteName,"Default",weaponStr);
 	
-	if phase = state.attacking && attackID == -1
+	if phase = state.attacking && attackID == comboID.misc_uppercut
 	{
 		var offhandName = "Crossbow"; //UPDATE THIS WHEN OFFHAND ITEMS ADDED
 		tmp = string_replace(bodySpriteName,"Offhand",offhandName);
@@ -33,13 +33,6 @@ if baseSpriteIndex != argument0 || equipmentChange
 			weaponSpriteName = string_replace(weaponSpriteName,"Offhand",offhandName);
 		}
 	}
-	
-	//	//effect sprite
-	//var effectSpriteName = string_replace(weaponSpriteName,"Weapon","Effect");
-	//if attackName == "Uppercut" 
-	//{
-	//	effectSpriteName = string_replace(effectSpriteName,weaponStr,"");
-	//}
 
 	//roundup
 		//body sprite

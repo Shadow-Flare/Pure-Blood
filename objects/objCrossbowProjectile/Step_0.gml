@@ -1,29 +1,27 @@
 //effect object start
 if new
 {
-	if ComboCache.offhandSubtypeNames[? subId] = "Normal Bolts"
+	switch subID
 	{
-		trailColour = make_color_rgb(119,136,153);
-	}
-	else if ComboCache.offhandSubtypeNames[? subId] = "Flaming Bolts"
-	{
-		trailColour = make_color_rgb(226,88,34);
-		boundEffect = obj_effect_base_fire;
-	}
-	else if ComboCache.offhandSubtypeNames[? subId] = "Frozen Bolts"
-	{
-		trailColour = make_color_rgb(21,84,191);
-		boundEffect = obj_effect_base_ice;
-	}
-	else if ComboCache.offhandSubtypeNames[? subId] = "Charged Bolts"
-	{
-		trailColour = make_color_rgb(216,227,76);
-		boundEffect = obj_effect_base_lightning;
-	}
-	else if ComboCache.offhandSubtypeNames[? subId] = "Serrated Bolts"
-	{
-		trailColour = make_color_rgb(139,0,0);
-		trailSizeRatio = 1.9;
+		case offhandSubtypeID.crossbow_normal:
+			trailColour = make_color_rgb(119,136,153);
+			break;
+		case offhandSubtypeID.crossbow_fire:
+			trailColour = make_color_rgb(226,88,34);
+			boundEffect = obj_effect_base_fire;
+			break;
+		case offhandSubtypeID.crossbow_ice:
+			trailColour = make_color_rgb(21,84,191);
+			boundEffect = obj_effect_base_ice;
+			break;
+		case offhandSubtypeID.crossbow_lightning:
+			trailColour = make_color_rgb(216,227,76);
+			boundEffect = obj_effect_base_lightning;
+			break;
+		case offhandSubtypeID.crossbow_serrated:
+			trailColour = make_color_rgb(139,0,0);
+			trailSizeRatio = 1.9;
+			break;
 	}
 	
 	if boundEffect != noone

@@ -1,7 +1,7 @@
 #region Up: change offhand equpment/subtype
 
 //Up input change
-if (InputManager.dUInput && canAct)
+if (InputManager.dUInput && !InputManager.ltInputHeld && canAct)
 {
 	dUInputTimer = 0;
 }
@@ -11,55 +11,17 @@ if (dUInputTimer != -1)
 	dUInputTimer++;
 	if (!InputManager.dUInputHeld || !canAct)
 	{
-		if phase != state.offhand && phase != state.ability
+		if phase != state.offhand && phase != state.ability with PlayerStats
 		{
-			for (var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
-			{
-				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
-				{
-					var ownedID = i;
-					break;
-				}
-			}
-			for (var i = 0; i < array_length_2d(PlayerStats.ownedSubtypes,ownedID); i++)
-			{
-				if PlayerStats.ownedSubtypes[ownedID,i] = PlayerStats.activeOffhandSubtypeID
-				{
-					var ownedSubtypeID = i;
-					break;
-				}
-			}
-			for (var i = 0; i < array_length_1d(PlayerStats.ownedActivatables); i++)
-			{
-				if PlayerStats.ownedActivatables[ownedID,i] = PlayerStats.activeOffhandActivatableID
-				{
-					var activeOwnedID = i;
-					break;
-				}
-			}
-			ownedSubtypeID++;
-			if ownedSubtypeID >= array_length_2d(PlayerStats.ownedSubtypes,ownedID) ownedSubtypeID = 0;
-			PlayerStats.activeOffhandSubtypeID = PlayerStats.ownedSubtypes[ownedID,ownedSubtypeID];
+			currentOffhandSubtypeIndex++
 		}
 		dUInputTimer = -1;
 	}
 	else if (dUInputTimer = floor(room_speed * 0.5))
 	{
-		if phase != state.offhand && phase != state.ability //&& phase != state.hooked
+		if phase != state.offhand && phase != state.ability with PlayerStats
 		{
-			for (var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
-			{
-				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
-				{
-					ownedID = i;
-					break;
-				}
-			}
-			ownedID++;
-			if ownedID >= array_length_1d(PlayerStats.ownedOffhands) ownedID = 0;
-			PlayerStats.activeOffhandID = PlayerStats.ownedOffhands[ownedID];
-			PlayerStats.activeOffhandSubtypeID = PlayerStats.ownedSubtypes[ownedID,0];
-			PlayerStats.activeOffhandActivatableID = PlayerStats.ownedActivatables[ownedID,0];
+			currentOffhandIndex++
 		}
 		dUInputTimer = -1;
 	}
@@ -68,64 +30,19 @@ if (dUInputTimer != -1)
 #endregion
 #region Left: change held weapon
 
-	#region code without hold function (active)
-if InputManager.dLInput && canAct
+	#region code without hold function
+if InputManager.dLInput && !InputManager.ltInputHeld && canAct with PlayerStats
 {
-	for (var i = 0; i < array_length_1d(PlayerStats.heldWeapons); i++)
-	{
-		var ownedID = 0;
-		if PlayerStats.heldWeapons[i] = PlayerStats.currentWeaponID
-		{
-			ownedID = i;
-			break;
-		}
-	}
-	ownedID++;
-	if ownedID >= array_length_1d(PlayerStats.heldWeapons) ownedID = 0;
-	PlayerStats.currentWeaponID = PlayerStats.heldWeapons[ownedID];
-	equipmentChange = true;
+	currentWeaponIndex++;
+	if currentWeaponIndex > 1 currentWeaponIndex = 0;	//2 max weapons atm
+	other.equipmentChange = true;
 }
-	#endregion
-	#region code with hold function (inactive)
-//if (InputManager.dLInput && canAct)
-//{
-//	dLInputTimer = 0;
-//}
-	
-//if dLInputTimer != -1
-//{
-//	dLInputTimer++;
-//	if (!InputManager.dLInputHeld || !canAct)
-//	{
-//		if phase != state.attacking //&& phase != hooked
-//		{
-//			for (var i = 0; i < array_length_1d(PlayerStats.heldWeapons); i++)
-//			{
-//				var ownedID = 0;
-//				if PlayerStats.heldWeapons[i] = PlayerStats.currentWeaponID
-//				{
-//					ownedID = i;
-//					break;
-//				}
-//			}
-//			ownedID++;
-//			if ownedID >= array_length_1d(PlayerStats.heldWeapons) ownedID = 0;
-//			PlayerStats.currentWeaponID = PlayerStats.heldWeapons[ownedID];
-//		}
-//		dLInputTimer = -1;
-//	}
-//	else if dLInputTimer = floor(room_speed * 1)
-//	{
-//		dLInputTimer = -1;
-//		//do hold things
-//	}
-//}
 	#endregion
 
 #endregion
 #region Right: change active ability
 
-if (InputManager.dRInput && canAct)
+if (InputManager.dRInput && !InputManager.ltInputHeld && canAct)
 {
 	dRInputTimer = 0;
 }
@@ -135,36 +52,45 @@ if dRInputTimer != -1
 	dRInputTimer++;
 	if (!InputManager.dRInputHeld || !canAct)
 	{
-		if phase != state.ability //&& phase != hooked
+		if phase != state.ability with PlayerStats
 		{
-			for (var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
-			{
-				var ownedID = 0;
-				if PlayerStats.ownedOffhands[i] = PlayerStats.activeOffhandID
-				{
-					ownedID = i;
-					break;
-				}
-			}
-			for (var i = 0; i < array_length_2d(PlayerStats.ownedActivatables,ownedID); i++)
-			{
-				var activeOwnedID = 0;
-				if PlayerStats.ownedActivatables[ownedID,i] = PlayerStats.activeOffhandActivatableID
-				{
-					activeOwnedID = i;
-					break;
-				}
-			}
-			activeOwnedID++;
-			if activeOwnedID >= array_length_2d(PlayerStats.ownedActivatables,ownedID) activeOwnedID = 0;
-			PlayerStats.activeOffhandActivatableID = PlayerStats.ownedActivatables[ownedID,activeOwnedID];
+			currentOffhandActivatableIndex++;
 		}
 		dRInputTimer = -1;
 	}
-	else if dRInputTimer = floor(room_speed * 1)
+	else if dRInputTimer = floor(room_speed * 0.5)
 	{
 		dRInputTimer = -1;
 	}
 }
 
+#endregion
+
+#region Cleanup
+//main weapon
+	var equip = [equipmentSlot.main1,equipmentSlot.main2];
+	var prevEquipID = ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]]
+	if ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]] == noone currentWeaponIndex = 0;
+	PlayerStats.currentWeaponID = ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]];
+	if prevEquipID != ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]] equipmentChange = true;
+	
+//offhand weapon
+	if PlayerStats.currentOffhandIndex >= 2 PlayerStats.currentOffhandIndex = 0;
+	var equip = [equipmentSlot.off1,equipmentSlot.off2];
+	var prevEquipID = ItemCache.equipment[? equip[PlayerStats.currentOffhandIndex]]
+	if ItemCache.equipment[? equip[PlayerStats.currentOffhandIndex]] == noone currentOffhandIndex = 0;
+	PlayerStats.currentOffhandID = ItemCache.equipment[? equip[PlayerStats.currentOffhandIndex]];
+	if prevEquipID != ItemCache.equipment[? equip[PlayerStats.currentOffhandIndex]]
+	{
+		PlayerStats.currentOffhandSubtypeIndex = 0;
+		PlayerStats.currentOffhandActivatableIndex = 0;
+	}
+	
+//offhand Subtype
+	if PlayerStats.currentOffhandSubtypeIndex >= ds_list_size(PlayerStats.subtypeCache) PlayerStats.currentOffhandSubtypeIndex = 0;
+	PlayerStats.currentOffhandSubtypeID = PlayerStats.subtypeCache[| PlayerStats.currentOffhandSubtypeIndex];
+	
+//offhand activatable
+	if PlayerStats.currentOffhandActivatableIndex >= ds_list_size(PlayerStats.activeCache) PlayerStats.currentOffhandActivatableIndex = 0;
+	PlayerStats.currentOffhandActivatableID = PlayerStats.activeCache[| PlayerStats.currentOffhandActivatableIndex];
 #endregion

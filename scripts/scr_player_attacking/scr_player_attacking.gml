@@ -9,22 +9,7 @@ var groundFinisherSize = PlayerStats.GFS[? wepClass];
 var aerialComboSize = PlayerStats.ACS[? wepClass];
 var aerialFinisherSize = PlayerStats.AFS[? wepClass];
 
-	//visuals
-switch attackName
-{
-	case "Burst":
-		if phaseTimer == round(attackMoveStart*room_speed)
-		{
-			var feetX = x;
-			var feetY = y+(sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index));
-			with create_effect(false,feetX,feetY,-1,sprDustL,0.4,facing,1)
-			{
-				image_alpha = 0.7;
-			}
-		}
-		break;
-}
-		//check if alt, if it is use alternative sprite
+	//check if alt, if it is use alternative sprite
 var comboType = noone
 switch vPhase
 {
@@ -48,9 +33,10 @@ if attackID == compareID && comboSizeToCheck%2 == attackNum%2 && attackNum < com
 update_sprite(animToUse,-(attackDuration+attackCooldown));
 
 	//attack Effect
-for(var i = 0; i < ds_list_size(ComboCache.attackHitStarts[? attackID]); i++)
+for(var i = 0; i < ds_list_size(combo_get_stat(attackID,comboStats.hitStart)); i++)
 {
-	if phaseTimer == round(ds_list_find_value(ComboCache.attackHitStarts[? attackID], i)*room_speed)
+	var test = round(ds_list_find_value(combo_get_stat(attackID,comboStats.hitStart), i)*room_speed);
+	if phaseTimer == round(ds_list_find_value(combo_get_stat(attackID,comboStats.hitStart), i)*room_speed)
 	{
 		scr_player_createAttackEffect(attackID,i,true);
 	}
@@ -180,7 +166,7 @@ switch vPhase
 							phased = 0;
 							attackNum++;
 							reset_queue();
-							scr_player_beginAttack(-1);
+							scr_player_beginAttack(comboID.misc_uppercut);
 							phaseTimer = 0;							//reset for properties
 							subPhase = subState.performing;
 							subPhaseTimer = 0;
@@ -256,6 +242,9 @@ switch vPhase
 							#region keep aerial attacking?
 						if xInputQueue && attackNum+1 != aerialComboSize+aerialFinisherSize && lastAttackHasHit
 						{
+							attackNum++;
+							reset_queue();
+							scr_player_beginAttack(attack_get_id(attackNum,vState.midAir));
 							canChangeVState = false;
 							vChangeBreak = false;
 							lastAttackHasHit = false;
@@ -271,9 +260,6 @@ switch vPhase
 								aerialTargetX = -4;
 								aerialTargetY = -4;	
 							}
-							attackNum++;
-							reset_queue();
-							scr_player_beginAttack(attack_get_id(attackNum,vState.midAir));
 							phaseTimer = 0;							//reset for properties
 							subPhase = subState.performing;
 							subPhaseTimer = 0;

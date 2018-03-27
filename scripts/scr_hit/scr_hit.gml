@@ -20,7 +20,17 @@ if attackType != damageType.none
 		//damage
 	var mh = statCache.hpMax;
 	var ph = statCache.hp;
-	statCache.hp -= attackPower*statCache.damageResistances[attackType];
+	switch attackType
+	{
+		case damageType.slash: case damageType.blunt: case damageType.pierce:
+				//physical reduc
+			statCache.hp -= attackPower-statCache.damageResistances[attackType];
+			break;
+		case damageType.fire: case damageType.ice: case damageType.lightning: case damageType.arcane: case damageType.dark: case damageType.light: case damageType.pure:
+				//magical reduc
+			statCache.hp -= attackPower*statCache.damageResistances[attackType];
+			break;
+	}
 	var hpLostRatio = ((ph-statCache.hp)/mh)
 	var partCount = hpLostRatio*(100*0.50)
 	var partSpeed = 1+hpLostRatio*(100*0.04)

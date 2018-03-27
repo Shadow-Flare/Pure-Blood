@@ -105,8 +105,29 @@ switch subPhase
 #endregion
 
 #region change state
+	//Use Item
+	if InputManager.ltInputHeld && (InputManager.dLInputHeld || InputManager.dUInputHeld || InputManager.dRInputHeld || InputManager.dDInputHeld)
+	{
+		if InputManager.dLInputHeld usedItemSlotIndex = 0;
+		else if InputManager.dUInputHeld usedItemSlotIndex = 1;
+		else if InputManager.dRInputHeld usedItemSlotIndex = 2;
+		else if InputManager.dDInputHeld usedItemSlotIndex = 3;
+		
+		var cache = ItemCache.equipment[? equipmentSlot.item];
+		usedItemIndex = cache[| usedItemSlotIndex];
+		
+		if usedItemIndex != noone
+		{
+			scr_player_use_item(usedItemIndex);
+		
+			phase = state.itemUse;
+			phaseTimer = 0;
+			subPhase = subState.performing;
+			subPhaseTimer = 0;
+		}
+	}
 	//Jumping
-	if aInputQueue
+	else if aInputQueue
 	{
 		reset_queue();
 		if !(moveV >= 0.7 && onPlatform)
@@ -128,7 +149,7 @@ switch subPhase
 	}
 	
 	//glide
-	if InputManager.aInputHeld && scr_player_ability_get(abilityType.movement,movementAbility.glide,playerAbilityStats.numberActivated) == 1 && canGlide && canAct
+	else if InputManager.aInputHeld && scr_player_ability_get(abilityType.movement,movementAbility.glide,playerAbilityStats.numberActivated) == 1 && canGlide && canAct
 	{
 		var prev = ySpd;
 		ySpd = min(ySpd,0);
@@ -227,6 +248,7 @@ switch subPhase
 				case vState.midAir:
 				case vState.jumping:
 					vPhase = vState.midAir;
+					scr_player_beginAttack(attack_get_id(attackNum,vState.midAir));
 					if lockOnType != lockOn.off && abs(lockOnTarget.x-x) <= attackTrackXDistance && abs(lockOnTarget.y-y) <= attackTrackYDistance
 					{
 						var dirToPlayer = sign(x-lockOnTarget.x);
@@ -239,7 +261,6 @@ switch subPhase
 						aerialTargetX = -4;
 						aerialTargetY = -4;	
 					}
-					scr_player_beginAttack(attack_get_id(attackNum,vState.midAir));
 					if aerialTargetX == -4 && aerialTargetY == -4 ySpd = aerialAttackVertBoost;
 					else facing = lockOnDir;
 					break;

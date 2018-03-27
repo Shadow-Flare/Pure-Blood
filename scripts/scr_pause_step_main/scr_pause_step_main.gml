@@ -33,24 +33,51 @@ if (InputManager.aInput == true)
 			success = true;
 			slotExpanded = 0;
 			menu = menuCurrent.weaponry;
+			
 			current_menu_options = menu_weaponry;
+			var count = 0;
+			var classID = ds_map_find_first(ComboCache.playerClass);
+			while classID != undefined
+			{
+				if class_get_stat(classID,weaponClassStats.isMain)
+				{
+					current_menu_options[0, count] = classID;
+					count++;
+				}
+				classID = ds_map_find_next(ComboCache.playerClass,classID);
+			}
+			current_menu_options[0, count] = noone;
+			count++;
+			var classID = ds_map_find_first(ComboCache.playerClass);
+			while classID != undefined
+			{
+				if !class_get_stat(classID,weaponClassStats.isMain)
+				{
+					current_menu_options[0, count] = classID;
+					count++;
+				}
+				classID = ds_map_find_next(ComboCache.playerClass,classID);
+			}
+			
 			sX = 0;
 			sY = 0;
 			break;
 		case "Equipment":
 			success = true;
 			menu = menuCurrent.equipment;
-			current_menu_options = menu_equipment;
-			sX = 0;
-			sY = 0;
-			for(var i = 0; i < array_length_1d(PlayerStats.ownedOffhands); i++)
-			{
-				for(var j = 0; j < array_length_2d(PlayerStats.ownedSubtypes,i)+1; j++)
-				{
-					if j == 0 current_menu_options[i, 0] = PlayerStats.ownedOffhands[i]
-				else if j != 0 current_menu_options[i, j] = PlayerStats.ownedSubtypes[i,j-1];
-				}
-			}
+			current_menu_options = menu_equipment; //unused, kept as a formality and to set as empty temporarily
+			sX = 0;	//used for managing equip
+			sY = 1; //used for managing items
+			sExpY = 0 //used for rune cycling
+			sYDisplay = sY;
+			slotExpanded = false;
+			selection = equipmentSlot.head;
+			originalWepSlot = PlayerStats.currentWeaponIndex;
+			originalOffSlot = PlayerStats.currentOffhandIndex;
+			canMoveH = true;
+			canMoveV = true;
+			runeAngleMod = 0;
+			
 			break;
 		case "Abilities":
 			success = true;

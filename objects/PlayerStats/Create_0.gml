@@ -1,0 +1,1 @@
+equipmentStats = ds_map_create();
