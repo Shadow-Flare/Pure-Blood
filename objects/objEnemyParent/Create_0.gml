@@ -32,6 +32,7 @@ lastAttackHasHit = false;
 hasBeenUppercut = false;
 hasStaggered = false;
 hasFlung = false;
+isHooked = noone;
 
 //base data
 pushable = true;
@@ -69,9 +70,9 @@ with statCache
 	hitEffectColour = "dark red";
 	
 		//Damage type resistances (as percentage; 1 = 100% of damage is recieved)
-	damageResistances[damageType.slash] = 1;
-	damageResistances[damageType.blunt] = 1;
-	damageResistances[damageType.pierce] = 1;
+	damageResistances[damageType.slash] = 0;
+	damageResistances[damageType.blunt] = 0;
+	damageResistances[damageType.pierce] = 0;
 	damageResistances[damageType.fire] = 1;
 	damageResistances[damageType.ice] = 1;
 	damageResistances[damageType.lightning] = 1;
@@ -94,6 +95,8 @@ with statCache
 	
 	hp = hpMax;
 	mp = mpMax;
+	
+	hookWeight = 0;				// 0 = gets pulled, 1 = get pulled to
 	
 	isInvulnerable = false;
 }

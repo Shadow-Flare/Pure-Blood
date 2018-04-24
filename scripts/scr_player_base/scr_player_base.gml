@@ -145,7 +145,11 @@ switch subPhase
 				jumpNum++;
 			}
 		}
-		else dropThroughPlatforms = true;
+		else
+		{
+			dropThroughPlatforms = true;
+			ySpd = 0.5;
+		}
 	}
 	
 	//glide
@@ -279,12 +283,13 @@ switch subPhase
 		reset_queue();
 	}
 	
-	////to Ability
-	//else if InputManager.rbInput && can_use_ability() && canAct
-	//{
-	//	phase = state.ability;
-	//	phaseTimer = 0;
-	//	subPhase = subState.none;
-	//	subPhaseTimer = 0;
-	//}
+	//to Ability
+	else if InputManager.rbInput && can_use_ability() && canAct
+	{
+		if !GameManager.thereisnospoon with statCache mp = clamp(mp-activeAbility_get_stat(currentOffhandActivatableID,activeAbilityStats.manaCost),0,mpMax);
+		phase = state.ability;
+		phaseTimer = 0;
+		subPhase = subState.none;
+		subPhaseTimer = 0;
+	}
 #endregion

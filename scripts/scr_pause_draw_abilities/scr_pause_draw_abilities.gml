@@ -23,9 +23,6 @@ switch selection
 		break;
 }
 draw_text(surfW*abilityCategoryTextX,surfH*abilityCategoryTextY,catName);
-	//ap display
-var apText = string(PlayerStats.ap)+"/"+string(PlayerStats.apMax);
-draw_text(surfW*abilityApDisplayX,surfH*abilityApDisplayY,apText);
 //set
 draw_set_font(fnt_small_text);
 draw_set_halign(fa_left);
@@ -47,10 +44,7 @@ for (var i = 0; i < ds_list_size(abilityTabSprites); i++)
 }
 
 //scroll bar
-scr_draw_scroll_bar(surfW*abilityScrollBarX, surfH*abilityScrollBarY1,surfH*abilityScrollBarY2,abilityScrollBarType,abilityScrollBarScale,abilityScrollBarColour);
-//scroll cursor
-var scrollYMod = abs(abilityScrollBarY2-abilityScrollBarY1-(sprite_get_height(abilityScrollCursorSprite)*abilityScrollBarScale/surfH))*(abilityPanelScroll/(array_length_1d(slot_options)-abilityPanelNum));
-draw_sprite_ext(abilityScrollCursorSprite,0,surfW*abilityScrollBarX,surfH*(abilityScrollBarY1+scrollYMod),abilityScrollBarScale,abilityScrollBarScale,0,abilityScrollCursorColour,1);
+scr_draw_scroll_bar(surfW*abilityScrollBarX, surfH*abilityScrollBarY1,surfH*abilityScrollBarY2,true,abilityPanelScroll,array_length_1d(slot_options)-abilityPanelNum-1,abilityScrollBarType,abilityScrollBarScale,abilityScrollBarColour);
 
 	//backing
 scr_draw_textbox(surfW*abilityTextbox1X1,surfH*abilityTextbox1Y1,surfW*abilityTextbox1X2,surfH*abilityTextbox1Y2,abilityTextbox1Type,abilityTextbox1Scale,abilityTextbox1Colour);
@@ -104,10 +98,8 @@ else
 			//ability selection emphasis
 		if (sY == 1 && i+abilityPanelScroll == sExpY)
 		{
-			var desc = ability_get_data(selection, abilityID, abilityStats.description);
 			col = c_white;
 			draw_set_color(col);
-			draw_text_ext(surfW*abilityDescriptionX,surfH*abilityDescriptionY, desc, surfH*abilityDescriptionSep, surfW*abilityDescriptionWidth);
 		}
 			
 		if (name == undefined)
@@ -127,4 +119,32 @@ else
 		draw_set_halign(fa_left);
 	}
 }
+#endregion
+#region details
+	//description & info
+		//textbox
+scr_draw_textbox(surfW*abilityTextbox2X1,surfH*abilityTextbox2Y1,surfW*abilityTextbox2X2,surfH*abilityTextbox2Y2,abilityTextbox2Type,abilityTextbox2Scale,abilityTextbox2Colour);
+		//description
+if sY != 0
+{
+	draw_set_font(abilityDescriptionFont);
+	draw_set_colour(c_white);
+	if maxAbilities != 0
+	{
+		var abilityID = slot_options[sExpY];
+		var desc = ability_get_data(selection, abilityID, abilityStats.description);
+		draw_text_ext(surfW*abilityDescriptionX,surfH*abilityDescriptionY, desc, surfH*abilityDescriptionSep, surfW*abilityDescriptionWidth);
+	}
+}
+	//AP Stats
+		//textbox
+scr_draw_textbox(surfW*abilityTextbox3X1,surfH*abilityTextbox3Y1,surfW*abilityTextbox3X2,surfH*abilityTextbox3Y2,abilityTextbox3Type,abilityTextbox3Scale,abilityTextbox3Colour);
+	//Bar (CURRENT CODE HERE IS JUST THE TEXT COMPONENT
+draw_set_valign(fa_center);
+draw_set_halign(fa_right);
+draw_set_font(fnt_alagard);	
+	var apText = string(PlayerStats.ap)+"/"+string(PlayerStats.apMax);
+	draw_text(surfW*abilityApDisplayX,surfH*abilityApDisplayY,apText);
+draw_set_valign(fa_top);
+draw_set_halign(fa_left);
 #endregion

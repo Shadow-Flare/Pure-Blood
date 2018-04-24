@@ -1,3 +1,5 @@
+if !layer_exists("lay_effects1") layer_create(1100,"lay_effects1");
+
 ini_open("settings");
 
 instance_activate_object(LightingController);
@@ -28,15 +30,9 @@ instance_destroy(BloodStainController);
 if ini_read_real("effects","blood",1) instance_create_layer(0,0,"lay_blocks",BloodStainController);
 else instance_destroy(BloodStainController);
 
-		//Attack Hit Boxes
-GameManager.hitBoxVisuals = ini_read_real("effects","hitBoxVisuals",false) 
-
-		//Actor Hit Boxes
-GameManager.actorBoxVisuals = ini_read_real("effects","actorBoxVisuals",false) 
-
 		//particle Effects
 instance_destroy(ParticleController);
-instance_create_layer(0,0,"lay_technicals",ParticleController);
+instance_create_layer(0,0,"lay_effects1",ParticleController);
 
 		//parallax
 instance_destroy(ParallaxController);
@@ -45,5 +41,14 @@ instance_create_depth(0,0,0,ParallaxController);
 		//ambience (audio)
 //instance_destroy(AmbienceController);
 instance_create_layer(0,0,"lay_technicals",AmbienceController);
+
+	//extras
+GameManager.musicEnabled = ini_read_real("effects","musicEnabled",true) 
+
+		//Attack Hit Boxes
+GameManager.hitBoxVisuals = ini_read_real("effects","hitBoxVisuals",false) 
+
+		//Actor Hit Boxes
+GameManager.actorBoxVisuals = ini_read_real("effects","actorBoxVisuals",false) 
 
 ini_close();

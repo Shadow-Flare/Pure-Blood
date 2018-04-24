@@ -4,10 +4,19 @@ subPhaseTimer++;
 	//Sub states
 #region states
 
-switch ComboCache.activeOffhandActivatableID
+switch PlayerStats.currentOffhandActivatableID
 {
-	case 0:
-		scr_player_ability_ropeShot();
+	case activeAbilityID.crossbow_rope_shot:
+		scr_player_ability_crossbow_ropeShot();
+		break;
+	case activeAbilityID.crossbow_shrapnel_burst:
+		scr_player_ability_crossbow_shrapnelBurst();
+		break;
+	case activeAbilityID.grimoire_reflect:
+		scr_player_ability_grimoire_reflect();
+		break;
+	case activeAbilityID.grimoire_heal:
+		scr_player_ability_grimoire_heal();
 		break;
 }
 		

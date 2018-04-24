@@ -38,7 +38,7 @@ switch vPhase
 		if zoneTouchID == noone
 		{
 			actorType = actorTypes.enemy;
-			zoneTouchID = scr_enemy_attack(zoneTouchFrameData,zoneTouchFollow,zoneTouchDuration,zoneTouchDamageType,zoneTouchDamage,zoneTouchStagger,zoneTouchKnockBack,zoneTouchStatusType,zoneTouchStatusValue,zoneTouchPierce,zoneTouchAnimation,zoneTouchHitSoundID);
+			zoneTouchID = scr_enemy_attack(zoneTouchFrameData,zoneTouchFollow,zoneTouchDuration,zoneTouchDamageType,zoneTouchDamage,zoneTouchStagger,zoneTouchKnockBack,zoneTouchStatusType,zoneTouchStatusValue,zoneTouchPierce,zoneTouchAnimation,zoneTouchHitSoundID,noone);
 			actorType = actorTypes.corpse;
 		}
 			//transition

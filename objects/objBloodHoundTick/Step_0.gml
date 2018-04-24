@@ -100,7 +100,7 @@ switch phase
 		if phaseTimer == round(bloatDuration*room_speed)
 		{
 			if instance_exists(target) instance_destroy(target);
-			scr_enemy_attack(explosionFrameData,explosionFollow,explosionDuration,explosionDamageType,explosionDamage,explosionStagger,explosionKnockback,explosionStatusType,explosionStatusValue,explosionPierce,explosionAnimation,explosionHitSoundID);
+			scr_enemy_attack(explosionFrameData,explosionFollow,explosionDuration,explosionDamageType,explosionDamage,explosionStagger,explosionKnockback,explosionStatusType,explosionStatusValue,explosionPierce,explosionAnimation,explosionHitSoundID,noone);
 			if explosionAttackSoundID != noone audio_play_sound(explosionAttackSoundID,10,0);
 			instance_destroy();
 			phase = state.dying;

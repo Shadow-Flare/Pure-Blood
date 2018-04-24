@@ -28,3 +28,15 @@ if frameData != -1
 	else hitOn = false;
 }
 else hitOn = true;
+
+//effects
+if !initialized
+{
+	if boundEffect != noone
+	{
+		event_perform_object(boundEffect,ev_create,0);
+		initialized = true;
+	}
+}
+
+if initialized event_perform_object(boundEffect,ev_step,ev_step_normal);

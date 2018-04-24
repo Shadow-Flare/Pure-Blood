@@ -1,4 +1,11 @@
 #region Equipment unique movement
+//prev
+sXPrev = sX;
+sYPrev = sY;
+sExpYPrev = sExpY;
+sExpXPrev = sExpX;
+var selectionPrev = selection;
+
 if !slotExpanded
 {
 	#region movement inputs
@@ -39,13 +46,16 @@ switch selection
 		else if sExpY < 0 sExpY = maxRunes-1;
 		
 		if inputV == 1 selection = equipmentSlot.head;
-		else if inputV == -1 selection = equipmentSlot.item;
+		else if inputV == -1 {selection = equipmentSlot.item; sY = 1;}
 		break;
 	case equipmentSlot.item:
 		sY = clamp(sY+inputH,0,3);
-		
 		if inputV == 1 selection = equipmentSlot.rune;
-		else if inputV == -1 selection = equipmentSlot.legs;
+		else if inputV == -1 
+		{
+			if sY <= 1 selection = equipmentSlot.hands;
+			else if sY >= 2 selection = equipmentSlot.legs;
+		}
 		break;
 	case equipmentSlot.head:
 		if inputH == 1 selection = equipmentSlot.off1;
@@ -54,40 +64,46 @@ switch selection
 		else if inputV == -1 selection = equipmentSlot.rune;
 		break;
 	case equipmentSlot.chest:
-		if inputH == 1 selection = equipmentSlot.off1;
-		else if inputH == -1 selection = equipmentSlot.main1;
-		else if inputV == 1 selection = equipmentSlot.legs;
+		if inputH == 1 selection = equipmentSlot.legs;
+		else if inputH == -1 selection = equipmentSlot.hands;
+		else if inputV == 1 {selection = equipmentSlot.item; sY = 1;};
 		else if inputV == -1 selection = equipmentSlot.head;
+		break;
+	case equipmentSlot.hands:
+		if inputH == 1 selection = equipmentSlot.chest;
+		else if inputH == -1 selection = equipmentSlot.legs;
+		else if inputV == 1 {selection = equipmentSlot.item; sY = 0;};
+		else if inputV == -1 selection = equipmentSlot.main1;
 		break;
 	case equipmentSlot.legs:
-		if inputH == 1 selection = equipmentSlot.off1;
-		else if inputH == -1 selection = equipmentSlot.main1;
-		else if inputV == 1 selection = equipmentSlot.item;
-		else if inputV == -1 selection = equipmentSlot.chest;
+		if inputH == 1 selection = equipmentSlot.hands;
+		else if inputH == -1 selection = equipmentSlot.chest;
+		else if inputV == 1 {selection = equipmentSlot.item; sY = 3;};
+		else if inputV == -1 selection = equipmentSlot.off1;
 		break;
 	case equipmentSlot.main1:
-		if inputH == 1 selection = equipmentSlot.chest;
+		if inputH == 1 selection = equipmentSlot.head;
 		else if inputH == -1 selection = equipmentSlot.main2;
-		else if inputV == 1 selection = equipmentSlot.legs;
-		else if inputV == -1 selection = equipmentSlot.head;
+		else if inputV == 1 selection = equipmentSlot.hands;
+		else if inputV == -1 selection = equipmentSlot.rune;
 		break;
 	case equipmentSlot.main2:
 		if inputH == 1 selection = equipmentSlot.main1;
 		else if inputH == -1 selection = equipmentSlot.off2;
-		else if inputV == 1 selection = equipmentSlot.legs;
-		else if inputV == -1 selection = equipmentSlot.head;
+		else if inputV == 1 selection = equipmentSlot.hands;
+		else if inputV == -1 selection = equipmentSlot.rune;
 		break;
 	case equipmentSlot.off1:
 		if inputH == 1 selection = equipmentSlot.off2;
-		else if inputH == -1 selection = equipmentSlot.chest;
+		else if inputH == -1 selection = equipmentSlot.head;
 		else if inputV == 1 selection = equipmentSlot.legs;
-		else if inputV == -1 selection = equipmentSlot.head;
+		else if inputV == -1 selection = equipmentSlot.rune;
 		break;
 	case equipmentSlot.off2:
 		if inputH == 1 selection = equipmentSlot.main2;
 		else if inputH == -1 selection = equipmentSlot.off1;
 		else if inputV == 1 selection = equipmentSlot.legs;
-		else if inputV == -1 selection = equipmentSlot.head;
+		else if inputV == -1 selection = equipmentSlot.rune;
 		break;
 }
 
@@ -96,6 +112,7 @@ switch selection
 {
 	case equipmentSlot.head:
 	case equipmentSlot.chest:
+	case equipmentSlot.hands:
 	case equipmentSlot.legs:
 		equipmentSelectionItemType = itemType.equipment;
 		break;
@@ -151,10 +168,11 @@ else
 		case equipmentSlot.rune:
 		case equipmentSlot.head:
 		case equipmentSlot.chest:
-		case equipmentSlot.legs:
 			equipmentSlotTypeIsHor = true;
 			sX = clamp(sX+inputH,0,totalItems-1);
 			break;
+		case equipmentSlot.legs:
+		case equipmentSlot.hands:
 		case equipmentSlot.main1:
 		case equipmentSlot.main2:
 		case equipmentSlot.off1:
@@ -166,6 +184,8 @@ else
 	}	
 	#endregion
 }
+
+if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || sExpX != sExpXPrev || selectionPrev != selection audio_play_sound(snd_menu_navigate,10,0);
 #endregion
 
 #region Alter active weapon for playerstats depending on selection, reset on B or start Press
@@ -205,6 +225,7 @@ if (InputManager.startInput)
 
 if InputManager.aInput == true
 {
+	audio_play_sound(snd_menu_select,10,0);
 	if !slotExpanded 
 	{
 		slotExpanded = true;
@@ -241,6 +262,7 @@ if InputManager.aInput == true
 					{
 						case equipmentSlot.head:
 						case equipmentSlot.chest:
+						case equipmentSlot.hands:
 						case equipmentSlot.legs:
 							keyType = itemType.equipment;
 							break;
@@ -269,6 +291,7 @@ if InputManager.aInput == true
 
 if InputManager.bInput == true
 {
+	audio_play_sound(snd_menu_back,10,0);
 	if slotExpanded 
 	{
 		slotExpanded = false;
@@ -283,11 +306,10 @@ if InputManager.bInput == true
 		PlayerStats.currentWeaponID = ItemCache.equipment[? equipMain[PlayerStats.currentWeaponIndex]];
 		PlayerStats.currentOffhandID = ItemCache.equipment[? equipOff[PlayerStats.currentOffhandIndex]];
 		
-		audio_play_sound(snd_menu_back,10,0);
 		menu = menuCurrent.main;
 		current_menu_options = menu_main;
 		sX = 0;
-		sY = 0;
+		sY = 2;
 		sExpY = 0;
 		equipmentSurfaceMainAlpha = 0;
 		equipmentSurfaceRunesAlpha = 0;
@@ -307,6 +329,7 @@ if InputManager.xInput == true
 		{
 			case equipmentSlot.head:
 			case equipmentSlot.chest:
+			case equipmentSlot.hands:
 			case equipmentSlot.legs:
 			case equipmentSlot.main1:
 			case equipmentSlot.main2:

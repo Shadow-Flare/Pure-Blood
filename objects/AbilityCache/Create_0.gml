@@ -1,12 +1,12 @@
-//ability enumerators
+#region ability enumerators
 enum abilityType {combat, movement, support};
 enum combatAbility {combo_plus, finisher_plus, aerial_plus, devastator_plus, aerial_defense, critical_boost};
 enum movementAbility {double_jump, high_jump, glide};
-enum supportAbility{exp_plus, hp_scan, mp_scan};
+enum supportAbility{exp_plus, damage_scan, hp_scan, mp_scan};
 
 enum abilityStats {name, description, icon, cost, maxNum};
 enum playerAbilityStats {numberOwned, numberActivated};
-
+#endregion
 #region all abilities
 	#region Initializer
 ability = ds_map_create();
@@ -111,6 +111,15 @@ cache[? abilityStats.description] = "Boosts experience gains by 25% from all sou
 cache[? abilityStats.icon] = undefined;
 cache[? abilityStats.cost] = 5;
 cache[? abilityStats.maxNum] = 3;
+		#endregion
+		#region HP Scan
+supportCache[? supportAbility.damage_scan] = ds_map_create();
+var cache = supportCache[? supportAbility.damage_scan];
+cache[? abilityStats.name] = "Damage Scan";
+cache[? abilityStats.description] = "Displays details on damage dealt. With colour indicating damage type.";
+cache[? abilityStats.icon] = undefined;
+cache[? abilityStats.cost] = 1;
+cache[? abilityStats.maxNum] = 1;
 		#endregion
 		#region HP Scan
 supportCache[? supportAbility.hp_scan] = ds_map_create();

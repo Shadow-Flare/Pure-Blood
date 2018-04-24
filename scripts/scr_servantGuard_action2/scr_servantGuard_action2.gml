@@ -9,7 +9,7 @@ switch subPhase
 			//damage zone
 		if action2ZoneID == noone
 		{
-			action2ZoneID = scr_enemy_attack(action2ZoneFrameData,action2ZoneFollow,action2ZoneDuration,action2ZoneDamageType,action2ZoneDamage,action2ZoneStagger,action2ZoneKnockback,action2ZoneStatusType,action2ZoneStatusValue,action2ZonePierce,action2ZoneAnimation,action2ZoneHitSoundID);
+			action2ZoneID = scr_enemy_attack(action2ZoneFrameData,action2ZoneFollow,action2ZoneDuration,action2ZoneDamageType,action2ZoneDamage,action2ZoneStagger,action2ZoneKnockback,action2ZoneStatusType,action2ZoneStatusValue,action2ZonePierce,action2ZoneAnimation,action2ZoneHitSoundID,noone);
 			if action2ZoneAttackSoundID != noone audio_play_sound(action2ZoneAttackSoundID,10,0);
 		}
 			//transtitions

@@ -1,146 +1,79 @@
-if place_meeting(x,y,objGrappleParent) && phase == "shooting"
+phaseTimer++;
+
+if caster.object_index == objPlayer && caster.phase != state.ability
 {
-	mount = instance_place(x,y,objGrappleParent);
-	x = mount.x;
-	y = mount.y;
-	phase = "hooked";
-	speed = 0;
-	if mount.object_index = obj_grapple_swing hookDist = 240*2.5;
-	else if mount.object_index = obj_grapple_mount hookDist = 240;
-	if point_distance(caster.x,caster.y,x,y) > hookDist pullDir = 1;
-	else if point_distance(caster.x,caster.y,x,y) <= hookDist pullDir = -1;
-}
-else if place_meeting(x,y,objEnemyParent) && instance_place(x,y,objEnemyParent).phase != "dying" && phase == "shooting"
-{
-	mount = instance_place(x,y,objEnemyParent);
-	x = mount.x;
-	y = mount.y;
-	if mount.hookWeight == 0 phase = "hookedEnemyPull";
-	else if mount.hookWeight == 1 phase = "hookedEnemyTravel";
-	speed = 0;
-}
-else if (point_distance(initialX,initialY,x,y) >= maxDist || !place_free(x,y)) && phase == "shooting"
-{
-	phase = "returning";
-	speed = -2*defaultSpeed;
+	phase = ropeshotPhase.returning;
+	phaseTimer = 0;
 }
 
-if phase == "returning"
+switch phase
 {
-	direction = point_direction(caster.x,caster.y,x,y)
-	speed = -defaultSpeed;
-	if place_meeting(x,y,caster)
-	{
-		instance_destroy();
-	}
-}
-
-if phase == "hooked"
-{
-	if (pullDir == 1 && point_distance(caster.x,caster.y,x,y)-caster.hookedSpeed > hookDist)
-	 ||(pullDir == -1 && point_distance(caster.x,caster.y,x,y)+caster.hookedSpeed < hookDist)
-	{
-		phase = "hooked";
-		moveDir = point_direction(caster.x,caster.y,x,y);
-	}
-	else
-	{
-		phase = "hookedStop";
-		while point_distance(caster.x,caster.y,x,y) > hookDist
+	case ropeshotPhase.shooting:
+		if (point_distance(initialX,initialY,x,y) >= maxDist || !place_free(x,y))
 		{
-			moveDir = point_direction(caster.x,caster.y,x,y);
-			caster.x += dcos(moveDir);
-			caster.y += -dsin(moveDir);
+			phase = ropeshotPhase.returning;
+			phaseTimer = 0;
 		}
-		caster.xSpd = 0;
-		caster.ySpd = 0;
-		aSpd = 0;
-	}
-	if xPrev == floor(caster.x) && yPrev == floor(caster.y)
-	{
-		phase = "hookedStop";
-		aSpd = 0;
-	}
-	xPrev = floor(caster.x);
-	yPrev = floor(caster.y);
-}
-
-if phase == "hookedStop"
-{
-	//friction Stats
-	accRatio = 2.25;
-	accSinRatio = 1.5;
-	spdFrictionRatio = 1;
-	moveInputRatio = 0.8;
-	maxASpd = 240/room_speed;
-	//movements
-	dir = point_direction(x,y,caster.x,caster.y);
-	aAcc = dsin(abs(dir-270)/accSinRatio)*accRatio*(360/hookDist);
-	if dir < 90 || dir > 270 aAcc *= -1;
-	aSpd += aAcc;
-	aSpd -= aSpd/(30/spdFrictionRatio);
-	dir2 = dir+aSpd;
-	dx = x+round(hookDist*dcos(dir2));
-	dy = y-round(hookDist*dsin(dir2));
-
-	if dir > 180 && (abs(dir-270) < 10 || sign(global.moveInput) = sign(dir-270))
-	{
-		aSpd += ceil(global.moveInput)*moveInputRatio*0.2;
-	}
-	if abs(aSpd) > maxASpd aSpd = sign(aSpd)*maxASpd;
-	
-	caster.xSpd = dx-caster.x;
-	caster.ySpd = dy-caster.y;
-	
-	if caster.onGround aSpd = 0;
-	with caster
-	{
-		hookDistMove = floor(global.moveInputV*8);
-		shiftX = (sign(hookDistMove)*dcos(other.dir));
-		shiftY = (sign(hookDistMove)*dsin(other.dir));
-		moved = 0;
-		while place_free(x+shiftX,y-shiftY) && moved <= abs(hookDistMove)
+		else if place_meeting(x,y,objGrappleParent)
 		{
-			other.hookDist += sign(hookDistMove);
-			moved++;
+			mount = instance_place(x,y,objGrappleParent);
+			x = mount.x;
+			y = mount.y;
+			speed = 0;
+			if mount.object_index = obj_grapple_swing 
+			{
+				phase = ropeshotPhase.hookedSwing;
+				phaseTimer = 0;
+				caster.ropeShotAngularSpeed = 0;
+				caster.ropeShotSwingDist = mount.swingDist;
+			}
+			else if mount.object_index = obj_grapple_mount
+			{
+				phase = ropeshotPhase.hookedPoint;
+				phaseTimer = 0;
+			}
 		}
-		if moved <= abs(hookDistMove) other.aSpd = 0;	
-	}
-	if hookDist < 240 hookDist = 240;
-	else if hookDist > maxDist hookDist = maxDist;
+		else 
+		{
+			with objActorParent if place_meeting(x,y,other) with other
+			{
+				var enemy = other;
+				if caster != enemy && is_enemy(caster.actorType, enemy.actorType) && enemy.phase != state.dying
+				{
+					mount = enemy;
+					var stats = enemy.statCache;
+					x = mount.x;
+					y = mount.y;
+					speed = 0;
+					if stats.hookWeight == 0 phase = ropeshotPhase.hookedEnemyPull;
+					else if stats.hookWeight == 1 phase = ropeshotPhase.hookedPlayerPull;
+					phaseTimer = 0;
+				}
+			}
+		}
+		break;
+	case ropeshotPhase.returning:
+		mount = noone;
+		direction = point_direction(caster.x,caster.y,x,y);
+		if speed == 0 speed = -defaultSpeed;
+		if place_meeting(x,y,caster) instance_destroy();
+		break;
+	case ropeshotPhase.hookedPoint:
+
+		break;
+	case ropeshotPhase.hookedSwing:
+		
+		break;
+	case ropeshotPhase.hookedEnemyPull:
+		
+		break;
+	case ropeshotPhase.hookedPlayerPull:
+		
+		break;
 }
 
-if phase == "hookedEnemyPull"
+if mount != noone
 {
 	x = mount.x;
 	y = mount.y;
-	mount.phase = "hooked";
-	var enemySpeed = 30
-	var enemyDestX = caster.x + sign(mount.x-caster.x)*8*16;
-	var enemyDestY = caster.y;
-	var enemyDestDir = point_direction(mount.x,mount.y,enemyDestX,enemyDestY);
-	var enemyXSpd = enemySpeed*dcos(enemyDestDir);
-	var enemyYSpd = -enemySpeed*dsin(enemyDestDir);
-	var enemyDistAfterMove = point_distance(mount.x+enemyXSpd,mount.y+enemyYSpd,enemyDestX,enemyDestY);
-	if enemyDistAfterMove > enemySpeed {mount.xSpd = enemyXSpd; mount.ySpd = enemyYSpd;}
-	else
-	{
-		mount.x = enemyDestX;
-		mount.y = enemyDestY;
-		phase = "returning";
-		if caster.onGround
-		{
-			mount.phase = "stagger";
-			mount.staggerTimer = 0;
-			mount.xSpd = 0;
-			mount.ySpd = 0;
-		}
-		else
-		{
-			mount.phase = "aerialAttacked";
-			mount.aerialAttackedTimer = 0;
-			mount.xSpd = 0;
-			mount.ySpd = -4;
-		}
-	}
 }

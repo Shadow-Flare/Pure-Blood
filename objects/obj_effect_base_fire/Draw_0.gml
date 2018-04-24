@@ -15,7 +15,7 @@ with ParticleController
 		pEmitter2 = part_emitter_create(pSysFire2);
 	}
 	
-	if other.enabled
+	if other.effectEnabled
 	{
 		surface_set_target(firePixBackSurf);
 			repeat(3) draw_sprite_ext(sprFireGlow,0,other.x,other.y,0.6*intensity,0.6*intensity,random(360),c_orange,1.0);
@@ -35,11 +35,11 @@ with ParticleController
 		part_emitter_burst(pSysFire,pEmitter,other.pFire,max(2*intensity,1));
 		part_emitter_burst(pSysFire,pEmitter,other.pEmber,-20*min(1/intensity,999));
 	}
-	if other.burst
+	if other.effectBurst
 	{
-		other.burst = false;
-		part_emitter_region(pSysFire,pEmitter,other.xPrev+random_range(-radius,radius),other.x+random_range(-radius,radius),other.yPrev+random_range(-radius,radius),other.y+random_range(-radius,radius),ps_shape_line,ps_distr_linear);
-		part_emitter_region(pSysFire2,pEmitter2,other.xPrev+random_range(-radius,radius),other.x+random_range(-radius,radius),other.yPrev+random_range(-radius,radius),other.y+random_range(-radius,radius),ps_shape_line,ps_distr_linear);
+		other.effectBurst = false;
+		part_emitter_region(pSysFire,pEmitter,other.x+random_range(-radius,radius),other.x+random_range(-radius,radius),other.y+random_range(-radius,radius),other.y+random_range(-radius,radius),ps_shape_line,ps_distr_linear);
+		part_emitter_region(pSysFire2,pEmitter2,other.x+random_range(-radius,radius),other.x+random_range(-radius,radius),other.y+random_range(-radius,radius),other.y+random_range(-radius,radius),ps_shape_line,ps_distr_linear);
 		part_type_direction(other.pFire,0,360,0,2);
 		part_type_direction(other.pGlow,0,360,0,2);
 		part_type_direction(other.pEmber,0,360,0,20);

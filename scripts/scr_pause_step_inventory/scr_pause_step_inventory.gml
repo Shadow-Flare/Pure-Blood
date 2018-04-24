@@ -4,6 +4,7 @@
 sXPrev = sX;
 sYPrev = sY;
 sExpYPrev = sExpY;
+sExpXPrev = sExpX;
 
 //checks
 var absHInput = abs(InputManager.moveInputH);
@@ -42,8 +43,15 @@ if  (moveTimer == 0) ||
 		else if InputManager.dDInput sExpY++;
 		else if InputManager.dUInput sExpY--;
 			
-		if (sExpY >= array_length_1d(slot_options)) sExpY = 0;
-		else if (sExpY < 0) sExpY = array_length_1d(slot_options)-1;
+		if (sExpY >= ds_grid_height(slot_grid)) sExpY = 0;
+		else if (sExpY < 0) sExpY = ds_grid_height(slot_grid)-1;
+		
+		if (absHInput > 0.5 && horInputMoreThanVert) sExpX += sign(InputManager.moveInputH);
+		else if InputManager.dRInput sExpX++;
+		else if InputManager.dLInput sExpX--;
+			
+		if (sExpX >= ds_grid_width(slot_grid)) sExpX = 0;
+		else if (sExpX < 0) sExpX = ds_grid_width(slot_grid)-1;
 	}
 }
 
@@ -53,17 +61,26 @@ if (absHInput > 0.5 || absVInput > 0.5 || InputManager.dLInput || InputManager.d
 }
 else { moveTimer = 0 };
 
-if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev audio_play_sound(snd_menu_navigate,10,0)
+if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || sExpX != sExpXPrev audio_play_sound(snd_menu_navigate,10,0);
 
 #endregion
+#region Reset selection data on Tab chenge and define selection
+if movedH
+{
+	abilityPanelScroll = 0;
+	sExpY = 0;
+	sExpX = 0;
+	movedH = false;
+}
 
 //select
 selection = current_menu_options[sX,sY];
 
-//modify scroll
-while (sExpY > inventoryPanelScroll + inventoryPanelNum - 1) inventoryPanelScroll++;
+#endregion
+#region modify scroll
+while (sExpY > inventoryPanelScroll + inventoryGridHeight - 1) inventoryPanelScroll++;
 while (sExpY < inventoryPanelScroll) inventoryPanelScroll--;
-
+#endregion
 #region Get Data
 	//maxItems
 var maxItems = 0;
@@ -74,23 +91,23 @@ if (maxItems == 0)
 {
 	maxItems = 1;
 }
+var numOfRows = ceil(maxItems/inventoryGridWidth);
 #endregion
-
-#region gather new slot data on horizontal change
-if (movedH)
-{		
-	abilityPanelScroll = 0;
-	sExpY = 0;
-	slot_options = [];
-	var itemID = ds_map_find_first(typeCache);
-	var count = 0;
-	while (itemID != undefined)
-	{
-		slot_options[count] = itemID;
-		itemID = ds_map_find_next(typeCache,itemID);
-		count++;
-	}
-	movedH = false;
+#region update Scheme Colour
+inventoryColourScheme = merge_color(inventoryColourScheme,inventoryTabColours[| sX],0.05);
+#endregion 
+#region gather new slot data every frame
+if ds_grid_width(slot_grid) != inventoryGridWidth || ds_grid_height(slot_grid) != numOfRows ds_grid_resize(slot_grid,inventoryGridWidth,max(numOfRows,inventoryGridHeight));
+ds_grid_clear(slot_grid,noone);
+var itemID = ds_map_find_first(typeCache);
+var count = 0;
+while (itemID != undefined)
+{
+	var xPos = count%inventoryGridWidth;
+	var yPos = floor(count/inventoryGridWidth);
+	slot_grid[# xPos,yPos] = itemID;
+	itemID = ds_map_find_next(typeCache,itemID);
+	count++;
 }
 #endregion
 

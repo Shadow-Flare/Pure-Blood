@@ -21,3 +21,7 @@ else
 	x+=xSpd;
 	y+=ySpd;
 }
+
+if alphaAdd != undefined image_alpha += alphaAdd;
+if xScaleGrowth != undefined image_xscale *= xScaleGrowth;
+if yScaleGrowth != undefined image_yscale *= yScaleGrowth;

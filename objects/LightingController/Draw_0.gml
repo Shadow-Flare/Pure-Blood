@@ -64,13 +64,22 @@ if !variable_instance_exists(id,"light") || !surface_exists(light)
 		gpu_set_blendmode(bm_subtract);
 		shader_set(shd_white);
 			draw_surface_ext(cutoutTiles,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
-			with objActorParent
+			if surface_exists(ParticleController.particleSurfFinal) draw_surface_ext(ParticleController.particleSurfFinal,(-camX+1)*lightScale,(-camY+1)*lightScale,lightScale,lightScale,0,make_color_rgb(128,128,255),1.0);
+			with all if visible && sprite_index != -1
+			{
+				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+			}
+			with objActorParent if visible
 			{
 					draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 					if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
 					{
 						draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 					}
+			}
+			with objAttackEffectParent if visible
+			{
+				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 			}
 			with objBlockParent if visible
 			{
@@ -414,13 +423,22 @@ if normalMappingEnabled
 	surface_set_target(normalMapCamera);
 		draw_surface_ext(normalMap,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
 		shader_set(shd_white);
-		with objActorParent
+		if surface_exists(ParticleController.particleSurfFinal) draw_surface_ext(ParticleController.particleSurfFinal,(-camX+1)*lightScale,(-camY+1)*lightScale,lightScale,lightScale,0,make_color_rgb(128,128,255),1.0);
+		with all if visible && sprite_index != -1
+		{
+			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+		}
+		with objActorParent if visible
 		{
 				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 				if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
 				{
 					draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 				}
+		}
+		with objAttackEffectParent if visible
+		{
+			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 		}
 		with objBlockParent if visible
 		{
@@ -460,13 +478,22 @@ if normalMappingEnabled
 	surface_set_target(specularMapCamera);
 		draw_surface_ext(specularMap,-(camX-1)*lightScale,-(camY-1)*lightScale,lightScale,lightScale,0,c_white,1);
 		shader_set(shd_white);
-		with objActorParent
+		if surface_exists(ParticleController.particleSurfFinal) draw_surface_ext(ParticleController.particleSurfFinal,(-camX+1)*lightScale,(-camY+1)*lightScale,lightScale,lightScale,0,make_color_rgb(128,128,128),1.0);
+		with all if visible && sprite_index != -1
+		{
+			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
+		}
+		with objActorParent if visible
 		{
 				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
 				if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
 				{
 					draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
 				}
+		}
+		with objAttackEffectParent if visible
+		{
+			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,128),image_alpha);
 		}
 		with objBlockParent if visible
 		{

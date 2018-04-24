@@ -38,6 +38,9 @@ if (InputManager.aInput == true)
 		case "V-Sync":
 			ini_write_real("effects","vsync",!ini_read_real("effects","vsync",true))
 			break;
+		case "Music Enabled":
+			ini_write_real("effects","musicEnabled",!ini_read_real("effects","musicEnabled",true))
+			break;
 		case "Attack Hit Boxes":
 			ini_write_real("effects","hitBoxVisuals",!ini_read_real("effects","hitBoxVisuals",false))
 			break;

@@ -78,6 +78,7 @@ with PlayerStats
 		repeat(PlayerStats.runeSize) ds_list_add(runeList,noone);
 		equipCache[? equipmentSlot.head] = equipmentItem.iron_helmet;
 		equipCache[? equipmentSlot.chest] = equipmentItem.iron_chestplate;
+		equipCache[? equipmentSlot.hands] = equipmentItem.rusted_gauntlets;
 		equipCache[? equipmentSlot.legs] = equipmentItem.chainmail_leggings;
 		equipCache[? equipmentSlot.main1] = weaponItem.gladius;
 		equipCache[? equipmentSlot.main2] = weaponItem.hastam;
@@ -100,6 +101,7 @@ with PlayerStats
 		scr_player_inventory_manage(itemType.equipment,equipmentItem.bassinet,1);
 		scr_player_inventory_manage(itemType.equipment,equipmentItem.red_bandanna,1);
 		scr_player_inventory_manage(itemType.equipment,equipmentItem.iron_chestplate,1);
+		scr_player_inventory_manage(itemType.equipment,equipmentItem.rusted_gauntlets,1);
 		scr_player_inventory_manage(itemType.equipment,equipmentItem.chainmail_leggings,1);
 			//Runes
 		scr_player_inventory_manage(itemType.rune,runeItem.dagaz,1);

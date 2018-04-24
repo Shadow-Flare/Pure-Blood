@@ -16,7 +16,7 @@
         "161b0094-997a-4a06-bb7f-ffe0b394781e"
     ],
     "filterType": "GMScript",
-    "folderName": "state behave scripts",
+    "folderName": "State behave scripts",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

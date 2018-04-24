@@ -166,7 +166,7 @@ if InputManager.bInput == true
 		menu = menuCurrent.main;
 		current_menu_options = menu_main;
 		sX = 0;
-		sY = 0;
+		sY = 3;
 	}
 	else sY = 0;
 	audio_play_sound(snd_menu_back,10,0);

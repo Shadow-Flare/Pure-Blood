@@ -21,7 +21,8 @@
         "814d15e2-64d0-4d5c-9eca-4dc784e4147d",
         "edb25d33-a3a0-4d41-aeb3-cbaecc0613a5",
         "17f21aad-b2d5-4924-a796-3b160d27468f",
-        "04482a50-e8de-44ea-b975-45c560528f0d"
+        "04482a50-e8de-44ea-b975-45c560528f0d",
+        "85760311-7ff9-4234-b9a5-a0e72bd4e6c1"
     ],
     "IsDnD": false,
     "layers": [
@@ -72,7 +73,8 @@
 {"name": "inst_20DCEC6","id": "011be314-1f40-4b26-a2e4-5edc6b4a603c","colour": { "Value": 4294967295 },"creationCodeFile": "","creationCodeType": "","ignore": false,"inheritCode": false,"inheritItemSettings": false,"IsDnD": false,"m_originalParentID": "00000000-0000-0000-0000-000000000000","m_serialiseFrozen": false,"modelName": "GMRInstance","name_with_no_file_rename": "inst_20DCEC6","objId": "b15fe7a2-046c-4e9f-9633-902167232f30","properties": null,"rotation": 0,"scaleX": 6,"scaleY": 2,"mvc": "1.0","x": 224,"y": 0},
 {"name": "inst_4F3820F3","id": "4ca520a3-b5c6-4879-b236-eea232914e16","colour": { "Value": 4294967295 },"creationCodeFile": "","creationCodeType": "","ignore": false,"inheritCode": false,"inheritItemSettings": false,"IsDnD": false,"m_originalParentID": "00000000-0000-0000-0000-000000000000","m_serialiseFrozen": false,"modelName": "GMRInstance","name_with_no_file_rename": "inst_4F3820F3","objId": "8164308b-6529-4e48-a0f3-544b6728db44","properties": null,"rotation": 0,"scaleX": 2,"scaleY": 4,"mvc": "1.0","x": 64,"y": -64},
 {"name": "inst_630BFB42","id": "5a8086fc-a355-413b-ba1c-b06a69c04d7b","colour": { "Value": 4294967295 },"creationCodeFile": "","creationCodeType": "","ignore": false,"inheritCode": false,"inheritItemSettings": false,"IsDnD": false,"m_originalParentID": "00000000-0000-0000-0000-000000000000","m_serialiseFrozen": false,"modelName": "GMRInstance","name_with_no_file_rename": "inst_630BFB42","objId": "8164308b-6529-4e48-a0f3-544b6728db44","properties": null,"rotation": 0,"scaleX": 2,"scaleY": 4,"mvc": "1.0","x": 224,"y": -64},
-{"name": "inst_205B5DE","id": "6fd7880b-3387-499e-9494-aa79bca9144a","colour": { "Value": 4294967295 },"creationCodeFile": "","creationCodeType": "","ignore": false,"inheritCode": false,"inheritItemSettings": false,"IsDnD": false,"m_originalParentID": "00000000-0000-0000-0000-000000000000","m_serialiseFrozen": false,"modelName": "GMRInstance","name_with_no_file_rename": "inst_205B5DE","objId": "8164308b-6529-4e48-a0f3-544b6728db44","properties": null,"rotation": 0,"scaleX": 12,"scaleY": 2,"mvc": "1.0","x": 64,"y": -96}
+{"name": "inst_205B5DE","id": "6fd7880b-3387-499e-9494-aa79bca9144a","colour": { "Value": 4294967295 },"creationCodeFile": "","creationCodeType": "","ignore": false,"inheritCode": false,"inheritItemSettings": false,"IsDnD": false,"m_originalParentID": "00000000-0000-0000-0000-000000000000","m_serialiseFrozen": false,"modelName": "GMRInstance","name_with_no_file_rename": "inst_205B5DE","objId": "8164308b-6529-4e48-a0f3-544b6728db44","properties": null,"rotation": 0,"scaleX": 12,"scaleY": 2,"mvc": "1.0","x": 64,"y": -96},
+{"name": "inst_211144C0","id": "85760311-7ff9-4234-b9a5-a0e72bd4e6c1","colour": { "Value": 4294967295 },"creationCodeFile": "","creationCodeType": "","ignore": false,"inheritCode": false,"inheritItemSettings": false,"IsDnD": false,"m_originalParentID": "00000000-0000-0000-0000-000000000000","m_serialiseFrozen": false,"modelName": "GMRInstance","name_with_no_file_rename": "inst_211144C0","objId": "54f9a996-fbf1-4933-9de0-d4f153c41107","properties": null,"rotation": 0,"scaleX": 6,"scaleY": 1,"mvc": "1.0","x": 112,"y": 96}
             ],
             "layers": [
 
@@ -275,7 +277,7 @@
             "depth": 600,
             "grid_x": 4,
             "grid_y": 4,
-            "hierarchyFrozen": true,
+            "hierarchyFrozen": false,
             "hierarchyVisible": true,
             "inheritLayerDepth": false,
             "inheritLayerSettings": false,
@@ -301,7 +303,7 @@
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,89,89,89,89,89,89,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

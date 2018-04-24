@@ -15,7 +15,7 @@
         "d6dc0671-df29-487e-bc03-756f993ba7a3"
     ],
     "filterType": "GMSprite",
-    "folderName": "Damage Effects",
+    "folderName": "Elemental Effects",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

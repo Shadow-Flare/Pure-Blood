@@ -26,11 +26,11 @@ if new
 	
 	if boundEffect != noone
 	{
-		effect = instance_create_depth(x,y,depth+1,obj_effect_persistent_follow);
+		effect = instance_create_depth(x,y,10000,obj_effect_persistent_follow);
 		with effect 
 		{
 			boundEffect = other.boundEffect;
-			enabled = true;
+			effectEnabled = true;
 			target = other.id;
 			radius = 1.2;
 			intensity = 0.3;
@@ -56,11 +56,8 @@ if hitOn
 	if !place_free(x+xSpd,y+ySpd)
 	{
 		image_index = irandom(sprite_get_number(sprite_index));
-		var xvar = xSpd/(abs(xSpd)+abs(ySpd));
-		var yvar = ySpd/(abs(xSpd)+abs(ySpd));
-		while place_free(x+xvar,y+yvar) {x += xvar; y+= yvar};
-		x+= xvar*3;
-		y+= yvar*3;
+		var ang = point_direction(0,0,xSpd,-ySpd);
+		while place_free(x+dcos(ang),y+dsin(ang)) {x+=dcos(ang); y+=dsin(ang);}
 		xSpd = 0;
 		ySpd = 0;
 		hitOn = 2;
@@ -68,8 +65,8 @@ if hitOn
 		{
 			radius = 3;
 			intensity = 0.5;
-			burst = true;
-			enabled = false;
+			effectBurst = true;
+			effectEnabled = false;
 		}
 	}
 	x += xSpd;
@@ -94,8 +91,8 @@ if !ds_list_empty(hitList) && instance_exists(hitList[| 0])
 		{
 			radius = 3;
 			intensity = 0.5;
-			burst = true;
-			enabled = false;
+			effectBurst = true;
+			effectEnabled = false;
 		}
 	}
 	if image_index == 0 image_index = irandom_range(1,sprite_get_number(sprite_index));

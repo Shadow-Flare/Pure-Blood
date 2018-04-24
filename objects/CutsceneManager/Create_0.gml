@@ -49,7 +49,6 @@ dialogScrollY1 = dialogBoxY1+0.02*(surfW/surfH);
 dialogScrollY2 = dialogBoxY2-0.02*(surfW/surfH);
 dialogScrollBarScale = 4;
 dialogScrollBarColour = c_blue;
-dialogScrollCursorSprite = spr_scrollcursor_0;
 dialogScrollCursorColour = c_blue;
 
 dialogScrollIndex = 0;

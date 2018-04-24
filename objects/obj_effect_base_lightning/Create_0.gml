@@ -2,8 +2,10 @@
 if !layer_exists("lay_technicals") layer_create(100,"lay_technicals");
 if !instance_exists(ParticleController) instance_create_layer(0,0,"lay_technicals",ParticleController);
 
-if !variable_instance_exists(id,"burst") burst = false;
-if !variable_instance_exists(id,"enabled") enabled = true;
+if !variable_instance_exists(id,"effectBurst") effectBurst = false;
+if !variable_instance_exists(id,"effectEnabled") effectEnabled = true;
+if !variable_instance_exists(id,"radius") radius = 4;
+if !variable_instance_exists(id,"intensity") intensity = 1.0;
 timer = 0;
 
 sparkTimer = 0;

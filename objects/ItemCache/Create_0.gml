@@ -18,9 +18,10 @@ enum weaponItem
 };
 enum equipmentItem 
 {
-/* head */				iron_helmet, bassinet, red_bandanna,
+/* Head  */				iron_helmet, bassinet, red_bandanna,
 /* Chest */				iron_chestplate,
-/* Legs */				chainmail_leggings
+/* Hands */				rusted_gauntlets,
+/* Legs  */				chainmail_leggings
 };
 enum runeItem
 {
@@ -221,6 +222,21 @@ cache[? itemStats.effectsCache] = ds_map_create();
 	effCache[? itemEffects.slashDef] = 5;
 	effCache[? itemEffects.bluntDef] = 1;
 	effCache[? itemEffects.pierceDef] = 3;
+			#endregion
+		#endregion
+		#region Legs
+			#region Rusted Gauntlets
+equipmentCache[? equipmentItem.rusted_gauntlets] = ds_map_create();
+var cache = equipmentCache[? equipmentItem.rusted_gauntlets];
+cache[? itemStats.name] = "Rusted Gauntlets";
+cache[? itemStats.icon] = spr_icon_item_equipment_rusted_gauntlets;
+cache[? itemStats.description] = "Heavy metal gauntlets, designed for hand protection. Metal plates bound around a tattered leather glove, time has left both the metal and the leather's quality wanting.";
+cache[? itemStats.equipSlot] = equipmentSlot.hands;
+cache[? itemStats.effectsCache] = ds_map_create();
+	var effCache = cache[? itemStats.effectsCache];
+	effCache[? itemEffects.slashDef] = 1;
+	effCache[? itemEffects.bluntDef] = 0;
+	effCache[? itemEffects.pierceDef] = 2;
 			#endregion
 		#endregion
 		#region Legs

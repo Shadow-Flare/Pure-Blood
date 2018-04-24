@@ -2,11 +2,11 @@ attackType = attackTypes.projectile;
 
 lifeTime = 0;
 targetFacingPrev = 0;
-hitOn = 1;
+hitOn = true;
 phaseOut = 0;
 
 trailTimer = 0;
-trailDuration = 0.4;
+trailDuration = 0.2;
 trailNumberOfPoints = min(60,trailDuration*room_speed); //applied to limit points with duration properly, if second value is used then it will be 1 point per frame
 trailNumberOfTrails = 1;
 trailColour = c_white;

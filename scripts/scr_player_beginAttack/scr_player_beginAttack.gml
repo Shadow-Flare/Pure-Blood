@@ -9,6 +9,8 @@ attackSpecials = combo_get_stat(attackID,comboStats.specials);
 attackCooldown = combo_get_stat(attackID,comboStats.cooldown);
 attackMoveDistanceX = combo_get_stat(attackID,comboStats.moveDistX);
 attackMoveDistanceY = combo_get_stat(attackID,comboStats.moveDistY);
+attackDesiredXDist = combo_get_stat(attackID,comboStats.desiredXDist);
+attackDesiredYDist = combo_get_stat(attackID,comboStats.desiredYDist);
 attackMoveStart = combo_get_stat(attackID,comboStats.moveStart);
 attackMoveDuration = combo_get_stat(attackID,comboStats.moveDuration);
 

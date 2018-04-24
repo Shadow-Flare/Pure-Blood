@@ -2,7 +2,7 @@ event_inherited();
 
 //player enumerators
 enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, itemUse, emote, dying, action1, action2, action3, action4, action5};
-enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, staggered, stunned, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
+enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, recovery, staggered, stunned, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
 enum vState {grounded, midAir, jumping};
 
 statCache = PlayerStats;
@@ -85,11 +85,21 @@ crossbowDurationAerialHolding = 0.2;
 crossbowAerialBounce = -0.3;
 crossbowBoltInitialSpeed = 16;
 
+ropeShotID = noone;
+ropeShotTarget = noone;
+ropeShotTargetID = noone;
+ropeShotTargetRange = 120;
+ropeShotSpeed = 6;
 ropeShotDurationPre = 0.2;
 ropeShotDurationFire = 0.25;
-ropeShotSpeedGround = 7;
-ropeShotSpeedAerial = 11;
-ropeShotTargetRange = 120;
+ropeShotSpeedGround = 3.2;
+ropeShotSpeedAerial = 4.6;
+ropeShotHookDistGrapplePoint = 32;
+ropeShotHookDistGrappleEnemy = 32;
+ropeShotSwingDist = 0;
+ropeShotSwingDistMin = 32;
+ropeShotSwingDistMax = 128;
+ropeShotAngularSpeed = 0;
 ropeShotMaxDist = 180
 
 attackName = noone;
@@ -125,7 +135,8 @@ glideDuration = 0.8;	//seconds
 canGlide = 1;
 
 staggeredDuration = 0.9;
-stunnedDuration = 1;
+stunnedDuration = 0.6;
+stunnedRecoveryDuration = 0.6;
 deflectDuration = 0.7;
 
 isDead = false;

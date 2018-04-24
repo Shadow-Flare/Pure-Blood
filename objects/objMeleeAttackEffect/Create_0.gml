@@ -1,4 +1,8 @@
 attackType = attackTypes.melee;
+boundEffect = noone;
+initialized = false;
+
+forceDrawBox = false;
 
 hitOn = false;
 hasHit = false;

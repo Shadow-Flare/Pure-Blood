@@ -36,7 +36,7 @@ else moveTimer = 0;
 #region Apply Movement
 if !slotExpanded
 {
-	sX = clamp(sX+hInput,0,array_height_2d(current_menu_options));
+	//sX = clamp(sX+hInput,0,array_height_2d(current_menu_options));
 	sY = clamp(sY+vInput,0,array_length_2d(current_menu_options,sX));
 }
 else

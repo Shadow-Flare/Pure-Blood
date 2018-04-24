@@ -12,11 +12,14 @@ if follow
 	}
 }
 
+//effect
+if boundEffect != noone && initialized event_perform_object(boundEffect,ev_draw,0);
+
 //draw self
 draw_self();
 
 //hitBox
-if GameManager.hitBoxVisuals 
+if GameManager.hitBoxVisuals || forceDrawBox
 {
 	if hitOn var col = c_red;
 	else var col = c_blue;

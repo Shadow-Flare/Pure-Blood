@@ -58,3 +58,7 @@ grav = 0.25;
 
 hitBoxVisuals = false;				//gets determined in "reset_effects()"
 actorBoxVisuals = false;			//gets determined in "reset_effects()"
+musicEnabled = true;				//gets determined in "reset_effects()"
+
+//CHEATS
+thereisnospoon = false;

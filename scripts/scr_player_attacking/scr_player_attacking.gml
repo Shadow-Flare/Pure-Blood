@@ -49,12 +49,40 @@ switch vPhase
 		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
 		{
 			xSpd = facing*(attackMoveDistanceX/((attackMoveDuration)*room_speed));
+			if lockOnType != lockOn.off && instance_exists(lockOnTarget) && attackDesiredXDist != -1
+			{
+				var dir = sign(lockOnTarget.x-x);
+				if dir == 0 dir = 1;
+				var sideX;
+				if dir == 1 sideX = lockOnTarget.x+lockOnTarget.facing*(sprite_get_xoffset(lockOnTarget.sprite_index)-sprite_get_bbox_left(lockOnTarget.sprite_index))
+				else	    sideX = lockOnTarget.x-lockOnTarget.facing*(sprite_get_xoffset(lockOnTarget.sprite_index)-sprite_get_bbox_right(lockOnTarget.sprite_index))
+				if abs(x+xSpd-sideX) < attackDesiredXDist
+				{
+					xSpd = 0;
+					while abs(x+xSpd-sideX) > attackDesiredXDist xSpd -= sign(x+xSpd-sideX);
+				}
+				else if sign(x+xSpd-sideX) == dir xSpd = 0;
+			}
 		}
 		else xSpd -= xSpd/4;
 			//ySpd
 		if phaseTimer >= round(attackMoveStart*room_speed) && phaseTimer <= round((attackMoveStart+attackMoveDuration)*room_speed)
 		{
 			ySpd = attackMoveDistanceY/((attackMoveDuration)*room_speed);
+			if lockOnType != lockOn.off && instance_exists(lockOnTarget) && attackDesiredYDist != -1
+			{
+				var dir = sign(lockOnTarget.y-y);
+				if dir == 0 dir = 1;
+				var sideY;
+				if dir == 1 sideY = lockOnTarget.y+(sprite_get_yoffset(lockOnTarget.sprite_index)-sprite_get_bbox_top(lockOnTarget.sprite_index))
+				else	    sideY = lockOnTarget.y-(sprite_get_yoffset(lockOnTarget.sprite_index)-sprite_get_bbox_bottom(lockOnTarget.sprite_index))
+				if abs(y+ySpd-sideY) < attackDesiredYDist
+				{
+					ySpd = 0;
+					while abs(y+ySpd-sideY) > attackDesiredYDist ySpd += sign(x+xSpd-sideX);;
+				}
+				else if sign(y+ySpd-sideY) == dir ySpd = 0;
+			}
 		}
 		break;
 

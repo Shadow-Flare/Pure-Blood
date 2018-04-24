@@ -56,10 +56,15 @@ ini_open("settings");
 			}
 			else if j == 5
 			{
-				if ini_read_real("effects","hitBoxVisuals",true) STR = "On";
+				if ini_read_real("effects","musicEnabled",true) STR = "On";
 				else draw_set_colour(c_red);
 			}
 			else if j == 6
+			{
+				if ini_read_real("effects","hitBoxVisuals",true) STR = "On";
+				else draw_set_colour(c_red);
+			}
+			else if j == 7
 			{
 				if ini_read_real("effects","actorBoxVisuals",true) STR = "On";
 				else draw_set_colour(c_red);

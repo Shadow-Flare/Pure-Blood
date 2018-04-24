@@ -76,7 +76,18 @@ switch subPhase
 		}
 		break;
 	case subState.stunned:
-		if subPhaseTimer >= round(room_speed*stunnedDuration)
+		if subPhaseTimer >= round(room_speed*stunnedDuration)		//make dependant on a variable length later?
+		{
+			subPhase = subState.recovery;
+			subPhaseTimer = 0;
+		}
+			//xSpd
+		xSpd -= xSpd/8;
+			//Sprite
+		update_sprite(sprPlayerBodyDefaultStunned,-stunnedDuration)
+		break;
+	case subState.recovery:
+		if subPhaseTimer >= round(room_speed*stunnedRecoveryDuration)
 		{
 			phased = false;
 			phase = state.base;
@@ -86,7 +97,7 @@ switch subPhase
 			//xSpd
 		xSpd -= xSpd/8;
 			//Sprite
-		update_sprite(sprPlayerBodyDefaultStunned,-stunnedDuration)
+		update_sprite(sprPlayerBodyDefaultRecovery,-stunnedRecoveryDuration)
 		break;
 }
 		

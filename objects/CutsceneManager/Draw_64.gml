@@ -73,10 +73,7 @@ if dialogDraw
 			{
 				dialogTextLeftShiftUse = true;
 					//back
-				scr_draw_scroll_bar(surfW*dialogScrollX1,surfH*(dialogScrollY1+drawVertMod),surfH*(dialogScrollY2+drawVertMod),0,4,c_blue);
-					//cursor
-				var scrollYMod = abs(dialogScrollY2-dialogScrollY1-(sprite_get_height(dialogScrollCursorSprite)*dialogScrollBarScale/surfH))*(dialogScrollIndex/dialogScrollMax);
-				draw_sprite_ext(dialogScrollCursorSprite,0,surfW*dialogScrollX1,surfH*(dialogScrollY1+scrollYMod+drawVertMod),dialogScrollBarScale,dialogScrollBarScale,0,dialogScrollCursorColour,1);
+				scr_draw_scroll_bar(surfW*dialogScrollX1,surfH*(dialogScrollY1+drawVertMod),surfH*(dialogScrollY2+drawVertMod),true,dialogScrollIndex,dialogScrollMax,0,4,c_blue);
 			}
 			else dialogTextLeftShiftUse = false;
 		break;

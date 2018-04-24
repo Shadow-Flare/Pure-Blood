@@ -18,7 +18,7 @@ if baseSpriteIndex != argument0
 	if asset_get_type(bodySpriteName) == asset_sprite sprite_index = asset_get_index(bodySpriteName);
 	else sprite_index = sprEnemySpriteMissing;
 	
-		//speed and index reset
+		//speed, blend and index reset
 	image_index = 0;
 	if sign(argument1) >= 0	image_speed = argument1;
 	else if sign(argument1) == -1 image_speed = sprite_get_number(sprite_index)/abs(argument1);

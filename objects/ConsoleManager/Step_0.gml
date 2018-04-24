@@ -28,7 +28,8 @@ if consoleEnabled
 		commandStr = keyboard_string;
 		commandRes = "";	
 	//POTENTIAL COMMANDS GO HERE
-		//GOTO ROOM
+		//Dev Commands
+		#region GOTO ROOM
 		tmp = string_delete(keyboard_string,6,string_length(keyboard_string)-5)
 		if tmp == "goto " || tmp == "goto"
 		{
@@ -51,7 +52,8 @@ if consoleEnabled
 				commandRes = "'"+string(extra)+"' isnt a room boss.";
 			}
 		}
-		//SET ROOM SPEED
+		#endregion
+		#region SET ROOM SPEED
 		tmp = string_delete(commandStr,13,string_length(commandStr)-12)
 		if tmp == "setroomspeed " || tmp == "setroomspeed"
 		{
@@ -75,7 +77,8 @@ if consoleEnabled
 				commandRes = "not a valid input boss.";
 			}
 		}
-		//SET MOVE SPEED
+		#endregion
+		#region SET MOVE SPEED
 		tmp = string_delete(commandStr,13,string_length(commandStr)-12)
 		if tmp == "setmovespeed " || tmp == "setmovespeed"
 		{
@@ -99,28 +102,32 @@ if consoleEnabled
 				commandRes = "not a valid input boss.";
 			}
 		}
-		//VSYNC TOGGLE
+		#endregion
+		#region VSYNC TOGGLE
 		if commandStr == "purefps"
 		{
 			conPureFps = !conPureFps;
 			if conPureFps commandRes = "Pure Fps mode enabled."
 			else commandRes = "Pure Fps disabled."
 		}
-		//CLICK HACK TOGGLE
+		#endregion
+		#region CLICK HACK TOGGLE
 		if commandStr == "clickhack"
 		{
 			conClickHack = !conClickHack;
 			if conClickHack commandRes = "click hack turned on. (UNSTABLE)";
 			else commandRes = "click hack turned off boss.";
 		}
-		//HELP TOGGLE
+		#endregion
+		#region HELP TOGGLE
 		if commandStr == "help" || commandStr == "?"
 		{
 			conHelpMenu = !conHelpMenu;
 			if conHelpMenu commandRes = "help menu enabled boss.";
 			else commandRes = "help menu disabled boss.";
 		}
-		//LIGHT TESTER TOGGLE
+		#endregion
+		#region LIGHT TESTER TOGGLE
 		if commandStr == "lightTester"
 		{
 			if ambienceTester ambienceTester = false;
@@ -139,7 +146,8 @@ if consoleEnabled
 			
 			selection = 0;
 		}
-		//AMBIENCE TESTER TOGGLE
+		#endregion
+		#region AMBIENCE TESTER TOGGLE
 		if commandStr == "ambienceTester"
 		{
 			if instance_exists(lightTester)
@@ -154,15 +162,8 @@ if consoleEnabled
 			selection = 1;
 			selectedPage = 0;
 		}
-		//HISTORY LOGGER
-		for(var i=0; i<7;i++)
-		{
-			if i!= 6 history[6-i] = history[5-i];
-			else history[0] = commandStr;
-			if i!= 6 historyM[6-i] = historyM[5-i];
-			else historyM[0] = commandRes;
-		}
-		//SHUTDOWN
+		#endregion
+		#region SHUTDOWN
 		if commandStr == "hardshutdown"
 		{
 			game_end()
@@ -172,6 +173,24 @@ if consoleEnabled
 		keyboard_lastkey = "";
 		selectIndex = 0;
 		if commandRes == "" commandRes = string(tmp)+"?";
+		#endregion
+		//Cheats
+		#region NO SPELL COST
+		if commandStr == "thereisnospoon"
+		{
+			GameManager.thereisnospoon = !GameManager.thereisnospoon;
+			if GameManager.thereisnospoon commandRes = "No spell cost mode enabled."
+			else commandRes = "No spell cost mode disabled."
+		}
+		#endregion
+	//HISTORY LOGGER
+		for(var i=0; i<7;i++)
+		{
+			if i!= 6 history[6-i] = history[5-i];
+			else history[0] = commandStr;
+			if i!= 6 historyM[6-i] = historyM[5-i];
+			else historyM[0] = commandRes;
+		}
 	}
 }
 

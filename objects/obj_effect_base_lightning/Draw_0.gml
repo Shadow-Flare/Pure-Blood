@@ -10,7 +10,7 @@ with ParticleController
 	}
 	part_emitter_region(pSysLightning,pEmitterLightning,other.xPrev,other.x,other.yPrev,other.y,ps_shape_line,ps_distr_linear);
 
-	if other.enabled
+	if other.effectEnabled
 	{
 		part_type_direction(other.pSpark,0,360,0,0);
 		part_type_size(other.pSpark,1*intensity,1.5*intensity,-0.025*intensity,0);
@@ -29,9 +29,10 @@ with ParticleController
 			other.sparkDuration = random_range(other.sparkDurationMin,other.sparkDurationMax);
 		}
 	}
-	if other.burst
+	if other.effectBurst
 	{
-		other.burst = false;
+		other.effectBurst = false;
+		part_emitter_region(pSysLightning,pEmitterLightning,other.x,other.x,other.y,other.y,ps_shape_line,ps_distr_linear);
 		part_type_size(other.pSpark,1*intensity,1.5*intensity,-0.025*intensity,0);
 		part_type_size(other.pLum,0,0,0.008*intensity,0.5*intensity);
 		part_type_speed(other.pSpark,1*intensity,2*intensity,-0.02*intensity,0);
@@ -45,8 +46,8 @@ with ParticleController
 
 var trailVarMod = 0;
 var trailAlphaMod = 0;
-var trailEnable = enabled;
-if trailForce = true
+var trailEnable = effectEnabled;
+if trailForce == true
 {
 	var trailVarMod = (trailTimer/60)*32
 	var trailAlphaMod = (trailTimer/60)*0.8

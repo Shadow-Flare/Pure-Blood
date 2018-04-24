@@ -27,15 +27,17 @@ with statCache
 attack1Range = 16*2.5;									
 
 //variables
-landingDuration = 0.7;									
-staggeredDuration = 0.5;								
-stunnedDuration = 1.8;
-deflectDuration = 0.7;
+landingDuration = 0.7;
+aerialStaggeredDuration = 0.3;
+staggeredDuration = 0.5;
+stunnedDuration = 1.2;
+stunnedRecoveryDuration = 0.6;
+deflectDuration = 0.3;
 pushable = true;
 flying = false;
 
-deathDuration = 1;										
-deathFadeDuration = 2;									
+deathDuration = 1;
+deathFadeDuration = 2;
 
 //ai data
 aggroRange = 16*7;										

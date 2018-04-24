@@ -16,6 +16,8 @@ var createDuration = argument5;
 var createXScale = argument6
 var createYScale = argument7;
 
+if createSprite == noone return noone;
+
 with instance_create_depth(createX,createY,createDepth,objEffectGeneral)
 {
 	follow = createFollow;

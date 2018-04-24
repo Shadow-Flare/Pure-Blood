@@ -11,20 +11,21 @@ with objAttackEffectParent
 		{
 			hasBeenHit = true;
 			lastHitType = attack.hitType;
-			if attack.attackType = attackTypes.melee && instance_exists(enemy) var dirNum = sign(x-enemy.x);
-			else var dirNum = sign(x-attack.x);
+			if attack.attackType == attackTypes.melee && instance_exists(enemy) var dirNum = sign(x-enemy.x);
+			else var dirNum = sign(attack.xSpd);
 			if !attack.pierce && hitPhase == hitState.blocking && dirNum == -facing
 			{
 				hasBlocked = true;
 				if instance_exists(enemy) enemy.hasDeflected = true;
 				other.hasDeflected = true;
 				xSpd = dirNum*max(attack.hitKnockback/2,1);
-				if attack.attackType = attackTypes.melee && instance_exists(enemy) enemy.xSpd = -dirNum*2
+				if attack.attackType = attackTypes.melee && instance_exists(enemy) enemy.xSpd = -dirNum*2;
+				instance_destroy(attack);
 			}
 			else if hitPhase != hitState.dodging
 			{
 					//stats
-				if stats.isInvulnerable == false scr_hit(attack,attack.hitSoundID,attack.hitType,attack.hitDamage,attack.statusType,attack.statusValue,enemy);
+				if stats.isInvulnerable == false scr_hit(attack,attack.hitSoundID,attack.hitType,attack.hitDamage,attack.statusType,attack.statusValue,enemy,attack.hitEffects);
 				switch attack.hitType
 				{
 					case damageType.slash: case damageType.blunt: case damageType.pierce: case damageType.none:
@@ -60,29 +61,30 @@ with objAttackEffectParent
 				}
 					//old
 				//if sign(attack.hitKnockback) == -1 reaction = 3;
-				//else if attack.hitStagger <= toughness && attack.hitStagger != -1 var reaction = 0;		//nothing
+				//else if attack.hitStagger <= toughness && attack.hitStagger != -1 var reaction = 0;	//nothing
 				//else if attack.hitStagger <= toughness*2 || attack.hitStagger == -1 reaction = 1;		//stagger
 				//else reaction = 2;	
 					//react
 				switch reaction
 				{
-					case 0:						//nothing
+					case 0:	#region Nothing
 							//effect
-						scr_hit_effect_sprite(round(x+random_range(-4,4)), round(y+random_range(-4,4)), sprHitEffectSprite, 0.3, random(360), 0.3, 0.3, 1);
+						create_effect(false,x+random_range(-4,4),y+random_range(-4,4),depth-1,spr_hit_blood_light,0.3,1,1);
 							//do nothing
 						xSpd = dirNum*max(attack.hitKnockback/2,1);
-						break;
-					case 1:						//stagger
-						hasStaggered = true;
+						break; #endregion
+					case 1:	#region Stagger
 							//effect
-						scr_hit_effect_sprite(round(x+random_range(-4,4)), round(y+random_range(-4,4)), sprHitEffectSprite, 0.3, random(360), 0.7, 0.7, 1);
+						create_effect(false,x+random_range(-4,4),y+random_range(-4,4),depth-1,spr_hit_blood_medium,0.3,1,1);
+							//state change
+						hasStaggered = true;
 						if phase == state.hitReaction && subPhase == subState.aerialStagger
 						{
 								//reset timer
 							subPhaseTimer = 0;
 								//movement
 							xSpd = attack.hitKnockback*dirNum;
-							ySpd = -attack.hitKnockback;
+							ySpd = -attack.hitKnockback/4;
 						}
 						else
 						{
@@ -94,11 +96,11 @@ with objAttackEffectParent
 								//movement
 							xSpd = attack.hitKnockback*dirNum;
 						}
-						break;
-					case 2:							//flung
+						break; #endregion
+					case 2: #region Flung
 						hasFlung = true;
 								//effect
-						scr_hit_effect_sprite(round(x+random_range(-4,4)), round(y+random_range(-4,4)), sprHitEffectSprite, 0.3, random(360), 1, 1, 1);
+						create_effect(false,x+random_range(-4,4),y+random_range(-4,4),depth-1,spr_hit_blood_heavy,0.3,1,1);
 								//screen shake
 						if attack.casterType = actorTypes.player
 						{
@@ -109,11 +111,19 @@ with objAttackEffectParent
 								//state change
 							//phased = true;
 							subPhase = subState.aerialStagger;
-							subPhaseTimer = 0;
-								//movement
-							var reactDir = -30+random_range(-5,5);
-							xSpd = dirNum*attack.hitKnockback*dcos(reactDir);
-							ySpd = -attack.hitKnockback*dsin(reactDir);
+							if attack.hitKnockback <= 4
+							{
+								subPhaseTimer = 0;
+								xSpd = attack.hitKnockback*dirNum;
+								ySpd = -attack.hitKnockback/4;
+							}
+							else
+							{
+								subPhaseTimer = room_speed;
+								var reactDir = -30+random_range(-5,5);
+								xSpd = dirNum*attack.hitKnockback*dcos(reactDir);
+								ySpd = -attack.hitKnockback*dsin(reactDir);
+							}
 						}
 						else
 						{
@@ -122,17 +132,17 @@ with objAttackEffectParent
 							phase = state.hitReaction;
 							phaseTimer = 0;
 							subPhase = subState.aerialStagger;
-							subPhaseTimer = 0;
+							subPhaseTimer = room_speed;
 								//movement
-							var reactDir = 35+random_range(-5,5);
+							var reactDir = 30+random_range(-5,5);
 							xSpd = dirNum*attack.hitKnockback*dcos(reactDir);
 							ySpd = -attack.hitKnockback*dsin(reactDir);
 						}
-						break
-					case 3:		//uppercut
+						break; #endregion
+					case 3: #region Uppercut
 							//effect
-						scr_hit_effect_sprite(round(x+random_range(-4,4)), round(y+random_range(-4,4)), sprHitEffectSprite, 0.3, random(360), 0.7, 0.7, 1);
-						//state change
+						create_effect(false,x+random_range(-4,4),y+random_range(-4,4),depth-1,spr_hit_blood_medium,0.3,1,1);
+							//state change
 						phase = state.hitReaction;
 						phaseTimer = 0;
 						subPhase = subState.aerialStagger;
@@ -143,7 +153,7 @@ with objAttackEffectParent
 						//movement
 						ySpd = attack.hitKnockback;
 						xSpd = dirNum*1;
-						break
+						break; #endregion
 				}
 			}
 		}

@@ -41,34 +41,76 @@ else
 	pushYSpd = 0;
 }
 
-//buffers and compiled speed
-xSpd += xSpdBuffer;
-ySpd += ySpdBuffer;
-pushXSpd += pushXSpdBuffer;
-pushYSpd += pushYSpdBuffer;
-envXSpd += envXSpdBuffer;
-envYSpd += envYSpdBuffer;
+#region buffers and compiled speed
+if object_index = objPlayer
+{
+	if ropeShotAngularSpeed == 0
+	{
+		xSpd += xSpdBuffer;
+		ySpd += ySpdBuffer;
+		pushXSpd += pushXSpdBuffer;
+		pushYSpd += pushYSpdBuffer;
+		envXSpd += envXSpdBuffer;
+		envYSpd += envYSpdBuffer;
 
-xSpdBuffer = xSpd % 1/6;
-ySpdBuffer = ySpd % 1/6;
-pushXSpdBuffer = pushXSpd % 1/6;
-pushYSpdBuffer = pushYSpd % 1/6;
-envXSpdBuffer = envXSpd % 1/6;
-envYSpdBuffer = envYSpd % 1/6;
+		xSpdBuffer = xSpd % 1/6;
+		ySpdBuffer = ySpd % 1/6;
+		pushXSpdBuffer = pushXSpd % 1/6;
+		pushYSpdBuffer = pushYSpd % 1/6;
+		envXSpdBuffer = envXSpd % 1/6;
+		envYSpdBuffer = envYSpd % 1/6;
 
-xSpd -= xSpdBuffer;
-ySpd -= ySpdBuffer;
-pushXSpd -= pushXSpdBuffer;
-pushYSpd -= pushYSpdBuffer;
-envXSpd -= envXSpdBuffer;
-envYSpd -= envYSpdBuffer;
+		xSpd -= xSpdBuffer;
+		ySpd -= ySpdBuffer;
+		pushXSpd -= pushXSpdBuffer;
+		pushYSpd -= pushYSpdBuffer;
+		envXSpd -= envXSpdBuffer;
+		envYSpd -= envYSpdBuffer;
 
-x = round(x*6)/6;
-y = round(y*6)/6;
+		x = round(x*6)/6;
+		y = round(y*6)/6;
+	}
+	else
+	{
+		xSpdBuffer = 0;
+		ySpdBuffer = 0;
+		pushXSpdBuffer = 0;
+		pushYSpdBuffer = 0;
+		envXSpdBuffer = 0;
+		envYSpdBuffer = 0;
+	}
+}
+else
+{
+	xSpd += xSpdBuffer;
+	ySpd += ySpdBuffer;
+	pushXSpd += pushXSpdBuffer;
+	pushYSpd += pushYSpdBuffer;
+	envXSpd += envXSpdBuffer;
+	envYSpd += envYSpdBuffer;
+
+	xSpdBuffer = xSpd % 1/6;
+	ySpdBuffer = ySpd % 1/6;
+	pushXSpdBuffer = pushXSpd % 1/6;
+	pushYSpdBuffer = pushYSpd % 1/6;
+	envXSpdBuffer = envXSpd % 1/6;
+	envYSpdBuffer = envYSpd % 1/6;
+
+	xSpd -= xSpdBuffer;
+	ySpd -= ySpdBuffer;
+	pushXSpd -= pushXSpdBuffer;
+	pushYSpd -= pushYSpdBuffer;
+	envXSpd -= envXSpdBuffer;
+	envYSpd -= envYSpdBuffer;
+
+	x = round(x*6)/6;
+	y = round(y*6)/6;
+}
 
 var compiledXSpd = xSpd+envXSpd+pushXSpd;
 var compiledYSpd = ySpd+envYSpd+pushYSpd;
 var sprHeightDif = sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index);
+#endregion
 
 	//platforms
 if !dropThroughPlatforms
@@ -91,9 +133,11 @@ if !place_free(x,y+compiledYSpd) && place_free(x,y)
 	ySpd = 0;
 	envYSpd = 0;
 	pushYSpd = 0;
+	if object_index = objPlayer ropeShotAngularSpeed = 0;
 	compiledYSpd = 0;
 }
 
+compiledYSpd = ySpd+envYSpd+pushYSpd;
 y+=compiledYSpd;
 
 with objPlatformParent solid = false;
@@ -114,7 +158,7 @@ if !phased
 			if place_meeting(x,y,othActor) pushXSpd-=dirToOther*1;
 		}
 		
-		else if place_meeting(x+compiledXSpd,y,othActor) && !place_meeting(x,y,othActor) && !othActor.phased
+		else if place_meeting(x+compiledXSpd,y,othActor) && !othActor.phased
 		{
 			var dirToOther = sign(othActor.x-x);
 			if dirToOther = 0 dirToOther = irandom(1);
@@ -122,6 +166,7 @@ if !phased
 
 			while place_meeting(x+compiledXSpd,y,othActor) 
 			{
+				if object_index = objPlayer ropeShotAngularSpeed = 0;
 				pushXSpd-=dirToOther*(1/6);
 				compiledXSpd = xSpd+envXSpd+pushXSpd;
 			}
@@ -140,6 +185,7 @@ switch sign(compiledXSpd)
 			xSpd = 0;
 			envXSpd = 0;
 			pushXSpd = 0;
+			if object_index = objPlayer ropeShotAngularSpeed = 0
 			compiledXSpd = 0;
 		}
 		break;
@@ -151,11 +197,13 @@ switch sign(compiledXSpd)
 			xSpd = 0;
 			envXSpd = 0;
 			pushXSpd = 0;
+			if object_index = objPlayer ropeShotAngularSpeed = 0;
 			compiledXSpd = 0;
 		}
 		break;
 }
 
-x+=compiledXSpd
+compiledXSpd = xSpd+envXSpd+pushXSpd;
+x+=compiledXSpd;
 
 with obj_block_nonSolid solid = false;

@@ -54,6 +54,7 @@ while equipID != undefined
 					case equipmentSlot.head:
 					case equipmentSlot.chest:
 					case equipmentSlot.legs:
+					case equipmentSlot.hands:
 						var keyType = itemType.equipment;
 						break;
 					case equipmentSlot.main1:
@@ -152,11 +153,18 @@ magicalPower = 0+1*intelligence+equipmentStats[? itemEffects.magPow];
 magicalStagger = 2+0.25*intelligence+0.25*willpower+equipmentStats[? itemEffects.magFor];
 magicalToughness = 2+0.30*willpower+equipmentStats[? itemEffects.magTough];
 
+drainMod = 0.1;		//scale with some faction stat, NEED TO MIRROR THIS IN EQUIPMENT ?
+
 physicalDefense = (damageResistances[damageType.slash]+damageResistances[damageType.blunt]+damageResistances[damageType.pierce])/3;
 
 jumpHeightVar = jumpHeightVarInitial+scr_player_ability_get(abilityType.movement,movementAbility.high_jump,playerAbilityStats.numberActivated);
 jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);							//jumpHeightVar*<blockSize>
 #endregion
+
+//TESTERS
+hpMax = max((mouse_x/320)*60,1);
+mpMax = max((mouse_y/176)*60,1);
+
 #region scale hp/mp values with max changes
 if hpMax != hpMaxPrev
 {

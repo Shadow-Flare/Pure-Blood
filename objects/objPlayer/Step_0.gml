@@ -148,9 +148,11 @@ switch PlayerStats.currentOffhandActivatableID
 {
 		//rope shot
 	case 0:
+		ropeShotTargetID = noone;
 		var nearestRopeShotTarget = instance_nearest(x,y,objGrappleParent);
-		if lockOnType = lockOn.hard ropeShotTarget = [lockOnTarget.x,lockOnTarget.y]
-		else if distance_to_object(nearestRopeShotTarget) <= ropeShotTargetRange ropeShotTarget = [nearestRopeShotTarget.x,nearestRopeShotTarget.y];
+		if lockOnType = lockOn.hard {ropeShotTarget = [lockOnTarget.x,lockOnTarget.y]; ropeShotTargetID = lockOnTarget;}
+		else if nearestRopeShotTarget != noone && distance_to_object(nearestRopeShotTarget) <= ropeShotTargetRange {ropeShotTarget = [nearestRopeShotTarget.x,nearestRopeShotTarget.y]; ropeShotTargetID = nearestRopeShotTarget;}
+		else if lockOnType = lockOn.soft {ropeShotTarget = [lockOnTarget.x,lockOnTarget.y]; ropeShotTargetID = lockOnTarget;}
 		else ropeShotTarget = noone;
 		
 		if ropeShotTarget != noone
@@ -194,18 +196,10 @@ if offhandHardCooldownTimer != -1
 	}
 	#endregion
 	#region reset hitPhase
-switch hitPhase
-{
-	case hitState.normal:
-		//do nothing
-		break;
-	case hitState.blocking:
-		if !(phase == state.blocking && subPhase == subState.performing) hitPhase = hitState.normal;
-		break;
-	case hitState.dodging:
-		if !(phase == state.dodging) hitPhase = hitState.normal;
-		break;
-}
+hitPhase = hitState.normal;
+// To make hitphase not notmal, must be set every
+// step after this point. Makes it much easier to
+// maintain hitphase during specific steps
 	#endregion
 	#region determine interactionPossible
 		interactionInstance = noone;

@@ -30,7 +30,9 @@
 sXPrev = sX;
 sYPrev = sY;
 sExpYPrev = sExpY;
+sExpXPrev = sExpX;
 
+	//Move Input
 //checks
 var absHInput = abs(InputManager.moveInputH);
 var absVInput = abs(InputManager.moveInputV);
@@ -62,6 +64,29 @@ if (absHInput > 0.5 || absVInput > 0.5 || InputManager.dLInput || InputManager.d
 	moveTimer++;
 }
 else moveTimer = 0;
+
+	//Right stick Movement
+//checks
+var absHInput = abs(InputManager.targetInputH);
+var absVInput = abs(InputManager.targetInputV);
+var horInputMoreThanVert = absHInput >= absVInput;
+
+//Determine movement (targetVInput/targetHInput)
+var targetVInput = 0, targetHInput = 0;
+if  (targetTimer == 0) || 
+	(targetTimer >= ceil(0.3 * room_speed) && targetTimer < ceil(1.0 * room_speed) && floor(targetTimer % (ceil(0.35 * room_speed))) == 0) ||
+	(targetTimer >= ceil(1.0 * room_speed) && floor(targetTimer%(ceil((1 / 10) * room_speed))) == 0)
+{
+	if (absHInput > 0.5 && horInputMoreThanVert) targetHInput = sign(InputManager.targetInputH);
+
+	if (absVInput > 0.5 && !horInputMoreThanVert) targetVInput = sign(InputManager.targetInputV);
+}
+
+if (absHInput > 0.5 || absVInput > 0.5)
+{
+	targetTimer++;
+}
+else targetTimer = 0;
 #endregion
 #region unique navigation: apply movement
 if weaponryExpandValue == 1 || weaponryExpandValue == 0
@@ -71,10 +96,12 @@ if weaponryExpandValue == 1 || weaponryExpandValue == 0
 			//REMOVE THIS: for the "REMOVE THIS: dont let selection move to offhands" in short
 		var sYPrevTemp = sY;
 		
+			//max height
+		weaponryMaxSY = array_length_2d(current_menu_options,0);
 			//perform move
 		sY = clamp(sY+vInput,0,array_length_2d(current_menu_options,0)-1);
 			//if on the gap slot move twice to skip, if still on gap just revert
-		if current_menu_options[0, sY] == noone	sY = clamp(sY+vInput,0,array_length_2d(current_menu_options,0)-1);
+		if current_menu_options[0, sY] == noone	sY = clamp(sY+vInput,0,weaponryMaxSY-1);
 		if current_menu_options[0, sY] == noone sY = sYPrevTemp;
 		
 			//REMOVE THIS: dont let selection move to offhands
@@ -86,6 +113,7 @@ if weaponryExpandValue == 1 || weaponryExpandValue == 0
 	{
 		if isMain
 		{
+				//main movement
 			if weaponryGroundComboSelected var wholeMax = maxComboLength+maxFinisherLength
 			else var wholeMax = maxAirComboLength+maxAirFinisherLength
 			sX = clamp(sX+hInput,0,wholeMax-1);
@@ -95,6 +123,12 @@ if weaponryExpandValue == 1 || weaponryExpandValue == 0
 				if sExpY > sExpYPrev weaponrySExpYDisplayDifference = 1;
 				else if sExpY < sExpYPrev weaponrySExpYDisplayDifference = -1;
 			}
+				//hitnum movement
+			var selectedComboID = weaponryComboList[| sExpY];
+			var hitNum = ds_list_size(combo_get_stat(selectedComboID,comboStats.damMod));
+			weaponryDetailsSelectedHit+=targetHInput;
+			if weaponryDetailsSelectedHit < 0 weaponryDetailsSelectedHit = hitNum-1;
+			else if weaponryDetailsSelectedHit >= hitNum weaponryDetailsSelectedHit = 0;
 		}
 		else
 		{
@@ -118,12 +152,14 @@ if InputManager.aInput
 		slotExpanded = true;
 		groundComboSelected = true;
 		weaponrySExpYDisplayDifference = 0;
+		audio_play_sound(snd_menu_select,10,0)
 	}
 	else
 	{
 		var attackIndex = sX;
 		if !isCombo attackIndex-=m;
 		combo_set(currentClass,selectedType,attackIndex,weaponryComboList[| sExpY]);
+		audio_play_sound(snd_menu_select,10,0)
 	}
 }
 #endregion
@@ -134,6 +170,7 @@ if InputManager.bInput
 	if slotExpanded
 	{
 		slotExpanded = false;
+		audio_play_sound(snd_menu_back,10,0)
 	}
 	else
 	{
@@ -141,7 +178,7 @@ if InputManager.bInput
 		menu = menuCurrent.main;
 		current_menu_options = menu_main;
 		sX = 0;
-		sY = 0;
+		sY = 1;
 	}
 }
 #endregion
@@ -152,6 +189,7 @@ if InputManager.yInput
 	if slotExpanded
 	{
 		weaponryGroundComboSelected = !weaponryGroundComboSelected;
+		audio_play_sound(snd_menu_navigate,10,0)
 	}
 }
 #endregion
@@ -203,7 +241,7 @@ if !exitingWeaponry
 	}
 }
 #endregion
-#region modify sExpY on changes and play sound
+#region modify sExpY on changes play sound and reset animation timer
 if sX != sXPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
 {
 	var index = sX;
@@ -220,5 +258,11 @@ if sX != sXPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPre
 	}
 }
 
-if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev audio_play_sound(snd_menu_navigate,10,0)
+if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
+{
+	audio_play_sound(snd_menu_navigate,10,0);
+	weaponryDetailsAnimationTimer = 0;
+	weaponryDetailsSelectedHit = 0;
+	weaponryDetailsSelectedHitDisplay = 0;
+}
 #endregion

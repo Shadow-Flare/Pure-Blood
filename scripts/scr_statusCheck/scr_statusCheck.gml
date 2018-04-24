@@ -47,13 +47,13 @@ with statCache
 					var dam = hpMax*0.3;
 					with other
 					{
-						scr_hit(noone,noone,damageType.pure,dam,specialType.none,0,noone);
+						scr_hit(noone,noone,damageType.pure,dam,specialType.none,0,noone,noone);
 						scr_hit_effect_blood(id,statCache.hitEffectType,statCache.hitEffectColour,75,2.22);
 					}
 					break;
 			}
 		}
-			//break hp management
+			//special hp management
 		if specialDamages[i] != 0
 		{			
 			if specialHasActivated[i] var spdMod = 6;
@@ -61,8 +61,12 @@ with statCache
 		
 			var specialSpd = (specialResistances[i]/(specialCooldowns[i]*room_speed))*spdMod;
 		
-			specialDamages[i] -= physSpd;
+			specialDamages[i] -= specialSpd;
 			if specialDamages[i] < 0 specialDamages[i] = 0;
 		}
 	}
 }
+
+//colour reset
+var oldCol = image_blend;
+image_blend = merge_colour(oldCol,c_white,0.05);

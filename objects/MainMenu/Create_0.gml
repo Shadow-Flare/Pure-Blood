@@ -31,4 +31,4 @@ sY = 0;
 moveTimer = 0;
 
 	//effect tester
-//with instance_create_depth(0,0,depth,obj_effect_persistent_mouseFollow) boundEffect = obj_effect_base_fire;
+with instance_create_depth(0,0,depth,obj_effect_persistent_mouseFollow) boundEffect = obj_effect_base_fire;

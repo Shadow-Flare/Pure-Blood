@@ -55,4 +55,19 @@ if audio_exists(musicPeaceAudio) && audio_exists(musicBattleAudio)
 	audio_sound_gain(musicPeaceAudio,peaceGain,0);
 	audio_sound_gain(musicBattleAudio,battleGain,0);
 }
+
+if !GameManager.musicEnabled
+{
+	//audio_sound_gain(ambienceAudio,0,0);
+	
+	audio_sound_gain(musicBaseAudio,0,0);
+	audio_sound_gain(musicPeaceAudio,0,0);
+	audio_sound_gain(musicBattleAudio,0,0);
+}
+else
+{
+	//audio_sound_gain(ambienceAudio,1,0);
+	
+	audio_sound_gain(musicBaseAudio,1,0);
+}
 #endregion

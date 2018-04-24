@@ -1,14 +1,14 @@
+//inventory interface section
+#region get data
 var surfW = surface_get_width(application_surface);
 var surfH = surface_get_height(application_surface);
-
-#region inventory interface section
-	//get data
-var maxItems = array_length_1d(slot_options);
+var gridW = ds_grid_width(slot_grid);
+var gridH = ds_grid_height(slot_grid);
 var typeCache = ItemCache.item[? selection];
-//set
-draw_set_font(fnt_menu);
-draw_set_halign(fa_center);
-	//category
+#endregion
+#region category Title
+//set dont and text data
+draw_set_font(fnt_alagard);
 var catName;
 switch selection
 {
@@ -32,10 +32,11 @@ switch selection
 		break;
 }
 draw_text(surfW*inventoryCategoryTextX,surfH*inventoryCategoryTextY,catName);
+#endregion
+#region tabs
 //set
 draw_set_font(fnt_small_text);
-draw_set_halign(fa_left);
-	//tabs
+//draw
 for (var i = 0; i < ds_list_size(inventoryTabSprites); i++)
 {
 	var col = c_dkgray;
@@ -51,70 +52,81 @@ for (var i = 0; i < ds_list_size(inventoryTabSprites); i++)
 	}
 	draw_sprite_ext(inventoryTabSprites[| i],0,surfW*(inventoryTabX+inventoryTabXInc*i),surfH*vertPos,inventoryTabImageScale,inventoryTabImageScale,0,col,1);
 }
+#endregion
+#region backing & scrollbar
+//backings
+	//main items
+scr_draw_textbox(surfW*inventoryTextbox1X1,surfH*inventoryTextbox1Y1,surfW*inventoryTextbox1X2,surfH*inventoryTextbox1Y2,inventoryTextbox1Type,inventoryTextbox1Scale,inventoryColourScheme);
+	//description
+scr_draw_textbox(surfW*inventoryTextbox2X1,surfH*inventoryTextbox2Y1,surfW*inventoryTextbox2X2,surfH*inventoryTextbox2Y2,inventoryTextbox2Type,inventoryTextbox2Scale,inventoryColourScheme);
 //scroll bar
-scr_draw_scroll_bar(surfW*inventoryScrollBarX, surfH*inventoryScrollBarY1,surfH*inventoryScrollBarY2,inventoryScrollBarType,inventoryScrollBarScale,inventoryScrollBarColour);
-//scroll cursor
-var scrollYMod = abs(inventoryScrollBarY2-inventoryScrollBarY1-(sprite_get_height(inventoryScrollCursorSprite)*inventoryScrollBarScale/surfH))*(inventoryPanelScroll/(array_length_1d(slot_options)-inventoryPanelNum));
-draw_sprite_ext(inventoryScrollCursorSprite,0,surfW*inventoryScrollBarX,surfH*(inventoryScrollBarY1+scrollYMod),inventoryScrollBarScale,inventoryScrollBarScale,0,inventoryScrollCursorColour,1);
-
-	//backing
-scr_draw_textbox(surfW*inventoryTextbox1X1,surfH*inventoryTextbox1Y1,surfW*inventoryTextbox1X2,surfH*inventoryTextbox1Y2,0,4,inventoryTextbox1Colour);
-	
-	//panels
-var panelSep = (inventoryPanelYEnd-inventoryPanelYBegin-(sprite_get_height(inventoryPanelSprite)*inventoryPanelScale)/surfH)/(inventoryPanelNum-1);
-for (var i = 0; i < inventoryPanelNum; i++)
+scr_draw_scroll_bar(surfW*inventoryScrollBarX, surfH*inventoryScrollBarY1,surfH*inventoryScrollBarY2,true,inventoryPanelScroll,gridH-inventoryGridHeight-1,inventoryScrollBarType,inventoryScrollBarScale,inventoryScrollBarColour);
+#endregion
+#region item slots
+var panelSepX = (inventoryPanelXEnd-inventoryPanelXBegin-(sprite_get_width(inventoryPanelSprite)*inventoryPanelScale)/surfW)/(inventoryGridWidth-1);
+var panelSepY = (inventoryPanelYEnd-inventoryPanelYBegin-(sprite_get_height(inventoryPanelSprite)*inventoryPanelScale)/surfH)/(inventoryGridHeight-1);
+for (var i = 0; i < inventoryGridWidth; i++)
 {
-	var colMod = 0.25;
-	if i < maxItems colMod = 1;
-	var blend = make_color_rgb(color_get_red(inventoryPanelBlend)*colMod,color_get_green(inventoryPanelBlend)*colMod,color_get_blue(inventoryPanelBlend)*colMod);
-	draw_sprite_ext(inventoryPanelSprite,0,surfW*inventoryPanelX,surfH*(inventoryPanelYBegin+panelSep*i),inventoryPanelScale,inventoryPanelScale,0,blend,1.0);
-	draw_sprite_ext(inventoryPanelNumSprite,0,surfW*inventoryPanelNumX,surfH*(inventoryPanelYBegin+panelSep*i),inventoryPanelScale,inventoryPanelScale,0,blend,1.0);
-}
-	
-	//Individual items
-if (maxItems == 0)
-{
-	var col = c_gray;
-	if sY == 1 col = c_white;
-	draw_set_colour(col);
-	var name = "Nothing";
-	var icon = spr_icon_item_TEMPLATE;
-	draw_text(surfW*(inventoryListX+inventoryTextXOffset),surfH*(inventoryListY+inventoryTextYOffset),name)
-	draw_sprite_ext(icon,0,surfW*inventoryListX,surfH*(inventoryListY),inventoryIconScale,inventoryIconScale,0,col,1);
-}
-else
-{
-	for (var i = 0; i < min(inventoryPanelNum,maxItems); i++)
+	for (var j = 0; j < inventoryGridHeight; j++)
 	{
-		var itemID = slot_options[i+inventoryPanelScroll];
-		var name = item_get_data(selection, itemID, itemStats.name);
+		var blend = merge_colour(inventoryColourScheme,c_black,0.75);
+		if (sY == 1 && i == sExpX && j+inventoryPanelScroll == sExpY) blend = inventoryColourScheme;
+		draw_sprite_ext(inventoryPanelSprite,0,surfW*(inventoryPanelXBegin+panelSepX*i),surfH*(inventoryPanelYBegin+panelSepY*j),inventoryPanelScale,inventoryPanelScale,0,blend,1.0);
+	}
+}
+#endregion
+#region Individual items
+for (var i = 0; i < inventoryGridWidth; i++)
+{
+	for (var j = 0; j < inventoryGridHeight; j++)
+	{
+		var itemID = slot_grid[# i,j+inventoryPanelScroll];
 		var icon = item_get_data(selection, itemID, itemStats.icon);
 		var num = scr_player_inventory_get(selection, itemID);
-		var col = c_gray;
-			//item selection emphasis
-		if (sY == 1 && i+inventoryPanelScroll == sExpY)
+		var col = c_white
+		//var col = c_gray;
+		//	//item selection emphasis
+		//if (sY == 1 && i == sExpX && j+inventoryPanelScroll == sExpY) col = c_white;
+
+		if (icon != undefined)
 		{
-			var desc = item_get_data(selection, itemID, itemStats.description);
-			col = c_white;
-			draw_set_color(col);
-			draw_text_ext(surfW*inventoryDescriptionX,surfH*inventoryDescriptionY, desc, surfH*inventoryDescriptionSep, surfW*inventoryDescriptionWidth);
+			var iconXOffset = (sprite_get_width(inventoryPanelSprite)*inventoryPanelScale-sprite_get_width(icon)*inventoryPanelIconScale)/2/surfW;
+			var iconYOffset = (sprite_get_height(inventoryPanelSprite)*inventoryPanelScale-sprite_get_height(icon)*inventoryPanelIconScale)/2/surfH;
+			draw_sprite_ext(icon,0,surfW*(inventoryPanelXBegin+iconXOffset+panelSepX*i),surfH*(inventoryPanelYBegin+iconYOffset+panelSepY*j),inventoryPanelIconScale,inventoryPanelIconScale,0,col,1);
+			draw_sprite_ext(inventoryPanelNumSprite,0,surfW*(inventoryPanelXBegin+inventoryPanelNumXOffset+panelSepX*i),surfH*(inventoryPanelYBegin+inventoryPanelNumYOffset+panelSepY*j),inventoryPanelNumScale,inventoryPanelNumScale,0,c_black,1.0);
+			draw_set_halign(fa_center);
+			draw_set_valign(fa_middle);
+			draw_set_colour(col);
+			draw_text(surfW*(inventoryPanelXBegin+inventoryPanelNumXOffset+panelSepX*i),surfH*(inventoryPanelYBegin+inventoryPanelNumYOffset+panelSepY*j),num);
+			draw_set_halign(fa_left);
+			draw_set_valign(fa_top);
 		}
-			
-		if (name == undefined)
-		{
-			name = "UNDEFINED";
-		}
-		if (icon == undefined)
-		{
-			icon = spr_icon_item_undefined;
-		}
-			
-		draw_sprite_ext(icon,0,surfW*inventoryListX,surfH*(inventoryListY+(panelSep*i)),inventoryIconScale,inventoryIconScale,0,col,1);
-		draw_set_color(col);
-		draw_text(surfW*(inventoryListX+inventoryTextXOffset),surfH*(inventoryListY+(panelSep*i)+inventoryTextYOffset),name)
-		draw_set_halign(fa_center);
-		draw_text(surfW*(inventoryListX+inventoryNumberXOffset),surfH*(inventoryListY+(panelSep*i)+inventoryNumberYOffset),num)
-		draw_set_halign(fa_left);
 	}
+}
+#endregion
+#region Descriptions
+switch sY
+{
+	case 0:
+			//nothing for now
+		break;
+	case 1:
+			//get data
+		var itemID = slot_grid[# sExpX,sExpY];
+		var itemName = item_get_data(selection,itemID,itemStats.name);
+		var itemDesc = item_get_data(selection,itemID,itemStats.description);
+		if itemName != undefined
+		{
+				//draw title
+			draw_set_font(inventoryItemNameFont);
+			draw_set_halign(fa_center);
+			draw_set_colour(c_white);
+			draw_text(inventoryItemNameX*surfW,inventoryItemNameY*surfH,itemName)
+			draw_set_halign(fa_left);
+				//draw Description
+			draw_set_font(inventoryItemDescriptionFont);
+			draw_text_ext(inventoryItemDescriptionX*surfW,inventoryItemDescriptionY*surfH,itemDesc,inventoryItemDescriptionSep*surfH,inventoryItemDescriptionWidth*surfW);
+		}
+		break;
 }
 #endregion

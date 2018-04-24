@@ -25,6 +25,15 @@ if mouse_check_button_pressed(mb_right)
 			var newEffect = obj_effect_base_lightning;
 			break;
 		case obj_effect_base_lightning:
+			var newEffect = obj_effect_base_arcane;
+			break;
+		case obj_effect_base_arcane:
+			var newEffect = obj_effect_base_light;
+			break;
+		case obj_effect_base_light:
+			var newEffect = obj_effect_base_dark;
+			break;
+		case obj_effect_base_dark:
 			var newEffect = obj_effect_base_fire;
 			break;
 	}
@@ -35,19 +44,19 @@ if mouse_check_button_pressed(mb_right)
 
 if mouse_check_button_pressed(mb_left)
 {
-	enabled = false;
+	effectEnabled = false;
 }
 
-if enabled = false
+if effectEnabled = false
 {
 	timer++;
 	if timer == round(1*room_speed)
 	{
-		burst = true;
+		effectBurst = true;
 	}
 	if timer >= round(3*room_speed)
 	{
 		timer= 0;
-		enabled = true;
+		effectEnabled = true;
 	}
 }
