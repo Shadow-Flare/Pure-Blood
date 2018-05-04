@@ -3,9 +3,11 @@ phaseTimer++;
 subPhaseTimer++;
 
 	//lock On facing
-if lockOnType = lockOn.hard
+if lockOnType == lockOn.hard
 {
-	facing = lockOnDir
+	var facingPrev = facing;
+	facing = lockOnDir;
+	if facing != facingPrev scr_player_base_subPhaseDeterminer();
 }
 else if sign(moveH) != 0 facing = sign(moveH)
 

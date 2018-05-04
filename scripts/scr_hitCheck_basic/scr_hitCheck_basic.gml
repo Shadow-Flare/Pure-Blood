@@ -14,13 +14,14 @@ with objAttackEffectParent
 		with other
 		{
 			hasBeenHit = true;
-			lastHitType = attack.hitType;
+			//lastHitType = attack.hitType;
 				//stats
 			if isInvulnerable == false
 			{
-				taken[0] = attack.hitDamage;
-				taken[1] = attack.hitStagger;
-				taken[2] = attack.hitKnockback;
+				var damTotal = attack.hitData[? damageData.slash]+attack.hitData[? damageData.pierce]+attack.hitData[? damageData.blunt]+attack.hitData[? damageData.fire]+attack.hitData[? damageData.ice]+attack.hitData[? damageData.lightning]+attack.hitData[? damageData.arcane]+attack.hitData[? damageData.light]+attack.hitData[? damageData.dark];
+				taken[0] = damTotal;
+				taken[1] = attack.hitData[? damageData.stagger];
+				taken[2] = attack.hitData[? damageData.knockback];;
 			}
 		}
 	}

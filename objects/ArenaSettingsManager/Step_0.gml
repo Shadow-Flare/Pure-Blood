@@ -41,7 +41,7 @@ if !slotExpanded
 }
 else
 {
-	sExpX = clamp(sExpX+hInput,0,array_length_1d(slotOptions));
+	sExpX = clamp(sExpX+hInput,0,array_length_1d(slotOptions)-1);
 }
 #endregion
 
@@ -89,14 +89,14 @@ if InputManager.aInput == 1
 					case "Enemy Invulnerability: ":
 						slotExpanded = true;
 						slotOptions = [];	
-						slotOptions[0] = false;
-						slotOptions[1] = true;
+						slotOptions[0] = "False";
+						slotOptions[1] = "True";
 						break;
 					case "Player Invulnerability: ":
 						slotExpanded = true;
 						slotOptions = [];	
-						slotOptions[0] = false;
-						slotOptions[1] = true;
+						slotOptions[0] = "False";
+						slotOptions[1] = "True";
 						break;
 					case "Change Arena: ":
 						slotExpanded = true;
@@ -109,14 +109,14 @@ if InputManager.aInput == 1
 					case "Platforms Enabled: ":
 						slotExpanded = true;
 						slotOptions = [];	
-						slotOptions[0] = false;
-						slotOptions[1] = true;
+						slotOptions[0] = "False";
+						slotOptions[1] = "True";
 						break;
 					case "Hook Points Enabled: ":
 						slotExpanded = true;
 						slotOptions = [];	
-						slotOptions[0] = false;
-						slotOptions[1] = true;
+						slotOptions[0] = "False";
+						slotOptions[1] = "True";
 						break;
 					case "Heal all entities":
 						with PlayerStats
@@ -152,6 +152,8 @@ if InputManager.aInput == 1
 			else
 			{
 				var newValue = slotOptions[sExpX]
+				if newValue == "False" newValue = false;
+				else if newValue == "True" newValue = true;
 				ArenaController.arenaStats[sY] = newValue;
 				if sY == 0
 				{

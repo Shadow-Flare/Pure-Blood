@@ -139,7 +139,7 @@ switch PlayerStats.currentOffhandID
 						break;
 		
 					case subState.post:
-						if subPhaseTimer == round(0.3*room_speed)
+						if subPhaseTimer >= round(0.3*room_speed)
 						{
 							phase = state.base;
 							phaseTimer = 0;
@@ -363,7 +363,7 @@ switch PlayerStats.currentOffhandID
 						break;
 		
 					case subState.post:
-						if subPhaseTimer == round(0.3*room_speed)
+						if subPhaseTimer >= round(0.3*room_speed)
 						{
 							phase = state.base;
 							phaseTimer = 0;

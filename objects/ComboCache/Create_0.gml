@@ -5,10 +5,11 @@ enum weaponClassStats {name, isMain, groundComboLength, groundFinisherLength, ae
 enum playerClassStats {level, xp, xpNeeded};
 
 	//Main Weapon Enumerators
-enum weaponStats {type, strMod, conMod, dexMod, cunMod, intMod, wisMod, range, specialType, specialValue, uniqueAttack};
+enum weaponStats {type, weight, range, uniqueAttack, strMod, dexMod, intMod, cunMod, physicalDam, fireDam, iceDam, lightningDam, arcaneDam, lightDam, darkDam, bleedDam, poisonDam};
 enum weaponComboTypes {groundCombo, groundFinisher, aerialCombo, aerialFinisher, technical, unique};
 enum comboSpecial {none, blink, thunderbolt};
-enum hitEffect {drainHpBase, drainHpScale, drainMpBase, drainMpScale};		//add base + scale factors later on
+enum hitEffect {uppercut, drainHpBase, drainHpScale, drainMpBase, drainMpScale};		//add base + scale factors later on
+enum damageData {stagger, knockback, slash, pierce, blunt, fire, ice, lightning, arcane, light, dark, pure, bleed, poison};
 enum extraComboTypes {upwards};
 enum comboStats {name, description, class, type, sound, desiredXDist, desiredYDist, specials, animation, frameData, duration, cooldown, hitSoundType, hitStart, hitDuration, moveStart, moveDuration, moveDistX, moveDistY, damType, damMod, forMod, knockback, specType, specDam, effects};
 enum comboID 
@@ -20,7 +21,7 @@ enum comboID
 
 	//Offhand Weapon Enumerators
 enum offhandStats {name};
-enum offhandSubtypeStats {name, ammoItem, manaCost, offhandType, damType, damVal, forVal, knockback, specType, specVal, boundEffect, projectileSpeed, explodeDuration, explodeScale, effect};
+enum offhandSubtypeStats {name, ammoItem, manaCost, offhandType, damType, damMod, forMod, knockback, specType, specVal, boundEffect, projectileSpeed, explodeDuration, explodeScale, effect};
 enum offhandSubtypeID
 {
 /* crossbow */		crossbow_normal, crossbow_fire, crossbow_ice, crossbow_lightning, crossbow_serrated,
@@ -302,7 +303,7 @@ cache[? comboStats.moveDistX] = 10;
 cache[? comboStats.moveDistY] = 0;
 cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
 cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],2.8);
-cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],4);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],7.2);
 cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],8);
 cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
 cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
@@ -436,7 +437,7 @@ cache[? comboStats.moveDistX] = 18;
 cache[? comboStats.moveDistY] = 0;
 cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
 cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],2.2);
-cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],4);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],7.4);
 cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],4.5);
 cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
 cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
@@ -772,7 +773,8 @@ cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.fo
 cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],-2.75);
 cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
 cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
-cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+	var c = ds_map_create(); c[? hitEffect.uppercut] = true;
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],c);
 		#endregion
 	#endregion
 #endregion
@@ -800,8 +802,8 @@ subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 0;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
 subCache[? offhandSubtypeStats.damType] = damageType.blunt;
-subCache[? offhandSubtypeStats.damVal] = 1.0;
-subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.damMod] = 1.0;
+subCache[? offhandSubtypeStats.forMod] = 0.3;
 subCache[? offhandSubtypeStats.knockback] = 3;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
 subCache[? offhandSubtypeStats.specVal] = 0;
@@ -814,8 +816,8 @@ subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 4;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
 subCache[? offhandSubtypeStats.damType] = damageType.fire;
-subCache[? offhandSubtypeStats.damVal] = 0.85;
-subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.damMod] = 0.85;
+subCache[? offhandSubtypeStats.forMod] = 0.3;
 subCache[? offhandSubtypeStats.knockback] = 3;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
 subCache[? offhandSubtypeStats.specVal] = 0;
@@ -828,8 +830,8 @@ subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 5;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
 subCache[? offhandSubtypeStats.damType] = damageType.ice;
-subCache[? offhandSubtypeStats.damVal] = 0.85;
-subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.damMod] = 0.85;
+subCache[? offhandSubtypeStats.forMod] = 0.3;
 subCache[? offhandSubtypeStats.knockback] = 3;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
 subCache[? offhandSubtypeStats.specVal] = 0;
@@ -842,8 +844,8 @@ subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 6;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
 subCache[? offhandSubtypeStats.damType] = damageType.lightning;
-subCache[? offhandSubtypeStats.damVal] = 0.85;
-subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.damMod] = 0.85;
+subCache[? offhandSubtypeStats.forMod] = 0.3;
 subCache[? offhandSubtypeStats.knockback] = 3;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
 subCache[? offhandSubtypeStats.specVal] = 0;
@@ -856,8 +858,8 @@ subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 3;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
 subCache[? offhandSubtypeStats.damType] = damageType.slash;
-subCache[? offhandSubtypeStats.damVal] = 0.6;
-subCache[? offhandSubtypeStats.forVal] = 0.3;
+subCache[? offhandSubtypeStats.damMod] = 0.6;
+subCache[? offhandSubtypeStats.forMod] = 0.3;
 subCache[? offhandSubtypeStats.knockback] = 3;
 subCache[? offhandSubtypeStats.specType] = specialType.bleed;
 subCache[? offhandSubtypeStats.specVal] = 20;
@@ -872,8 +874,8 @@ subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 16;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
 subCache[? offhandSubtypeStats.damType] = damageType.fire;
-subCache[? offhandSubtypeStats.damVal] = 0.8;
-subCache[? offhandSubtypeStats.forVal] = 1.2;
+subCache[? offhandSubtypeStats.damMod] = 0.8;
+subCache[? offhandSubtypeStats.forMod] = 1.2;
 subCache[? offhandSubtypeStats.knockback] = 6;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
 subCache[? offhandSubtypeStats.specVal] = 0;
@@ -890,8 +892,8 @@ subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 20;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
 subCache[? offhandSubtypeStats.damType] = damageType.ice;
-subCache[? offhandSubtypeStats.damVal] = 1.0;
-subCache[? offhandSubtypeStats.forVal] = 1.2;
+subCache[? offhandSubtypeStats.damMod] = 1.0;
+subCache[? offhandSubtypeStats.forMod] = 1.2;
 subCache[? offhandSubtypeStats.knockback] = 6;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
 subCache[? offhandSubtypeStats.specVal] = 0;
@@ -908,8 +910,8 @@ subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 24;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
 subCache[? offhandSubtypeStats.damType] = damageType.lightning;
-subCache[? offhandSubtypeStats.damVal] = 1.2;
-subCache[? offhandSubtypeStats.forVal] = 1.2;
+subCache[? offhandSubtypeStats.damMod] = 1.2;
+subCache[? offhandSubtypeStats.forMod] = 1.2;
 subCache[? offhandSubtypeStats.knockback] = 6;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
 subCache[? offhandSubtypeStats.specVal] = 0;
@@ -926,8 +928,8 @@ subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 32;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
 subCache[? offhandSubtypeStats.damType] = damageType.dark;
-subCache[? offhandSubtypeStats.damVal] = 2.0;
-subCache[? offhandSubtypeStats.forVal] = 0.7;
+subCache[? offhandSubtypeStats.damMod] = 2.0;
+subCache[? offhandSubtypeStats.forMod] = 0.7;
 subCache[? offhandSubtypeStats.knockback] = 3;
 subCache[? offhandSubtypeStats.effect] = ds_map_create(); var c = subCache[? offhandSubtypeStats.effect]; c[? hitEffect.drainHpBase] = 1;
 subCache[? offhandSubtypeStats.specType] = specialType.none;
@@ -945,8 +947,8 @@ subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 2;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
 subCache[? offhandSubtypeStats.damType] = damageType.slash;
-subCache[? offhandSubtypeStats.damVal] = 0.2;
-subCache[? offhandSubtypeStats.forVal] = 0.4;
+subCache[? offhandSubtypeStats.damMod] = 0.2;
+subCache[? offhandSubtypeStats.forMod] = 0.4;
 subCache[? offhandSubtypeStats.knockback] = 2;
 subCache[? offhandSubtypeStats.effect] = ds_map_create(); var c = subCache[? offhandSubtypeStats.effect]; c[? hitEffect.drainMpBase] = 2.5;
 subCache[? offhandSubtypeStats.specType] = specialType.none;

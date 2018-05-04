@@ -8,8 +8,7 @@ with statCache
 	damagePower = 7;									
 	staggerPower = 3;									
 	
-	physicalToughness = 1.2;								
-	magicalToughness = 1;		
+	toughness = 1.2;								
 	breakCooldownDuration = 1;
 	
 	moveSpeed = 0.9;									

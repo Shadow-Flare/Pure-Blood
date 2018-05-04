@@ -4,7 +4,7 @@ enum mainTransType {none, newGame, arena, hordeMode, ex}
 enum loadType {none, newGame, arena, hordeMode, ending}
 
 enum damageType {none,slash,blunt,pierce,fire,ice,lightning,arcane,light,dark,pure};
-enum specialType {none, bleed};
+enum specialType {none, bleed, poison};
 
 instance_create_depth(0,0,0,InputManager);
 if !instance_exists(GameManager) instance_create_depth(0,0,0,GameManager);
@@ -31,4 +31,4 @@ sY = 0;
 moveTimer = 0;
 
 	//effect tester
-with instance_create_depth(0,0,depth,obj_effect_persistent_mouseFollow) boundEffect = obj_effect_base_fire;
+//with instance_create_depth(0,0,depth,obj_effect_persistent_mouseFollow) boundEffect = obj_effect_base_fire;

@@ -8,8 +8,7 @@ with statCache
 	damagePower = 6;									
 	staggerPower = 5;									
 	
-	physicalToughness = 2.2;							
-	magicalToughness = 1.2;								
+	toughness = 2.2;														
 	breakCooldownDuration = 1.8;
 	
 	moveSpeed = 0.35;									
@@ -53,12 +52,8 @@ action1MoveBurst = 6;																	//$$//
 action1Move = 0;																		//$$//
 action1MoveStart = action1Duration*(/**/4/**//sprite_get_number(action1Animation))		
 action1MoveDuration = action1Duration*(/**/3/**//sprite_get_number(action1Animation))	
-action1DamageType = damageType.pierce;																	//$$//
-action1Damage = 1;																		//$$//
-action1Stagger = 1;																		//$$//
-action1Knockback = 3.5;																	//$$//
-action1StatusType = specialType.none;																	//$$//
-action1StatusValue = 0;																	//$$//
+action1DamageData = ds_map_create();
+scr_create_damageCache(action1DamageData,1,3.5,0,1,0,0,0,0,0,0,0);
 action1Pierce = false;																	//$$//
 
 	//action2: parry begin
@@ -78,12 +73,8 @@ action2ZoneFollow = true;
 action2ZoneAttackSoundID = noone;
 action2ZoneHitSoundID = noone;
 action2ZoneDuration = -1;
-action2ZoneDamageType = damageType.blunt;
-action2ZoneDamage = 0.3;
-action2ZoneStagger = 0;
-action2ZoneKnockback = 1.5;
-action2ZoneStatusType = specialType.none;
-action2ZoneStatusValue = 0;
+action2ZoneDamageData = ds_map_create();
+scr_create_damageCache(action2ZoneDamageData,0.3,1.5,0,0,0.3,0,0,0,0,0,0);
 action2ZonePierce = false;	
 
 		//sub2: blocking reaction
@@ -102,11 +93,7 @@ action3HitDuration = action3Duration*(/**/2/**//sprite_get_number(action3Animati
 action3MoveBurst = 3;																	//$$//
 action3Move = 0;																		//$$//
 action3MoveStart = action3Duration*(/**/4/**//sprite_get_number(action3Animation))		
-action3MoveDuration = action3Duration*(/**/3/**//sprite_get_number(action3Animation))	
-action3DamageType = damageType.pierce;																	//$$//
-action3Damage = 2;																	
-action3Stagger = 1.5;																		
-action3Knockback = 4;																	//$$//
-action3StatusType = specialType.none;																	//$$//
-action3StatusValue = 0;																	//$$//
+action3MoveDuration = action3Duration*(/**/3/**//sprite_get_number(action3Animation))
+action3DamageData = ds_map_create();
+scr_create_damageCache(action3DamageData,1.5,4,0,2,0,0,0,0,0,0,0);
 action3Pierce = false;																	//$$//

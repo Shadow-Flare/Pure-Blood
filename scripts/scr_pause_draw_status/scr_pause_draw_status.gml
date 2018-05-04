@@ -1,159 +1,427 @@
-#region basic options draw
+#region initializer
+var surfW = surface_get_width(application_surface);
+var surfH = surface_get_height(application_surface);
+#endregion
 
-for (var i = 0; i < array_height_2d(current_menu_options); i++)
-{
-	for (var j = 0; j < array_length_2d(current_menu_options,i); j++)
-	{
-		draw_set_halign(fa_center);
-		draw_set_valign(fa_center);
-		draw_set_colour(c_white);
-		if current_menu_options[i,j] != "Accept" draw_text(260,260+40*j,current_menu_options[i,j]);
-		var str;
-		var arrLeft = false;
-		switch j
-		{
-			case 0: 
-				str = PlayerStats.strength;
-				if PlayerStats.strength != strengthTemp 
-				{
-					arrLeft = true;
-					draw_set_colour(c_green);
-				}
-				break;
-			case 1: 
-				str = PlayerStats.constitution;
-				if PlayerStats.constitution != constitutionTemp
-				{
-					arrLeft = true;
-					draw_set_colour(c_green);
-				}
-				break;
-			case 2: 
-				str = PlayerStats.dexterity;
-				if PlayerStats.dexterity != dexterityTemp
-				{
-					arrLeft = true;
-					draw_set_colour(c_green);
-				}
-				break;
-			case 3: 
-				str = PlayerStats.cunning;
-				if PlayerStats.cunning != cunningTemp
-				{
-					arrLeft = true;
-					draw_set_colour(c_green);
-				}
-				break;
-			case 4: 
-				str = PlayerStats.intelligence;
-				if PlayerStats.intelligence != intelligenceTemp
-				{
-					arrLeft = true;
-					draw_set_colour(c_green);
-				}
-				break;
-			case 5: 
-				str = PlayerStats.willpower;
-				if PlayerStats.willpower != willpowerTemp
-				{
-					arrLeft = true;
-					draw_set_colour(c_green);
-				}
-				break;
-			case 6:
-				str = "Accept";
-				if !changeCheck draw_set_colour(c_dkgray);
-				break;
-		}
-		if sX == i && sY == j draw_sprite_ext(spr_select,0,610,270+40*j,1/16,1/16,0,merge_color(c_white,c_orange,0.5),1);
-		draw_text(610,270+40*j,str);
-		draw_set_colour(c_yellow);
-		if str != "Accept"
-		{
-			if arrLeft draw_text(580,270+40*j,"<");
-			if PlayerStats.statPoints != 0 draw_text(640,270+40*j,">🢂🡲🡲🡲>");
-		}
-		draw_set_halign(fa_left);
-		draw_set_valign(fa_left);
-	}
-}
+#region draw stat page boxes
+	//textbox 1
+scr_draw_textbox(statusTextbox1X1*surfW,statusTextbox1Y1*surfH,statusTextbox1X2*surfW,statusTextbox1Y2*surfH,statusTextbox1Type,statusTextbox1Scale,statusTextbox1Blend);
+	//textbox 2
+scr_draw_textbox(statusTextbox2X1*surfW,statusTextbox2Y1*surfH,statusTextbox2X2*surfW,statusTextbox2Y2*surfH,statusTextbox2Type,statusTextbox2Scale,statusTextbox2Blend);
+	//textbox 3
+scr_draw_textbox(statusTextbox3X1*surfW,statusTextbox3Y1*surfH,statusTextbox3X2*surfW,statusTextbox3Y2*surfH,statusTextbox3Type,statusTextbox3Scale,statusTextbox3Blend);
+	//textbox 4
+scr_draw_textbox(statusTextbox4X1*surfW,statusTextbox4Y1*surfH,statusTextbox4X2*surfW,statusTextbox4Y2*surfH,statusTextbox4Type,statusTextbox4Scale,statusTextbox4Blend);
 
 #endregion
-#region draw stat data
+#region primary stats
+	#region get data
+var str = PlayerStats.strength;
+var con = PlayerStats.constitution;
+var dex = PlayerStats.dexterity;
+var cun = PlayerStats.cunning;
+var int = PlayerStats.intelligence;
+var wil = PlayerStats.willpower
+var bStr = PlayerStats.strengthBase;
+var bCon = PlayerStats.constitutionBase;
+var bDex = PlayerStats.dexterityBase;
+var bCun = PlayerStats.cunningBase;
+var bInt = PlayerStats.intelligenceBase;
+var bWil = PlayerStats.willpowerBase;
 
-draw_set_font(fnt_status);
+var index = 0;
+
+draw_set_font(fnt_alagard);
+var strH = string_height(" ");
+var ySep = ((statusPrimaryY2-statusPrimaryY1)*surfH-strH)/(statusPrimaryStatNum);
+	#endregion
+	#region draw selection Glow
+	var xx = statusPrimaryX1*surfW;
+	if selection != noone && selection != 0 var drawBool = true;
+	switch selection
+	{
+		case "Strength":		var index = 1;	break;
+		case "Constitution":	var index = 2;	break;
+		case "Dexterity":		var index = 3;	break;
+		case "Cunning":			var index = 4;	break;
+		case "Intelligence":	var index = 5;	break;
+		case "Willpower":		var index = 6;	break;
+	}
+	var yy = (statusPrimaryY1)*surfH+ySep*index;
+	var sprW = sprite_get_width(statusPrimarySelectionSprite);
+	var sprH = sprite_get_height( statusPrimarySelectionSprite);
+	draw_sprite_ext(statusPrimarySelectionSprite,0,xx,yy,statusPrimarySelectionSpriteW/sprW,statusPrimarySelectionSpriteH/sprH,0,statusPrimarySelectionSpriteBlend,statusPrimarySelectionSpriteAlpha);
+	#endregion
+	#region draw Data names
+draw_set_colour(statusPrimaryColour);
+var index = 0;
+draw_set_halign(fa_left);
+draw_text(statusPrimaryX1*surfW,(statusPrimaryY1)*surfH+ySep*index,"  Primary Stats"); index++;
+draw_text(statusPrimaryX1*surfW,(statusPrimaryY1)*surfH+ySep*index,"Strength"); index++;
+draw_text(statusPrimaryX1*surfW,(statusPrimaryY1)*surfH+ySep*index,"Constitution"); index++;
+draw_text(statusPrimaryX1*surfW,(statusPrimaryY1)*surfH+ySep*index,"Dexterity"); index++;
+draw_text(statusPrimaryX1*surfW,(statusPrimaryY1)*surfH+ySep*index,"Cunning"); index++;
+draw_text(statusPrimaryX1*surfW,(statusPrimaryY1)*surfH+ySep*index,"Intelligence"); index++;
+draw_text(statusPrimaryX1*surfW,(statusPrimaryY1)*surfH+ySep*index,"WillPower"); index++;
+	#endregion
+	#region data values
+index = 0;		//reset
+draw_set_halign(fa_center);
+var arrRight = false;
+if PlayerStats.statPoints != 0 arrRight = true;
+
+	//stat points data
+if PlayerStats.statPoints != 0 || statPointsTemp != 0
+{
+	var sprH = sprite_get_height(statusPrimaryStatPointSprite);
+	var sprW = sprite_get_width(statusPrimaryStatPointSprite);
+	draw_sprite_ext(statusPrimaryStatPointSprite,0,(statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryStatPointSpriteW/sprW,statusPrimaryStatPointSpriteH/sprH,0,c_black,1.0);
+	draw_text((statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index,string(PlayerStats.statPoints));
+}
+index++;
+
+	//stats
+draw_set_colour(statusPrimaryColour);
+if str != strengthTemp
+{
+	draw_sprite_ext(statusPrimaryArrowSprite,0,(statusPrimaryX2-statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+	draw_set_colour(c_green);
+}
+if arrRight draw_sprite_ext(statusPrimaryArrowSprite,1,(statusPrimaryX2+statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+draw_text((statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index,string(str)); index++;
+
+draw_set_colour(statusPrimaryColour);
+if con != constitutionTemp
+{
+	draw_sprite_ext(statusPrimaryArrowSprite,0,(statusPrimaryX2-statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+	draw_set_colour(c_green);
+}
+if arrRight draw_sprite_ext(statusPrimaryArrowSprite,1,(statusPrimaryX2+statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+draw_text((statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index,string(con)); index++;
+
+draw_set_colour(statusPrimaryColour);
+if dex != dexterityTemp
+{
+	draw_sprite_ext(statusPrimaryArrowSprite,0,(statusPrimaryX2-statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+	draw_set_colour(c_green);
+}
+if arrRight draw_sprite_ext(statusPrimaryArrowSprite,1,(statusPrimaryX2+statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+draw_text((statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index,string(dex)); index++;
+
+draw_set_colour(statusPrimaryColour);
+if cun != cunningTemp
+{
+	draw_sprite_ext(statusPrimaryArrowSprite,0,(statusPrimaryX2-statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+	draw_set_colour(c_green);
+}
+if arrRight draw_sprite_ext(statusPrimaryArrowSprite,1,(statusPrimaryX2+statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+draw_text((statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index,string(cun)); index++;
+
+draw_set_colour(statusPrimaryColour);
+if int != intelligenceTemp
+{
+	draw_sprite_ext(statusPrimaryArrowSprite,0,(statusPrimaryX2-statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+	draw_set_colour(c_green);
+}
+if arrRight draw_sprite_ext(statusPrimaryArrowSprite,1,(statusPrimaryX2+statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+draw_text((statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index,string(int)); index++;
+
+draw_set_colour(statusPrimaryColour);
+if wil != willpowerTemp
+{
+	draw_sprite_ext(statusPrimaryArrowSprite,0,(statusPrimaryX2-statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+	draw_set_colour(c_green);
+}
+if arrRight draw_sprite_ext(statusPrimaryArrowSprite,1,(statusPrimaryX2+statusPrimaryArrowXOffset)*surfW,(statusPrimaryY1)*surfH+ySep*index+strH/2,statusPrimaryArrowScale,statusPrimaryArrowScale,0,c_white,1.0);
+draw_text((statusPrimaryX2)*surfW,(statusPrimaryY1)*surfH+ySep*index,string(wil)); index++;
+
+draw_set_halign(fa_left);
+	#endregion
+#endregion
+#region Stats Page
+switch statusPage
+{
+	case 0: #region Weapon Information
+			#region set up data
+			
+				//weapon damage values
+		var wepID1 = scr_player_equipment_slot(equipmentSlot.main1);
+		scr_player_get_weapon_damage(wepID1,PlayerStats.weaponMain1DamageDetails,PlayerStats.strength,PlayerStats.dexterity,PlayerStats.cunning,PlayerStats.intelligence);
+		scr_player_get_weapon_damage(wepID1,_weaponMain1DamageDetails,strengthTemp,dexterityTemp,cunningTemp,intelligenceTemp);
+		var wepID2 = scr_player_equipment_slot(equipmentSlot.main2);
+		scr_player_get_weapon_damage(wepID2,PlayerStats.weaponMain2DamageDetails,PlayerStats.strength,PlayerStats.dexterity,PlayerStats.cunning,PlayerStats.intelligence);
+		scr_player_get_weapon_damage(wepID2,_weaponMain2DamageDetails,strengthTemp,dexterityTemp,cunningTemp,intelligenceTemp);
+		var wepID3 = scr_player_equipment_slot(equipmentSlot.off1);
+		scr_player_get_weapon_damage(wepID3,PlayerStats.weaponOff1DamageDetails,PlayerStats.strength,PlayerStats.dexterity,PlayerStats.cunning,PlayerStats.intelligence);
+		scr_player_get_weapon_damage(wepID3,_weaponOff1DamageDetails,strengthTemp,dexterityTemp,cunningTemp,intelligenceTemp);
+		var wepID4 = scr_player_equipment_slot(equipmentSlot.off2);
+		scr_player_get_weapon_damage(wepID4,PlayerStats.weaponOff2DamageDetails,PlayerStats.strength,PlayerStats.dexterity,PlayerStats.cunning,PlayerStats.intelligence);
+		scr_player_get_weapon_damage(wepID4,_weaponOff2DamageDetails,strengthTemp,dexterityTemp,cunningTemp,intelligenceTemp);
+		
+				//textbox data
+		var tX1 = statusTextbox4X1*surfW;
+		var tY1 = statusTextbox4Y1*surfH;
+		var tX2 = statusTextbox4X2*surfW;
+		var tY2 = statusTextbox4Y2*surfH;
+		var tXIcon = statusPage1WeaponIconBoxWidth*surfW;
+		var tYSep = (tY2-tY1)/4;
+		
+				//boundaries
+		var length1 = tX2-tXIcon-tX1-(statusPage1BoundaryMainGap)*2;
+		var length2 = tYSep-statusPage1BoundaryMainY-(statusPage1BoundarySubGap)*2-(4*4);
+		var b1X = statusPage1BoundaryMainGap;
+		var b1Y = statusPage1BoundaryMainY;
+		var b2X = statusPage1BoundarySubX;
+		var b2Y = statusPage1BoundaryMainY+statusPage1BoundarySubGap;
+		var b3X = statusPage1BoundarySubX*2;
+		var b3Y = statusPage1BoundaryMainY+statusPage1BoundarySubGap;
+		var bSprL = sprite_get_height(statusPage1BoundarySprite);
+		
+				//icon data
+		var iconXOff = (tXIcon-sprite_get_width(spr_icon_item_TEMPLATE)*statusPage1WeaponIconScale)/2;
+		var iconYOff = (tYSep-sprite_get_height(spr_icon_item_TEMPLATE)*statusPage1WeaponIconScale)/2;
+		
+				//name Data
+		var nX = tX1+statusPage1NameXOffset*surfW;
+		var nY = tY1+statusPage1NameYOffset*surfH;
+		
+				//damage Data
+		draw_set_font(statusPage1DataNameFont);
+		var strH = string_height(" ");
+		var dXSep = statusPage1BoundarySubX;
+		var dYSep = (tYSep-b1Y-strH)/(statusPage1DataColumn-1);
+		var dNX = statusPage1DataXMargin*surfW+(4*4);
+		var dNY = statusPage1DataXMargin*surfW;
+		var dVX = statusPage1BoundarySubX-statusPage1DataXMargin*8*surfW;
+		var dVY = dNY;
+		var dAX = statusPage1BoundarySubX-statusPage1DataXMargin*4*surfW;
+		var dAY = dNY;
+		
+			#endregion
+			#region Textboxes
+		var index = 0;
+		scr_draw_textbox(tX1,tY1+index*tYSep,tX2-tXIcon,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxMainBlend); index++;
+		scr_draw_textbox(tX1,tY1+index*tYSep,tX2-tXIcon,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxMainBlend); index++;
+		scr_draw_textbox(tX1,tY1+index*tYSep,tX2-tXIcon,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxOffBlend); index++;
+		scr_draw_textbox(tX1,tY1+index*tYSep,tX2-tXIcon,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxOffBlend); index++;
+		var index = 0;
+		scr_draw_textbox(tX2-tXIcon,tY1+index*tYSep,tX2,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxIconBlend); index++;
+		scr_draw_textbox(tX2-tXIcon,tY1+index*tYSep,tX2,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxIconBlend); index++;
+		scr_draw_textbox(tX2-tXIcon,tY1+index*tYSep,tX2,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxIconBlend); index++;
+		scr_draw_textbox(tX2-tXIcon,tY1+index*tYSep,tX2,tY1+(index+1)*tYSep,statusPage1WeaponTextboxType,statusPage1WeaponTextboxScale,statusPage1WeaponTextboxIconBlend); index++;
+			#endregion
+			#region Boundaries
+			
+				//boundary1
+			var index = 0;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b1X,tY1+tYSep*index+b1Y,statusPage1BoundaryThickness,length1/bSprL,90,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b1X,tY1+tYSep*index+b1Y,statusPage1BoundaryThickness,length1/bSprL,90,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b1X,tY1+tYSep*index+b1Y,statusPage1BoundaryThickness,length1/bSprL,90,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b1X,tY1+tYSep*index+b1Y,statusPage1BoundaryThickness,length1/bSprL,90,c_white,1.0); index++;
+				//boundary2
+			var index = 0;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b2X,tY1+tYSep*index+b2Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b2X,tY1+tYSep*index+b2Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b2X,tY1+tYSep*index+b2Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b2X,tY1+tYSep*index+b2Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;
+				//boundary3
+			var index = 0;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b3X,tY1+tYSep*index+b3Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b3X,tY1+tYSep*index+b3Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b3X,tY1+tYSep*index+b3Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;
+			draw_sprite_ext(statusPage1BoundarySprite,0,tX1+b3X,tY1+tYSep*index+b3Y,statusPage1BoundaryThickness,length2/bSprL,0,c_white,1.0); index++;		
+
+			#endregion
+			#region Icons
+		var index = 0;
+		var icon = item_get_data(itemType.weapon,wepID1,itemStats.icon);
+		draw_sprite_ext(icon,0,tX2-tXIcon+iconXOff,tY1+tYSep*index+iconYOff,statusPage1WeaponIconScale,statusPage1WeaponIconScale,0,c_white,1.0); index++;
+		var icon = item_get_data(itemType.weapon,wepID2,itemStats.icon);
+		draw_sprite_ext(icon,0,tX2-tXIcon+iconXOff,tY1+tYSep*index+iconYOff,statusPage1WeaponIconScale,statusPage1WeaponIconScale,0,c_white,1.0); index++;
+		var icon = item_get_data(itemType.weapon,wepID3,itemStats.icon);
+		draw_sprite_ext(icon,0,tX2-tXIcon+iconXOff,tY1+tYSep*index+iconYOff,statusPage1WeaponIconScale,statusPage1WeaponIconScale,0,c_white,1.0); index++;
+		var icon = item_get_data(itemType.weapon,wepID4,itemStats.icon);
+		draw_sprite_ext(icon,0,tX2-tXIcon+iconXOff,tY1+tYSep*index+iconYOff,statusPage1WeaponIconScale,statusPage1WeaponIconScale,0,c_white,1.0); index++;
+			#endregion
+			#region Names
+		draw_set_colour(statusPage1NameColour);
+		draw_set_font(statusPage1NameFont);
+		var index = 0;
+		var name = item_get_data(itemType.weapon,wepID1,itemStats.name);
+		draw_text(nX,nY+tYSep*index,name); index++;
+		var name = item_get_data(itemType.weapon,wepID2,itemStats.name);
+		draw_text(nX,nY+tYSep*index,name); index++;
+		var name = item_get_data(itemType.weapon,wepID3,itemStats.name);
+		draw_text(nX,nY+tYSep*index,name); index++;
+		var name = item_get_data(itemType.weapon,wepID4,itemStats.name);
+		draw_text(nX,nY+tYSep*index,name); index++;
+			#endregion
+			#region Damage Data
+			//weapon 1
+		var index = 0;
+		scr_pause_status_updateWeaponsList(_weaponMain1DamageDetails,wepID1);
+		for(var i = 0; i < ds_list_size(_weaponDataList); i++)
+		{
+			var yPos = i%2;
+			var xPos = floor(i/2);
+			var tXPos = tX1;
+			var tYPos = tY1+b1Y+tYSep*index;
+			draw_set_font(statusPage1DataNameFont);
+			draw_set_colour(statusPage1DataNameColour);
+				draw_text(tXPos+dNX+xPos*dXSep,tYPos+dNY+dYSep*yPos,_weaponDataList[| i]);
+			draw_set_halign(fa_middle);
+			draw_set_font(statusPage1DataValueFont);
+			draw_set_colour(statusPage1DataValueColour);
+				draw_text(tXPos+dVX+xPos*dXSep,tYPos+dVY+dYSep*yPos,_weaponDataListValuesBase[| i]);
+				draw_text(tXPos+dAX+xPos*dXSep,tYPos+dAY+dYSep*yPos,_weaponDataListValues[| i]);
+			draw_set_halign(fa_left);
+		}
+
+			//weapon 2
+		index++;
+		scr_pause_status_updateWeaponsList(_weaponMain2DamageDetails,wepID2);
+		for(var i = 0; i < ds_list_size(_weaponDataList); i++)
+		{
+			var yPos = i%2;
+			var xPos = floor(i/2);
+			var tXPos = tX1;
+			var tYPos = tY1+b1Y+tYSep*index;
+			draw_set_font(statusPage1DataNameFont);
+			draw_set_colour(statusPage1DataNameColour);
+				draw_text(tXPos+dNX+xPos*dXSep,tYPos+dNY+dYSep*yPos,_weaponDataList[| i]);
+			draw_set_halign(fa_middle);
+			draw_set_font(statusPage1DataValueFont);
+			draw_set_colour(statusPage1DataValueColour);
+				draw_text(tXPos+dVX+xPos*dXSep,tYPos+dVY+dYSep*yPos,_weaponDataListValuesBase[| i]);
+				draw_text(tXPos+dAX+xPos*dXSep,tYPos+dAY+dYSep*yPos,_weaponDataListValues[| i]);
+			draw_set_halign(fa_left);
+		}
+			
+			//weapon 3
+		index++;
+		scr_pause_status_updateWeaponsList(_weaponOff1DamageDetails,wepID3);
+		for(var i = 0; i < ds_list_size(_weaponDataList); i++)
+		{
+			var yPos = i%2;
+			var xPos = floor(i/2);
+			var tXPos = tX1;
+			var tYPos = tY1+b1Y+tYSep*index;
+			draw_set_font(statusPage1DataNameFont);
+			draw_set_colour(statusPage1DataNameColour);
+				draw_text(tXPos+dNX+xPos*dXSep,tYPos+dNY+dYSep*yPos,_weaponDataList[| i]);
+			draw_set_halign(fa_middle);
+			draw_set_font(statusPage1DataValueFont);
+			draw_set_colour(statusPage1DataValueColour);
+				draw_text(tXPos+dVX+xPos*dXSep,tYPos+dVY+dYSep*yPos,_weaponDataListValuesBase[| i]);
+				draw_text(tXPos+dAX+xPos*dXSep,tYPos+dAY+dYSep*yPos,_weaponDataListValues[| i]);
+			draw_set_halign(fa_left);
+		}
+			
+			//weapon 4
+		index++;
+		scr_pause_status_updateWeaponsList(_weaponOff2DamageDetails,wepID4);
+		for(var i = 0; i < ds_list_size(_weaponDataList); i++)
+		{
+			var yPos = i%2;
+			var xPos = floor(i/2);
+			var tXPos = tX1;
+			var tYPos = tY1+b1Y+tYSep*index;
+			draw_set_font(statusPage1DataNameFont);
+			draw_set_colour(statusPage1DataNameColour);
+				draw_text(tXPos+dNX+xPos*dXSep,tYPos+dNY+dYSep*yPos,_weaponDataList[| i]);
+			draw_set_halign(fa_middle);
+			draw_set_font(statusPage1DataValueFont);
+			draw_set_colour(statusPage1DataValueColour);
+				draw_text(tXPos+dVX+xPos*dXSep,tYPos+dVY+dYSep*yPos,_weaponDataListValuesBase[| i]);
+				draw_text(tXPos+dAX+xPos*dXSep,tYPos+dAY+dYSep*yPos,_weaponDataListValues[| i]);
+			draw_set_halign(fa_left);
+		}
+		
+			#endregion
+		break; #endregion
+	case 1: #region Defensive and misc stats
 	
-draw_set_colour(c_white);
-draw_text(260,50,"Level:         " + string(PlayerStats.level));
-draw_set_colour(c_teal);
-draw_text(500,50,"Stat Points:   " + string(PlayerStats.statPoints));
-draw_set_colour(c_purple);
-draw_text(260,100,"EXP:          " + string(ceil(PlayerStats.xp))+"/" + string(PlayerStats.xpNeeded));
-draw_set_colour(c_yellow);
-draw_text(500,100,"Gold:         "  + string(PlayerStats.gold));
+		break; #endregion
+	case 2: #region Equipment + abilities + combos/subtypes/actives
+	
+		break; #endregion
+}
+#endregion
+
+#region (OLD) draw stat data
+
+//draw_set_font(fnt_status);
+	
+//draw_set_colour(c_white);
+//draw_text(260,50,"Level:         " + string(PlayerStats.level));
+//draw_set_colour(c_teal);
+//draw_text(500,50,"Stat Points:   " + string(PlayerStats.statPoints));
+//draw_set_colour(c_purple);
+//draw_text(260,100,"EXP:          " + string(ceil(PlayerStats.xp))+"/" + string(PlayerStats.xpNeeded));
+//draw_set_colour(c_yellow);
+//draw_text(500,100,"Gold:         "  + string(PlayerStats.gold));
 
 
-draw_set_font(fnt_status);
+//draw_set_font(fnt_status);
 	
-if PlayerStats.statPoints != 0 && selection == "Constitution" draw_set_colour(c_green);
-else draw_set_colour(c_white);
-draw_text(850,260,"Health:");
+//if PlayerStats.statPoints != 0 && selection == "Constitution" draw_set_colour(c_green);
+//else draw_set_colour(c_white);
+//draw_text(850,260,"Health:");
 	
-if PlayerStats.statPoints != 0 && selection == "Willpower" draw_set_colour(c_green);
-else draw_set_colour(c_white);
-draw_text(850,290,"Mana:");
+//if PlayerStats.statPoints != 0 && selection == "Willpower" draw_set_colour(c_green);
+//else draw_set_colour(c_white);
+//draw_text(850,290,"Mana:");
 	
-if PlayerStats.statPoints != 0 && (selection == "Strength" || selection == "Dexterity") draw_set_colour(c_green);
-else draw_set_colour(c_white);
-draw_text(850,350,"Physical Power:");
+//if PlayerStats.statPoints != 0 && (selection == "Strength" || selection == "Dexterity") draw_set_colour(c_green);
+//else draw_set_colour(c_white);
+//draw_text(850,350,"Physical Power:");
 	
-if PlayerStats.statPoints != 0 && (selection == "Strength")draw_set_colour(c_green);
-else draw_set_colour(c_white);
-draw_text(850,380,"Physical Stagger:");
+//if PlayerStats.statPoints != 0 && (selection == "Strength")draw_set_colour(c_green);
+//else draw_set_colour(c_white);
+//draw_text(850,380,"Physical Stagger:");
 	
-if PlayerStats.statPoints != 0 && (selection == "Intelligence") draw_set_colour(c_green);
-else draw_set_colour(c_white);
-draw_text(850,440,"Magical Power:");
+//if PlayerStats.statPoints != 0 && (selection == "Intelligence") draw_set_colour(c_green);
+//else draw_set_colour(c_white);
+//draw_text(850,440,"Magical Power:");
 	
-if PlayerStats.statPoints != 0 && (selection == "Intelligence" || selection == "Willpower") draw_set_colour(c_green);
-else draw_set_colour(c_white);
-draw_text(850,470,"Magical Stagger:");
+//if PlayerStats.statPoints != 0 && (selection == "Intelligence" || selection == "Willpower") draw_set_colour(c_green);
+//else draw_set_colour(c_white);
+//draw_text(850,470,"Magical Stagger:");
 	
-draw_set_colour(c_white);
-draw_text(850,530,"Movement Speed:");
-draw_text(850,590,"Bleed Resistance:");
+//draw_set_colour(c_white);
+//draw_text(850,530,"Movement Speed:");
+//draw_text(850,590,"Bleed Resistance:");
 	
-draw_text(1150,260,string(ceil(PlayerStats.hp)) + "/" + string(PlayerStats.hpMax));
-draw_text(1150,290,string(floor(PlayerStats.mp)) + "/" + string(PlayerStats.mpMax));
-draw_text(1150,350,string(PlayerStats.physicalPower));
-draw_text(1150,380,string(PlayerStats.physicalStagger));
-draw_text(1150,440,string(PlayerStats.magicalPower));
-draw_text(1150,470,string(PlayerStats.magicalStagger));
-draw_text(1150,530,string(PlayerStats.moveSpeed));
-draw_text(1150,590,string(PlayerStats.specialResistances[0]));
+//draw_text(1150,260,string(ceil(PlayerStats.hp)) + "/" + string(PlayerStats.hpMax));
+//draw_text(1150,290,string(floor(PlayerStats.mp)) + "/" + string(PlayerStats.mpMax));
+//draw_text(1150,350,string(PlayerStats.physicalPower));
+//draw_text(1150,380,string(PlayerStats.physicalStagger));
+//draw_text(1150,440,string(PlayerStats.magicalPower));
+//draw_text(1150,470,string(PlayerStats.magicalStagger));
+//draw_text(1150,530,string(PlayerStats.moveSpeed));
+//draw_text(1150,590,string(PlayerStats.specialResistances[0]));
 
-draw_text(1250,260,"Physical Toughness:");
-draw_text(1250,290,"Magical Toughness:");
-draw_text(1250,350,"Slash Resistance:");
-draw_text(1250,380,"Blunt Resistance:");
-draw_text(1250,410,"Pierce Resistance:");
-draw_text(1250,440,"Fire Resistance:");
-draw_text(1250,470,"Ice Resistance:");
-draw_text(1250,500,"Lightning Resistance:");
-draw_text(1250,530,"Arcane Resistance:");
-draw_text(1250,560,"Light Resistance:");
-draw_text(1250,590,"Dark Resistance:");
+//draw_text(1250,260,"Physical Toughness:");
+//draw_text(1250,290,"Magical Toughness:");
+//draw_text(1250,350,"Slash Resistance:");
+//draw_text(1250,380,"Blunt Resistance:");
+//draw_text(1250,410,"Pierce Resistance:");
+//draw_text(1250,440,"Fire Resistance:");
+//draw_text(1250,470,"Ice Resistance:");
+//draw_text(1250,500,"Lightning Resistance:");
+//draw_text(1250,530,"Arcane Resistance:");
+//draw_text(1250,560,"Light Resistance:");
+//draw_text(1250,590,"Dark Resistance:");
 	
-draw_text(1550,260,string(PlayerStats.physicalToughness));
-draw_text(1550,290,string(PlayerStats.magicalToughness));
-draw_text(1550,350,string(PlayerStats.damageResistances[0]));
-draw_text(1550,380,string(PlayerStats.damageResistances[1]));
-draw_text(1550,410,string(PlayerStats.damageResistances[2]));
-draw_text(1550,440,string(PlayerStats.damageResistances[3]));
-draw_text(1550,470,string(PlayerStats.damageResistances[4]));
-draw_text(1550,500,string(PlayerStats.damageResistances[5]));
-draw_text(1550,530,string(PlayerStats.damageResistances[6]));
-draw_text(1550,560,string(PlayerStats.damageResistances[7]));
-draw_text(1550,590,string(PlayerStats.damageResistances[8]));
+//draw_text(1550,260,string(PlayerStats.toughness));
+//draw_text(1550,350,string(PlayerStats.damageResistances[0]));
+//draw_text(1550,380,string(PlayerStats.damageResistances[1]));
+//draw_text(1550,410,string(PlayerStats.damageResistances[2]));
+//draw_text(1550,440,string(PlayerStats.damageResistances[3]));
+//draw_text(1550,470,string(PlayerStats.damageResistances[4]));
+//draw_text(1550,500,string(PlayerStats.damageResistances[5]));
+//draw_text(1550,530,string(PlayerStats.damageResistances[6]));
+//draw_text(1550,560,string(PlayerStats.damageResistances[7]));
+//draw_text(1550,590,string(PlayerStats.damageResistances[8]));
 	
 #endregion

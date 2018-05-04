@@ -8,6 +8,7 @@ draw_set_alpha(1);
 
 #region draw options and data
 draw_set_font(fnt_arena_menu);
+draw_set_halign(fa_middle);
 draw_set_colour(c_white);
 for (var i = 0; i < array_height_2d(current_menu_options); i++)
 {
@@ -16,7 +17,7 @@ for (var i = 0; i < array_height_2d(current_menu_options); i++)
 			//options
 		var col = c_white;
 		if !slotExpanded && sX == i && sY == j col = c_blue;
-		var textX = 100+800*i;
+		var textX = 256+800*i;
 		var textY = 100+60*j;
 		draw_text_colour(textX,textY,current_menu_options[i, j],col,col,col,col,1.0);
 
@@ -32,15 +33,22 @@ for (var i = 0; i < array_height_2d(current_menu_options); i++)
 #region draw slot data
 if slotExpanded
 {
+	var maxWidth = 0;
+	for (var i = 0; i < array_length_1d(slotOptions); i++)
+	{
+		var strW = string_width(string(slotOptions[i]));
+		if strW > maxWidth maxWidth = strW;
+	}
 	for (var i = 0; i < array_length_1d(slotOptions); i++)
 	{
 		var sep = i-sExpX;
 		var col = c_white;
 		if slotOptions[i] == ArenaController.arenaStats[sY] col = c_aqua;
 		if sep == 0 col = c_blue;
-		var alpha = max(1-abs(sep)*(1/4),0);
+		var alpha = max(1-abs(sep)*(1/3),0);
 		
-		draw_text_colour(100+1100+800*sX+140*sep,100+60*sY,string(slotOptions[i]),col,col,col,col,alpha);
+		draw_text_colour(256+1100+800*sX+(maxWidth+32)*sep,100+60*sY,string(slotOptions[i]),col,col,col,col,alpha);
 	}
 }
+draw_set_halign(fa_left);
 #endregion

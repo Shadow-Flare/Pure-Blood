@@ -2,7 +2,7 @@ with PlayerStats
 {
 	level = 1;
 	newLevels = 0;
-	statPoints = 0;
+	statPoints = 5;
 	
 	xp = 0;
 	xpNeeded = 10*power(level+1,2);
@@ -26,8 +26,7 @@ with PlayerStats
 	mpMax = 20+4*willpower;
 	apMax = 10+1*cunning;
 	
-	physicalBreakHp = 0;
-	magicalBreakHp = 0;
+	breakHp = 0;
 	breakCooldownDuration = 1;
 
 	ap = 0;
@@ -60,17 +59,21 @@ with PlayerStats
 	damageResistances[damageType.pure] = 1;			//should allways be 1
 
 	//Special activation check, all initially false
-	specialHasActivated[specialType.bleed] = false	
+	specialHasActivated[specialType.bleed] = false;
+	specialHasActivated[specialType.poison] = false;
 
 	//Special Cooldowns (seconds)
-	specialCooldowns[specialType.bleed] = 6	
+	specialCooldowns[specialType.bleed] = 6;
+	specialCooldowns[specialType.poison] = 15;
 
 	//Special Damage initializers
-	specialDamages[specialType.bleed] = 0;						//Bleed
+	specialDamages[specialType.bleed] = 0;
+	specialDamages[specialType.poison] = 0;
 
 	//Special resistances (100 is considered normal)
-	specialResistances[specialType.bleed] = 100;				//Bleed
-	
+	specialResistances[specialType.bleed] = 100;
+	specialResistances[specialType.poison] = 100;
+
 	//equipment data
 		var equipCache = ItemCache.equipment
 		var runeList = equipCache[? equipmentSlot.rune];

@@ -68,7 +68,7 @@
             "grid_x": 16,
             "grid_y": 16,
             "hierarchyFrozen": false,
-            "hierarchyVisible": true,
+            "hierarchyVisible": false,
             "inheritLayerDepth": false,
             "inheritLayerSettings": false,
             "inheritSubLayers": false,
@@ -95,7 +95,7 @@
             "modelName": "GMRInstanceLayer",
             "mvc": "1.0",
             "userdefined_depth": false,
-            "visible": true
+            "visible": false
         },
         {
             "__type": "GMRTileLayer_Model:#YoYoStudio.MVCFormat",
@@ -672,8 +672,8 @@
     "viewSettings":     {
         "id": "a1505f8f-b66a-4d2d-85aa-9432def94e07",
         "clearDisplayBuffer": true,
-        "clearViewBackground": true,
-        "enableViews": true,
+        "clearViewBackground": false,
+        "enableViews": false,
         "inheritViewSettings": false,
         "modelName": "GMRoomViewSettings",
         "mvc": "1.0"

@@ -27,3 +27,7 @@ switch phase
 		}
 		break;
 }
+
+	//vv simulated vv
+xSpd = speed*dsin(direction);
+ySpd = -speed*dcos(direction);

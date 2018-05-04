@@ -52,8 +52,8 @@ if consoleEnabled
 				draw_text(viewW-columnWidth*1,rowHeight*10,"Target Enemy Pos Y:               "+string(enemy.y));
 				draw_text(viewW-columnWidth*2,rowHeight*11,"Target Enemy Hp:                  "+string(cache.hp)+"/"+string(cache.hpMax));
 				draw_text(viewW-columnWidth*1,rowHeight*11,"Target Enemy Mp:                  "+string(cache.mp)+"/"+string(cache.mpMax));
-				draw_text(viewW-columnWidth*2,rowHeight*12,"Target Enemy Physical Break:      "+string(round(cache.physicalBreakHp*100)/100)+"/"+string(cache.physicalToughness));
-				draw_text(viewW-columnWidth*1,rowHeight*12,"Target Enemy Magical Break:       "+string(round(cache.magicalBreakHp*100)/100)+"/"+string(cache.magicalToughness));
+				draw_text(viewW-columnWidth*2,rowHeight*12,"Target Enemy Toughness:           "+string(cache.toughness));
+				draw_text(viewW-columnWidth*1,rowHeight*12,"Target Enemy Break HP:            "+string(round(cache.breakHp*100)/100)+"/"+string(cache.toughness));
 			}
 		}
 	

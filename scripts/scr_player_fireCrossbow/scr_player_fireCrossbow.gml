@@ -43,13 +43,58 @@ if !click with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCr
 	ySpd = -spd*dsin(qD);
 	hitSoundID = noone;			//CHANGE//
 	hitEffects = subtype_get_stat(subID,offhandSubtypeStats.effect);
-	hitType = subtype_get_stat(subID,offhandSubtypeStats.damType);
-	hitDamage = subtype_get_stat(subID,offhandSubtypeStats.damVal);
-	hitStagger = subtype_get_stat(subID,offhandSubtypeStats.forVal);
-	hitKnockback = subtype_get_stat(subID,offhandSubtypeStats.knockback);
-	statusType = subtype_get_stat(subID,offhandSubtypeStats.specType);
-	statusValue = subtype_get_stat(subID,offhandSubtypeStats.specVal);
 	pierce = false;
+	
+		//hitData management
+	if PlayerStats.currentOffhandIndex == 0 var cache = PlayerStats.weaponOff1DamageDetails;
+	else var cache = PlayerStats.weaponOff2DamageDetails;
+			//initializer
+	//hitData[? damageData.stagger] = 0;		//set later
+	//hitData[? damageData.knockback] = 0;		//set later
+	hitData[? damageData.slash] = 0;			//set later
+	hitData[? damageData.pierce] = 0;			//set later
+	hitData[? damageData.blunt] = 0;			//set later
+	hitData[? damageData.fire] = cache[? weaponDamageDetails.fire];
+	hitData[? damageData.ice] = cache[? weaponDamageDetails.ice];
+	hitData[? damageData.lightning] = cache[? weaponDamageDetails.lightning];
+	hitData[? damageData.arcane] = cache[? weaponDamageDetails.arcane];
+	hitData[? damageData.light] = cache[? weaponDamageDetails.light];
+	hitData[? damageData.dark] = cache[? weaponDamageDetails.dark];
+			//pure
+	hitData[? damageData.pure] = cache[? weaponDamageDetails.pure];
+			//status
+	hitData[? damageData.bleed] = cache[? weaponDamageDetails.bleed];
+	hitData[? damageData.poison] = cache[? weaponDamageDetails.poison];
+			//stagger & knockback
+	hitData[? damageData.stagger] = cache[? weaponDamageDetails.stagger] * subtype_get_stat(subID,offhandSubtypeStats.forMod);
+	hitData[? damageData.knockback] = cache[? weaponDamageDetails.stagger] * subtype_get_stat(subID,offhandSubtypeStats.forMod) * 0.55;	//May need tweaking
+		//get main type - initializer
+	mainType = noone;
+			//physical
+	var physDam = cache[? weaponDamageDetails.physical] * subtype_get_stat(subID,offhandSubtypeStats.damMod);
+	var damType = subtype_get_stat(subID,offhandSubtypeStats.damType);
+	var highest = physDam;
+	switch damType
+	{
+		case damageType.slash: hitData[? damageData.slash] = physDam; mainType = damageType.slash; break;
+		case damageType.pierce: hitData[? damageData.pierce] = physDam; mainType = damageType.pierce; break;
+		case damageType.blunt: hitData[? damageData.blunt] = physDam; mainType = damageType.blunt; break;
+	}
+		
+		//change all undefined to 0
+	var index = ds_map_find_first(hitData);
+	while (index != undefined)
+	{
+		if hitData[? index] == undefined hitData[? index] = 0;
+		index = ds_map_find_next(hitData,index);
+	}
+		
+	if hitData[? damageData.fire] > highest {mainType = damageType.fire; highest = hitData[? damageData.fire];};
+	if hitData[? damageData.ice] > highest {mainType = damageType.ice; highest = hitData[? damageData.ice];};
+	if hitData[? damageData.lightning] > highest {mainType = damageType.lightning; highest = hitData[? damageData.lightning];};
+	if hitData[? damageData.arcane] > highest {mainType = damageType.arcane; highest = hitData[? damageData.arcane];};
+	if hitData[? damageData.light] > highest {mainType = damageType.light; highest = hitData[? damageData.light];};
+	if hitData[? damageData.dark] > highest {mainType = damageType.dark; highest = hitData[? damageData.dark];};
 	
 		//sfx
 	audio_play_sound(snd_crossbow_fire,10,0);
@@ -57,7 +102,7 @@ if !click with instance_create_depth(projectileXStrt,projectileYStrt,depth,objCr
 		//gfx
 	with create_effect(false,x,y,depth+1,spr_radial_glow,0.3,1/sprite_get_width(spr_radial_glow),0.5/sprite_get_height(spr_radial_glow))
 	{
-		switch other.hitType
+		switch other.mainType
 		{
 			case damageType.slash: case damageType.pierce: case damageType.blunt:
 				image_blend = c_white;

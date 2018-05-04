@@ -1,6 +1,7 @@
 var surfW = surface_get_width(application_surface);
 var surfH = surface_get_height(application_surface);
 
+#region Main Map Draw
 var mapSurfW = (surfW)*(mapHudViewportX2-mapHudViewportX1);
 var mapSurfH = (surfH)*(mapHudViewportY2-mapHudViewportY1);
 var mapBaseW = mapSurfW+mapHudViewportBorderWidth*2;
@@ -72,3 +73,16 @@ draw_text(20,40,"Cursor Y:");
 	draw_text(100,40,string(mapCursorY));
 draw_text(20,60,"Zoom Level:");
 	draw_text(100,60,string(mapZoomLevel));
+#endregion
+#region Title and Coord
+	//Area name and coord;
+var areaName = "{AREA NAME}";
+draw_set_font(fnt_alagard);
+	draw_text_colour(mapAreaNameX*surfW,mapAreaNameY*surfH,areaName,mapAreaNameColour,mapAreaNameColour,mapAreaNameColour,mapAreaNameColour,1.0);
+draw_set_halign(fa_right);
+	draw_text_colour(mapCoordX*surfW,mapCoordY*surfH,"("+string(coordX)+","+string(coordY)+")",mapCoordColour,mapCoordColour,mapCoordColour,mapCoordColour,1.0);
+draw_set_halign(fa_left);
+#endregion
+#region Legend
+scr_draw_textbox(mapDetailsTextboxX1*surfW,mapDetailsTextboxY1*surfH,mapDetailsTextboxX2*surfW,mapDetailsTextboxY2*surfH,mapDetailsTextboxType,mapDetailsTextboxScale,mapDetailsTextboxBlend);
+#endregion

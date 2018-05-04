@@ -351,19 +351,39 @@ draw_clear_alpha(c_black,0);
 			var _damageResistances_dark = 1+equipmentPlayerEquipAltStats[? itemEffects.darkRes]+0.01*_willpower;
 
 			var _specialResistances_bleed = 100+3*_constitution+1.5*_intelligence;
+			var _specialResistances_poison = 100+3*_constitution+1.5*_intelligence;
+			
+			var _toughness = 2+0.3*_constitution+equipmentPlayerEquipAltStats[? itemEffects.toughness];
 
 			var _alacrity = _dexterity*0.33333+_cunning*0.1+equipmentPlayerEquipAltStats[? itemEffects.alacrity];
 			var _memory = _intelligence*0.66666+equipmentPlayerEquipAltStats[? itemEffects.memory];
 
-			var _physicalPower = 0+0.25*_strength+0.25*_dexterity+equipmentPlayerEquipAltStats[? itemEffects.physPow];
-			var _physicalStagger = 0.5+0.05*_strength+equipmentPlayerEquipAltStats[? itemEffects.physFor];
-			var _physicalToughness = 2+0.30*_constitution+equipmentPlayerEquipAltStats[? itemEffects.physTough];
-			
-			var _magicalPower = 0+1*_intelligence+equipmentPlayerEquipAltStats[? itemEffects.magPow];
-			var _magicalStagger = 2+0.25*_intelligence+0.25*_willpower+equipmentPlayerEquipAltStats[? itemEffects.magFor];
-			var _magicalToughness = 2+0.30*_willpower+equipmentPlayerEquipAltStats[? itemEffects.magTough];
-
 			var _physicalDefense = (_damageResistances_slash+_damageResistances_pierce+_damageResistances_blunt)/3;
+			
+			var wepID = equipmentPlayerEquipAlt[? equipmentSlot.main1];
+			scr_player_get_weapon_damage(wepID,_weaponMain1DamageDetails,_strength,_dexterity,_cunning,_intelligence);
+			var _wepMain1Name = item_get_data(itemType.weapon,wepID,itemStats.name);
+			var _wepMain1Dam = scr_weapon_damage_compiled(_weaponMain1DamageDetails);
+			var _wepMain1Sta = _weaponMain1DamageDetails[? weaponDamageDetails.stagger];
+
+			var wepID = equipmentPlayerEquipAlt[? equipmentSlot.main2];
+			scr_player_get_weapon_damage(wepID,_weaponMain2DamageDetails,_strength,_dexterity,_cunning,_intelligence);
+			var _wepMain2Name = item_get_data(itemType.weapon,wepID,itemStats.name);
+			var _wepMain2Dam = scr_weapon_damage_compiled(_weaponMain2DamageDetails);
+			var _wepMain2Sta = _weaponMain2DamageDetails[? weaponDamageDetails.stagger];
+
+			var wepID = equipmentPlayerEquipAlt[? equipmentSlot.off1];
+			scr_player_get_weapon_damage(wepID,_weaponOff1DamageDetails,_strength,_dexterity,_cunning,_intelligence);
+			var _wepOff1Name = item_get_data(itemType.weapon,wepID,itemStats.name);
+			var _wepOff1Dam = scr_weapon_damage_compiled(_weaponOff1DamageDetails);
+			var _wepOff1Sta = _weaponOff1DamageDetails[? weaponDamageDetails.stagger];
+
+			var wepID = equipmentPlayerEquipAlt[? equipmentSlot.off2];
+			scr_player_get_weapon_damage(wepID,_weaponOff2DamageDetails,_strength,_dexterity,_cunning,_intelligence);
+			var _wepOff2Name = item_get_data(itemType.weapon,wepID,itemStats.name);
+			var _wepOff2Dam = scr_weapon_damage_compiled(_weaponOff2DamageDetails);
+			var _wepOff2Sta = _weaponOff2DamageDetails[? weaponDamageDetails.stagger];
+			
 			#endregion
 		#endregion
 		//title && page
@@ -445,64 +465,60 @@ draw_clear_alpha(c_black,0);
 			
 			break; #endregion
 		case 1: #region Page 2: Alacrity, Damage+Force and toughnesses.
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Toughness"); index++;
 			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Alacrity"); index++;
-			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Memory"); index++;
-			index++;	//empty space
-			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Physical Power"); index++;
-			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Physical Force"); index++;
-			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Physical Toughness"); index++;
-			index++;	//empty space
-			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Magical Power"); index++;
-			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Magical Force"); index++;
-			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Magical Toughness"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Main Hand 1"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"	Damage"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Main Hand 2"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"	Damage"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Off Hand 1"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"	Damage"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Off Hand 2"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"	Damage"); index++;
 			
 			index = 1; //reset
 			draw_set_halign(fa_right);
+			
+			if _toughness == PlayerStats.toughness col = c_white;
+			else if _toughness > PlayerStats.toughness col = c_green;
+			else col = c_red;
+			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_toughness)),col,col,col,col,1.0); index++;
 			
 			if _alacrity == PlayerStats.alacrity col = c_white;
 			else if _alacrity > PlayerStats.alacrity col = c_green;
 			else col = c_red;
 			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_alacrity)),col,col,col,col,1.0); index++;
 			
-			if _memory == PlayerStats.memory col = c_white;
-			else if _memory > PlayerStats.memory col = c_green;
+			draw_text(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,_wepMain1Name); index++;
+			
+			if _alacrity == PlayerStats.alacrity col = c_white;
+			else if _alacrity > PlayerStats.alacrity col = c_green;
 			else col = c_red;
-			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_memory)),col,col,col,col,1.0); index++;
+			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_wepMain1Dam)),col,col,col,col,1.0); index++;
+			
+			draw_text(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,_wepMain2Name); index++;
+			
+			if _alacrity == PlayerStats.alacrity col = c_white;
+			else if _alacrity > PlayerStats.alacrity col = c_green;
+			else col = c_red;
+			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_wepMain2Dam)),col,col,col,col,1.0); index++;
+			
+			draw_text(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,_wepOff1Name); index++;
+			
+			if _alacrity == PlayerStats.alacrity col = c_white;
+			else if _alacrity > PlayerStats.alacrity col = c_green;
+			else col = c_red;
+			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_wepOff1Dam)),col,col,col,col,1.0); index++;
+			
+			draw_text(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,_wepOff2Name); index++;
+			
+			if _alacrity == PlayerStats.alacrity col = c_white;
+			else if _alacrity > PlayerStats.alacrity col = c_green;
+			else col = c_red;
+			draw_text_colour(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_wepOff2Dam)),col,col,col,col,1.0); index++;
 			
 			index++;	//empty space
 			
-			if _physicalPower == PlayerStats.physicalPower col = c_white;
-			else if _physicalPower > PlayerStats.physicalPower col = c_green;
-			else col = c_red;
-			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_physicalPower)),col,col,col,col,1.0); index++;
-			
-			if _physicalStagger == PlayerStats.physicalStagger col = c_white;
-			else if _physicalStagger > PlayerStats.physicalStagger col = c_green;
-			else col = c_red;
-			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_physicalStagger)),col,col,col,col,1.0); index++;
-			
-			if _physicalToughness == PlayerStats.physicalToughness col = c_white;
-			else if _physicalToughness > PlayerStats.physicalToughness col = c_green;
-			else col = c_red;
-			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_physicalToughness)),col,col,col,col,1.0); index++;
-			
-			
-			index++;	//empty space
-			
-			if _magicalPower == PlayerStats.magicalPower col = c_white;
-			else if _magicalPower > PlayerStats.magicalPower col = c_green;
-			else col = c_red;
-			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_magicalPower)),col,col,col,col,1.0); index++;
-			
-			if _magicalStagger == PlayerStats.magicalStagger col = c_white;
-			else if _magicalStagger > PlayerStats.magicalStagger col = c_green;
-			else col = c_red;
-			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_magicalStagger)),col,col,col,col,1.0); index++;
-			
-			if _magicalToughness == PlayerStats.magicalToughness col = c_white;
-			else if _magicalToughness > PlayerStats.magicalToughness col = c_green;
-			else col = c_red;
-			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_magicalToughness)),col,col,col,col,1.0); index++;
 			
 			draw_set_halign(fa_left);
 			
@@ -577,6 +593,7 @@ draw_clear_alpha(c_black,0);
 			break; #endregion
 		case 3: #region Page 4: Special Defenses and Misc (Not fully filled yet)
 			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Bleed Resistance"); index++;
+			draw_text(equipmentPlayerStatsTextColumn1X*surfX,equipmentPlayerStatsTextColumn1Y1*surfY+index*textSep,"Poison Resistance"); index++;
 			
 			index = 1; //reset
 			draw_set_halign(fa_right);
@@ -585,6 +602,11 @@ draw_clear_alpha(c_black,0);
 			else if _specialResistances_bleed > PlayerStats.specialResistances[specialType.bleed]  col = c_green;
 			else col = c_red;
 			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_specialResistances_bleed)),col,col,col,col,1.0); index++;
+			
+			if _specialResistances_poison == PlayerStats.specialResistances[specialType.poison] col = c_white;
+			else if _specialResistances_poison > PlayerStats.specialResistances[specialType.poison]  col = c_green;
+			else col = c_red;
+			draw_text_color(equipmentPlayerStatsTextColumn2X*surfX,equipmentPlayerStatsTextColumn2Y1*surfY+index*textSep,string(round(_specialResistances_poison)),col,col,col,col,1.0); index++;
 			
 			draw_set_halign(fa_left);
 			

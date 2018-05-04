@@ -24,3 +24,4 @@ boundEffect = noone;
 new = true;
 
 hitList = ds_list_create();
+hitData = ds_map_create();

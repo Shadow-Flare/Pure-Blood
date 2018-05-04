@@ -54,8 +54,8 @@ switch phase
 		break;
 	case ropeshotPhase.returning:
 		mount = noone;
-		direction = point_direction(caster.x,caster.y,x,y);
-		if speed == 0 speed = -defaultSpeed;
+		direction = point_direction(x,y,caster.x,caster.y);
+		if speed == 0 speed = defaultSpeed;
 		if place_meeting(x,y,caster) instance_destroy();
 		break;
 	case ropeshotPhase.hookedPoint:

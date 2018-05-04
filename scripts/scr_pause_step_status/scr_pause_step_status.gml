@@ -1,7 +1,49 @@
-scr_menu_navigate();
+#region movement inputs
+var maxRunes = PlayerStats.runeSize;
+var inputH = InputManager.moveInputH+InputManager.dRInput-InputManager.dLInput;
+var inputV = InputManager.moveInputV+InputManager.dDInput-InputManager.dUInput;
+if equipCanMove
+{
+	if abs(inputH) >= 0.7
+	{
+		inputH = sign(inputH);
+		equipCanMove = false;
+	}
+	else if abs(inputV) >= 0.7
+	{
+		inputV = sign(inputV);
+		equipCanMove = false;
+	}
+	else
+	{
+		inputH = 0;
+		inputV = 0;
+	}
+}
+else
+{
+	if abs(inputH) <= 0.4 && abs(inputV) <= 0.4 equipCanMove = true;	
+	inputH = 0;
+	inputV = 0;
+}
+#endregion
+#region apply movement
+if PlayerStats.statPoints != 0 || statPointsTemp != 0
+{
+	if sY = noone sY = 0;
+	if inputV != 0
+	{
+		sY += inputV;
+		if sY > array_length_2d(menu_status,0)-1 sY = 0;
+		if sY < 0 sY = array_height_2d(menu_status)-1;
+	}
+}
+else sY = noone;
+#endregion
 
 //select
-selection = current_menu_options[sX,sY];
+if sY != noone selection = current_menu_options[sX,sY];
+else selection = noone;
 
 #region determine status menu "changeCheck"
 
@@ -11,80 +53,51 @@ else changeCheck = true;
 #endregion
 #region alter stat
 
-if InputManager.dRInput || InputManager.dLInput && !(InputManager.dRInput && InputManager.dLInput)
+if inputH != 0
 {
+	var canShiftThisWay = PlayerStats.statPoints-inputH == clamp(PlayerStats.statPoints-inputH,0,statPointsTemp);
 	switch selection
 	{
 		case "Strength":
-			if InputManager.dRInput && PlayerStats.statPoints != 0
+			if canShiftThisWay && PlayerStats.strengthBase+inputH >= strengthTemp
 			{
-				PlayerStats.strength++;
-				PlayerStats.statPoints--;
-			}
-			if InputManager.dLInput && PlayerStats.strength != strengthTemp
-			{
-				PlayerStats.strength--;
-				PlayerStats.statPoints++;
+				PlayerStats.strengthBase += inputH;
+				PlayerStats.statPoints -= inputH;
 			}
 			break;
 		case "Constitution":
-			if InputManager.dRInput && PlayerStats.statPoints != 0
+			if canShiftThisWay && PlayerStats.constitutionBase+inputH >= constitutionTemp
 			{
-				PlayerStats.constitution++;
-				PlayerStats.statPoints--;
-			}
-			if InputManager.dLInput && PlayerStats.constitution != constitutionTemp
-			{
-				PlayerStats.constitution--;
-				PlayerStats.statPoints++;
+				PlayerStats.constitutionBase += inputH;
+				PlayerStats.statPoints -= inputH;
 			}
 			break;
 		case "Dexterity":
-			if InputManager.dRInput && PlayerStats.statPoints != 0
+			if canShiftThisWay && PlayerStats.dexterityBase+inputH >= dexterityTemp
 			{
-				PlayerStats.dexterity++;
-				PlayerStats.statPoints--;
-			}
-			if InputManager.dLInput && PlayerStats.dexterity != dexterityTemp
-			{
-				PlayerStats.dexterity--;
-				PlayerStats.statPoints++;
+				PlayerStats.dexterityBase += inputH;
+				PlayerStats.statPoints -= inputH;
 			}
 			break;
 		case "Cunning":
-			if InputManager.dRInput && PlayerStats.statPoints != 0
+			if canShiftThisWay && PlayerStats.cunningBase+inputH >= cunningTemp
 			{
-				PlayerStats.cunning++;
-				PlayerStats.statPoints--;
-			}
-			if InputManager.dLInput && PlayerStats.cunning != cunningTemp
-			{
-				PlayerStats.cunning--;
-				PlayerStats.statPoints++;
+				PlayerStats.cunningBase += inputH;
+				PlayerStats.statPoints -= inputH;
 			}
 			break;
 		case "Intelligence":
-			if InputManager.dRInput && PlayerStats.statPoints != 0
+			if canShiftThisWay && PlayerStats.intelligenceBase+inputH >= intelligenceTemp
 			{
-				PlayerStats.intelligence++;
-				PlayerStats.statPoints--;
-			}
-			if InputManager.dLInput && PlayerStats.intelligence != intelligenceTemp
-			{
-				PlayerStats.intelligence--;
-				PlayerStats.statPoints++;
+				PlayerStats.intelligenceBase += inputH;
+				PlayerStats.statPoints -= inputH;
 			}
 			break;
 		case "Willpower":
-			if InputManager.dRInput && PlayerStats.statPoints != 0
+			if canShiftThisWay && PlayerStats.willpowerBase+inputH >= willpowerTemp
 			{
-				PlayerStats.willpower++;
-				PlayerStats.statPoints--;
-			}
-			if InputManager.dLInput && PlayerStats.willpower != willpowerTemp
-			{
-				PlayerStats.willpower--;
-				PlayerStats.statPoints++;
+				PlayerStats.willpowerBase += inputH;
+				PlayerStats.statPoints -= inputH;
 			}
 			break;
 	}
@@ -109,19 +122,14 @@ if (InputManager.startInput)
 if (InputManager.aInput == true)
 {
 	audio_play_sound(snd_menu_select,10,0);
-	switch selection
-	{
-		case "Accept":
-				//update temp save data
-			statPointsTemp = PlayerStats.statPoints;
-			strengthTemp = PlayerStats.strength;
-			constitutionTemp = PlayerStats.constitution;
-			dexterityTemp = PlayerStats.dexterity;
-			cunningTemp = PlayerStats.cunning;
-			intelligenceTemp = PlayerStats.intelligence;
-			willpowerTemp = PlayerStats.willpower;
-			break;
-	}
+		//update temp save data
+	statPointsTemp = PlayerStats.statPoints;
+	strengthTemp = PlayerStats.strengthBase;
+	constitutionTemp = PlayerStats.constitutionBase;
+	dexterityTemp = PlayerStats.dexterityBase;
+	cunningTemp = PlayerStats.cunningBase;
+	intelligenceTemp = PlayerStats.intelligenceBase;
+	willpowerTemp = PlayerStats.willpowerBase;
 }
 
 #endregion
@@ -136,12 +144,22 @@ if InputManager.bInput == true
 	sY = 0;
 		//revert to temp save data
 	PlayerStats.statPoints = statPointsTemp;
-	PlayerStats.strength = strengthTemp;
-	PlayerStats.constitution = constitutionTemp;
-	PlayerStats.dexterity = dexterityTemp;
-	PlayerStats.cunning = cunningTemp;
-	PlayerStats.intelligence = intelligenceTemp;
-	PlayerStats.willpower = willpowerTemp;
+	PlayerStats.strengthBase = strengthTemp;
+	PlayerStats.constitutionBase = constitutionTemp;
+	PlayerStats.dexterityBase = dexterityTemp;
+	PlayerStats.cunningBase = cunningTemp;
+	PlayerStats.intelligenceBase = intelligenceTemp;
+	PlayerStats.willpowerBase = willpowerTemp;
+}
+
+#endregion
+#region (Y)			Cycle Page
+
+if InputManager.yInput == true
+{
+	audio_play_sound(snd_menu_navigate,10,0);
+	statusPage++;
+	if statusPage > statusPageNum-1 statusPage = 0;
 }
 
 #endregion

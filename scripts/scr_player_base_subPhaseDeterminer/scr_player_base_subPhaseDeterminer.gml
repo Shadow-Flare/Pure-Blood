@@ -1,4 +1,3 @@
-//if abs(xSpd) > PlayerStats.moveSpeed xSpd = sign(xSpd)*PlayerStats.moveSpeed
 with objPlayer
 {
 	switch vPhase
@@ -24,7 +23,7 @@ with objPlayer
 			}
 			else
 			{
-				if sign(moveH) = lockOnDir
+				if sign(moveH) = facing
 				{
 					if abs(moveH) <= 0.8
 					{

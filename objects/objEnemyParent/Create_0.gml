@@ -53,12 +53,10 @@ with statCache
 	damagePower = 0;
 	staggerPower = 0;
 	
-	physicalToughness = 1;
-	magicalToughness = 1;
+	toughness = 1;
 	breakCooldownDuration = 1;
 	
-	physicalBreakHp = 0;
-	magicalBreakHp = 0;
+	breakHp = 0;
 	
 	moveSpeed = 1;
 	defaultMoveSpeed = moveSpeed;
@@ -82,16 +80,20 @@ with statCache
 	damageResistances[damageType.pure] = 1;			//should allways be 1
 
 	//Special activation check, all initially false
-	specialHasActivated[specialType.bleed] = false	
+	specialHasActivated[specialType.bleed] = false;
+	specialHasActivated[specialType.poison] = false	
 
 	//Special Cooldowns (seconds)
-	specialCooldowns[specialType.bleed] = 6	
+	specialCooldowns[specialType.bleed] = 6;
+	specialCooldowns[specialType.poison] = 15;
 
 	//Special Damage initializers
-	specialDamages[specialType.bleed] = 0;						//Bleed
+	specialDamages[specialType.bleed] = 0;
+	specialDamages[specialType.poison] = 0;
 
 	//Special resistances (100 is considered normal)
-	specialResistances[specialType.bleed] = 100;				//Bleed
+	specialResistances[specialType.bleed] = 100;
+	specialResistances[specialType.poison] = 100;
 	
 	hp = hpMax;
 	mp = mpMax;

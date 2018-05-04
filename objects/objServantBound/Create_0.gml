@@ -9,8 +9,7 @@ with statCache
 	damagePower = 17;
 	staggerPower = 20;
 	
-	physicalToughness = 999;
-	magicalToughness = 999;
+	toughness = 999;
 	breakCooldownDuration = 1;
 	
 	moveSpeed = 1;										//$$//
@@ -53,10 +52,6 @@ action1Follow = false;
 action1Duration = 0.7;
 action1AttackSoundID = noone;															//$$//
 action1HitSoundID = noone;																//$$//
-action1DamageType = damageType.fire;
-action1Damage = 1;
-action1Stagger = 1;
-action1Knockback = 4;
-action1StatusType = specialType.none;
-action1StatusValue = 0;
+action1DamageData = ds_map_create();
+scr_create_damageCache(action1DamageData,1,4,0,0,0,1,0,0,0,0,0);
 action1Pierce = 1;

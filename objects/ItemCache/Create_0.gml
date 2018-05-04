@@ -1,7 +1,7 @@
 #region enum initializers
 enum itemType {item, weapon, equipment, rune, key, alchemy};
 enum itemStats {icon, name, usable, description, equipSlot, effectsCache, weaponData, useAnimation, useDuration};
-enum itemEffects {hp, mp, ap, str, con, dex, cun, int, wil, alacrity, memory, physPow, physFor, physTough, magPow, magFor, magTough, slashDef, bluntDef, pierceDef, fireRes, iceRes, lightningRes, arcaneRes, lightRes, darkRes, bleedRes, LENGTH};	//length just for checking enum amount, needed for other areas.
+enum itemEffects {hp, mp, ap, str, con, dex, cun, int, wil, toughness, alacrity, memory, slashDef, bluntDef, pierceDef, fireRes, iceRes, lightningRes, arcaneRes, lightRes, darkRes, bleedRes, LENGTH};	//length just for checking enum amount, needed for other areas.
 enum itemItem 
 {
 /* Ammo */				crossbow_bolt,
@@ -87,17 +87,16 @@ cache[? itemStats.description] = "A basic long sword. The very standard of melee
 cache[? itemStats.equipSlot] = equipmentSlot.main1;
 cache[? itemStats.effectsCache] = ds_map_create();
 var eCache = cache[? itemStats.effectsCache];
-	eCache[? itemEffects.physPow] = 3;
-//	eCache[? itemEffects.physFor] = 0.1;
 cache[? itemStats.weaponData] = ds_map_create();
 var wepData = cache[? itemStats.weaponData]
 	wepData[? weaponStats.type] = weaponClass.sword;
+	wepData[? weaponStats.uniqueAttack] = comboID.sword_skyward_slice;
+	wepData[? weaponStats.range] = 1;
+	wepData[? weaponStats.weight] = 1.6;
 	wepData[? weaponStats.strMod] = 0.10;
 	wepData[? weaponStats.dexMod] = 0.05;
-	wepData[? weaponStats.range] = 1;
-	wepData[? weaponStats.specialType] = -1;
-	wepData[? weaponStats.specialValue] = 0;
-	wepData[? weaponStats.uniqueAttack] = comboID.sword_skyward_slice;
+	wepData[? weaponStats.physicalDam] = 2;
+
 			#endregion
 		#endregion
 		#region spears
@@ -110,17 +109,15 @@ cache[? itemStats.description] = "A basic Spear. Often handed to militias, desig
 cache[? itemStats.equipSlot] = equipmentSlot.main1;
 cache[? itemStats.effectsCache] = ds_map_create();
 var eCache = cache[? itemStats.effectsCache];
-	eCache[? itemEffects.physPow] = 4;
-//	eCache[? itemEffects.physFor] = 1.1;
 cache[? itemStats.weaponData] = ds_map_create();
 var wepData = cache[? itemStats.weaponData]
 	wepData[? weaponStats.type] = weaponClass.spear;
+	wepData[? weaponStats.uniqueAttack] = comboID.spear_drive;
+	wepData[? weaponStats.range] = 1;
+	wepData[? weaponStats.weight] = 1.8;
 	wepData[? weaponStats.strMod] = 0.05;
 	wepData[? weaponStats.dexMod] = 0.15;
-	wepData[? weaponStats.range] = 1;
-	wepData[? weaponStats.specialType] = -1;
-	wepData[? weaponStats.specialValue] = 0;
-	wepData[? weaponStats.uniqueAttack] = comboID.spear_drive;
+	wepData[? weaponStats.physicalDam] = 2;
 			#endregion
 		#endregion
 		
@@ -131,19 +128,17 @@ weaponCache[? weaponItem.crossbow] = ds_map_create();
 var cache = weaponCache[? weaponItem.crossbow];
 cache[? itemStats.name] = "Crossbow";
 cache[? itemStats.icon] = spr_icon_item_weapon_crossbow;
-cache[? itemStats.description] = "A basic one-handed crossbow. Hunters often lack the time to properly handle a bow in the middle of a fight, as such an easier to wield, one-handed variant of the crossbow was developed.";
+cache[? itemStats.description] = "A basic one-handed crossbow. Hunters often lack the time to properly handle a bow or even a crossbow in the middle of a fight, as such an easier to wield, one-handed variant of the crossbow was developed.";
 cache[? itemStats.equipSlot] = equipmentSlot.off1;
 cache[? itemStats.effectsCache] = ds_map_create();
 var eCache = cache[? itemStats.effectsCache];
-	eCache[? itemEffects.physPow] = 1;
-	eCache[? itemEffects.physFor] = 0.5;
 cache[? itemStats.weaponData] = ds_map_create();
 var wepData = cache[? itemStats.weaponData]
 	wepData[? weaponStats.type] = weaponClass.crossbow;
-	wepData[? weaponStats.strMod] = 0.10;
-	wepData[? weaponStats.dexMod] = 0.05;
-	wepData[? weaponStats.specialType] = -1;
-	wepData[? weaponStats.specialValue] = 0;
+	wepData[? weaponStats.weight] = 0.6;
+	wepData[? weaponStats.strMod] = 0.05;
+	wepData[? weaponStats.dexMod] = 0.3;
+	wepData[? weaponStats.physicalDam] = 1;
 				#endregion
 		#endregion
 		#region grimoires
@@ -156,14 +151,12 @@ cache[? itemStats.description] = "A basic grimoire. The mages college has long s
 cache[? itemStats.equipSlot] = equipmentSlot.off1;
 cache[? itemStats.effectsCache] = ds_map_create();
 var eCache = cache[? itemStats.effectsCache];
-	eCache[? itemEffects.magPow] = 1;
-	eCache[? itemEffects.magFor] = 1;
 cache[? itemStats.weaponData] = ds_map_create();
 var wepData = cache[? itemStats.weaponData]
 	wepData[? weaponStats.type] = weaponClass.grimoire;
-	wepData[? weaponStats.intMod] = 0.45;
-	wepData[? weaponStats.specialType] = -1;
-	wepData[? weaponStats.specialValue] = 0;
+	wepData[? weaponStats.weight] = 1.4;
+	wepData[? weaponStats.intMod] = 0.2;
+	wepData[? weaponStats.arcaneDam] = 3.5;
 				#endregion
 		#endregion
 	#endregion

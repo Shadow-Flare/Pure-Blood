@@ -8,8 +8,7 @@ with statCache
 	damagePower = 7;									//$$//
 	staggerPower = 5;									//$$//
 	
-	physicalToughness = 6;								//$$//
-	magicalToughness = 8;								//$$//
+	toughness = 6;										//$$//
 	breakCooldownDuration = 1;
 	
 	moveSpeed = 0.2;									//$$//
@@ -58,12 +57,8 @@ action1MoveBurst = 3;																	//$$//
 action1Move = 0;																		//$$//
 action1MoveStart = action1Duration*(/**/6/**//sprite_get_number(action1Animation));		//$$//
 action1MoveDuration = action1Duration*(/**/0/**//sprite_get_number(action1Animation));	//$$//
-action1DamageType = damageType.blunt;																	//$$//
-action1Damage = 1;																		//$$//
-action1Stagger = 1;																		//$$//
-action1Knockback = 12;																	//$$//
-action1StatusType = -1;																	//$$//
-action1StatusValue = 0;																	//$$//
+action1DamageData = ds_map_create();
+scr_create_damageCache(action1DamageData,1,12,0,0,1,0,0,0,0,0,0);
 action1Pierce = true;
 
 	//action2: Leap
@@ -83,12 +78,8 @@ action2Sub2ZoneHitSoundID = noone;																//$$//
 action2Sub2ZoneFrameData = -1;
 action2Sub2ZoneFollow = true;
 action2Sub2ZoneDuration = -1
-action2Sub2ZoneDamageType = damageType.blunt;
-action2Sub2ZoneDamage = 0.3;
-action2Sub2ZoneStagger = 0;
-action2Sub2ZoneKnockback = 1.5;
-action2Sub2ZoneStatusType = specialType.none;
-action2Sub2ZoneStatusValue = 0;
+action2Sub2ZoneDamageData = ds_map_create();
+scr_create_damageCache(action2Sub2ZoneDamageData,0.8,1.5,0,0,0.3,0,0,0,0,0,0);
 action2Sub2ZonePierce = true;
 		//sub3: Landing
 action2Sub3Animation = sprBloodHoundBodyAction2Sub3;
@@ -100,13 +91,9 @@ action2Sub3ZoneAttackSoundID = noone;															//$$//
 action2Sub3ZoneHitSoundID = noone;																//$$//
 action2Sub3ZoneFrameData = [0,1]
 action2Sub3ZoneFollow = false;
-action2Sub3ZoneDuration = -1
-action2Sub3ZoneDamageType = damageType.slash;
-action2Sub3ZoneDamage = 0.3;
-action2Sub3ZoneStagger = 0;
-action2Sub3ZoneKnockback = 1.5;
-action2Sub3ZoneStatusType = specialType.none;
-action2Sub3ZoneStatusValue = 0;
+action2Sub3ZoneDuration = -1;
+action2Sub3ZoneDamageData = ds_map_create();
+scr_create_damageCache(action2Sub3ZoneDamageData,1.4,1.5,0.3,0,0,0,0,0,0,0,0);
 action2Sub3ZonePierce = true;
 	
 	//action3: Fling Corpses
@@ -123,12 +110,8 @@ action3MoveBurst = 0																	//$$//
 action3Move = 0;																		//$$//
 action3MoveStart = action3Duration*(/**/0/**//sprite_get_number(action3Animation));
 action3MoveDuration = action3Duration*(/**/0/**//sprite_get_number(action3Animation));
-action3DamageType = damageType.slash;																	//$$//
-action3Damage = 1;																		//$$//
-action3Stagger = 1;																		//$$//
-action3Knockback = 12;																	//$$//
-action3StatusType = specialType.none;																	//$$//
-action3StatusValue = 0;																	//$$//
+action3DamageData = ds_map_create();
+scr_create_damageCache(action3DamageData,1,12,1,0,0,0,0,0,0,0,0);
 action3Pierce = true;
 		//corpses
 action3CorpseMin = 3;

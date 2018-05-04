@@ -55,6 +55,7 @@ auxSpriteRotation = 0;
 
 enum lockOn {off, soft, hard}
 lockOnType = lockOn.off;
+lockOnDir = 1;
 lockOnTarget = noone;
 softLockRange = 260;
 hardLockRange = 320;

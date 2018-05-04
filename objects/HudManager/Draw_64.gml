@@ -28,7 +28,8 @@ surface_set_target(damageNumberSurf);
 		var xRel = (xx-camX)*(1920/320);
 		var yRel = (yy-camY)*(1080/176);
 		
-		var textString = string(num);
+		var textString = string(abs(num));						//will implement a system for healing numbers at some point, for now if damage is negative just lie ans say positive
+		if sign(num) == -1 textString = "000"+textString;		//add "000" to start for debugging purposes
 		var textSize = string_length(textString);
 		var textSpr = sprPixelNumbers;
 		var textW = sprite_get_width(textSpr);

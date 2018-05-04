@@ -10,6 +10,7 @@ with instance_create_depth(x,y,depth-1,objMeleeAttackEffect)
 {
 	caster = other;
 	casterType = other.actorType;
+	pierce = 0;
 	//get effect properties/collisions
 	attackAnimation = other.attackAnimation;
 
@@ -17,23 +18,68 @@ with instance_create_depth(x,y,depth-1,objMeleeAttackEffect)
 		frameData = ds_list_find_value(combo_get_stat(attackID,comboStats.frameData),hitNum);
 		attackDuration = ds_list_find_value(combo_get_stat(attackID,comboStats.hitDuration),hitNum);
 		hitEffects = ds_list_find_value(combo_get_stat(attackID,comboStats.effects),hitNum);
-		hitType = ds_list_find_value(combo_get_stat(attackID,comboStats.damType),hitNum);
-		hitDamage = ds_list_find_value(combo_get_stat(attackID,comboStats.damMod),hitNum) * PlayerStats.physicalPower;
-		hitStagger = ds_list_find_value(combo_get_stat(attackID,comboStats.forMod),hitNum) * PlayerStats.physicalStagger;
-		hitKnockback = ds_list_find_value(combo_get_stat(attackID,comboStats.knockback),hitNum);
-		statusType = ds_list_find_value(combo_get_stat(attackID,comboStats.specType),hitNum);
-		statusValue = ds_list_find_value(combo_get_stat(attackID,comboStats.specDam),hitNum);
-		pierce = 0;
+			
+			//hitData management
+		if PlayerStats.currentWeaponIndex == 0 var cache = PlayerStats.weaponMain1DamageDetails;
+		else var cache = PlayerStats.weaponMain2DamageDetails;
+				//initializer
+		//hitData[? damageData.stagger] = 0;		//set later
+		//hitData[? damageData.knockback] = 0;		//set later
+		hitData[? damageData.slash] = 0;			//set later
+		hitData[? damageData.pierce] = 0;			//set later
+		hitData[? damageData.blunt] = 0;			//set later
+		hitData[? damageData.fire] = cache[? weaponDamageDetails.fire];
+		hitData[? damageData.ice] = cache[? weaponDamageDetails.ice];
+		hitData[? damageData.lightning] = cache[? weaponDamageDetails.lightning];
+		hitData[? damageData.arcane] = cache[? weaponDamageDetails.arcane];
+		hitData[? damageData.light] = cache[? weaponDamageDetails.light];
+		hitData[? damageData.dark] = cache[? weaponDamageDetails.dark];
+				//pure
+		hitData[? damageData.pure] = cache[? weaponDamageDetails.pure];
+				//status
+		hitData[? damageData.bleed] = cache[? weaponDamageDetails.bleed];
+		hitData[? damageData.poison] = cache[? weaponDamageDetails.poison];
+				//stagger & knockback
+		hitData[? damageData.stagger] = cache[? weaponDamageDetails.stagger] * ds_list_find_value(combo_get_stat(attackID,comboStats.forMod),hitNum);
+		hitData[? damageData.knockback] = ds_list_find_value(combo_get_stat(attackID,comboStats.knockback),hitNum);
+			//get main type - initializer
+		mainType = damageType.none;
+				//physical
+		var physDam = cache[? weaponDamageDetails.physical] * ds_list_find_value(combo_get_stat(attackID,comboStats.damMod),hitNum);
+		var damType = ds_list_find_value(combo_get_stat(attackID,comboStats.damType),hitNum);
+		var highest = physDam;
+		switch damType
+		{
+			case damageType.slash: hitData[? damageData.slash] = physDam; mainType = damageType.slash; break;
+			case damageType.pierce: hitData[? damageData.pierce] = physDam; mainType = damageType.pierce; break;
+			case damageType.blunt: hitData[? damageData.blunt] = physDam; mainType = damageType.blunt; break;
+		}
 		
+			//change all undefined to 0
+		var index = ds_map_find_first(hitData);
+		while (index != undefined)
+		{
+			if hitData[? index] == undefined hitData[? index] = 0;
+			index = ds_map_find_next(hitData,index);
+		}
+		
+		if hitData[? damageData.fire] > highest {mainType = damageType.fire; highest = hitData[? damageData.fire];};
+		if hitData[? damageData.ice] > highest {mainType = damageType.ice; highest = hitData[? damageData.ice];};
+		if hitData[? damageData.lightning] > highest {mainType = damageType.lightning; highest = hitData[? damageData.lightning];};
+		if hitData[? damageData.arcane] > highest {mainType = damageType.arcane; highest = hitData[? damageData.arcane];};
+		if hitData[? damageData.light] > highest {mainType = damageType.light; highest = hitData[? damageData.light];};
+		if hitData[? damageData.dark] > highest {mainType = damageType.dark; highest = hitData[? damageData.dark];};
+		
+			//audio		
 		hitSoundID = noone;
 		var hitAudioType = ds_list_find_value(combo_get_stat(attackID,comboStats.hitSoundType),hitNum);
-		if hitAudioType == undefined
+		if hitAudioType == undefined && mainType != damageType.none
 		{
 				//vvv this will likely need to change
 			if attackType = 2 var type = 2;
 			else var type = 1;
 			var wholeCache = AudioCache.audioHitCache[| type];
-			var subtypeCache = wholeCache[| hitType];
+			var subtypeCache = wholeCache[| mainType];
 			var size = ds_list_size(subtypeCache);
 			if size != 0
 			{
@@ -118,13 +164,21 @@ if ds_list_find_index(attackSpecials,comboSpecial.thunderbolt) != -1
 			//STATS
 		frameData = [0,2];
 		attackDuration = 1;	//give lightning time to linger
-		hitType = ds_list_find_value(combo_get_stat(attackID,comboStats.damType),hitNum);
-		hitDamage = ds_list_find_value(combo_get_stat(attackID,comboStats.damMod),hitNum) * PlayerStats.magicalPower;
-		hitStagger = ds_list_find_value(combo_get_stat(attackID,comboStats.forMod),hitNum) * PlayerStats.magicalStagger;
-		hitKnockback = ds_list_find_value(combo_get_stat(attackID,comboStats.knockback),hitNum);
-		statusType = ds_list_find_value(combo_get_stat(attackID,comboStats.specType),hitNum);
-		statusValue = ds_list_find_value(combo_get_stat(attackID,comboStats.specDam),hitNum);
 		pierce = 0;
+		
+		hitData[? damageData.lightning] = cache[? weaponDamageDetails.lightning];
+		hitData[? damageData.stagger] = 1.8 * cache[? weaponDamageDetails.stagger];
+		hitData[? damageData.knockback] = 3.0 * cache[? weaponDamageDetails.stagger];	//May need tweaking
+		
+		mainType = damageType.lightning;
+		
+			//change all undefined to 0
+		var index = ds_map_find_first(hitData);
+		while (index != undefined)
+		{
+			if hitData[? index] == undefined hitData[? index] = 0;
+			index = ds_map_find_next(hitData,index);
+		}
 		
 		hitSoundID = noone;
 			//Set

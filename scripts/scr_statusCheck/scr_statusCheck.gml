@@ -14,20 +14,17 @@ if phase != state.dying && statCache.hp <= 0
 with statCache
 {	
 		//break
-	if physicalBreakHp != 0 || magicalBreakHp != 0
+	if breakHp != 0
 	{
 		if other.hasFlung var spdMod = 6;
 		else if other.hasStaggered var spdMod = 3;
 		else var spdMod = 1;
 		
-		var physSpd = (physicalToughness/(breakCooldownDuration*room_speed))*spdMod;
-		var magiSpd = (magicalToughness/(breakCooldownDuration*room_speed))*spdMod;
+		var breakSpd = (toughness/(breakCooldownDuration*room_speed))*spdMod;
 		
-		physicalBreakHp -= physSpd;
-		magicalBreakHp -= magiSpd;
+		breakHp -= breakSpd;
 
-		if physicalBreakHp < 0 physicalBreakHp = 0;
-		if magicalBreakHp < 0 magicalBreakHp = 0;
+		if breakHp < 0 breakHp = 0;
 	}
 	else
 	{
@@ -47,8 +44,11 @@ with statCache
 					var dam = hpMax*0.3;
 					with other
 					{
-						scr_hit(noone,noone,damageType.pure,dam,specialType.none,0,noone,noone);
+						var hitData = ds_map_create();
+						hitData[? damageData.pure] = dam;
+						scr_hit(noone,noone,hitData,noone,noone);
 						scr_hit_effect_blood(id,statCache.hitEffectType,statCache.hitEffectColour,75,2.22);
+						ds_map_destroy(hitData);
 					}
 					break;
 			}

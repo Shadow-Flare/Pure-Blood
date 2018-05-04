@@ -86,7 +86,7 @@ switch subPhase
 				if point_distance(x,y,ropeShotID.x,ropeShotID.y) <= ropeShotHookDistGrapplePoint
 				{
 					ropeShotID.phase = ropeshotPhase.returning;
-					ropeShotID.speed = -ropeShotSpeedAerial*1.2;
+					ropeShotID.speed = ropeShotSpeedAerial*1.2;
 					phase = state.base;
 					vPhase = vState.jumping;
 					jumpNum++;
@@ -148,7 +148,7 @@ switch subPhase
 					jumpNum++;
 					
 					ropeShotID.phase = ropeshotPhase.returning;
-					ropeShotID.speed = -ropeShotSpeedAerial*1.2;
+					ropeShotID.speed = ropeShotSpeedAerial*1.2;
 					ropeShotID = noone;
 					phase = state.base;
 					phaseTimer = 0;
@@ -157,7 +157,7 @@ switch subPhase
 				else if vPhase = vState.grounded && ropeShotID.phaseTimer >= round(0.5*room_speed)
 				{
 					ropeShotID.phase = ropeshotPhase.returning;
-					ropeShotID.speed = -ropeShotSpeedAerial*1.2;
+					ropeShotID.speed = ropeShotSpeedAerial*1.2;
 					ropeShotID = noone;
 					phase = state.base;
 					phaseTimer = 0;
@@ -183,7 +183,7 @@ switch subPhase
 					enemy.ySpd = 0
 					enemy.isHooked = noone;
 					ropeShotID.phase = ropeshotPhase.returning;
-					ropeShotID.speed = -ropeShotSpeedAerial*1.2;
+					ropeShotID.speed = ropeShotSpeedAerial*1.2;
 					phase = state.base;
 					phaseTimer = 0;
 					scr_player_base_subPhaseDeterminer();
@@ -198,7 +198,7 @@ switch subPhase
 				if point_distance(x,y,ropeShotID.x,ropeShotID.y) <= ropeShotHookDistGrapplePoint
 				{
 					ropeShotID.phase = ropeshotPhase.returning;
-					ropeShotID.speed = -ropeShotSpeedAerial*1.2;
+					ropeShotID.speed = ropeShotSpeedAerial*1.2;
 					phase = state.base;
 					phaseTimer = 0;
 					scr_player_base_subPhaseDeterminer();

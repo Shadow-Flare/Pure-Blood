@@ -6,10 +6,9 @@ with statCache
 	mpMax = 0;											
 	
 	damagePower = 7;									
-	staggerPower = 3;									
+	staggerPower = 4;									
 	
-	physicalToughness = 1.8;								
-	magicalToughness = 1;		
+	toughness = 1.8;									
 	breakCooldownDuration = 2;
 	
 	moveSpeed = 0.5;									
@@ -58,10 +57,8 @@ action1MoveBurst = 5;
 action1Move = 0;																		
 action1MoveStart = action1Duration*(/**/9/**//sprite_get_number(action1Animation))		
 action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))																		
-action1DamageType = damageType.slash;																	
-action1Damage = 1;																		
-action1Stagger = 1.8;																		
-action1Knockback = 3;																	
+action1DamageData = ds_map_create();		
+scr_create_damageCache(action1DamageData,1.0,1.0,1,0,0,0,0,0,0,0,0);																
 action1StatusType = damageType.none;																	
 action1StatusValue = 0;																	
 action1Pierce = false;																	

@@ -13,7 +13,8 @@
         "3db5792d-2921-4c9f-8810-973f989d5e54",
         "e378f2d4-cb65-46cd-89b6-d12ba760e5cc",
         "feb616c8-f594-4562-abc4-1dd32091672d",
-        "7b857944-2517-4010-8bce-64ca4f692914"
+        "7b857944-2517-4010-8bce-64ca4f692914",
+        "4d86b0e9-21a6-48d0-9b01-9ddd5000cc1c"
     ],
     "filterType": "GMScript",
     "folderName": "Inventory Data",

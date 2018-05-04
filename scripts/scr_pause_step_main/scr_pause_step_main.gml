@@ -98,12 +98,12 @@ if (InputManager.aInput == true)
 				//create temp save data
 			changeCheck = false;
 			statPointsTemp = PlayerStats.statPoints;
-			strengthTemp = PlayerStats.strength;
-			constitutionTemp = PlayerStats.constitution;
-			dexterityTemp = PlayerStats.dexterity;
-			cunningTemp = PlayerStats.cunning;
-			intelligenceTemp = PlayerStats.intelligence;
-			willpowerTemp = PlayerStats.willpower;
+			strengthTemp = PlayerStats.strengthBase;
+			constitutionTemp = PlayerStats.constitutionBase;
+			dexterityTemp = PlayerStats.dexterityBase;
+			cunningTemp = PlayerStats.cunningBase;
+			intelligenceTemp = PlayerStats.intelligenceBase;
+			willpowerTemp = PlayerStats.willpowerBase;
 			break;
 		case "Map":
 			var str = room_get_name(room);
@@ -155,6 +155,16 @@ if InputManager.bInput == true
 {
 	audio_play_sound(snd_menu_back,10,0);
 	endingPause = true;
+}
+
+#endregion
+#region (Y)			Cycle Page
+
+if InputManager.yInput == true
+{
+	audio_play_sound(snd_menu_navigate,10,0);
+	mainDescriptionDetailsPageNum++;
+	if mainDescriptionDetailsPageNum >= mainDescriptionDetailsPageMax mainDescriptionDetailsPageNum = 0;
 }
 
 #endregion

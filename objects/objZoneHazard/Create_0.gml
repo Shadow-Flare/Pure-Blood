@@ -7,10 +7,6 @@ zoneHitSoundID = noone;												//$$//
 zoneFrameData = -1;
 zoneFollow = true;
 zoneDuration = -1
-zoneDamageType = damageType.slash;
-zoneDamage = 6;
-zoneStagger = 0.3;
-zoneKnockback = 1.5;
-zoneStatusType = specialType.none;
-zoneStatusValue = 0;
+zoneDamageData = ds_map_create();		
+scr_create_damageCache(zoneDamageData,0.3,0,6,0,0,0,0,0,0,0,0);
 zonePierce = true;

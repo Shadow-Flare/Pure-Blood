@@ -9,6 +9,7 @@ casterType = noone;					//must fill
 attackType = attackTypes.projectile;
 hitOn = false;
 hitList = ds_list_create();
+hitData = ds_map_create();
 phase = projectilePhase.normal;
 phaseTimer = 0;
 

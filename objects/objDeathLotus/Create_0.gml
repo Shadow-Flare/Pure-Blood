@@ -8,8 +8,7 @@ with statCache
 	damagePower = 1;									//$$//
 	staggerPower = 3;									//$$//
 	
-	physicalToughness = 1;								//$$//
-	magicalToughness = 1;								//$$//
+	toughness = 1;										//$$//
 	breakCooldownDuration = 1;							//$$//
 	
 	moveSpeed = 0;										//$$//
@@ -53,10 +52,8 @@ action1ProjCreateTime = action1Duration*(/**/4/**//sprite_get_number(action1Anim
 action1ProjCreateXOffset = 0;
 action1ProjCreateYOffset = 0;
 action1ProjCreateSpeed = 4;
-action1ProjDamageType = damageType.pierce;
-action1ProjDamage = 1;
-action1ProjStagger = 1;
-action1ProjKnockback = 4;
+action1ProjDamageData = ds_map_create();
+scr_create_damageCache(action1ProjDamageData,1,4,0,1,0,0,0,0,0,0,0);	
 action1ProjStatusType = specialType.none;
 action1ProjStatusValue = 0;
 action1ProjPierce = false;

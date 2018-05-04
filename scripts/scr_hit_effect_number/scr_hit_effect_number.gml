@@ -19,6 +19,7 @@ var yMod = -spd*dsin(ang);
 var col;
 switch type
 {
+	case noone: col = make_colour_rgb(255,255,255); break;
 	case damageType.slash: col = make_colour_rgb(255,255,255); break;
 	case damageType.pierce: col = make_colour_rgb(255,255,255) break;
 	case damageType.blunt: col = make_colour_rgb(255,255,255) break;

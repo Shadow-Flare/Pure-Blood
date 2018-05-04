@@ -29,7 +29,7 @@ switch subPhase
 			//damage Zone
 		if action2Sub2ZoneID == noone
 		{
-			action2Sub2ZoneID = scr_enemy_attack(action2Sub2ZoneFrameData,action2Sub2ZoneFollow,action2Sub2ZoneDuration,action2Sub2ZoneDamageType,action2Sub2ZoneDamage*statCache.damagePower,action2Sub2ZoneStagger*statCache.staggerPower,action2Sub2ZoneKnockback,action2Sub2ZoneStatusType,action2Sub2ZoneStatusValue,action2Sub2ZonePierce,action2Sub2Animation,action2Sub2ZoneHitSoundID,noone);
+			action2Sub2ZoneID = scr_enemy_attack(action2Sub2ZoneFrameData,action2Sub2ZoneFollow,action2Sub2ZoneDuration,action2Sub2ZoneDamageData,statCache.damagePower,statCache.staggerPower,action2Sub2ZonePierce,action2Sub2Animation,action2Sub2ZoneHitSoundID,noone);
 			if action2Sub2AttackSoundID != noone audio_play_sound(action2Sub2AttackSoundID,10,0);
 		}
 			//transitions
@@ -56,7 +56,7 @@ switch subPhase
 			//damage Zone
 		if action2Sub3ZoneID == noone
 		{
-			action2Sub3ZoneID = scr_enemy_attack(action2Sub3ZoneFrameData,action2Sub3ZoneFollow,action2Sub3ZoneDuration,action2Sub3ZoneDamageType,action2Sub3ZoneDamage*statCache.damagePower,action2Sub3ZoneStagger*statCache.staggerPower,action2Sub3ZoneKnockback,action2Sub3ZoneStatusType,action2Sub3ZoneStatusValue,action2Sub3ZonePierce,action2Sub3Animation,action2Sub3ZoneHitSoundID,noone);
+			action2Sub3ZoneID = scr_enemy_attack(action2Sub3ZoneFrameData,action2Sub3ZoneFollow,action2Sub3ZoneDuration,action2Sub3ZoneDamageData,statCache.damagePower,statCache.staggerPower,action2Sub3ZonePierce,action2Sub3Animation,action2Sub3ZoneHitSoundID,noone);
 			if action2Sub3ZoneAttackSoundID != noone audio_play_sound(action2Sub3ZoneAttackSoundID,10,0);
 		}
 		if subPhaseTimer == round(action2Sub3Duration*room_speed)

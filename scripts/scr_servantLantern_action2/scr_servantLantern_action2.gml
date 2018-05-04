@@ -17,7 +17,7 @@ switch subPhase
 			//timing and attack
 		if subPhaseTimer == round(action2HitStart*room_speed)
 		{
-			scr_enemy_attack(action2FrameData,action2Follow,action2HitDuration,action2DamageType,action2Damage*statCache.damagePower,action2Stagger*statCache.staggerPower,action2Knockback,action2StatusType,action2StatusValue,action2Pierce,action2Animation,action2HitSoundID,noone)
+			scr_enemy_attack(action2FrameData,action2Follow,action2HitDuration,action2DamageData,statCache.damagePower,statCache.staggerPower,action2Pierce,action2Animation,action2HitSoundID,noone)
 			if action2AttackSoundID != noone audio_play_sound(action2AttackSoundID,10,0);
 		}
 		else if subPhaseTimer == round(action2Duration*room_speed)

@@ -14,3 +14,4 @@ hitListResetDuration = 1.6;
 soundPlayed = false;
 
 hitList = ds_list_create();
+hitData = ds_map_create();

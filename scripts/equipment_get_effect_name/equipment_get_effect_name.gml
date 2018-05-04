@@ -17,13 +17,6 @@ switch effectID
 	case itemEffects.int: return "Intelligence" break;
 	case itemEffects.wil: return "Willpower" break;
 	
-	case itemEffects.physPow: return "Power" break;
-	case itemEffects.physFor: return "Force" break;
-	case itemEffects.physTough: return "Toughness" break;
-	case itemEffects.magPow: return "Magic" break;
-	case itemEffects.magFor: return "Kinesis" break;
-	case itemEffects.magTough: return "Spirit" break;
-	
 	case itemEffects.slashDef: return "Slash Defence" break;
 	case itemEffects.bluntDef: return "Blunt Defence" break;
 	case itemEffects.pierceDef: return "Pierce Defence" break;

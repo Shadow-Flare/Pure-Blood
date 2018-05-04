@@ -52,12 +52,10 @@ with statCache
 	damagePower = 0;
 	staggerPower = 0;
 	
-	physicalToughness = 1;
-	magicalToughness = 1;
+	toughness = 1;
 	breakCooldownDuration = 1;
 	
-	physicalBreakHp = 0;
-	magicalBreakHp = 0;
+	breakHp = 0;
 	
 	moveSpeed = 1;
 	defaultMoveSpeed = moveSpeed;

@@ -62,7 +62,6 @@ menu_status[0, 2] = "Dexterity";
 menu_status[0, 3] = "Cunning";
 menu_status[0, 4] = "Intelligence";
 menu_status[0, 5] = "Willpower";
-menu_status[0, 6] = "Accept"
 
 menu_settings[0, 0] = "Lighting"
 menu_settings[0, 1] = "Blood"
@@ -89,7 +88,8 @@ slotExpanded = 0;
 endingGame = false;
 endingPause = false;
 
-//background textbox
+#region General Data
+	//background textbox
 backTextboxType = 3;
 backTextboxScale = 4;
 var backTextboxScaleBorderGap = 0;		//measured in surfW
@@ -100,6 +100,12 @@ backTextboxY2 = 1-backTextboxScaleBorderGap*surfW/surfH;
 backTextboxMod = c_white;
 var backTextboxHorSpace = (surfW-sprite_get_width(spr_textbox_3)*backTextboxScale*2)/surfW;
 var backTextboxVertSpace = (surfH-sprite_get_height(spr_textbox_3)*backTextboxScale*2)/surfH;
+	//setup Weapon Data caches
+_weaponMain1DamageDetails = ds_map_create();
+_weaponMain2DamageDetails = ds_map_create();
+_weaponOff1DamageDetails = ds_map_create();
+_weaponOff2DamageDetails = ds_map_create()
+#endregion
 
 #region Main Data
 	//boundaries
@@ -120,7 +126,7 @@ mainBoundary3Y = mainBoundary1Y2;
 mainBoundary4X = mainBoundary3X1;
 mainBoundary4Y1 = backTextboxY1+(32*4)/surfH;
 mainBoundary4Y2 = backTextboxY2-(32*4)/surfH;
-	//panels
+	#region panels
 mainPanelsSprite = spr_menu_panel;
 mainPanelsScale = 4;
 mainPanelsFont = fnt_alagard;
@@ -130,11 +136,65 @@ mainPanelsY =  (36*4)/surfH;
 mainPanelsYSep = ((sprH+4)*4)/surfH
 mainPanelsTextX = (5*4)/surfW;
 mainPanelsTextY = (4*4)/surfH;
-	//Map
-	
-	//Details
-	
-	//Player Stats
+	#endregion
+	#region Map
+var mapX1 = mainBoundary4X+(8*4)/surfW;
+var mapX2 = mainBoundary1X-(7*4)/surfW;
+var mapY1 = backTextboxY1+(32*4)/surfH;
+var mapY2 = mainBoundary3Y-(7*4)/surfH;
+	//surfaces
+mainMapViewSurface = noone;
+mainMapViewBase = noone;
+mainMapViewDetails = noone;
+
+mainMapDrawRegionX1 = mapX1+(5*4)/surfW;
+mainMapDrawRegionX2 = mapX2-(5*4)/surfW;
+mainMapDrawRegionY1 = mapY1+(17*4)/surfH;
+mainMapDrawRegionY2 = mapY2-(5*4)/surfH;
+mainMapDrawRegionBorderWidth = 4;
+mainMapDrawRegionBorderColour = c_orange;
+mainMapDrawRegionBaseColour = c_black;
+mainMapDrawRegionBaseAlpha = 0.6;
+mainMapAreaNameX = mapX1+(4*4)/surfW;
+mainMapAreaNameY = mapY1+(4*4)/surfH;
+mainMapAreaNameColour = c_white;
+mainMapCoordX = mapX2-(4*4)/surfW;
+mainMapCoordY = mainMapAreaNameY;
+mainMapCoordColour = c_white;
+	#endregion
+	#region Details
+	//initials
+var descriptionX1 = mainBoundary1X+(8*4)/surfW;
+var descriptionX2 = backTextboxX2-(32*4)/surfW;
+var descriptionY1 = backTextboxY1+(32*4)/surfH;
+var descriptionY2 = mainBoundary3Y-(7*4)/surfH;
+//	//portrait
+//mainDescriptionPortraitX1 = descriptionX1+(4*4)/surfW;
+//mainDescriptionPortraitX2 = mainDescriptionPortraitX1+((48+4)*4)/surfW;
+//mainDescriptionPortraitY1 = descriptionY1+(40*4)/surfH;
+//mainDescriptionPortraitY2 = mainDescriptionPortraitY1+((64+4)*4)/surfH;
+//mainDescriptionPortraitType = 0;
+//mainDescriptionPortraitScale = 4;
+//mainDescriptionPortraitBlend = c_blue;
+//	//name
+//mainDescriptionNameX = mainDescriptionPortraitX1;
+//mainDescriptionNameY = mainDescriptionPortraitY1-(12*4)/surfH;
+//mainDescriptionNameFont = fnt_alagard;
+//mainDescriptionNameColour = c_white;
+	//details
+mainDescriptionList = ds_list_create();
+mainDescriptionValuesList = ds_list_create();
+mainDescriptionDetailsPageNum = 0;
+mainDescriptionDetailsPageMax = 4;
+mainDescriptionDetailsX1 = descriptionX1+(4*4)/surfW;
+mainDescriptionDetailsX2 = descriptionX2-(4*4)/surfW;
+mainDescriptionDetailsY1 = descriptionY1+(4*4)/surfH;
+mainDescriptionDetailsY2 = descriptionY2-(4*4)/surfH;
+mainDescriptionDetailsMaxEntries = 8;
+mainDescriptionDetailsFont = fnt_alagard;
+mainDescriptionDetailsColour = c_white;
+	#endregion
+	#region Player Stats
 var playerStatsX1 = mainBoundary4X+(8*4)/surfW;
 var playerStatsX2 = mainBoundary2X-(7*4)/surfW;
 var playerStatsY1 = mainBoundary3Y+(8*4)/surfH;
@@ -166,17 +226,33 @@ mainPlayerApScale = 4;
 mainPlayerApColour = c_yellow;
 mainPlayerApTextColour = merge_colour(c_black,c_yellow,0.75);
 		//EXP to next
-mainPlayerExpX = mainPlayerHpX1-mainPlayerStatsTextSep;
-mainPlayerExpY = playerStatsY2-(8*4)/surfW;
-mainPlayerExpValueSep = (12*4)/surfW;
-mainPlayerExpColour = c_yellow
+mainPlayerExpX = playerStatsX1+(3.5*4)/surfW;
+mainPlayerExpY = playerStatsY2-(5*4)/surfH;
+mainPlayerExpValueSep = (48.5*4)/surfW;
+mainPlayerExpColour = c_purple
 		//gold
-mainPlayerGoldX = (playerStatsX1+playerStatsX1*2)/3;
-mainPlayerGoldY = playerStatsY2-(8*4)/surfW;
-mainPlayerGoldValueSep = (12*4)/surfW;
+mainPlayerGoldX = playerStatsX1+(116*4)/surfW;;
+mainPlayerGoldY = playerStatsY2-(5*4)/surfH;
+mainPlayerGoldValueSep = (20*4)/surfW;
 mainPlayerGoldColour = c_yellow;
-	//Weaponry
-	
+	#endregion
+	#region Weaponry
+var weaponryX1 = mainBoundary2X+(8*4)/surfW;
+var weaponryX2 = backTextboxX2-(32*4)/surfW;
+var weaponryY1 = mainBoundary3Y+(8*4)/surfH;
+var weaponryY2 = backTextboxY2-(32*4)/surfH;
+mainWeaponryX1 = weaponryX1+(56*4)/surfW;
+mainWeaponryX2 = weaponryX2-(16*4)/surfW;
+mainWeaponryYI = weaponryY1+(4*4)/surfH;
+mainWeaponryNameX = weaponryX1+(4*4)/surfW;
+mainWeaponryLevelX = weaponryX2-(8*4)/surfW;
+mainWeaponryThickness = (7*4)/surfH;
+mainWeaponryYSep = mainWeaponryThickness+(5*4)/surfH;
+mainWeaponryScale = 4;
+mainWeaponryColour = c_yellow;
+mainWeaponryNameColour = c_white;
+mainWeaponryLevelColour = c_white;
+	#endregion
 #endregion
 #region Inventory Data
 	//scroll
@@ -618,6 +694,96 @@ abilityTextbox3Colour = c_white;
 abilityApDisplayX = abilityTextbox3X2-(12*4)/surfW;
 abilityApDisplayY = (abilityTextbox3Y1+abilityTextbox3Y2)/2;
 #endregion
+#region Status
+	//2: Portrait
+statusTextbox1X1 = (36*4)/surfW;;
+statusTextbox1X2 = ((36+48)*4)/surfW;
+statusTextbox1Y1 = (36*4)/surfH;;
+statusTextbox1Y2 = statusTextbox1Y1+(64*4)/surfH;;
+statusTextbox1Type = 0;
+statusTextbox1Scale = 4;
+statusTextbox1Blend = c_white;
+	//1: Main Data
+statusTextbox2X1 = statusTextbox1X2;
+statusTextbox2X2 = ((36+136)*4)/surfW;
+statusTextbox2Y1 = statusTextbox1Y1;
+statusTextbox2Y2 = statusTextbox1Y2;
+statusTextbox2Type = 0;
+statusTextbox2Scale = 4;
+statusTextbox2Blend = c_purple;
+	//3: Primary section
+statusTextbox3X1 = statusTextbox1X1;
+statusTextbox3X2 = statusTextbox2X2;
+statusTextbox3Y1 = statusTextbox1Y2;
+statusTextbox3Y2 = 1-(36*4)/surfH;
+statusTextbox3Type = 0;
+statusTextbox3Scale = 4;
+statusTextbox3Blend = c_purple;
+	//4: Stat Pages Section
+statusTextbox4X1 = statusTextbox2X2;
+statusTextbox4X2 = 1-(36*4)/surfW;
+statusTextbox4Y1 = (36*4)/surfH;
+statusTextbox4Y2 = 1-(36*4)/surfH;
+statusTextbox4Type = 0;
+statusTextbox4Scale = 4;
+statusTextbox4Blend = c_purple;
+	//primary
+statusPrimaryX1 = statusTextbox3X1+(12*4)/surfW;
+statusPrimaryX2 = statusTextbox3X2-(20*4)/surfW;
+statusPrimaryY1 = statusTextbox3Y1+(12*4)/surfH;
+statusPrimaryY2 = statusTextbox3Y2-(12*4)/surfH;
+statusPrimaryStatNum = 6;
+statusPrimaryArrowXOffset = (8*4)/surfW;
+statusPrimaryArrowSprite = spr_pause_status_statArrows;
+statusPrimaryArrowScale = 4;
+statusPrimarySelectionSprite = spr_pause_status_statSelection;
+statusPrimarySelectionSpriteW = (statusPrimaryX2-statusPrimaryX1)*surfW;
+statusPrimarySelectionSpriteH = (8*4);
+statusPrimarySelectionSpriteBlend = c_orange;
+statusPrimarySelectionSpriteAlpha = 0.7;
+statusPrimaryStatPointSprite = spr_pause_status_statPoints;
+statusPrimaryStatPointSpriteW = (12*4);
+statusPrimaryStatPointSpriteH = (12*4);
+statusPrimaryFont = fnt_alagard;
+statusPrimaryColour = c_white;
+	//Main Pages
+statusPage = 0;
+statusPageNum = 3;
+		//Page 1: offense
+			//texboxes
+_weaponDataList = ds_list_create();
+_weaponDataListValues = ds_list_create();
+_weaponDataListValuesBase = ds_list_create();
+
+statusPage1WeaponTextboxType = 0;
+statusPage1WeaponTextboxScale = 4;
+statusPage1WeaponTextboxMainBlend = merge_colour(c_black,c_red,0.5);
+statusPage1WeaponTextboxOffBlend = merge_colour(c_black,c_yellow,0.5);
+statusPage1WeaponTextboxIconBlend = merge_colour(c_black,c_blue,0.5);
+			//boundaries
+statusPage1BoundarySprite = spr_pause_status_boundary_vert;
+statusPage1BoundaryThickness = (4);
+statusPage1BoundaryMainY = (20*4);
+statusPage1BoundarySubX = (74*4);
+statusPage1BoundaryMainGap = (10*4);
+statusPage1BoundarySubGap = (4*4);
+			//icons
+statusPage1WeaponIconBoxWidth = (48*4)/surfW;
+statusPage1WeaponIconScale = 8;
+			//names
+statusPage1NameXOffset = (8*4)/surfW;
+statusPage1NameYOffset = statusPage1NameXOffset*surfW/surfH;
+statusPage1NameFont = fnt_alagard;
+statusPage1NameColour = c_white;
+			//data
+statusPage1DataXMargin = (4*4)/surfW;
+statusPage1DataColumn = 3;
+statusPage1DataNameColour = c_white;
+statusPage1DataNameFont = fnt_small_pixel;
+statusPage1DataNameColour = c_white;
+statusPage1DataValueFont = fnt_small_pixel;
+statusPage1DataValueColour = c_white;
+#endregion
 #region Map Data
 mapCursorX = 0;
 mapCursorY = 0;
@@ -631,12 +797,46 @@ mapViewSurface = noone;
 mapViewBase = noone;
 mapViewDetails = noone;
 
-mapHudViewportX1 = 0.1;
-mapHudViewportY1 = 0.1*surfW/surfH;
-mapHudViewportX2 = 1-0.1;
-mapHudViewportY2 = 1-0.1*surfW/surfH;
+mapHudViewportX1 = (37*4)/surfW;
+mapHudViewportY1 = (49*4)/surfH;
+mapHudViewportX2 = 1-(160*4)/surfW;
+mapHudViewportY2 = 1-(37*4)/surfH;
 mapHudViewportBorderWidth = 4;
 mapHudViewportBorderColour = c_orange;
 mapHudViewportBaseTransparency = 0.6;
 mapHudViewportBaseColour = c_black;
+
+	//name + coords
+mapAreaNameX = mapHudViewportX1+(4*4)/surfW;
+mapAreaNameY = (36*4)/surfH;
+mapAreaNameColour = c_white;
+mapCoordX = mapHudViewportX2-(4*4)/surfW;
+mapCoordY = mapAreaNameY;
+mapCoordColour = c_white;
+
+	//details
+		//textbox
+mapDetailsTextboxX1 = mapHudViewportX2+(5*4)/surfW;
+mapDetailsTextboxX2 = 1-(36*4)/surfW;
+mapDetailsTextboxY1 = (36*4)/surfH;
+mapDetailsTextboxY2 = 1-(36*4)/surfH;
+mapDetailsTextboxType = 5;
+mapDetailsTextboxScale = 4;
+mapDetailsTextboxBlend = c_yellow;
+#endregion
+#region Main Data
+settingsPanelsSprite = spr_menu_panel;
+settingsPanelsScale = 4;
+settingsPanelsFont = fnt_alagard;
+var sprH = sprite_get_height(mainPanelsSprite);
+settingsPanelsX = (36*4)/surfW;
+settingsPanelsY =  (36*4)/surfH;
+settingsPanelsYSep = ((sprH+4)*4)/surfH
+settingsPanelsTextX = (5*4)/surfW;
+settingsPanelsTextY = (4*4)/surfH;
+settingsSwitchFont = fnt_small_pixel;
+settingsSwitchXOffset = (4*4)/surfW;
+settingsSwitchSprite = spr_menu_switch;
+settingsSwitchColourOn = c_lime;
+settingsSwitchColourOff = c_red;
 #endregion

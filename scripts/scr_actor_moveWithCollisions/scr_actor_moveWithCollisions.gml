@@ -1,4 +1,4 @@
-#region move if not free
+#region move if not free (this kinda sucks)
 var safeCheckDist = 32;
 	//this is awful and should be changed
 if !place_free(x,y)

@@ -8,8 +8,7 @@ with statCache
 	damagePower = 7;
 	staggerPower = 6;
 	
-	physicalToughness = 3;
-	magicalToughness = 5;
+	toughness = 3;
 	breakCooldownDuration = 2;
 	
 	moveSpeed = 0.4;
@@ -52,12 +51,8 @@ action1MoveBurst = 3;																	//$$//
 action1Move = 0;																		//$$//
 action1MoveStart = action1Duration*(/**/4/**//sprite_get_number(action1Animation))		//$$//
 action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))	//$$//
-action1DamageType = damageType.blunt;																	//$$//
-action1Damage = 0.8;
-action1Stagger = 0.8;
-action1Knockback = 4;																	//$$//
-action1StatusType = specialType.none;																	//$$//
-action1StatusValue = 0;																	//$$//
+action1DamageData = ds_map_create();
+scr_create_damageCache(action1DamageData,0.8,4,0,0,0.8,0,0,0,0,0,0);
 action1Pierce = false;																	//$$//
 
 	//action2: fire burst (targets bound servants alot in ai)
@@ -73,10 +68,6 @@ action2MoveBurst = 0;																	//$$//
 action2Move = 0;																		//$$//
 action2MoveStart = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
 action2MoveDuration = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
-action2DamageType = damageType.fire;
-action2Damage = 1.2;																	//$$//
-action2Stagger = 1.2;																	//$$//
-action2Knockback = 5;																	//$$//
-action2StatusType = specialType.none;																	//$$//
-action2StatusValue = 0;																	//$$//
+action2DamageData = ds_map_create();
+scr_create_damageCache(action2DamageData,1.2,5,0.2,0,0,1.2,0,0,0,0,0);
 action2Pierce = false;																	//$$//

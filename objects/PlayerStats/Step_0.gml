@@ -141,17 +141,12 @@ damageResistances[damageType.light] = 1+equipmentStats[? itemEffects.lightRes]+0
 damageResistances[damageType.dark] = 1+equipmentStats[? itemEffects.darkRes]+0.01*willpower;
 
 specialResistances[specialType.bleed] = 100+3*constitution+1.5*intelligence;
+specialResistances[specialType.poison] = 100+3*constitution+1.5*intelligence;
+
+toughness = 2+0.30*constitution+equipmentStats[? itemEffects.toughness];
 
 alacrity = dexterity*0.33333+cunning*0.1+equipmentStats[? itemEffects.alacrity];
 memory = intelligence*0.66666+equipmentStats[? itemEffects.memory];
-
-physicalPower = 0+0.25*strength+0.25*dexterity+equipmentStats[? itemEffects.physPow];
-physicalStagger = 0.5+0.05*strength+equipmentStats[? itemEffects.physFor];
-physicalToughness = 2+0.30*constitution+equipmentStats[? itemEffects.physTough];
-
-magicalPower = 0+1*intelligence+equipmentStats[? itemEffects.magPow];
-magicalStagger = 2+0.25*intelligence+0.25*willpower+equipmentStats[? itemEffects.magFor];
-magicalToughness = 2+0.30*willpower+equipmentStats[? itemEffects.magTough];
 
 drainMod = 0.1;		//scale with some faction stat, NEED TO MIRROR THIS IN EQUIPMENT ?
 
@@ -159,11 +154,24 @@ physicalDefense = (damageResistances[damageType.slash]+damageResistances[damageT
 
 jumpHeightVar = jumpHeightVarInitial+scr_player_ability_get(abilityType.movement,movementAbility.high_jump,playerAbilityStats.numberActivated);
 jumpPow = sqrt(2*(jumpHeightVar*16)*GameManager.grav);							//jumpHeightVar*<blockSize>
+
+var wepID = ItemCache.equipment[? equipmentSlot.main1];
+scr_player_get_weapon_damage(wepID,weaponMain1DamageDetails,strength,dexterity,cunning,intelligence);
+
+var wepID = ItemCache.equipment[? equipmentSlot.main2];
+scr_player_get_weapon_damage(wepID,weaponMain2DamageDetails,strength,dexterity,cunning,intelligence);
+
+var wepID = ItemCache.equipment[? equipmentSlot.off1];
+scr_player_get_weapon_damage(wepID,weaponOff1DamageDetails,strength,dexterity,cunning,intelligence);
+
+var wepID = ItemCache.equipment[? equipmentSlot.off2];
+scr_player_get_weapon_damage(wepID,weaponOff2DamageDetails,strength,dexterity,cunning,intelligence);
+
 #endregion
 
-//TESTERS
-hpMax = max((mouse_x/320)*60,1);
-mpMax = max((mouse_y/176)*60,1);
+////TESTERS
+//hpMax = round(max((mouse_x/320)*60,1));
+//mpMax = round(max((mouse_y/176)*60,1));
 
 #region scale hp/mp values with max changes
 if hpMax != hpMaxPrev

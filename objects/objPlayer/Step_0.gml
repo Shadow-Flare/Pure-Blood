@@ -42,8 +42,9 @@ switch lockOnType
 		if lockOnTarget != noone 
 		{
 			lockOnType = lockOn.soft;
+			var lockPrev = lockOnDir;
 			lockOnDir = sign(lockOnTarget.x-x);
-			if lockOnDir = 0 lockOnDir = 1;
+			if lockOnDir = 0 lockOnDir = -lockPrev;
 		}
 		if InputManager.rsInput && lockOnType == lockOn.soft && canAct lockOnType = lockOn.hard;
 		break;
@@ -122,6 +123,12 @@ switch lockOnType
 		}
 		if InputManager.rsInput && canAct lockOnType = lockOn.soft;
 		break;
+}
+
+if lockOnTarget == noone || !instance_exists(lockOnTarget)
+{	
+	lockOnType = lockOn.off;
+	lockOnTarget = noone;
 }
 
 #endregion
