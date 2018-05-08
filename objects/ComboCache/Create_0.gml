@@ -1,7 +1,7 @@
 #region enum Initialisers
 	//Class Enumerators
-enum weaponClass {crossbow, grimoire, sword, spear};
-enum weaponClassStats {name, isMain, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards};
+enum weaponClass {sword, spear, crossbow, grimoire};
+enum weaponClassStats {name, numOfSubtypes, numOfActives, isMain, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards};
 enum playerClassStats {level, xp, xpNeeded};
 
 	//Main Weapon Enumerators
@@ -20,15 +20,14 @@ enum comboID
 }
 
 	//Offhand Weapon Enumerators
-enum offhandStats {name};
-enum offhandSubtypeStats {name, ammoItem, manaCost, offhandType, damType, damMod, forMod, knockback, specType, specVal, boundEffect, projectileSpeed, explodeDuration, explodeScale, effect};
+enum offhandSubtypeStats {name, index, baseAnimation, icon, ammoItem, manaCost, offhandType, damType, damMod, forMod, knockback, specType, specVal, boundEffect, projectileSpeed, explodeDuration, explodeScale, effect};
 enum offhandSubtypeID
 {
 /* crossbow */		crossbow_normal, crossbow_fire, crossbow_ice, crossbow_lightning, crossbow_serrated,
 /* grimoire */		grimoire_blaze, grimoire_frost, grimoire_spark, grimoire_drain, grimoire_osmose
 }
 	//Offhand Active Ability Enumerators
-enum activeAbilityStats {name, manaCost, offhandType};
+enum activeAbilityStats {name, index, baseAnimation, boundEffect, icon, manaCost, offhandType};
 enum activeAbilityID
 {
 /* crossbow */		crossbow_rope_shot, crossbow_shrapnel_burst,
@@ -82,12 +81,16 @@ class = ds_map_create();
 	var cache = class[? weaponClass.crossbow];
 	cache[? weaponClassStats.name] = "Crossbow";
 	cache[? weaponClassStats.isMain] = false;
+	cache[? weaponClassStats.numOfSubtypes] = 0;		//Set properly in end of ComboCache creat event
+	cache[? weaponClassStats.numOfActives] = 0;			//Set properly in end of ComboCache creat event
 		#endregion
 		#region Grimoire
 	class[? weaponClass.grimoire] = ds_map_create();
 	var cache = class[? weaponClass.grimoire];
 	cache[? weaponClassStats.name] = "Grimoire";
 	cache[? weaponClassStats.isMain] = false;
+	cache[? weaponClassStats.numOfSubtypes] = 0;		//Set properly in end of ComboCache creat event
+	cache[? weaponClassStats.numOfActives] = 0;			//Set properly in end of ComboCache creat event
 		#endregion
 	#endregion
 #endregion
@@ -778,19 +781,6 @@ cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.e
 		#endregion
 	#endregion
 #endregion
-#region All Offhand Classes
-offhandClass = ds_map_create();
-	#region Crossbow
-offhandClass[? weaponClass.crossbow] = ds_map_create();
-var cache = offhandClass[? weaponClass.crossbow];
-cache[? offhandStats.name] = "Crossbow";
-	#endregion
-	#region Grimoire
-offhandClass[? weaponClass.grimoire] = ds_map_create();
-var cache = offhandClass[? weaponClass.grimoire];
-cache[? offhandStats.name] = "Grimoire";
-	#endregion
-#endregion
 #region All Offhand Subtypes
 subtype = ds_map_create();
 	#region crossbow
@@ -798,6 +788,10 @@ subtype = ds_map_create();
 subtype[? offhandSubtypeID.crossbow_normal] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_normal];
 subCache[? offhandSubtypeStats.name] = "Normal Bolts";
+subCache[? offhandSubtypeStats.index] = 0;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_normal_bolt;
+subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.boundEffect] = noone;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 0;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
@@ -812,6 +806,10 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_fire] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_fire];
 subCache[? offhandSubtypeStats.name] = "Fire Bolts";
+subCache[? offhandSubtypeStats.index] = 1;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_fire_bolt;
+subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.boundEffect] = obj_effect_base_fire;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 4;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
@@ -826,7 +824,11 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_ice] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_ice];
 subCache[? offhandSubtypeStats.name] = "Ice Bolts";
+subCache[? offhandSubtypeStats.index] = 2;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_ice_bolt;
+subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.boundEffect] = obj_effect_base_ice;
 subCache[? offhandSubtypeStats.manaCost] = 5;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
 subCache[? offhandSubtypeStats.damType] = damageType.ice;
@@ -840,6 +842,10 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_lightning] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_lightning];
 subCache[? offhandSubtypeStats.name] = "Lightning Bolts";
+subCache[? offhandSubtypeStats.index] = 3;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_lightning_bolt;
+subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.boundEffect] = obj_effect_base_lightning;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 6;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
@@ -854,6 +860,10 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_serrated] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_serrated];
 subCache[? offhandSubtypeStats.name] = "Serrated Bolts";
+subCache[? offhandSubtypeStats.index] = 4;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_serrated_bolt;
+subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.boundEffect] = noone;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 3;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
@@ -870,6 +880,8 @@ subCache[? offhandSubtypeStats.specVal] = 20;
 subtype[? offhandSubtypeID.grimoire_blaze] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_blaze];
 subCache[? offhandSubtypeStats.name] = "Blaze";
+subCache[? offhandSubtypeStats.index] = 0;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_blaze;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 16;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -888,6 +900,8 @@ subCache[? offhandSubtypeStats.explodeScale] = 4;
 subtype[? offhandSubtypeID.grimoire_frost] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_frost];
 subCache[? offhandSubtypeStats.name] = "Frost";
+subCache[? offhandSubtypeStats.index] = 1;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_frost;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 20;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -906,6 +920,8 @@ subCache[? offhandSubtypeStats.explodeScale] = 5;
 subtype[? offhandSubtypeID.grimoire_spark] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_spark];
 subCache[? offhandSubtypeStats.name] = "Spark";
+subCache[? offhandSubtypeStats.index] = 2;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_spark;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 24;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -924,6 +940,8 @@ subCache[? offhandSubtypeStats.explodeScale] = 2.5;
 subtype[? offhandSubtypeID.grimoire_drain] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_drain];
 subCache[? offhandSubtypeStats.name] = "Drain";
+subCache[? offhandSubtypeStats.index] = 3;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_drain;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 32;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -943,6 +961,8 @@ subCache[? offhandSubtypeStats.explodeScale] = 2.5;
 subtype[? offhandSubtypeID.grimoire_osmose] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_osmose];
 subCache[? offhandSubtypeStats.name] = "Osmose";
+subCache[? offhandSubtypeStats.index] = 4;
+subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_osmose;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 2;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -967,6 +987,10 @@ activeAbility = ds_map_create();
 activeAbility[? activeAbilityID.crossbow_rope_shot] = ds_map_create();
 var cache = activeAbility[? activeAbilityID.crossbow_rope_shot];
 cache[? activeAbilityStats.name] = "Rope Shot"
+cache[? activeAbilityStats.index] = 0;
+cache[? activeAbilityStats.icon] = spr_icon_active_crossbow_rope_shot;
+cache[? activeAbilityStats.baseAnimation] = spr_hook;
+cache[? activeAbilityStats.boundEffect] = noone;
 cache[? activeAbilityStats.manaCost] = 0;
 cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
 		#endregion
@@ -974,6 +998,10 @@ cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
 activeAbility[? activeAbilityID.crossbow_shrapnel_burst] = ds_map_create();
 var cache = activeAbility[? activeAbilityID.crossbow_shrapnel_burst];
 cache[? activeAbilityStats.name] = "Shrapnel Burst"
+cache[? activeAbilityStats.index] = 1;
+cache[? activeAbilityStats.icon] = spr_icon_active_crossbow_shrapnel_burst;
+cache[? activeAbilityStats.baseAnimation] = noone;
+cache[? activeAbilityStats.boundEffect] = noone;
 cache[? activeAbilityStats.manaCost] = 12;
 cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
 		#endregion
@@ -983,6 +1011,10 @@ cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
 activeAbility[? activeAbilityID.grimoire_reflect] = ds_map_create();
 var cache = activeAbility[? activeAbilityID.grimoire_reflect];
 cache[? activeAbilityStats.name] = "Reflect"
+cache[? activeAbilityStats.index] = 0;
+cache[? activeAbilityStats.icon] = spr_icon_active_grimoire_reflect;
+cache[? activeAbilityStats.baseAnimation] = spr_grimoire_reflect;
+cache[? activeAbilityStats.boundEffect] = noone;
 cache[? activeAbilityStats.manaCost] = 18;
 cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;
 		#endregion
@@ -990,6 +1022,10 @@ cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;
 activeAbility[? activeAbilityID.grimoire_heal] = ds_map_create();
 var cache = activeAbility[? activeAbilityID.grimoire_heal];
 cache[? activeAbilityStats.name] = "Heal"
+cache[? activeAbilityStats.index] = 1;
+cache[? activeAbilityStats.icon] = spr_icon_active_grimoire_heal;
+cache[? activeAbilityStats.baseAnimation] = noone;
+cache[? activeAbilityStats.boundEffect] = noone;
 cache[? activeAbilityStats.manaCost] = 24;
 cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;
 		#endregion
@@ -1010,6 +1046,28 @@ playerActiveAbility = ds_map_create();
 #endregion
 
 #region Misc
+	#region Class Subtype and active size
+		//subtypes
+var index = ds_map_find_first(subtype);
+while index != undefined
+{
+	var subCache = subtype[? index];
+	var classEnum = subCache[? offhandSubtypeStats.offhandType];
+	var classCache = class[? classEnum];
+	classCache[? weaponClassStats.numOfSubtypes]++;
+	index = ds_map_find_next(subtype,index);
+}
+		//actives
+var index = ds_map_find_first(activeAbility);
+while index != undefined
+{
+	var actCache = activeAbility[? index];
+	var classEnum = actCache[? activeAbilityStats.offhandType];
+	var classCache = class[? classEnum];
+	classCache[? weaponClassStats.numOfActives]++;
+	index = ds_map_find_next(activeAbility,index);
+}
+	#endregion
 	#region Specials initializers
 			//Blink
 		blinkRange = 16*4;

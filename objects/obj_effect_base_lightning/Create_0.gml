@@ -1,3 +1,5 @@
+simOveride = false;
+
 //effects
 if !layer_exists("lay_technicals") layer_create(100,"lay_technicals");
 if !instance_exists(ParticleController) instance_create_layer(0,0,"lay_technicals",ParticleController);

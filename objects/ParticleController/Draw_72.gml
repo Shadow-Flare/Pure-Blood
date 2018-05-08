@@ -38,3 +38,5 @@ surface_set_target(darkPixSurf);
 	draw_clear_alpha(c_black,0);
 	part_system_drawit(pSysDark);	//draw inverted later for neato effect
 surface_reset_target();
+
+if !surface_exists(overidePixSurf) overidePixSurf = surface_create(room_width,room_height);

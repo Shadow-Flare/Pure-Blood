@@ -15,3 +15,6 @@ surface_set_target(particleSurfFinal);
 surface_reset_target();
 
 draw_surface(particleSurfFinal,0,0);
+
+//simulation
+if !surface_exists(particleSurfSim) particleSurfSim = surface_create(room_width,room_height);

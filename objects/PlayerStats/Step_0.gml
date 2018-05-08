@@ -93,7 +93,7 @@ var cache = ComboCache.subtype;
 var subID = ds_map_find_first(cache);
 while subID != undefined
 {
-	if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == currentOffhandID
+	if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == weapon_get_stat(currentOffhandID,weaponStats.type)
 	{
 		ds_list_add(subtypeCache,subID);
 	}
@@ -106,7 +106,7 @@ var cache = ComboCache.activeAbility;
 var subID = ds_map_find_first(cache);
 while subID != undefined
 {
-	if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == currentOffhandID
+	if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == weapon_get_stat(currentOffhandID,weaponStats.type)
 	{
 		ds_list_add(activeCache,subID);
 	}

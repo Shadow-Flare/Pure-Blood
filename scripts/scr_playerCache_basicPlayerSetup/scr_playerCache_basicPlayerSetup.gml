@@ -148,8 +148,8 @@ with PlayerStats
 		//initial data
 	currentWeaponID = ItemCache.equipment[? equipmentSlot.main1];				//gladius
 	currentOffhandID = ItemCache.equipment[? equipmentSlot.off1];				//crossbow
-	currentOffhandSubtypeID = 0;												//first index??
-	currentOffhandActivatableID = 0;											//first index??
+	currentOffhandSubtypeID = offhandSubtypeID.crossbow_normal;												//first index??
+	currentOffhandActivatableID = activeAbilityID.crossbow_rope_shot;											//first index??
 	
 	currentWeaponIndex = 0;
 	currentOffhandIndex = 0;
@@ -165,7 +165,7 @@ with PlayerStats
 	var subID = ds_map_find_first(cache);
 	while subID != undefined
 	{
-		if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == PlayerStats.currentOffhandID
+		if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == weapon_get_stat(PlayerStats.currentOffhandID,weaponStats.type)
 		{
 			ds_list_add(subtypeCache,subID);
 		}
@@ -177,7 +177,7 @@ with PlayerStats
 	var subID = ds_map_find_first(cache);
 	while subID != undefined
 	{
-		if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == PlayerStats.currentOffhandID
+		if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == weapon_get_stat(PlayerStats.currentOffhandID,weaponStats.type)
 		{
 			ds_list_add(activeCache,subID);
 		}

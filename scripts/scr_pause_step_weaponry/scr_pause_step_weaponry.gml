@@ -93,21 +93,20 @@ if weaponryExpandValue == 1 || weaponryExpandValue == 0
 {
 	if !slotExpanded
 	{
-			//REMOVE THIS: for the "REMOVE THIS: dont let selection move to offhands" in short
 		var sYPrevTemp = sY;
 		
 			//max height
 		weaponryMaxSY = array_length_2d(current_menu_options,0);
 			//perform move
-		sY = clamp(sY+vInput,0,array_length_2d(current_menu_options,0)-1);
+		var cap = array_length_2d(current_menu_options,0)-1;
+		sY+=vInput;
+		if sY > cap sY = 0;
+		else if sY < 0 sY = cap;
 			//if on the gap slot move twice to skip, if still on gap just revert
 		if current_menu_options[0, sY] == noone	sY = clamp(sY+vInput,0,weaponryMaxSY-1);
 		if current_menu_options[0, sY] == noone sY = sYPrevTemp;
 		
-			//REMOVE THIS: dont let selection move to offhands
-		var tempCurrentClass = current_menu_options[0, sY];
-		var tempIsMain = class_get_stat(tempCurrentClass,weaponClassStats.isMain);
-		if !tempIsMain sY = sYPrevTemp;
+		if sY != sYPrevTemp weaponryGroundComboSelected = true;
 	}
 	else
 	{
@@ -132,7 +131,16 @@ if weaponryExpandValue == 1 || weaponryExpandValue == 0
 		}
 		else
 		{
-		
+				//get maxNum
+			if weaponryGroundComboSelected var maxNum = class_get_stat(currentClass,weaponClassStats.numOfSubtypes)-1;		//the condition here is a shared variable with main types, not reason not to. couldnt be bothered changing the name.
+			else var maxNum = class_get_stat(currentClass,weaponClassStats.numOfActives)-1;
+				//hInput
+			sExpX+=hInput;
+			if sExpX > maxNum sExpX = 0;
+			else if sExpX < 0 sExpX = maxNum;
+				//vInput
+			var desired = sExpX+vInput*weaponrySubtypeIconRowSize;
+			if desired <= maxNum && desired >= 0 sExpX = desired;
 		}
 	}
 }
@@ -147,6 +155,7 @@ if InputManager.startInput
 #region (A)					Select
 if InputManager.aInput
 {
+	instance_destroy(weaponryBoundEffectSim);
 	if !slotExpanded
 	{
 		slotExpanded = true;
@@ -167,6 +176,7 @@ if InputManager.aInput
 var exitingWeaponry = false;
 if InputManager.bInput
 {
+	instance_destroy(weaponryBoundEffectSim);
 	if slotExpanded
 	{
 		slotExpanded = false;
@@ -186,9 +196,11 @@ if InputManager.bInput
 var weaponryGroundComboSelectedPrev = weaponryGroundComboSelected;
 if InputManager.yInput
 {
+	instance_destroy(weaponryBoundEffectSim);
 	if slotExpanded
 	{
 		weaponryGroundComboSelected = !weaponryGroundComboSelected;
+		sExpX = 0;
 		audio_play_sound(snd_menu_navigate,10,0)
 	}
 }
@@ -221,7 +233,7 @@ if !exitingWeaponry
 	}
 }
 #endregion
-#region refresh slot options
+#region refresh options
 if !exitingWeaponry
 {
 	ds_list_clear(weaponryComboList);
@@ -239,30 +251,70 @@ if !exitingWeaponry
 			comID = ds_map_find_next(ComboCache.combo,comID);
 		}
 	}
-}
-#endregion
-#region modify sExpY on changes play sound and reset animation timer
-if sX != sXPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
-{
-	var index = sX;
-	if !isCombo index-=m
-	var comID = combo_get_id(currentClass,selectedType,index);
-	for(var i = 0; i < ds_list_size(weaponryComboList); i++)
+	else
 	{
-		if weaponryComboList[| i] == comID
+		var cache = ComboCache.playerActiveAbility;
+		var maxSlots = class_get_stat(currentClass,weaponClassStats.numOfActives);
+
+		var maxSlots = 8
+		repeat(maxSlots) ds_list_add(weaponryComboList,noone);
+		
+		var comID = ds_map_find_first(cache);
+		while comID != undefined
 		{
-			sExpY = i;
-			weaponrySExpYDisplayDifference = 0;
-			break;
+			var comType = subtype_get_stat(comID,offhandSubtypeStats.offhandType);
+			var comIndex = subtype_get_stat(comID,offhandSubtypeStats.index);
+
+			if  comType == currentClass
+			{
+				weaponryComboList[| comIndex] = comID;
+			}
+			comID = ds_map_find_next(cache,comID);
+		}
+		
+		var cache = ComboCache.playerOffhandSubtype;
+		var maxSlots = class_get_stat(currentClass,weaponClassStats.numOfSubtypes);
+		
+		var comID = ds_map_find_first(cache);
+		while comID != undefined
+		{
+			var comType = subtype_get_stat(comID,offhandSubtypeStats.offhandType);
+			var comIndex = subtype_get_stat(comID,offhandSubtypeStats.index);
+
+			if  comType == currentClass
+			{
+				weaponryComboList[| comIndex] = comID;
+			}
+			comID = ds_map_find_next(cache,comID);
 		}
 	}
 }
-
-if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
+#endregion
+#region for mains: modify sExpY on changes play sound and reset animation timer
+if isMain
 {
-	audio_play_sound(snd_menu_navigate,10,0);
-	weaponryDetailsAnimationTimer = 0;
-	weaponryDetailsSelectedHit = 0;
-	weaponryDetailsSelectedHitDisplay = 0;
+	if sX != sXPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
+	{
+		var index = sX;
+		if !isCombo index-=m
+		var comID = combo_get_id(currentClass,selectedType,index);
+		for(var i = 0; i < ds_list_size(weaponryComboList); i++)
+		{
+			if weaponryComboList[| i] == comID
+			{
+				sExpY = i;
+				weaponrySExpYDisplayDifference = 0;
+				break;
+			}
+		}
+	}
+
+	if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
+	{
+		audio_play_sound(snd_menu_navigate,10,0);
+		weaponryDetailsAnimationTimer = 0;
+		weaponryDetailsSelectedHit = 0;
+		weaponryDetailsSelectedHitDisplay = 0;
+	}
 }
 #endregion

@@ -16,6 +16,7 @@ instance_deactivate_all(1);
 	//Data stores
 instance_activate_object(objCacheParent);
 	//Controllers
+instance_activate_object(ParticleController);
 instance_activate_object(GameManager);
 instance_activate_object(InputManager);
 instance_activate_object(EffectsManager);
@@ -341,9 +342,13 @@ inventoryItemDescriptionWidth = (inventoryTextbox2X2-inventoryTextbox2X1)-(40*4)
 #region Weaponry Data
 weaponryGroundComboSelected = true;
 weaponryComboList = ds_list_create();
+weaponrySubtypeList = ds_list_create();
+weaponryActiveList = ds_list_create();
 weaponryExpandValue = 0;
 weaponryExpandDuration = 0.25;	//seconds
 weaponryClassDisplaySy = 0;
+weaponryCurrentTargetID = 0;	//used for offhand/active details
+weaponryBoundEffectSim = noone;
 
 	//class textbox Text data
 weaponryMaxSY = 0;
@@ -384,11 +389,31 @@ weaponryScrollCursorColour = make_colour_rgb(64,64,255);
 	//class textbox data 2
 weaponrySExpYDisplayDifference = 0;
 weaponrySExpYDisplayShiftDuration = 0.1;
+		//main
 weaponryComboX = (12*4)/surfW;
 weaponryComboY = (weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight)/3;
 weaponryComboXSep = weaponryClassTextboxWidth/7;
 weaponryComboYSep = (weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight-weaponryClassDetailSurfBorderWidth/surfH-weaponryComboNameHeight/surfH)/3;		//switch class name height for some combo name height if using different fonts
 weaponryComboYExpSep = weaponryComboNameHeight/surfH*1.2;
+		//offhand
+			//subtype
+weaponrySubtypeTitleX = (4*4)/surfW;
+weaponrySubtypeTitleY = ((8+weaponryClassTextboxHeight)*4+weaponryClassNameHeight)/surfH;
+weaponrySubtypeX = (9*4)/surfW;
+weaponrySubtypeY = weaponrySubtypeTitleY+(4*4+weaponryClassNameHeight)/surfH;
+weaponrySubtypeXSep = (30*4)/surfW;
+weaponrySubtypeYSep = (30*4)/surfH;
+weaponrySubtypeIconScale = 4;
+weaponrySubtypeIconRowSize = 6;
+			//actives
+weaponryActiveTitleX = weaponrySubtypeTitleX;
+weaponryActiveTitleY = ((86+weaponryClassTextboxHeight)*4)/surfH;
+weaponryActiveX = weaponrySubtypeX;
+weaponryActiveY = weaponryActiveTitleY+((4*4)+weaponryClassNameHeight)/surfH;
+weaponryActiveXSep = weaponrySubtypeXSep;
+weaponryActiveYSep = weaponrySubtypeYSep;
+weaponryActiveIconScale = weaponrySubtypeIconScale;
+weaponryActiveIconRowSize = weaponrySubtypeIconRowSize;
 	//details texbox
 weaponryDetailsType = 5;
 weaponryDetailsScale = 4;
@@ -407,6 +432,7 @@ weaponryDetailsNameY = weaponryDetailsY1 + (20*4)/surfH;
 weaponryDetailsAnimationX = (weaponryDetailsX1+weaponryDetailsX2)/2;
 weaponryDetailsAnimationY = weaponryDetailsY1 + (58*4)/surfH;
 weaponryDetailsAnimationScale = 4;
+weaponryDetailsAnimationOffScale = 6;
 weaponryDetailsAnimationTimer = 0;
 		//description
 weaponryDetailsDescriptionFont = fnt_small_pixel;
