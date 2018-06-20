@@ -2,7 +2,7 @@ with PlayerStats
 {
 	level = 1;
 	newLevels = 0;
-	statPoints = 5;
+	statPoints = 0;
 	
 	xp = 0;
 	xpNeeded = 10*power(level+1,2);
@@ -26,12 +26,13 @@ with PlayerStats
 	mpMax = 20+4*willpower;
 	apMax = 10+1*cunning;
 	
-	breakHp = 0;
-	breakCooldownDuration = 1;
-
-	ap = 0;
 	hp = hpMax;
 	mp = mpMax;
+	ap = 0;
+	
+	breakHp = 0;
+	breakCooldownDuration = 1;
+	mass = 1;
 
 	moveSpeed = 1.5;
 	defaultMoveSpeed = moveSpeed;
@@ -97,6 +98,7 @@ with PlayerStats
 			//weapons
 		scr_player_inventory_manage(itemType.weapon,weaponItem.gladius,1);
 		scr_player_inventory_manage(itemType.weapon,weaponItem.hastam,1);
+		//scr_player_inventory_manage(itemType.weapon,weaponItem.crucifix,1);
 		scr_player_inventory_manage(itemType.weapon,weaponItem.crossbow,1);
 		scr_player_inventory_manage(itemType.weapon,weaponItem.spell_book,1);
 			//equipments
@@ -118,11 +120,11 @@ with PlayerStats
 		//combos
 		scr_player_giveallcombos();
 
-		//offhand subtypes
-		scr_player_givealloffhandsubtypes();
+		//offhand subtypes		//no need to give default here, are auto-given
+		//scr_player_givealloffhandsubtypes();
 
-		//active ability
-		scr_player_giveallactiveabilities();
+		//active ability		//no need to give default here, are auto-given
+		//scr_player_giveallactiveabilities();
 		
 	//passive ability data
 		scr_player_giveallabilities();
@@ -144,12 +146,13 @@ with PlayerStats
 	AFS = noone;
 	scr_resetComboData(weaponClass.sword);
 	scr_resetComboData(weaponClass.spear);
+	scr_resetComboData(weaponClass.greatHammer);
 	
 		//initial data
 	currentWeaponID = ItemCache.equipment[? equipmentSlot.main1];				//gladius
 	currentOffhandID = ItemCache.equipment[? equipmentSlot.off1];				//crossbow
-	currentOffhandSubtypeID = offhandSubtypeID.crossbow_normal;												//first index??
-	currentOffhandActivatableID = activeAbilityID.crossbow_rope_shot;											//first index??
+	currentOffhandSubtypeID = offhandSubtypeID.crossbow_normal;
+	currentOffhandActivatableID = activeAbilityID.crossbow_rope_shot;
 	
 	currentWeaponIndex = 0;
 	currentOffhandIndex = 0;
@@ -158,32 +161,8 @@ with PlayerStats
 	
 	subtypeCache = ds_list_create();
 	activeCache = ds_list_create();
-	#region initial update of offhand Subtypes and activatables
-		//subtypes
-	ds_list_clear(subtypeCache);
-	var cache = ComboCache.subtype;
-	var subID = ds_map_find_first(cache);
-	while subID != undefined
-	{
-		if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == weapon_get_stat(PlayerStats.currentOffhandID,weaponStats.type)
-		{
-			ds_list_add(subtypeCache,subID);
-		}
-		subID = ds_map_find_next(cache,subID);
-	}
-		//actives
-	ds_list_clear(activeCache);
-	var cache = ComboCache.activeAbility;
-	var subID = ds_map_find_first(cache);
-	while subID != undefined
-	{
-		if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == weapon_get_stat(PlayerStats.currentOffhandID,weaponStats.type)
-		{
-			ds_list_add(activeCache,subID);
-		}
-		subID = ds_map_find_next(cache,subID);
-	}
-	#endregion
+
+	scr_player_update_offhand_caches();
 	
 	//misc
 	isInvulnerable = false;

@@ -6,7 +6,7 @@ with statCache
 	mpMax = 0;											
 	
 	damagePower = 7;									
-	staggerPower = 3;									
+	staggerPower = 6;									
 	
 	toughness = 1.2;								
 	breakCooldownDuration = 1;
@@ -30,17 +30,17 @@ staggeredDuration = 0.6;
 stunnedDuration = 1.8;
 deflectDuration = 0.7;
 pushable = true;
-flying = false;
+flying = flyingDefault;
 
 deathDuration = 1;										
 deathFadeDuration = 2;									
 
 //ai data
-aggroRange = 16*7;										
-actionHardCooldown = 1.5;
-action1AIDelay = 0.3;
+aggroRange = 16*10;										
+actionHardCooldown = 3.0;
 
-aiIdleHeight = 16*5;
+aiIdleHeightMin = 16*5;
+aiIdleHeight = noone;
 aiMovementTimer = 0;
 aiOscillateTimer = 0;
 aiOscillateDistance = 8;
@@ -49,25 +49,56 @@ aiWanderDistance = 16*4;
 
 aiSwoopStartXDist = 5*16;
 aiSwoopStartYDist = 5*16;
+aiSwoopTargetRange = 0.2*16;
+
+aiMeleeAcquireRange = 2.5*16;
+aiMeleeStartXDist = 0.7*16;
+aiMeleeStartYDist = 0.0*16;
+aiMeleeTargetRange = 0.2*16;
 
 //action data
-	//action1: general attack				the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings
-action1Animation = sprZombieBodyAction1													
-action1FrameData = -1;
-action1Follow = true;
-action1Duration = 1.2;	
-action1AttackSoundID = noone;															//$$//
-action1HitSoundID = noone;																//$$//
-action1HitStart = action1Duration*(/**/10/**//sprite_get_number(action1Animation))		
-action1HitDuration = action1Duration*(/**/3/**//sprite_get_number(action1Animation))	
-action1MoveBurst = 5;																	
-action1Move = 0;																		
-action1MoveStart = action1Duration*(/**/9/**//sprite_get_number(action1Animation))		
-action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))																		
-action1DamageType = damageType.slash;																	
-action1Damage = 1;																		
-action1Stagger = 1.8;																		
-action1Knockback = 3;																	
-action1StatusType = specialType.none;																	
-action1StatusValue = 0;																	
-action1Pierce = false;	
+	//action1: swoop attack
+		//sub1
+action1Sub1Duration = 0.6;
+action1Sub1Animation = sprFlyingSkeletonBodyIdle;
+		//swoop
+action1SwoopXInitial = 0;
+action1SwoopYInitial = 0;
+action1SwoopXFinal = 0;
+action1SwoopYPeak = 0;
+action1SwoopYAcceleration = 0;
+action1SwoopDuration = 0.7;
+action1Animation = sprFlyingSkeletonBodyAction1;
+action1AttackSoundID = noone;
+		//zone data
+action1ZoneID = noone;
+action1Data = ds_map_create();
+scr_enemyActionDataDefaults(action1Data,enemyActionType.damageZone);
+action1Data[? enemyActionData.animation] = sprBloodHoundEffectAction2Sub2;
+action1Data[? enemyActionData.performSoundID] = noone;
+action1Data[? enemyActionData.hitAngle] = -1;
+action1Data[? enemyActionData.hitSoundID] = noone;
+action1Data[? enemyActionData.pierce] = false;
+scr_create_damageCache(action1Data[? enemyActionData.damageData],1.0,0.5,1,0,0,0,0,0,0,0,0,0);
+		//sub2: ending slowdown
+action1Sub2Animation = sprFlyingSkeletonBodyAction1Sub2;
+action1Sub2Duration = 0.4;
+
+	//action2: melee peck
+action2Data = ds_map_create();
+scr_enemyActionDataDefaults(action2Data,enemyActionType.attack);
+action2Data[? enemyActionData.animation] = sprFlyingSkeletonBodyAction1;
+action2Data[? enemyActionData.duration] = 0.9;	
+action2Data[? enemyActionData.performSoundID] = noone;
+action2Data[? enemyActionData.hitSoundID] = noone;
+action2Data[? enemyActionData.hitStart] = action2Data[? enemyActionData.duration]*(/**/2/**//sprite_get_number(action2Data[? enemyActionData.animation]));
+action2Data[? enemyActionData.hitDuration] = action2Data[? enemyActionData.duration]*(/**/3/**//sprite_get_number(action2Data[? enemyActionData.animation]));
+action2Data[? enemyActionData.hitAngle] = 290;		
+scr_create_damageCache(action2Data[? enemyActionData.damageData],1.2,0.5,1.0,0,0,0,0,0,0,0,0.4,0);
+
+//Action Data holder
+var tmp = 0;
+actionDataHolder = ds_list_create();
+
+ds_list_add(actionDataHolder,action2Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;

@@ -1,51 +1,4 @@
-switch vPhase
-{
-	case vState.grounded:
-		#region Grounded
-			//transition
-		var isGrounded = false;
-		with objBlockParent
-		{
-			if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
-			{
-				isGrounded = true;
-				if object_is_ancestor(object_index,objPlatformParent) other.onPlatform = true;
-				else other.onPlatform = false;
-				break;
-			}
-		}
-		if !isGrounded
-		{
-			vPhase = vState.midAir;
-			onPlatform = false
-		}
-			//no ySpd change
-		#endregion
-		break;
-	case vState.midAir:
-		#region Airborne
-			//transition
-		var isGrounded = false;
-		if sign(ySpd) != -1
-		{
-			with objBlockParent
-			{
-				if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
-				{
-					isGrounded = true;
-					other.vPhase = vState.grounded;
-					if object_is_ancestor(object_index,objPlatformParent) other.onPlatform = true;
-					else other.onPlatform = false;
-					break;
-				}
-			}
-		}
-			//ySpd
-		if !isGrounded ySpd += GameManager.grav;
-		if ySpd > maxFallSpeed ySpd = maxFallSpeed;
-		#endregion
-		break;
-}
+scr_actor_ground_vStateMachine();
 
 phaseTimer++;
 
@@ -100,8 +53,8 @@ switch phase
 		if phaseTimer == round(bloatDuration*room_speed)
 		{
 			if instance_exists(target) instance_destroy(target);
-			scr_enemy_attack(explosionFrameData,explosionFollow,explosionDuration,explosionDamageData,statCache.damagePower,statCache.staggerPower,explosionPierce,explosionAnimation,explosionHitSoundID,noone);
-			if explosionAttackSoundID != noone audio_play_sound(explosionAttackSoundID,10,0);
+			scr_enemy_attack(action1Data,statCache.damagePower,statCache.staggerPower);
+			if action1Data[? enemyActionData.performSoundID] != noone audio_play_sound(action1Data[? enemyActionData.performSoundID],10,0);
 			instance_destroy();
 			phase = state.dying;
 		}

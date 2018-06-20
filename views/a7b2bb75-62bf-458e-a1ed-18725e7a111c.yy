@@ -4,10 +4,8 @@
     "mvc": "1.1",
     "name": "a7b2bb75-62bf-458e-a1ed-18725e7a111c",
     "children": [
-        "0f4ccd5a-34ae-43f5-a7af-eb62bc2d7b02",
-        "6a921fce-6d03-4fbf-ae98-e36c075fdece",
-        "99779964-49eb-42f4-8991-98cd6907de62",
-        "a8e26493-a2cf-43aa-a329-dfb585ec1d5f"
+        "ca6abf90-01ca-4482-9aa5-26034bf132f4",
+        "5351376c-0f01-45a4-965f-212088220054"
     ],
     "filterType": "GMSprite",
     "folderName": "Spells",

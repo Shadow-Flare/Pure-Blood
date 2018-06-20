@@ -1,11 +1,19 @@
 timer++
 
+if shiftRoom
+{
+	room_goto(roomTo);
+	draw_texture_flush();
+	shiftRoom = false;
+}
+
 if timer == room_speed
 {
 	if roomTo != rmMainMenu
 	{
 		instance_activate_all();
-		room_goto(roomTo);
+		with all if !persistent instance_destroy();
+		shiftRoom = true;
 	}
 	else
 	{

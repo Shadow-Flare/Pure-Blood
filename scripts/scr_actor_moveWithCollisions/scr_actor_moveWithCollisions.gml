@@ -20,7 +20,7 @@ if !place_free(x,y)
 	//nonSolid blocks
 with obj_block_nonSolid solid = true;
 
-//push alteration
+#region push reset
 if place_meeting(x,y,objActorParent) && !phased && pushable
 {
 	othActor = instance_place(x,y,objActorParent);
@@ -40,82 +40,72 @@ else
 	pushXSpd = 0;
 	pushYSpd = 0;
 }
+#endregion
 
 #region buffers and compiled speed
-if object_index = objPlayer
-{
-	if ropeShotAngularSpeed == 0
-	{
-		xSpd += xSpdBuffer;
-		ySpd += ySpdBuffer;
-		pushXSpd += pushXSpdBuffer;
-		pushYSpd += pushYSpdBuffer;
-		envXSpd += envXSpdBuffer;
-		envYSpd += envYSpdBuffer;
+//if object_index = objPlayer
+//{
+//	if ropeShotAngularSpeed == 0
+//	{
+//		xSpd += xSpdBuffer;
+//		ySpd += ySpdBuffer;
+//		pushXSpd += pushXSpdBuffer;
+//		pushYSpd += pushYSpdBuffer;
 
-		xSpdBuffer = xSpd % 1/6;
-		ySpdBuffer = ySpd % 1/6;
-		pushXSpdBuffer = pushXSpd % 1/6;
-		pushYSpdBuffer = pushYSpd % 1/6;
-		envXSpdBuffer = envXSpd % 1/6;
-		envYSpdBuffer = envYSpd % 1/6;
+//		xSpdBuffer = xSpd % 1/6;
+//		ySpdBuffer = ySpd % 1/6;
+//		pushXSpdBuffer = pushXSpd % 1/6;
+//		pushYSpdBuffer = pushYSpd % 1/6;
 
-		xSpd -= xSpdBuffer;
-		ySpd -= ySpdBuffer;
-		pushXSpd -= pushXSpdBuffer;
-		pushYSpd -= pushYSpdBuffer;
-		envXSpd -= envXSpdBuffer;
-		envYSpd -= envYSpdBuffer;
+//		xSpd -= xSpdBuffer;
+//		ySpd -= ySpdBuffer;
+//		pushXSpd -= pushXSpdBuffer;
+//		pushYSpd -= pushYSpdBuffer;
+//	}
+//	else
+//	{
+//		xSpdBuffer = 0;
+//		ySpdBuffer = 0;
+//		pushXSpdBuffer = 0;
+//		pushYSpdBuffer = 0;
+//	}
+//}
+//else
+//{
+//	xSpd += xSpdBuffer;
+//	ySpd += ySpdBuffer;
+//	pushXSpd += pushXSpdBuffer;
+//	pushYSpd += pushYSpdBuffer;
 
-		x = round(x*6)/6;
-		y = round(y*6)/6;
-	}
-	else
-	{
-		xSpdBuffer = 0;
-		ySpdBuffer = 0;
-		pushXSpdBuffer = 0;
-		pushYSpdBuffer = 0;
-		envXSpdBuffer = 0;
-		envYSpdBuffer = 0;
-	}
-}
-else
-{
-	xSpd += xSpdBuffer;
-	ySpd += ySpdBuffer;
-	pushXSpd += pushXSpdBuffer;
-	pushYSpd += pushYSpdBuffer;
-	envXSpd += envXSpdBuffer;
-	envYSpd += envYSpdBuffer;
+//	xSpdBuffer = xSpd % 1/6;
+//	ySpdBuffer = ySpd % 1/6;
+//	pushXSpdBuffer = pushXSpd % 1/6;
+//	pushYSpdBuffer = pushYSpd % 1/6;
 
-	xSpdBuffer = xSpd % 1/6;
-	ySpdBuffer = ySpd % 1/6;
-	pushXSpdBuffer = pushXSpd % 1/6;
-	pushYSpdBuffer = pushYSpd % 1/6;
-	envXSpdBuffer = envXSpd % 1/6;
-	envYSpdBuffer = envYSpd % 1/6;
+//	xSpd -= xSpdBuffer;
+//	ySpd -= ySpdBuffer;
+//	pushXSpd -= pushXSpdBuffer;
+//	pushYSpd -= pushYSpdBuffer;
+//}
 
-	xSpd -= xSpdBuffer;
-	ySpd -= ySpdBuffer;
-	pushXSpd -= pushXSpdBuffer;
-	pushYSpd -= pushYSpdBuffer;
-	envXSpd -= envXSpdBuffer;
-	envYSpd -= envYSpdBuffer;
-
-	x = round(x*6)/6;
-	y = round(y*6)/6;
-}
+//if envXSpd == 0 && envYSpd == 0
+//{
+//	x = round(x*6)/6;
+//	y = round(y*6)/6;
+//}
 
 var compiledXSpd = xSpd+envXSpd+pushXSpd;
 var compiledYSpd = ySpd+envYSpd+pushYSpd;
 var sprHeightDif = sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index);
+
+xSpdCompPrev = compiledXSpd;
+ySpdCompPrev = compiledYSpd;
 #endregion
 
-	//platforms
-if !dropThroughPlatforms
+#region dropThroughPlatforms code
+if !dropThroughPlatforms && !flying
 {
-	with objPlatformParent
+	with objPlatformParent if enabled
 	{
 		if y > other.y+sprHeightDif solid = true;
 	}
@@ -124,6 +114,7 @@ else
 {
 	if onPlatform compiledYSpd += 1;
 }
+#endregion
 
 //do V collision check
 if !place_free(x,y+compiledYSpd) && place_free(x,y)
@@ -149,13 +140,16 @@ if !phased
 	for (var i = 0; i < instance_number(objActorParent); i++)
 	{
 		var othActor = instance_find(objActorParent,i);
-		if place_meeting(x,y,othActor) && pushable == true && !othActor.phased
+		if place_meeting(x,y,othActor) && !othActor.phased
 		{
-			var dirToOther = sign(othActor.x-x);
-			if dirToOther = 0 dirToOther = irandom(1);
-			if dirToOther = 0 dirToOther = -1;
+			if pushable
+			{
+				var dirToOther = sign(othActor.x-x);
+				if dirToOther = 0 dirToOther = irandom(1);
+				if dirToOther = 0 dirToOther = -1;
 
-			if place_meeting(x,y,othActor) pushXSpd-=dirToOther*1;
+				if place_meeting(x,y,othActor) pushXSpd-=dirToOther*1;
+			}
 		}
 		
 		else if place_meeting(x+compiledXSpd,y,othActor) && !othActor.phased
@@ -168,8 +162,13 @@ if !phased
 			{
 				if object_index = objPlayer ropeShotAngularSpeed = 0;
 				pushXSpd-=dirToOther*(1/6);
+				xSpd = ceil(abs(xSpd)*6)/6*sign(xSpd);
+				envXSpd = ceil(abs(envXSpd)*6)/6*sign(envXSpd);
+				x = round(x*6)/6;
 				compiledXSpd = xSpd+envXSpd+pushXSpd;
 			}
+			xSpd+=pushXSpd;
+			pushXSpd = 0;
 		}
 	}
 }

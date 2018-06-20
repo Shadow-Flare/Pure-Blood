@@ -6,8 +6,8 @@ else if moveH != 0 && vPhase == vState.grounded facing = sign(moveH);
 
 	//Sub states
 #region sub States
-
-switch PlayerStats.currentOffhandID
+var currentOffClass = weapon_get_stat(PlayerStats.currentOffhandID,weaponStats.type);
+switch currentOffClass
 {	
 	case weaponClass.crossbow: #region
 		switch vPhase
@@ -241,7 +241,7 @@ switch PlayerStats.currentOffhandID
 				switch subPhase
 				{
 					case subState.pre:
-						if subPhaseTimer >= round(crossbowDurationPre*room_speed)
+						if subPhaseTimer >= round(grimoireDurationPre*room_speed)
 						{ 
 							if InputManager.yInputHeld && canAct
 							{
@@ -268,16 +268,16 @@ switch PlayerStats.currentOffhandID
 						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
 							//Sprite
-						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultCrossbowPreTowards;							
-						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultCrossbowPreAway;	
-						else var newSprite = sprPlayerBodyDefaultCrossbowPre;
-						update_sprite(newSprite,-crossbowDurationPre);
+						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultGrimoirePreTowards;							
+						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultGrimoirePreAway;	
+						else var newSprite = sprPlayerBodyDefaultGrimoirePre;
+						update_sprite(newSprite,-grimoireDurationPre);
 							//this is commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
-						//auxSpriteIndex = sprPlayerAuxSwordCrossbowPre;
+						//auxSpriteIndex = sprPlayerAuxSwordGrimoirePre;
 						break;
 		
 					case subState.fire:
-						if subPhaseTimer >= round(crossbowDurationFire*room_speed)
+						if subPhaseTimer >= round(grimoireDurationFire*room_speed)
 						{
 							subPhase = subState.holding;
 							subPhaseTimer = 0;
@@ -291,11 +291,11 @@ switch PlayerStats.currentOffhandID
 						if lockOnType == lockOn.off aimAngle = (facing==1)? 0:180;
 						else {aimAngle = point_direction(x,y,lockOnTarget.x,lockOnTarget.y)}
 							//Sprite
-						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultCrossbowFireTowards;
-						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultCrossbowFireAway;	
-						else var newSprite = sprPlayerBodyDefaultCrossbowFire;
-						update_sprite(newSprite,-crossbowDurationFire);
-						auxSpriteIndex = sprPlayerAuxDefaultCrossbowFire;
+						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultGrimoireFireTowards;
+						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultGrimoireFireAway;	
+						else var newSprite = sprPlayerBodyDefaultGrimoireFire;
+						update_sprite(newSprite,-grimoireDurationFire);
+						auxSpriteIndex = sprPlayerAuxDefaultGrimoireFire;
 							//xSpd
 						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
@@ -313,11 +313,11 @@ switch PlayerStats.currentOffhandID
 							subPhaseTimer = 0;
 						}
 							//Sprite
-						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultCrossbowAimTowards;							
-						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultCrossbowAimAway;	
-						else var newSprite = sprPlayerBodyDefaultCrossbowAim;
+						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultGrimoireAimTowards;							
+						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultGrimoireAimAway;	
+						else var newSprite = sprPlayerBodyDefaultGrimoireAim;
 						update_sprite(newSprite,1);
-						auxSpriteIndex = sprPlayerAuxDefaultCrossbowAim;
+						auxSpriteIndex = sprPlayerAuxDefaultGrimoireAim;
 							//xSpd
 						xSpd -= xSpd/4;
 						break;
@@ -338,25 +338,25 @@ switch PlayerStats.currentOffhandID
 								subPhase = subState.fire;
 								subPhaseTimer = 0;
 							}
-							else if subPhaseTimer == round(crossbowDurationHolding*room_speed)
+							else if subPhaseTimer == round(grimoireDurationHolding*room_speed)
 							{
 								reset_queue();
 								subPhase = subState.aim;
 								subPhaseTimer = 0;
 							}
 						}
-						else if subPhaseTimer == round(crossbowDurationPost*room_speed)
+						else if subPhaseTimer == round(grimoireDurationPost*room_speed)
 						{
 							reset_queue();
 							subPhase = subState.post;
 							subPhaseTimer = 0;
 						}
 							//Sprite
-						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultCrossbowHoldingTowards;							
-						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultCrossbowHoldingAway;	
-						else var newSprite = sprPlayerBodyDefaultCrossbowHolding;
-						update_sprite(newSprite,-crossbowDurationHolding);
-						auxSpriteIndex = sprPlayerAuxDefaultCrossbowHolding;
+						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultGrimoireHoldingTowards;							
+						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultGrimoireHoldingAway;	
+						else var newSprite = sprPlayerBodyDefaultGrimoireHolding;
+						update_sprite(newSprite,-grimoireDurationHolding);
+						auxSpriteIndex = sprPlayerAuxDefaultGrimoireHolding;
 							//xSpd
 						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
@@ -370,12 +370,12 @@ switch PlayerStats.currentOffhandID
 							scr_player_base_subPhaseDeterminer();
 						}
 							//Sprite
-						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultCrossbowPostTowards;							
-						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultCrossbowPostAway;	
-						else var newSprite = sprPlayerBodyDefaultCrossbowPost;
-						update_sprite(newSprite,-crossbowDurationPost);
+						if sign(moveH) == facing var newSprite = sprPlayerBodyDefaultGrimoirePostTowards;							
+						else if sign(moveH) == -facing var newSprite = sprPlayerBodyDefaultGrimoirePostAway;	
+						else var newSprite = sprPlayerBodyDefaultGrimoirePost;
+						update_sprite(newSprite,-grimoireDurationPost);
 							//these are commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
-						//auxSpriteIndex = sprPlayerAuxSwordCrossbowPost;
+						//auxSpriteIndex = sprPlayerAuxSwordGrimoirePost;
 							//xSpd
 						if moveH != 0 xSpd = PlayerStats.moveSpeed/2*sign(moveH);
 						else xSpd -= xSpd/4;
@@ -389,19 +389,19 @@ switch PlayerStats.currentOffhandID
 				switch subPhase
 				{
 					case subState.pre:
-						if subPhaseTimer >= round(crossbowDurationAerialPre*room_speed)
+						if subPhaseTimer >= round(grimoireDurationAerialPre*room_speed)
 						{
 							reset_queue();
 							aimAngle = (facing==1)? 0:180;
 							scr_player_fireGrimoire(aimAngle);
 							subPhase = subState.fire;
 							subPhaseTimer = 0;
-							ySpd = 2*crossbowAerialBounce;
+							ySpd = 2*grimoireAerialBounce;
 						}
 							//Sprite
-						update_sprite(sprPlayerBodyDefaultCrossbowAerialPre,-crossbowDurationAerialPre);
+						update_sprite(sprPlayerBodyDefaultGrimoireAerialPre,-grimoireDurationAerialPre);
 							//this is commented out because of how the sprites currently work, currently the arm is merged with the body sprite for this subphase
-						//auxSpriteIndex = sprPlayerAuxSwordCrossbowPre;
+						//auxSpriteIndex = sprPlayerAuxSwordGrimoirePre;
 							//xSpd
 						if moveH != 0 xSpd = clamp(xSpd+moveH*PlayerStats.moveSpeed/15,-PlayerStats.moveSpeed/2,PlayerStats.moveSpeed/2);
 						else xSpd -= xSpd/20;
@@ -410,15 +410,15 @@ switch PlayerStats.currentOffhandID
 						break;
 						
 					case subState.fire:
-						if subPhaseTimer >= round(crossbowDurationAerialFire*room_speed)
+						if subPhaseTimer >= round(grimoireDurationAerialFire*room_speed)
 						{
 								reset_queue();
 								subPhase = subState.holding;
 								subPhaseTimer = 0;
 						}
 							//Sprite
-						update_sprite(sprPlayerBodyDefaultCrossbowAerialFire,-crossbowDurationAerialFire);
-						auxSpriteIndex = sprPlayerAuxDefaultCrossbowFire;
+						update_sprite(sprPlayerBodyDefaultGrimoireAerialFire,-grimoireDurationAerialFire);
+						auxSpriteIndex = sprPlayerAuxDefaultGrimoireFire;
 						if moveH != 0 xSpd = clamp(xSpd+moveH*PlayerStats.moveSpeed/15,-PlayerStats.moveSpeed/2,PlayerStats.moveSpeed/2);
 						else xSpd -= xSpd/20;
 							//ySpd
@@ -433,17 +433,17 @@ switch PlayerStats.currentOffhandID
 							scr_player_fireGrimoire(aimAngle);
 							subPhase = subState.fire;
 							subPhaseTimer = 0;
-							ySpd = crossbowAerialBounce;
+							ySpd = grimoireAerialBounce;
 						}
-						else if subPhaseTimer == round(crossbowDurationAerialHolding*room_speed)
+						else if subPhaseTimer == round(grimoireDurationAerialHolding*room_speed)
 						{
 							phase = state.base;
 							phaseTimer = 0;
 							scr_player_base_subPhaseDeterminer();
 						}
 							//Sprite
-						update_sprite(sprPlayerBodyDefaultCrossbowAerialHolding,-crossbowDurationAerialHolding);
-						auxSpriteIndex = sprPlayerAuxDefaultCrossbowHolding;
+						update_sprite(sprPlayerBodyDefaultGrimoireAerialHolding,-grimoireDurationAerialHolding);
+						auxSpriteIndex = sprPlayerAuxDefaultGrimoireHolding;
 							//xSpd
 						if moveH != 0 xSpd = clamp(xSpd+moveH*PlayerStats.moveSpeed/15,-PlayerStats.moveSpeed/2,PlayerStats.moveSpeed/2);
 						else xSpd -= xSpd/20;

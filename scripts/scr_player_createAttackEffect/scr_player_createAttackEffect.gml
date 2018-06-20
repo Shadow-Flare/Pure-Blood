@@ -13,6 +13,7 @@ with instance_create_depth(x,y,depth-1,objMeleeAttackEffect)
 	pierce = 0;
 	//get effect properties/collisions
 	attackAnimation = other.attackAnimation;
+	hitAngle = ds_list_find_value(combo_get_stat(attackID,comboStats.hitAngle),hitNum);
 
 		//STATS
 		frameData = ds_list_find_value(combo_get_stat(attackID,comboStats.frameData),hitNum);
@@ -43,32 +44,17 @@ with instance_create_depth(x,y,depth-1,objMeleeAttackEffect)
 		hitData[? damageData.stagger] = cache[? weaponDamageDetails.stagger] * ds_list_find_value(combo_get_stat(attackID,comboStats.forMod),hitNum);
 		hitData[? damageData.knockback] = ds_list_find_value(combo_get_stat(attackID,comboStats.knockback),hitNum);
 			//get main type - initializer
-		mainType = damageType.none;
 				//physical
 		var physDam = cache[? weaponDamageDetails.physical] * ds_list_find_value(combo_get_stat(attackID,comboStats.damMod),hitNum);
 		var damType = ds_list_find_value(combo_get_stat(attackID,comboStats.damType),hitNum);
-		var highest = physDam;
 		switch damType
 		{
-			case damageType.slash: hitData[? damageData.slash] = physDam; mainType = damageType.slash; break;
-			case damageType.pierce: hitData[? damageData.pierce] = physDam; mainType = damageType.pierce; break;
-			case damageType.blunt: hitData[? damageData.blunt] = physDam; mainType = damageType.blunt; break;
+			case damageType.slash: hitData[? damageData.slash] = physDam; break;
+			case damageType.pierce: hitData[? damageData.pierce] = physDam; break;
+			case damageType.blunt: hitData[? damageData.blunt] = physDam; break;
 		}
 		
-			//change all undefined to 0
-		var index = ds_map_find_first(hitData);
-		while (index != undefined)
-		{
-			if hitData[? index] == undefined hitData[? index] = 0;
-			index = ds_map_find_next(hitData,index);
-		}
-		
-		if hitData[? damageData.fire] > highest {mainType = damageType.fire; highest = hitData[? damageData.fire];};
-		if hitData[? damageData.ice] > highest {mainType = damageType.ice; highest = hitData[? damageData.ice];};
-		if hitData[? damageData.lightning] > highest {mainType = damageType.lightning; highest = hitData[? damageData.lightning];};
-		if hitData[? damageData.arcane] > highest {mainType = damageType.arcane; highest = hitData[? damageData.arcane];};
-		if hitData[? damageData.light] > highest {mainType = damageType.light; highest = hitData[? damageData.light];};
-		if hitData[? damageData.dark] > highest {mainType = damageType.dark; highest = hitData[? damageData.dark];};
+		mainType = scr_damageCache_get_mainType(hitData);
 		
 			//audio		
 		hitSoundID = noone;
@@ -158,19 +144,29 @@ if ds_list_find_index(attackSpecials,comboSpecial.thunderbolt) != -1
 		
 		caster = other;
 		casterType = other.actorType;
-		//get effect properties/collisions
 		attackAnimation = other.attackAnimation;
 
 			//STATS
 		frameData = [0,2];
 		attackDuration = 1;	//give lightning time to linger
 		pierce = 0;
-		
-		hitData[? damageData.lightning] = cache[? weaponDamageDetails.lightning];
+
 		hitData[? damageData.stagger] = 1.8 * cache[? weaponDamageDetails.stagger];
 		hitData[? damageData.knockback] = 3.0 * cache[? weaponDamageDetails.stagger];	//May need tweaking
+		hitData[? damageData.slash] = 0;
+		hitData[? damageData.pierce] = 0;
+		hitData[? damageData.blunt] = 0;
+		hitData[? damageData.fire] = 0;
+		hitData[? damageData.ice] = 0;
+		hitData[? damageData.lightning] = cache[? weaponDamageDetails.lightning];
+		hitData[? damageData.arcane] = 0;
+		hitData[? damageData.light] = 0;
+		hitData[? damageData.dark] = 0;
+		hitData[? damageData.poison] = 0;
+		hitData[? damageData.bleed] = 0;
+		hitEffects = noone;
 		
-		mainType = damageType.lightning;
+		mainType = scr_damageCache_get_mainType(hitData);
 		
 			//change all undefined to 0
 		var index = ds_map_find_first(hitData);

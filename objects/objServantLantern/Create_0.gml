@@ -23,8 +23,10 @@ with statCache
 
 //variables
 landingDuration = 0.7;									//&&//
+aerialStaggeredDuration = 0.3;
 staggeredDuration = 0.5;								//$$//
 stunnedDuration = 0.6;									//$$//
+stunnedRecoveryDuration = 0.6;
 deflectDuration = 0.7;
 pushable = true;
 flying = false;
@@ -38,36 +40,38 @@ aggroRange = 16*10;
 actionHardCooldown = 3.5;
 
 //action data
-	//action1: general attack				the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings
-action1Animation = sprServantLanternBodyAction1;
-action1FrameData = -1;
-action1Follow = true;
-action1Duration = 1.2;																	//$$//
-action1AttackSoundID = noone;															//$$//
-action1HitSoundID = noone;																//$$//
-action1HitStart = action1Duration*(/**/5/**//sprite_get_number(action1Animation))		//$$//
-action1HitDuration = action1Duration*(/**/3/**//sprite_get_number(action1Animation))	//$$//
-action1MoveBurst = 3;																	//$$//
-action1Move = 0;																		//$$//
-action1MoveStart = action1Duration*(/**/4/**//sprite_get_number(action1Animation))		//$$//
-action1MoveDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation))	//$$//
-action1DamageData = ds_map_create();
-scr_create_damageCache(action1DamageData,0.8,4,0,0,0.8,0,0,0,0,0,0);
-action1Pierce = false;																	//$$//
+	//action1: general attack, weapon swing		the number in between "/**/#/**/" below indicates the sprite number, starting at 0 for timings
+action1Data = ds_map_create();
+scr_enemyActionDataDefaults(action1Data,enemyActionType.attack);
+action1Data[? enemyActionData.animation] = sprServantLanternBodyAction1;
+action1Data[? enemyActionData.duration] = 1.2;
+action1Data[? enemyActionData.performSoundID] = noone;
+action1Data[? enemyActionData.hitAngle] = 165;
+action1Data[? enemyActionData.hitSoundID] = noone;
+action1Data[? enemyActionData.hitStart] = action1Data[? enemyActionData.duration]*(/**/5/**//sprite_get_number(action1Data[? enemyActionData.animation]));
+action1Data[? enemyActionData.hitDuration] = action1Data[? enemyActionData.duration]*(/**/3/**//sprite_get_number(action1Data[? enemyActionData.animation]));
+action1Data[? enemyActionData.moveBurstX] = 3;																	
+action1Data[? enemyActionData.moveStart] = action1Data[? enemyActionData.duration]*(/**/4/**//sprite_get_number(action1Data[? enemyActionData.animation]));
+action1Data[? enemyActionData.moveDuration] = action1Data[? enemyActionData.duration]*(/**/2/**//sprite_get_number(action1Data[? enemyActionData.animation]));		
+scr_create_damageCache(action1Data[? enemyActionData.damageData],0.8,1.2,0,0,0.8,0,0,0,0,0,0,0);
 
-	//action2: fire burst (targets bound servants alot in ai)
-action2Animation = sprServantLanternBodyAction2;
-action2FrameData = -1;
-action2Follow = false;
-action2Duration = 1.6;																	//$$//
-action2AttackSoundID = noone;															//$$//
-action2HitSoundID = noone;																//$$//
-action2HitStart = action1Duration*(/**/10/**//sprite_get_number(action2Animation))
-action2HitDuration = 1.5
-action2MoveBurst = 0;																	//$$//
-action2Move = 0;																		//$$//
-action2MoveStart = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
-action2MoveDuration = action1Duration*(/**/0/**//sprite_get_number(action2Animation))
-action2DamageData = ds_map_create();
-scr_create_damageCache(action2DamageData,1.2,5,0.2,0,0,1.2,0,0,0,0,0);
-action2Pierce = false;																	//$$//
+	//action2: general attack, fire Burst (targets bound servants alot in ai)
+action2Data = ds_map_create();
+scr_enemyActionDataDefaults(action2Data,enemyActionType.attack);
+action2Data[? enemyActionData.animation] = sprServantLanternBodyAction2;
+action2Data[? enemyActionData.duration] = 1.6;	
+action2Data[? enemyActionData.performSoundID] = noone;
+action2Data[? enemyActionData.hitAngle] = 90;
+action2Data[? enemyActionData.hitSoundID] = noone;
+action2Data[? enemyActionData.hitStart] = action2Data[? enemyActionData.duration]*(/**/10/**//sprite_get_number(action2Data[? enemyActionData.animation]));
+action2Data[? enemyActionData.hitDuration] = 1.5	//seconds
+scr_create_damageCache(action2Data[? enemyActionData.damageData],1.2,1,0,0,0,1.2,0,0,0,0,0,0);
+
+//Action Data holder
+var tmp = 0;
+actionDataHolder = ds_list_create();
+
+ds_list_add(actionDataHolder,action1Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;
+ds_list_add(actionDataHolder,action2Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;

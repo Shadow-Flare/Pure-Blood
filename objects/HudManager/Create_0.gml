@@ -8,13 +8,20 @@ damageNumbers = ds_list_create();
 
 //message feed
 messageFeed = ds_list_create();
+messageImages = ds_list_create();
 messageTimers = ds_list_create();
 messageTop = 0
 
 messageFadeDuration = 1;
 messageShowDuration = 3;
+messageFont = fnt_alagard;
 messageDivider = 50;
+messageBorder = 20;
 messageMovePerFrame = 1;
+messageImageOffsetX = -48;
+messageImageOffsetY = -10;
+messageImageSizeX = 48;
+messageImageSizeY = messageImageSizeX;
 
 spriteTimer = 0;
 

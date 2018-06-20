@@ -4,13 +4,6 @@ with objPlatform
 	solid = true;
 }
 
-//kill zones
-if instance_exists(action2ZoneID) && !(phase == state.action2 && subPhase == subState.actionSub1)
-{
-	instance_destroy(action2ZoneID);
-	action2ZoneID = noone;
-}
-
 switch aggroPhase
 {
 	case enemyAggroState.passive:

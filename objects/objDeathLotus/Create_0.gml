@@ -53,7 +53,7 @@ action1ProjCreateXOffset = 0;
 action1ProjCreateYOffset = 0;
 action1ProjCreateSpeed = 4;
 action1ProjDamageData = ds_map_create();
-scr_create_damageCache(action1ProjDamageData,1,4,0,1,0,0,0,0,0,0,0);	
+scr_create_damageCache(action1ProjDamageData,1,4,0,1,0,0,0,0,0,0,0,0);	
 action1ProjStatusType = specialType.none;
 action1ProjStatusValue = 0;
 action1ProjPierce = false;

@@ -10,7 +10,7 @@ if attackDuration != -1
 }
 else
 {
-	if ds_list_size(hitList) != 0
+	if ds_list_empty(hitList)
 	{
 		timer++;
 		if timer >= round(hitListResetDuration*room_speed)

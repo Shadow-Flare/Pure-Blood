@@ -11,12 +11,6 @@ if instance_exists(action2Sub2ZoneID) && !(phase == state.action2 && subPhase ==
 	instance_destroy(action2Sub2ZoneID);
 	action2Sub2ZoneID = noone;
 }
-	//leap land
-if instance_exists(action2Sub3ZoneID) && !(phase == state.action2 && subPhase == subState.actionSub3)
-{
-	instance_destroy(action2Sub3ZoneID);
-	action2Sub3ZoneID = noone;
-}
 
 switch aggroPhase
 {

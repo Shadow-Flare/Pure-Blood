@@ -1,6 +1,7 @@
 event_inherited();
 
-enum cameraState {idle, player}
+enum cameraState {idle, player};
+enum fadeType {none, in, out};
 
 xTo = x;
 yTo = y;
@@ -16,3 +17,9 @@ shakeTimer = 0;
 	//Brute Force
 forceX = 0;
 forceY = 0;
+
+	//real time fade
+fadeTypeState = fadeType.none;
+fadeColour = c_black;
+fadeDuration = 0;
+fadeTimer = 0;

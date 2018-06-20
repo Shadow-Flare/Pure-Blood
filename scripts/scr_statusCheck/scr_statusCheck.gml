@@ -10,14 +10,25 @@ if phase != state.dying && statCache.hp <= 0
 	subPhaseTimer = 0;
 }
 
+//execute death fade then deletion
+if isDead
+{
+	image_speed = 0;
+	image_alpha -= 1/(60*deathFadeDuration);
+	if image_alpha <= 0
+	{
+		instance_destroy();
+	}
+}
+
 //guaged hp management
 with statCache
 {	
 		//break
 	if breakHp != 0
 	{
-		if other.hasFlung var spdMod = 6;
-		else if other.hasStaggered var spdMod = 3;
+		if other.hasFlung var spdMod = 32;
+		else if other.hasStaggered var spdMod = 6;
 		else var spdMod = 1;
 		
 		var breakSpd = (toughness/(breakCooldownDuration*room_speed))*spdMod;
@@ -46,8 +57,8 @@ with statCache
 					{
 						var hitData = ds_map_create();
 						hitData[? damageData.pure] = dam;
-						scr_hit(noone,noone,hitData,noone,noone);
-						scr_hit_effect_blood(id,statCache.hitEffectType,statCache.hitEffectColour,75,2.22);
+						scr_hit(noone,noone,hitData,noone,noone,noone);
+						scr_hit_effect_blood(id,statCache.hitEffectType,statCache.hitEffectColour,75,noone,2.22);
 						ds_map_destroy(hitData);
 					}
 					break;

@@ -19,3 +19,6 @@ image_xscale = initialScale;
 image_yscale = image_xscale;
 
 hitList = ds_list_create();
+
+xSpd = 0;	//simulation
+ySpd = 0;	//^

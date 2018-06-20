@@ -45,8 +45,8 @@ switch phase
 					x = mount.x;
 					y = mount.y;
 					speed = 0;
-					if stats.hookWeight == 0 phase = ropeshotPhase.hookedEnemyPull;
-					else if stats.hookWeight == 1 phase = ropeshotPhase.hookedPlayerPull;
+					if stats.mass >= 2.5 phase = ropeshotPhase.hookedEnemyPull;
+					else phase = ropeshotPhase.hookedPlayerPull;
 					phaseTimer = 0;
 				}
 			}

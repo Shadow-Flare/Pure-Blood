@@ -4,10 +4,9 @@ with objPlatform
 	solid = true;
 }
 
-if hasBeenHit && lastHitType == 3
+if lastHitTypes[| damageType.fire]
 {
 	driveAction = 1;
-	lastHitType = -1;
 }
 
 hasBeenHit = false;

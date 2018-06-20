@@ -4,8 +4,28 @@ var surfH = surface_get_height(application_surface);
 enum dialogState {closed,opening,closing,dialog};
 enum dialogType {choice,speech};
 
-	//cutscenes
-wantsToRun = noone;
+enum puppetCommand {waitTillIdle, moveTo, interact, emote, emoteCyclic};
+enum puppetCommandData {type, interruptible, arg1, arg2, arg3, arg4, arg5};
+enum cutsceneCommand {waitTime, waitPuppet, fadeIn, fadeOut, commandPuppet, commandWorldEvent};
+enum cutsceneCommandData {type, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8};
+enum worldEventCommand {enemyKilled, runScript, runScriptRepeat}
+enum worldEventCommandData {type, arg1, arg2, arg3, arg4, arg5}
+	
+	//puppet/cutscene mechanisms
+puppetStackMap = ds_map_create();
+mainCutsceneStack = ds_stack_create();
+mainWorldEventStack = ds_stack_create();
+
+mainWorldEventQueueMap = ds_map_create();
+mainWorldEventQueueMap[? worldEventCommandData.type] = noone;
+mainWorldEventQueueMap[? worldEventCommandData.arg1] = noone;
+mainWorldEventQueueMap[? worldEventCommandData.arg2] = noone;
+mainWorldEventQueueMap[? worldEventCommandData.arg3] = noone;
+mainWorldEventQueueMap[? worldEventCommandData.arg4] = noone;
+mainWorldEventQueueMap[? worldEventCommandData.arg5] = noone;
+
+cutsceneTimer = 0;
+worldEventTimer = 0;
 
 	//dialog
 playerCanActDialog = true;

@@ -41,7 +41,7 @@ if (InputManager.aInput == true)
 			{
 				if class_get_stat(classID,weaponClassStats.isMain)
 				{
-					current_menu_options[0, count] = classID;
+					current_menu_options[0, class_get_stat(classID,weaponClassStats.ID)] = classID;
 					count++;
 				}
 				classID = ds_map_find_next(ComboCache.playerClass,classID);
@@ -53,10 +53,25 @@ if (InputManager.aInput == true)
 			{
 				if !class_get_stat(classID,weaponClassStats.isMain)
 				{
-					current_menu_options[0, count] = classID;
-					count++;
+					current_menu_options[0, count+class_get_stat(classID,weaponClassStats.ID)] = classID;
 				}
 				classID = ds_map_find_next(ComboCache.playerClass,classID);
+			}
+			var height = array_height_2d(current_menu_options);
+			for(var i = 0; i < height; i++)
+			{
+				if current_menu_options[0,i] == undefined
+				{
+					for(var j = 0; j < height; j++)
+					{
+						current_menu_options[0,height-j-1] = current_menu_options[0,height-j-2];
+						if j == i break;
+					}
+					var tmp = current_menu_options;
+					current_menu_options = [];
+					array_copy(current_menu_options,0,tmp,0,height-1);
+					height = array_height_2d(current_menu_options);
+				}
 			}
 			
 			sX = 0;

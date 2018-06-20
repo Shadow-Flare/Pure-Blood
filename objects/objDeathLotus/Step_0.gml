@@ -1,11 +1,11 @@
 #region passives
 
 	//melee attack cooldown
-scr_enemy_actionHardCooldown();
+scr_actor_actionHardCooldown();
 
 #endregion
 
-scr_deathLotus_ai();
+if canAct scr_deathLotus_ai();
 
 #region State machines
 	
@@ -16,7 +16,7 @@ scr_deathLotus_ai();
 	switch phase
 	{
 		case state.base:
-			scr_enemy_crawl_base();
+			scr_actor_crawl_base();
 			break;
 		case state.action1:
 			scr_deathLotus_action1();
@@ -25,10 +25,10 @@ scr_deathLotus_ai();
 			scr_deathLotus_action2();
 			break;
 		case state.hitReaction:
-			scr_enemy_crawl_hitReaction();
+			scr_actor_crawl_hitReaction();
 			break;
 		case state.dying:
-			scr_enemy_crawl_dying();
+			scr_actor_crawl_dying();
 			break;
 	}
 	

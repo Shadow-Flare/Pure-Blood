@@ -1,5 +1,4 @@
-var tmpID = 17;
-tmpID--; controllers[tmpID] = ConsoleManager;
+var tmpID = 16;
 tmpID--; controllers[tmpID] = HudManager;
 tmpID--; controllers[tmpID] = TargetManager;
 tmpID--; controllers[tmpID] = PlayerStats;
@@ -27,7 +26,7 @@ with ArenaController
 	//initialisers
 	spawnTimer = -1;
 
-	numberOfEnemies = 6;	//CHANGE AS ENEMIES ARE REFACTORED!
+	numberOfEnemies = 7;	//CHANGE AS ENEMIES ARE REFACTORED!
 	for(var i = 0; i < numberOfEnemies; i++)
 	{
 		switch i

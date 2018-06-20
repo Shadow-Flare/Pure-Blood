@@ -8,7 +8,7 @@ switch subPhase
 		if subPhaseTimer == round(action2Duration*room_speed)
 		{
 			phase = state.base;
-			scr_enemy_crawl_base_subPhaseDeterminer();
+			scr_actor_crawl_base_subPhaseDeterminer();
 			phaseTimer = 0;
 			subPhaseTimer = 0;
 			changeFacing = true;

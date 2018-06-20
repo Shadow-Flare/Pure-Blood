@@ -1,5 +1,5 @@
 {
-    "id": "ceb4b2c6-cb29-4518-b9be-380466554b71",
+    "id": "1bead0d9-19e0-4053-baa9-4688c65677fa",
     "modelName": "GMSprite",
     "mvc": "1.12",
     "name": "sprBloodHoundEffectAction2Sub2",
@@ -16,24 +16,24 @@
     "edgeFiltering": false,
     "frames": [
         {
-            "id": "8633d9f4-ee64-41c6-871f-38188819a040",
+            "id": "82782461-93b9-45de-9ab1-4173cd4b9137",
             "modelName": "GMSpriteFrame",
             "mvc": "1.0",
-            "SpriteId": "ceb4b2c6-cb29-4518-b9be-380466554b71",
+            "SpriteId": "1bead0d9-19e0-4053-baa9-4688c65677fa",
             "compositeImage": {
-                "id": "8fc416df-591b-4dcc-b0de-ad1fcaad1852",
+                "id": "a7ffd632-8fee-451d-b665-cbfd23edbc09",
                 "modelName": "GMSpriteImage",
                 "mvc": "1.0",
-                "FrameId": "8633d9f4-ee64-41c6-871f-38188819a040",
+                "FrameId": "82782461-93b9-45de-9ab1-4173cd4b9137",
                 "LayerId": "00000000-0000-0000-0000-000000000000"
             },
             "images": [
                 {
-                    "id": "1155fa49-ecda-4753-86c5-5ce6304942d5",
+                    "id": "079fc1a4-c384-4ca7-8ce0-b20fe089e7fe",
                     "modelName": "GMSpriteImage",
                     "mvc": "1.0",
-                    "FrameId": "8633d9f4-ee64-41c6-871f-38188819a040",
-                    "LayerId": "8a2fdfb4-f49e-4372-8472-4f765eee194f"
+                    "FrameId": "82782461-93b9-45de-9ab1-4173cd4b9137",
+                    "LayerId": "25e1ad29-586c-4a16-9f6b-2f1e6ba3753a"
                 }
             ]
         }
@@ -43,20 +43,20 @@
     "height": 95,
     "layers": [
         {
-            "id": "8a2fdfb4-f49e-4372-8472-4f765eee194f",
+            "id": "25e1ad29-586c-4a16-9f6b-2f1e6ba3753a",
             "modelName": "GMImageLayer",
             "mvc": "1.0",
-            "SpriteId": "ceb4b2c6-cb29-4518-b9be-380466554b71",
+            "SpriteId": "1bead0d9-19e0-4053-baa9-4688c65677fa",
             "blendMode": 0,
             "isLocked": false,
-            "name": "Layer 1",
-            "opacity": 50,
+            "name": "default",
+            "opacity": 100,
             "visible": true
         }
     ],
     "origin": 9,
     "originLocked": false,
-    "playbackSpeed": 1,
+    "playbackSpeed": 7,
     "playbackSpeedType": 0,
     "premultiplyAlpha": false,
     "sepmasks": false,

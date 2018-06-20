@@ -1,6 +1,33 @@
 ///@arg attackID
 
+	//get combo size data
+var wepClass = weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type);
+var groundComboSize = PlayerStats.GCS[? wepClass];
+//var groundFinisherSize = PlayerStats.GFS[? wepClass];
+var aerialComboSize = PlayerStats.ACS[? wepClass];
+//var aerialFinisherSize = PlayerStats.AFS[? wepClass];
+
 attackID = argument0;
+
+	//check if alt, if it is use alternative sprite
+var comboType = noone;
+switch vPhase
+{
+	case vState.grounded:
+		comboType = weaponClassStats.groundComboDefault;
+		break;
+	case vState.jumping:
+	case vState.midAir:
+		comboType = weaponClassStats.aerialComboDefault;
+		break;
+}
+var compareID = class_get_stat(wepClass,comboType);
+if vPhase = vState.grounded var comboSizeToCheck = groundComboSize;
+else comboSizeToCheck = aerialComboSize;
+if attackID == compareID && comboSizeToCheck%2 == attackNum%2 && attackNum < comboSizeToCheck
+{
+	attackID++;
+}
 
 attackName = combo_get_stat(attackID,comboStats.name);
 attackDuration = combo_get_stat(attackID,comboStats.duration);

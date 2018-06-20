@@ -13,12 +13,9 @@ var ReflectAbsorbDuration = 0.4;
 var reflectReleaseFrameData = -1;
 var reflectReleaseDuration = 0.6;
 var reflectReleaseEffects = noone;
-var reflectReleaseType = damageType.arcane;
-var reflectReleaseDamageMod =  1 + PlayerStats.magicalPower * 0.05;
-var reflectReleaseStaggerMod = 1.5 + PlayerStats.magicalStagger * 0.05;
-var reflectReleaseKnockbackMod = 0.7 + PlayerStats.magicalStagger * 0.25;
-var reflectReleaseSpecialType = specialType.none;
-var reflectReleaseSpecialValue = 0;
+
+//all damage data set in effect create
+
 var reflectReleasePierce = 0;
 var reflectReleaseFollow = false;
 var reflectReleaseHitSoundType = undefined;
@@ -49,6 +46,15 @@ switch subPhase
 				sprite_index = reflectEffectSprite;
 				image_speed = sprite_get_number(sprite_index)/abs(duration);
 				
+					//hitData management
+				if PlayerStats.currentOffhandIndex == 0 var cache = PlayerStats.weaponOff1DamageDetails;
+				else var cache = PlayerStats.weaponOff2DamageDetails;
+	
+				var magPow = cache[? weaponDamageDetails.arcane] / 150;
+				var reflectReleaseDamageMod =  1 + (1+magPow);
+				var reflectReleaseStaggerMod = 1.5 + (1+magPow);
+				var reflectReleaseKnockbackMod = 0.7 + (1+magPow);
+				
 					//absorb data
 				absorbSound = reflectAbsorbSound;
 				absorbSprite = reflectAbsorbSprite;
@@ -58,12 +64,11 @@ switch subPhase
 				releaseFrameData = reflectReleaseFrameData;
 				releaseDuration = reflectReleaseDuration;
 				releaseEffects = reflectReleaseEffects;
-				releaseType = reflectReleaseType;
+
 				releaseDamageMod =  reflectReleaseDamageMod;
 				releaseStaggerMod = reflectReleaseStaggerMod;
 				releaseKnockbackMod = reflectReleaseKnockbackMod;
-				releaseSpecialType = reflectReleaseSpecialType;
-				releaseSpecialValue = reflectReleaseSpecialValue;
+
 				releasePierce = reflectReleasePierce;
 				releaseFollow = reflectReleaseFollow;
 				releaseHitSoundType = reflectReleaseHitSoundType;

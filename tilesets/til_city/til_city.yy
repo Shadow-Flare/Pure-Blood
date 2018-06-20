@@ -382,15 +382,7 @@
             356,
             357,
             358,
-            359,
-            360,
-            361,
-            362,
-            363,
-            364,
-            365,
-            366,
-            367
+            359
         ],
         "SerialiseFrameCount": 1
     },
@@ -398,7 +390,7 @@
         
     ],
     "tile_animation_speed": 15,
-    "tile_count": 368,
+    "tile_count": 360,
     "tileheight": 16,
     "tilehsep": 0,
     "tilevsep": 0,

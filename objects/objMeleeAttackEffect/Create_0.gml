@@ -15,3 +15,6 @@ soundPlayed = false;
 
 hitList = ds_list_create();
 hitData = ds_map_create();
+
+xSpd = 0;
+ySpd = 0;

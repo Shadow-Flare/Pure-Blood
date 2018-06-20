@@ -12,8 +12,10 @@ blurRadius = 4;
 radialBlurFactor = 1;
 
 glowBoost = 3.2;
-glowBlurRadius = 2;
-
+glowDownscaleFactor = 6;
+glowShaderH = shd_bloom_hor_9;
+glowShaderV = shd_bloom_ver_9;
+glowDiameter = 9;				//should be identical to the end number of the above two
 
 shaftLightReso = 1024;
 shaftLightStepReso = 1024;

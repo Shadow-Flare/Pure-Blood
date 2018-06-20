@@ -1,5 +1,5 @@
 ///@arg itemType.ENUM
-///@arg SECONDENUM
+///@arg index
 ///@arg mod
 var type = argument0;
 var itemID = argument1;
@@ -16,6 +16,11 @@ if type == itemType.weapon
 		classCache[? playerClassStats.level] = 0;
 		classCache[? playerClassStats.xp] = 0;
 		classCache[? playerClassStats.xpNeeded] = 10*power(1.5,classCache[? playerClassStats.level]);
+		if !class_get_stat(class,weaponClassStats.isMain)
+		{
+			scr_player_subtype_manage(class_get_stat(class,weaponClassStats.defaultSubtype),ownedSubtypeStats.owned,true);
+			scr_player_active_manage(class_get_stat(class,weaponClassStats.defaultActive),ownedActiveStats.owned,true);
+		}
 	}
 	//else do nothing
 }

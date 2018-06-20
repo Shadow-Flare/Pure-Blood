@@ -1,6 +1,7 @@
 lifeTimer = 0;
 duration = 0;
 follow = false;
+trackFollowedXScale = false;
 caster = noone;
 slowdownFactor = 0;
 

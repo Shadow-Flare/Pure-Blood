@@ -1,8 +1,22 @@
 phaseTimer++;
 subPhaseTimer++;
 
+var dataMap = action3Data;
+var dataPerformSoundId = dataMap[? enemyActionData.performSoundID];
+var dataAnimation = dataMap[? enemyActionData.animation];
+var dataDuration = dataMap[? enemyActionData.duration];
+var dataHitStart = dataMap[? enemyActionData.hitStart];
+var dataHitDuration = dataMap[? enemyActionData.hitDuration]; //unused
+var dataPerformSoundId = dataMap[? enemyActionData.performSoundID];
+var dataMoveStart = dataMap[? enemyActionData.moveStart];
+var dataMoveDuration = dataMap[? enemyActionData.moveDuration];
+var dataMoveBurstX = dataMap[? enemyActionData.moveBurstX];
+var dataMoveBurstY = dataMap[? enemyActionData.moveBurstY];
+var dataMoveX = dataMap[? enemyActionData.moveX];
+var dataMoveY = dataMap[? enemyActionData.moveY];
+
 	//sprite
-update_sprite_enemy(action3Animation,-action3Duration)
+update_sprite_enemy(dataAnimation,-dataDuration)
 
 		//get deflected
 switch subPhase
@@ -27,31 +41,21 @@ switch subPhase
 			}
 		}
 			//timing and attack
-		if subPhaseTimer == round(action3HitStart*room_speed)
+		if subPhaseTimer == round(dataHitStart*room_speed)
 		{
-			scr_enemy_attack(action3FrameData,action3Follow,action3HitDuration,action3DamageData,statCache.damagePower,statCache.staggerPower,action3Pierce,action3Animation,action3HitSoundID,noone);
-			if action3AttackSoundID != noone audio_play_sound(action3AttackSoundID,10,0);
+			scr_enemy_attack(dataMap,statCache.damagePower,statCache.staggerPower);
+			if dataPerformSoundId != noone audio_play_sound(dataPerformSoundId,10,0);
 		}
-		if subPhaseTimer == round(action3Duration*room_speed)
+		if subPhaseTimer == round(dataDuration*room_speed)
 		{
 			lastAttackHasHit = false;
 			hasDeflected = false;
 			phase = state.base;
-			scr_enemy_ground_base_subPhaseDeterminer();
+			scr_actor_ground_base_subPhaseDeterminer();
 			phaseTimer = 0;
 			subPhaseTimer = 0;
 		}
 			//xSpd
-				//burst
-		if action3MoveBurst != 0 && phaseTimer == round(action3MoveStart*room_speed)
-		{
-			xSpd = facing*action3MoveBurst;
-		}
-				//consistent
-		else if action3Move != 0 && phaseTimer >= round(action3MoveStart*room_speed) && phaseTimer <= round((action3MoveStart+action3MoveDuration)*room_speed)
-		{
-			xSpd = facing*action3Move;
-		}
-		else xSpd -= xSpd/4;
+		xSpd -= xSpd/4;
 		break;
 }

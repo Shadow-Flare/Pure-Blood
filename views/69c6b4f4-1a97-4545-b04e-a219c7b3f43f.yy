@@ -10,7 +10,7 @@
         "94438b5b-4a37-454b-ad46-0f6c85a837eb"
     ],
     "filterType": "GMTileSet",
-    "folderName": "Dungeon Base",
+    "folderName": "Dungeon",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

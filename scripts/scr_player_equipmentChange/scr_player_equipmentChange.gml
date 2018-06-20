@@ -1,3 +1,6 @@
+//initials
+var mainWeaponPrev = PlayerStats.currentWeaponID;
+
 #region Up: change offhand equpment/subtype
 
 //Up input change
@@ -35,7 +38,7 @@ if InputManager.dLInput && !InputManager.ltInputHeld && canAct with PlayerStats
 {
 	currentWeaponIndex++;
 	if currentWeaponIndex > 1 currentWeaponIndex = 0;	//2 max weapons atm
-	other.equipmentChange = true;
+	other.mainWeaponEquipmentChange = true;
 }
 	#endregion
 
@@ -72,7 +75,7 @@ if dRInputTimer != -1
 	var prevEquipID = ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]]
 	if ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]] == noone currentWeaponIndex = 0;
 	PlayerStats.currentWeaponID = ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]];
-	if prevEquipID != ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]] equipmentChange = true;
+	if prevEquipID != ItemCache.equipment[? equip[PlayerStats.currentWeaponIndex]] mainWeaponEquipmentChange = true;
 	
 //offhand weapon
 	if PlayerStats.currentOffhandIndex >= 2 PlayerStats.currentOffhandIndex = 0;
@@ -94,3 +97,6 @@ if dRInputTimer != -1
 	if PlayerStats.currentOffhandActivatableIndex >= ds_list_size(PlayerStats.activeCache) PlayerStats.currentOffhandActivatableIndex = 0;
 	PlayerStats.currentOffhandActivatableID = PlayerStats.activeCache[| PlayerStats.currentOffhandActivatableIndex];
 #endregion
+
+//mainWeaponEquipmentChange old id save
+if mainWeaponEquipmentChange equipmentSwitchWeaponIndex = mainWeaponPrev;

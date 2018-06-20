@@ -51,6 +51,10 @@ for (var i = 0; i < array_height_2d(current_menu_options); i++)
 				if ini_read_real("effects","actorBoxVisuals",true) STR = "On";
 				else col = settingsSwitchColourOff;
 				break;
+			case 8:
+				if ini_read_real("debug","cutsceneDebug",false) STR = "On";
+				else col = settingsSwitchColourOff;
+				break;
 		}
 		var xPos = (settingsPanelsX+settingsSwitchXOffset)*surfW+sprite_get_width(settingsPanelsSprite)*settingsPanelsScale;
 		var yPos = (settingsPanelsY+settingsPanelsYSep*j)*surfH;

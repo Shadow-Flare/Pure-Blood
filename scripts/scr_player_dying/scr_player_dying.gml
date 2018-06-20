@@ -44,12 +44,3 @@ switch subPhase
 }
 		
 #endregion
-
-if isDead
-{
-	image_alpha -= deathFadeDuration/60;
-	if image_alpha <= 0
-	{
-		//DEATH CODE
-	}
-}

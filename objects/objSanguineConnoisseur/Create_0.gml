@@ -25,6 +25,7 @@ with statCache
 landingDuration = 0.7;
 deflectDuration = 0.7;									//&&//
 staggeredDuration = 0.5;
+aerialStaggeredDuration = 0.3;
 stunnedDuration = 0.6;
 pushable = true;
 flying = false;
@@ -54,12 +55,8 @@ action1Sub2Duration = 0.7;
 	action1Sub2ProjCreateXOffset = -6;
 	action1Sub2ProjCreateYOffset = -21;
 	action1Sub2ProjCreateSpeed = 4;
-	action1Sub2ProjDamageType = damageType.dark;
-	action1Sub2ProjDamage = 1;
-	action1Sub2ProjStagger = 1;
-	action1Sub2ProjKnockback = 4;
-	action1Sub2ProjStatusType = specialType.none;
-	action1Sub2ProjStatusValue = 0;
+	action1Sub2ProjDamageData = ds_map_create();		
+	scr_create_damageCache(action1Sub2ProjDamageData,1.0,4.0,0,0,0,0,0,0,0,0,1,0);	
 	action1Sub2ProjPierce = false;
 
 	//action2: teleport
@@ -75,3 +72,10 @@ action2Sub2TeleportMinDistance = attackMinRange*1.25;
 		//sub1: re-appear
 action2Sub3Animation = sprSanguineConnoisseurBodyAction2Sub3;
 action2Sub3Duration = 0.7; 
+
+//Action Data holder
+//var tmp = 0;
+//actionDataHolder = ds_list_create();
+
+//ds_list_add(actionDataHolder,action1Data);
+//ds_list_mark_as_map(actionDataHolder,tmp); tmp++;

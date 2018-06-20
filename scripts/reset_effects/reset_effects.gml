@@ -32,7 +32,7 @@ else instance_destroy(BloodStainController);
 
 		//particle Effects
 instance_destroy(ParticleController);
-instance_create_layer(0,0,"lay_effects1",ParticleController);
+instance_create_layer(0,0,"lay_technicals",ParticleController);
 
 		//parallax
 instance_destroy(ParallaxController);
@@ -50,5 +50,8 @@ GameManager.hitBoxVisuals = ini_read_real("effects","hitBoxVisuals",false)
 
 		//Actor Hit Boxes
 GameManager.actorBoxVisuals = ini_read_real("effects","actorBoxVisuals",false) 
+
+		//Actor Hit Boxes
+GameManager.cutsceneDebug = ini_read_real("debug","cutsceneDebug",false) 
 
 ini_close();

@@ -154,7 +154,7 @@ ropeShotTarget = noone;
 switch PlayerStats.currentOffhandActivatableID
 {
 		//rope shot
-	case 0:
+	case activeAbilityID.crossbow_rope_shot:
 		ropeShotTargetID = noone;
 		var nearestRopeShotTarget = instance_nearest(x,y,objGrappleParent);
 		if lockOnType = lockOn.hard {ropeShotTarget = [lockOnTarget.x,lockOnTarget.y]; ropeShotTargetID = lockOnTarget;}
@@ -202,9 +202,10 @@ if offhandHardCooldownTimer != -1
 		}
 	}
 	#endregion
-	#region reset hitPhase
+	#region reset hitPhase and phased toggle
 hitPhase = hitState.normal;
-// To make hitphase not notmal, must be set every
+phased = false;
+// To make hitphase not normal, must be set every
 // step after this point. Makes it much easier to
 // maintain hitphase during specific steps
 	#endregion
@@ -227,7 +228,7 @@ hitPhase = hitState.normal;
 
 #region State mechanisms
 
-scr_actor_vStateMachine();
+scr_actor_ground_vStateMachine();
 
 	#region get needed inputs
 if canAct
@@ -241,7 +242,7 @@ if canAct
 }
 else
 {
-	moveH = 0;
+	moveH = driveMove;
 	moveV = 0;
 	reset_queue();
 }
@@ -273,6 +274,12 @@ switch phase
 	case state.itemUse:
 		scr_player_itemUse();
 		break;
+	case state.interact:
+		scr_player_interact();
+		break;
+	case state.emote:
+		scr_player_emote();
+		break;
 	case state.dying:
 		scr_player_dying();
 		break;
@@ -284,6 +291,7 @@ switch phase
 scr_hitCheck();
 scr_statusCheck();
 scr_player_equipmentChange();
+scr_player_weaponSummonStateMachine();
 
 	//addional properties
 image_xscale = facing;

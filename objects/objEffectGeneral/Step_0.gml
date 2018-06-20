@@ -9,6 +9,15 @@ if follow
 {
 	x = caster.x;
 	y = caster.y;
+	
+	if trackFollowedXScale
+	{
+		var desiredDir = sign(caster.image_xscale);
+		if desiredDir != 0 && desiredDir != sign(image_xscale)
+		{
+			image_xscale = abs(image_xscale)*desiredDir;
+		}
+	}
 }
 else
 {

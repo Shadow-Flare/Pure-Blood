@@ -1,6 +1,6 @@
 #region enum initializers
 enum itemType {item, weapon, equipment, rune, key, alchemy};
-enum itemStats {icon, name, usable, description, equipSlot, effectsCache, weaponData, useAnimation, useDuration};
+enum itemStats {icon, name, pluralName, usable, description, equipSlot, effectsCache, weaponData, useAnimation, useDuration};
 enum itemEffects {hp, mp, ap, str, con, dex, cun, int, wil, toughness, alacrity, memory, slashDef, bluntDef, pierceDef, fireRes, iceRes, lightningRes, arcaneRes, lightRes, darkRes, bleedRes, LENGTH};	//length just for checking enum amount, needed for other areas.
 enum itemItem 
 {
@@ -14,7 +14,8 @@ enum weaponItem
 	/* Grimoires */		spell_book,
 /* mainHands */
 	/* Swords */		gladius,
-	/* Spears */		hastam
+	/* Spears */		hastam,
+	/* Great Hammers */	crucifix
 };
 enum equipmentItem 
 {
@@ -53,6 +54,7 @@ var itemCache = item[? itemType.item];
 	itemCache[? itemItem.crossbow_bolt] = ds_map_create();
 	var cache = itemCache[? itemItem.crossbow_bolt];
 	cache[? itemStats.name] = "Crossbow Bolt";
+	cache[? itemStats.pluralName] = "Crossbow Bolts";
 	cache[? itemStats.description] = "A typical crossbow bolt.";
 	cache[? itemStats.icon] = spr_icon_item_item_crossbow_bolt;
 	cache[? itemStats.usable] = false;
@@ -61,6 +63,7 @@ var itemCache = item[? itemType.item];
 itemCache[? itemItem.summon_stone] = ds_map_create();
 var cache = itemCache[? itemItem.summon_stone];
 cache[? itemStats.name] = "Summon Stone";
+cache[? itemStats.pluralName] = "Summon Stones";
 cache[? itemStats.icon] = spr_icon_item_key_summon_stone;
 cache[? itemStats.description] = "(TEST) Summons a shop.";
 cache[? itemStats.usable] = true;
@@ -69,6 +72,7 @@ cache[? itemStats.usable] = true;
 itemCache[? itemItem.hearthstone] = ds_map_create();
 var cache = itemCache[? itemItem.hearthstone];
 cache[? itemStats.name] = "Hearthstone";
+cache[? itemStats.pluralName] = "Hearthstones";
 cache[? itemStats.icon] = spr_icon_item_key_hearthstone;
 cache[? itemStats.description] = "(TEST) Return to last checkpoint.";
 cache[? itemStats.usable] = true;
@@ -88,7 +92,8 @@ cache[? itemStats.equipSlot] = equipmentSlot.main1;
 cache[? itemStats.effectsCache] = ds_map_create();
 var eCache = cache[? itemStats.effectsCache];
 cache[? itemStats.weaponData] = ds_map_create();
-var wepData = cache[? itemStats.weaponData]
+var wepData = cache[? itemStats.weaponData];
+	wepData[? weaponStats.particleVolume] = 6;
 	wepData[? weaponStats.type] = weaponClass.sword;
 	wepData[? weaponStats.uniqueAttack] = comboID.sword_skyward_slice;
 	wepData[? weaponStats.range] = 1;
@@ -112,6 +117,7 @@ var eCache = cache[? itemStats.effectsCache];
 cache[? itemStats.weaponData] = ds_map_create();
 var wepData = cache[? itemStats.weaponData]
 	wepData[? weaponStats.type] = weaponClass.spear;
+	wepData[? weaponStats.particleVolume] = 12;
 	wepData[? weaponStats.uniqueAttack] = comboID.spear_drive;
 	wepData[? weaponStats.range] = 1;
 	wepData[? weaponStats.weight] = 1.8;
@@ -120,7 +126,30 @@ var wepData = cache[? itemStats.weaponData]
 	wepData[? weaponStats.physicalDam] = 2;
 			#endregion
 		#endregion
-		
+		#region great hammers
+			#region crucifix
+weaponCache[? weaponItem.crucifix] = ds_map_create();
+var cache = weaponCache[? weaponItem.crucifix];
+cache[? itemStats.name] = "Crucifix";
+cache[? itemStats.icon] = spr_icon_item_weapon_crucifix;
+cache[? itemStats.description] = "A sanctified wallpiece used as an improvised hammer. <LORE>";
+cache[? itemStats.equipSlot] = equipmentSlot.main1;
+cache[? itemStats.effectsCache] = ds_map_create();
+var eCache = cache[? itemStats.effectsCache];
+cache[? itemStats.weaponData] = ds_map_create();
+var wepData = cache[? itemStats.weaponData]
+	wepData[? weaponStats.type] = weaponClass.greatHammer;
+	wepData[? weaponStats.particleVolume] = 18;
+	wepData[? weaponStats.uniqueAttack] = comboID.greatHammer_divineJudgement;
+	wepData[? weaponStats.range] = 1.1;
+	wepData[? weaponStats.weight] = 1.8;
+	wepData[? weaponStats.strMod] = 0.25;
+	wepData[? weaponStats.dexMod] = 0.0;
+	wepData[? weaponStats.intMod] = 0.3;
+	wepData[? weaponStats.physicalDam] = 2.5;
+	wepData[? weaponStats.lightDam] = 1;
+			#endregion
+		#endregion
 			//off
 		#region crossbows
 			#region crossbow

@@ -10,6 +10,7 @@ with statCache
 	
 	toughness = 6;										//$$//
 	breakCooldownDuration = 1;
+	mass = 4;
 	
 	moveSpeed = 0.2;									//$$//
 	defaultMoveSpeed = moveSpeed;
@@ -26,7 +27,7 @@ landingDuration = 0.7;									//&&//
 staggeredDuration = 0.5;								//$$//
 stunnedDuration = 0.6;									//$$//
 deflectDuration = 0.7;
-pushable = false;
+pushable = true;
 flying = false;
 
 deathDuration = 2.5;
@@ -45,78 +46,76 @@ numOfAction1Or3Or4 = 0;
 
 //action data
 	//action1: Slam
-action1Animation = sprBloodHoundBodyAction1												//$$//
-action1FrameData = [0,2]
-action1Follow = true;
-action1Duration = 2.4;																	//$$//
-action1AttackSoundID = noone;															//$$//
-action1HitSoundID = noone;																//$$//
-action1HitStart = action1Duration*(/**/7/**//sprite_get_number(action1Animation));		//$$//
-action1HitDuration = action1Duration*(/**/2/**//sprite_get_number(action1Animation));	//$$//
-action1MoveBurst = 3;																	//$$//
-action1Move = 0;																		//$$//
-action1MoveStart = action1Duration*(/**/6/**//sprite_get_number(action1Animation));		//$$//
-action1MoveDuration = action1Duration*(/**/0/**//sprite_get_number(action1Animation));	//$$//
-action1DamageData = ds_map_create();
-scr_create_damageCache(action1DamageData,1,12,0,0,1,0,0,0,0,0,0);
-action1Pierce = true;
+action1Data = ds_map_create();
+scr_enemyActionDataDefaults(action1Data,enemyActionType.attack);
+action1Data[? enemyActionData.animation] = sprBloodHoundBodyAction1;
+action1Data[? enemyActionData.duration] = 2.4;	
+action1Data[? enemyActionData.frameData] = [0,2];
+action1Data[? enemyActionData.performSoundID] = noone;
+action1Data[? enemyActionData.hitAngle] = 240;
+action1Data[? enemyActionData.hitSoundID] = noone;
+action1Data[? enemyActionData.hitStart] = action1Data[? enemyActionData.duration]*(/**/7/**//sprite_get_number(action1Data[? enemyActionData.animation]));
+action1Data[? enemyActionData.hitDuration] = action1Data[? enemyActionData.duration]*(/**/2/**//sprite_get_number(action1Data[? enemyActionData.animation]));
+action1Data[? enemyActionData.moveBurstX] = 3;																	
+action1Data[? enemyActionData.moveStart] = action1Data[? enemyActionData.duration]*(/**/6/**//sprite_get_number(action1Data[? enemyActionData.animation]));
+action1Data[? enemyActionData.moveDuration] = action1Data[? enemyActionData.duration]*(/**/0/**//sprite_get_number(action1Data[? enemyActionData.animation]));		
+action1Data[? enemyActionData.pierce] = true;
+scr_create_damageCache(action1Data[? enemyActionData.damageData],1.0,2.5,0,0,1,0,0,0,0,0,0,0);
 
 	//action2: Leap
 		//Sub1: Pre-Leap
 action2Sub1Animation = sprBloodHoundBodyAction2Sub1;
 action2Sub1Duration = 0.8;
-action2Sub1SoundID = noone;															//$$//
+action2Sub1SoundID = noone;
 		//Sub2: Leap execute
 action2Sub2Animation = sprBloodHoundBodyAction2Sub2;
 action2Sub2TargetEnemy = false;	//CHANGE THIS TO MAKE LEAP TARGET PLAYER
 action2Sub2Angle = 25;
 action2Sub2Distance = 180;
 action2Sub2AttackSoundID = noone;
-			//damage zone
-action2Sub2ZoneID = noone;															//$$//
-action2Sub2ZoneHitSoundID = noone;																//$$//
-action2Sub2ZoneFrameData = -1;
-action2Sub2ZoneFollow = true;
-action2Sub2ZoneDuration = -1
-action2Sub2ZoneDamageData = ds_map_create();
-scr_create_damageCache(action2Sub2ZoneDamageData,0.8,1.5,0,0,0.3,0,0,0,0,0,0);
-action2Sub2ZonePierce = true;
+			//DamageZone
+action2Sub2ZoneID = noone;
+action2Sub2Data = ds_map_create();
+scr_enemyActionDataDefaults(action2Sub2Data,enemyActionType.damageZone);
+action2Sub2Data[? enemyActionData.animation] = sprBloodHoundEffectAction2Sub2;
+action2Sub2Data[? enemyActionData.performSoundID] = noone;
+action2Sub2Data[? enemyActionData.hitAngle] = -1;
+action2Sub2Data[? enemyActionData.hitSoundID] = noone;
+action2Sub2Data[? enemyActionData.pierce] = true;
+scr_create_damageCache(action2Sub2Data[? enemyActionData.damageData],0.8,1.5,0,0,0.3,0,0,0,0,0,0,0);
 		//sub3: Landing
 action2Sub3Animation = sprBloodHoundBodyAction2Sub3;
 action2Sub3Duration = 0.8;
 
-			//damage zone
-action2Sub3ZoneID = noone;
-action2Sub3ZoneAttackSoundID = noone;															//$$//
-action2Sub3ZoneHitSoundID = noone;																//$$//
-action2Sub3ZoneFrameData = [0,1]
-action2Sub3ZoneFollow = false;
-action2Sub3ZoneDuration = -1;
-action2Sub3ZoneDamageData = ds_map_create();
-scr_create_damageCache(action2Sub3ZoneDamageData,1.4,1.5,0.3,0,0,0,0,0,0,0,0);
-action2Sub3ZonePierce = true;
+			//DamageZone
+action2Sub3Data = ds_map_create();
+scr_enemyActionDataDefaults(action2Sub3Data,enemyActionType.damageZone);
+action2Sub3Data[? enemyActionData.animation] = sprBloodHoundEffectAction2Sub3;
+action2Sub3Data[? enemyActionData.performSoundID] = noone;
+action2Sub3Data[? enemyActionData.hitDuration] = 0.4;
+action2Sub3Data[? enemyActionData.hitAngle] = 90;
+action2Sub3Data[? enemyActionData.hitSoundID] = noone;
+action2Sub3Data[? enemyActionData.pierce] = true;
+scr_create_damageCache(action2Sub3Data[? enemyActionData.damageData],1.4,1.5,0.3,0,0,0,0,0,0,0,0,0);
 	
 	//action3: Fling Corpses
-		//attack
-action3Animation = sprBloodHoundBodyAction3;											//$$//
-action3FrameData = [4,6];
-action3Follow = true;	
-action3Duration = 1.4;																	//$$//
-action3AttackSoundID = noone;															//$$//
-action3HitSoundID = noone;																//$$//
-action3HitStart = action3Duration*(/**/9/**//sprite_get_number(action3Animation));
-action3HitDuration = action3Duration*(/**/2/**//sprite_get_number(action3Animation));
-action3MoveBurst = 0																	//$$//
-action3Move = 0;																		//$$//
-action3MoveStart = action3Duration*(/**/0/**//sprite_get_number(action3Animation));
-action3MoveDuration = action3Duration*(/**/0/**//sprite_get_number(action3Animation));
-action3DamageData = ds_map_create();
-scr_create_damageCache(action3DamageData,1,12,1,0,0,0,0,0,0,0,0);
-action3Pierce = true;
+	//action1: general attack
+action3Data = ds_map_create();
+scr_enemyActionDataDefaults(action3Data,enemyActionType.attack);
+action3Data[? enemyActionData.animation] = sprBloodHoundBodyAction3;
+action3Data[? enemyActionData.duration] = 1.4;
+action3Data[? enemyActionData.frameData] = [4,6];
+action3Data[? enemyActionData.performSoundID] = noone;
+action3Data[? enemyActionData.hitSoundID] = noone;
+action3Data[? enemyActionData.hitStart] = action3Data[? enemyActionData.duration]*(/**/9/**//sprite_get_number(action3Data[? enemyActionData.animation]));
+action3Data[? enemyActionData.hitDuration] = action3Data[? enemyActionData.duration]*(/**/2/**//sprite_get_number(action3Data[? enemyActionData.animation]));
+action3Data[? enemyActionData.hitAngle] = 70;
+action3Data[? enemyActionData.pierce] = true;
+scr_create_damageCache(action3Data[? enemyActionData.damageData],1,12,1,0,0,0,0,0,0,0,0,0);
 		//corpses
 action3CorpseMin = 3;
 action3CorpseMax = 4;
-action3CorpseTime = action3Duration*(/**/9/**//sprite_get_number(action3Animation));
+action3CorpseTime = action3Data[? enemyActionData.duration]*(/**/9/**//sprite_get_number(action3Data[? enemyActionData.animation]));
 action3CorpseXOffset = 12;
 action3CorpseYOffset = 12;
 
@@ -134,3 +133,16 @@ action4TickYOffset = -20;
 action5Animation = sprBloodHoundBodyAction5;
 action5SoundID = noone;
 action5Duration = 0.8;
+
+//Action Data holder
+var tmp = 0;
+actionDataHolder = ds_list_create();
+
+ds_list_add(actionDataHolder,action1Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;
+ds_list_add(actionDataHolder,action2Sub2Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;
+ds_list_add(actionDataHolder,action2Sub3Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;
+ds_list_add(actionDataHolder,action3Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;

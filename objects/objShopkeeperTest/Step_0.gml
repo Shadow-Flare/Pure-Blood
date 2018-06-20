@@ -24,9 +24,9 @@ if used with CutsceneManager
 }
 
 #region State machines
-		
+var leave = false		
 		//vPhase
-	scr_actor_vStateMachine();
+	scr_actor_ground_vStateMachine();
 	
 		//phase (nested subPhase)
 	switch phase
@@ -62,8 +62,7 @@ if used with CutsceneManager
 					update_sprite_enemy(sprShopkeeperBodyEmote2,-leaveDuration);
 					if phaseTimer >= round(leaveDuration*room_speed)
 					{
-						instance_destroy();
-						phase = state.dying;
+						leave = true;
 					}
 					break;
 			}
@@ -74,3 +73,5 @@ if used with CutsceneManager
 
 scr_hitCheck();
 scr_statusCheck();
+
+if leave instance_destroy();

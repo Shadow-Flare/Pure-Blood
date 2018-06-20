@@ -9,7 +9,7 @@
         "03e22608-8ed6-4b89-994d-046a61bb4c2f"
     ],
     "filterType": "GMScript",
-    "folderName": "misc",
+    "folderName": "drawing",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

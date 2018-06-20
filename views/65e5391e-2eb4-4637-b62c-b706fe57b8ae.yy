@@ -10,7 +10,7 @@
         "e27818c6-3db6-4f76-aeab-14f794877f88"
     ],
     "filterType": "GMTileSet",
-    "folderName": "City Base",
+    "folderName": "City",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

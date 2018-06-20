@@ -1,3 +1,4 @@
+window_set_fullscreen(true);
 	//draw application surface
 draw_surface_ext(application_surface,0,appSurfYBorder,appSurfModX,appSurfModY,0,c_white,1);
 

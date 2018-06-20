@@ -222,17 +222,18 @@ if (InputManager.startInput)
 
 #endregion
 #region (A)			Select
-
+var wantsToSelectAudio = false;
 if InputManager.aInput == true
 {
-	audio_play_sound(snd_menu_select,10,0);
 	if !slotExpanded 
 	{
 		slotExpanded = true;
 		equipmentSlotExpandedNew = true;
+		wantsToSelectAudio = true;
 	}
 	else
 	{
+		audio_play_sound(snd_menu_select,10,0);
 		slotExpanded = false;
 		
 		var newEquipID = equipmentSlotCache[| sX];
@@ -252,35 +253,6 @@ if InputManager.aInput == true
 		}
 		else
 		{
-			var key = ds_map_find_first(ItemCache.equipment);
-			while key != undefined
-			{
-				var keyType = noone;
-				if ItemCache.equipment[? key] == newEquipID
-				{
-					switch key
-					{
-						case equipmentSlot.head:
-						case equipmentSlot.chest:
-						case equipmentSlot.hands:
-						case equipmentSlot.legs:
-							keyType = itemType.equipment;
-							break;
-						case equipmentSlot.main1:
-						case equipmentSlot.main2:
-						case equipmentSlot.off1:
-						case equipmentSlot.off2:
-							keyType = itemType.weapon;
-							break;
-					}
-					if keyType == equipmentSelectionItemType && keyType != noone
-					{
-						var num = scr_player_inventory_get(equipmentSelectionItemType,newEquipID)
-						if num < 2 ItemCache.equipment[? key] = noone;
-					}
-				}
-				key = ds_map_find_next(ItemCache.equipment,key);
-			}
 			ItemCache.equipment[? selection] = newEquipID;
 		}
 	}
@@ -368,16 +340,23 @@ if InputManager.yInput == true
 		var cache = ItemCache.inventory[? equipmentSelectionItemType];
 		var itemID = ds_map_find_first(cache);
 		var count = 0;
-		ds_list_add(equipmentSlotCache, noone);
 		count++;
 		var sel = selection;
 		if sel == equipmentSlot.main2 sel = equipmentSlot.main1;
 		if sel == equipmentSlot.off2 sel = equipmentSlot.off1;
+		if sel != equipmentSlot.main1 && sel != equipmentSlot.off1 ds_list_add(equipmentSlotCache, noone);
 		if sel == equipmentSlot.item
 		{
 			while itemID != undefined
 			{
-				if item_get_data(equipmentSelectionItemType,itemID,itemStats.usable)
+				var available = true;
+				var equipCache = ItemCache.equipment;
+				var itemCache = equipCache[? equipmentSlot.item];
+				for(var i = 0; i < ds_list_size(itemCache); i++)
+				{
+					if itemCache[| i] == itemID available = false;
+				}
+				if available && item_get_data(equipmentSelectionItemType,itemID,itemStats.usable)
 				{
 					ds_list_add(equipmentSlotCache, itemID);
 					count++;
@@ -413,12 +392,35 @@ if InputManager.yInput == true
 			{
 				if item_get_data(equipmentSelectionItemType,itemID,itemStats.equipSlot) == sel
 				{
-					ds_list_add(equipmentSlotCache, itemID);
-					count++;
+					available = true;
+					if sel == equipmentSlot.main1 || sel == equipmentSlot.off1
+					{
+						var key = ds_map_find_first(ItemCache.equipment);
+						while key != undefined
+						{
+							var keyAlt = key;
+							if keyAlt == equipmentSlot.main2 keyAlt = equipmentSlot.main1;
+							if keyAlt == equipmentSlot.off2 keyAlt = equipmentSlot.off1;
+							if keyAlt == sel && key != selection && ItemCache.equipment[? key] == itemID available = false;
+							key = ds_map_find_next(ItemCache.equipment,key);
+						}
+					}
+					if available
+					{
+						ds_list_add(equipmentSlotCache, itemID);
+						count++;
+					}
 				}
 				itemID = ds_map_find_next(cache,itemID);
 			}
 		}
+		if ds_list_size(equipmentSlotCache) == 0 
+		{
+			slotExpanded = false;
+			audio_play_sound(snd_menu_back,10,0);
+			wantsToSelectAudio = false;
+		}
+		if wantsToSelectAudio audio_play_sound(snd_menu_select,10,0);
 		
 		//track active
 		equipmentSlotActiveItem = noone

@@ -1,6 +1,9 @@
 phaseTimer++;
 subPhaseTimer++;
 
+var dataMap = action1Data;
+var dataPerformSoundId = dataMap[? enemyActionData.performSoundID];
+
 switch subPhase
 {
 	case subState.actionSub1:
@@ -22,8 +25,8 @@ switch subPhase
 		xSpd = facing*statCache.moveSpeed;
 		if (subPhaseTimer >= round(action1Sub2Duration*room_speed) || (place_meeting(x+xSpd,y,objActorParent) && !instance_place(x+xSpd,y,objActorParent).phased) || !place_free(x+xSpd,y)) && statCache.hp != 0
 		{
-			scr_enemy_attack(action1FrameData,action1Follow,action1Duration,action1DamageData,statCache.damagePower,statCache.staggerPower,action1Pierce,action1Sub3Animation,action1HitSoundID,noone);
-			if action1AttackSoundID != noone audio_play_sound(action1AttackSoundID,10,0);
+			scr_enemy_attack(dataMap,statCache.damagePower,statCache.staggerPower);
+			if dataPerformSoundId != noone audio_play_sound(dataPerformSoundId,10,0);
 			statCache.hp = 0;
 			xSpd = 0;
 		}

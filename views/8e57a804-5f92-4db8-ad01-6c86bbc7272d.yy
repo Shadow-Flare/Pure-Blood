@@ -10,7 +10,7 @@
         "81e270a5-1167-49ce-ba8d-76743f4aa031"
     ],
     "filterType": "GMTileSet",
-    "folderName": "Mansion Base",
+    "folderName": "Mansion Entrance",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

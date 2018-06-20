@@ -1,7 +1,9 @@
 with ParticleController
 {
 	var pSysTarget = pSysLightning;
+	var trailSurfTarget = lightningPixSurf;
 	if other.simOveride var pSysTarget = pSysOveride;
+	if other.simOveride var trailSurfTarget = overidePixSurf;
 	
 	var radius = other.radius;
 	var intensity = other.intensity;
@@ -73,7 +75,7 @@ if trailForce == true
 		trailForce = false;
 	}
 }
-	
-surface_set_target(ParticleController.lightningPixSurf);	
+
+surface_set_target(trailSurfTarget);	
 	scr_draw_trail(trailEnable,max(round(2*intensity),1),0.25,30,c_orange,2,round((16+trailVarMod)*intensity),1-trailAlphaMod,2,1);
 surface_reset_target();

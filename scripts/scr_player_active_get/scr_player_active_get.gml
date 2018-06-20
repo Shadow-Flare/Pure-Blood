@@ -1,12 +1,14 @@
 ///@arg activeAbility.ENUM
+///@arg ownedActiveStats.ENUM
 var actID = argument0;
+var stat = argument1;
 
 with ComboCache
 {
-	var comboOwned = playerActiveAbility[? actID];
-	if (comboOwned == undefined)
+	var ownedCache = playerActiveAbility[? actID];
+	if ownedCache == undefined return undefined;
+	else
 	{
-		comboOwned = false;
+		return ownedCache[? stat];
 	}
-	return comboOwned;
 }

@@ -1,5 +1,5 @@
-x += (xTo -x)/10;
-y += (yTo -y)/10;
+x += (xTo-x)/6;
+y += (yTo-y)/6;
 
 camera_set_view_pos(cam,-(camera_get_view_width(cam)/2)+x,-(camera_get_view_height(cam)/2)+y);
 
@@ -52,7 +52,9 @@ if shakeDuration != 0
 }
 #endregion
 
-xPosFinal = xPos+forceX;
-yPosFinal = yPos+forceY;
+xPosFinal = round((xPos+forceX)*6)/6;
+yPosFinal = round((yPos+forceY)*6)/6;
+//xPosFinal = xPos+forceX;
+//yPosFinal = yPos+forceY;
 
 camera_set_view_pos(cam,xPosFinal,yPosFinal);

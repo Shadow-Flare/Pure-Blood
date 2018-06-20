@@ -16,7 +16,7 @@ if consoleEnabled
 		//show input
 		viewW = view_wport[view_current]*2;
 		viewH = view_hport[view_current]*2;
-		draw_set_alpha(0.5);
+		draw_set_alpha(0.6);
 		draw_set_color(c_black);
 		draw_rectangle(0,0,viewW,200,0);
 		draw_set_alpha(1);
@@ -40,7 +40,7 @@ if consoleEnabled
 			draw_text(viewW-columnWidth*2,rowHeight* 6,"Player Vertical-Phase:            "+string(objPlayer.vPhase));
 			draw_text(viewW-columnWidth*1,rowHeight* 6,"Lock-On Type:                     "+string(conLockOnType));
 
-			if objPlayer.lockOnTarget != noone
+			if objPlayer.lockOnTarget != noone && instance_exists(objPlayer.lockOnTarget)
 			{
 				var enemy = objPlayer.lockOnTarget;
 				var cache = enemy.statCache;
@@ -57,7 +57,7 @@ if consoleEnabled
 			}
 		}
 	
-		for(var i = 0; i < 7; i++)
+		for(var i = 0; i < maxHistory; i++)
 		{
 			draw_text(20,50+10*i,history[i]);
 			draw_text(450,50+10*i,historyM[i]);
@@ -65,16 +65,16 @@ if consoleEnabled
 	
 		if conHelpMenu
 		{
-			draw_set_alpha(0.75);
+			draw_set_alpha(0.6);
 			draw_set_color(c_black);
-			draw_rectangle(0,130,viewW,170+array_length_1d(helpText)*10,0);
+			draw_rectangle(0,200,viewW,200+(array_length_1d(helpText)+2)*10,0);
 			draw_set_alpha(1);
 			draw_set_font(fnt_console);
 			draw_set_color(c_white);
 			for (var i = 0; i < array_length_1d(helpText);i++)
 			{
-				draw_text(20,150+10*i,helpText[i]);
-				draw_text(450,150+10*i,helpTextM[i]);
+				draw_text(20,210+10*i,helpText[i]);
+				draw_text(450,210+10*i,helpTextM[i]);
 			}
 		}
 	}
@@ -101,7 +101,7 @@ if lightTester != noone && instance_exists(lightTester)
 	var boxX = 0;
 	if conHelpMenu
 	{
-		boxY += 170+array_length_1d(helpText)*10
+		boxY += 200+(array_length_1d(helpText)+2)*10
 	}
 	if consoleEnabled
 	{

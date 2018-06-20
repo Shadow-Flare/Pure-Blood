@@ -20,7 +20,16 @@
 	}
 	else
 	{
-		
+		weaponryMaxMemory = floor(PlayerStats.memory);
+			//refresh memory usage
+		weaponrySubtypeMemoryUsage = 0;
+		weaponryActiveMemoryUsage = 0;
+				//subtype
+		var cache = PlayerStats.subtypeCache;
+		for(var i = 0; i < ds_list_size(cache); i++) weaponrySubtypeMemoryUsage += subtype_get_stat(cache[| i], offhandSubtypeStats.memoryUsage);
+				//actives
+		var cache = PlayerStats.activeCache;
+		for(var i = 0; i < ds_list_size(cache); i++) weaponryActiveMemoryUsage += activeAbility_get_stat(cache[| i], activeAbilityStats.memoryUsage);
 	}
 #endregion
 
@@ -165,10 +174,85 @@ if InputManager.aInput
 	}
 	else
 	{
-		var attackIndex = sX;
-		if !isCombo attackIndex-=m;
-		combo_set(currentClass,selectedType,attackIndex,weaponryComboList[| sExpY]);
-		audio_play_sound(snd_menu_select,10,0)
+		if isMain
+		{
+			var attackIndex = sX;
+			if !isCombo attackIndex-=m;
+			combo_set(currentClass,selectedType,attackIndex,weaponryComboList[| sExpY]);
+			audio_play_sound(snd_menu_select,10,0);
+		}
+		else
+		{	
+			if weaponryGroundComboSelected
+			{
+				if weaponrySubtypeList[| sExpX] != noone
+				{
+					var subList = PlayerStats.subtypeCache;
+					var selectedSubID = weaponrySubtypeList[| sExpX];
+					var selectedSubEnabledIndex = weaponrySubtypeIndexList[| sExpX];
+					var subListIndex = ds_list_find_index(subList,selectedSubID)
+						//disable
+					if selectedSubEnabledIndex != -1
+					{
+						if ds_list_size(subList) > 1
+						{
+							scr_player_subtype_manage(selectedSubID,ownedSubtypeStats.enabled,false);
+							audio_play_sound(snd_menu_select,10,0);
+						}
+						else audio_play_sound(snd_menu_back,10,0);
+					}
+						//enable
+					else if	weaponrySubtypeMemoryUsage+subtype_get_stat(selectedSubID, offhandSubtypeStats.memoryUsage) <= weaponryMaxMemory
+					{
+						scr_player_subtype_manage(selectedSubID,ownedSubtypeStats.enabled,true);
+						scr_player_subtype_manage(selectedSubID,ownedSubtypeStats.enabledIndex,ds_list_size(subList));
+					}
+						//fail
+					else
+					{
+						audio_play_sound(snd_menu_back,10,0);		//make some fail audio.
+					}
+				}
+				else
+				{
+					audio_play_sound(snd_menu_back,10,0);		//make some fail audio.
+				}
+			}
+			else
+			{
+				if weaponryActiveList[| sExpX] != noone
+				{
+					var subList = PlayerStats.activeCache;
+					var selectedSubID = weaponryActiveList[| sExpX];
+					var selectedSubEnabledIndex = weaponryActiveIndexList[| sExpX];
+					var subListIndex = ds_list_find_index(subList,selectedSubID)
+					if selectedSubEnabledIndex != -1		//disable
+					{
+						if ds_list_size(subList) > 1
+						{
+							scr_player_active_manage(selectedSubID,ownedActiveStats.enabled,false);
+							audio_play_sound(snd_menu_select,10,0);
+						}
+						else audio_play_sound(snd_menu_back,10,0);
+					}
+					else if	weaponryActiveMemoryUsage+activeAbility_get_stat(selectedSubID, activeAbilityStats.memoryUsage) <= weaponryMaxMemory
+					{
+						scr_player_active_manage(selectedSubID,ownedActiveStats.enabled,true);
+						scr_player_active_manage(selectedSubID,ownedActiveStats.enabledIndex,ds_list_size(subList));
+					}
+						//fail
+					else
+					{
+						audio_play_sound(snd_menu_back,10,0);		//make some fail audio.
+					}
+				}
+				else
+				{
+					audio_play_sound(snd_menu_back,10,0);		//make some fail audio.
+				}
+			}
+			scr_player_update_offhand_caches();
+		}
 	}
 }
 #endregion
@@ -229,7 +313,16 @@ if !exitingWeaponry
 	}
 	else
 	{
-		
+		weaponryMaxMemory = floor(PlayerStats.memory);
+			//refresh memory usage
+		weaponrySubtypeMemoryUsage = 0;
+		weaponryActiveMemoryUsage = 0;
+				//subtype
+		var cache = PlayerStats.subtypeCache;
+		for(var i = 0; i < ds_list_size(cache); i++) weaponrySubtypeMemoryUsage += subtype_get_stat(cache[| i], offhandSubtypeStats.memoryUsage);
+				//actives
+		var cache = PlayerStats.activeCache;
+		for(var i = 0; i < ds_list_size(cache); i++) weaponryActiveMemoryUsage += activeAbility_get_stat(cache[| i], activeAbilityStats.memoryUsage);
 	}
 }
 #endregion
@@ -237,6 +330,10 @@ if !exitingWeaponry
 if !exitingWeaponry
 {
 	ds_list_clear(weaponryComboList);
+	ds_list_clear(weaponrySubtypeList);
+	ds_list_clear(weaponrySubtypeIndexList);
+	ds_list_clear(weaponryActiveList);
+	ds_list_clear(weaponryActiveIndexList);
 	if isMain
 	{
 		var comID = ds_map_find_first(ComboCache.combo);
@@ -253,27 +350,10 @@ if !exitingWeaponry
 	}
 	else
 	{
-		var cache = ComboCache.playerActiveAbility;
-		var maxSlots = class_get_stat(currentClass,weaponClassStats.numOfActives);
-
-		var maxSlots = 8
-		repeat(maxSlots) ds_list_add(weaponryComboList,noone);
-		
-		var comID = ds_map_find_first(cache);
-		while comID != undefined
-		{
-			var comType = subtype_get_stat(comID,offhandSubtypeStats.offhandType);
-			var comIndex = subtype_get_stat(comID,offhandSubtypeStats.index);
-
-			if  comType == currentClass
-			{
-				weaponryComboList[| comIndex] = comID;
-			}
-			comID = ds_map_find_next(cache,comID);
-		}
-		
+			//subtypes
 		var cache = ComboCache.playerOffhandSubtype;
 		var maxSlots = class_get_stat(currentClass,weaponClassStats.numOfSubtypes);
+		repeat(maxSlots) {ds_list_add(weaponrySubtypeList,noone); ds_list_add(weaponrySubtypeIndexList,-1);};
 		
 		var comID = ds_map_find_first(cache);
 		while comID != undefined
@@ -283,10 +363,29 @@ if !exitingWeaponry
 
 			if  comType == currentClass
 			{
-				weaponryComboList[| comIndex] = comID;
+				weaponrySubtypeList[| comIndex] = comID;
+				weaponrySubtypeIndexList[| comIndex] = scr_player_subtype_get(comID,ownedSubtypeStats.enabledIndex);
 			}
 			comID = ds_map_find_next(cache,comID);
 		}
+			//abilities
+		var cache = ComboCache.playerActiveAbility;
+		var maxSlots = class_get_stat(currentClass,weaponClassStats.numOfActives);
+		repeat(maxSlots) {ds_list_add(weaponryActiveList,noone); ds_list_add(weaponryActiveIndexList,-1);};
+		
+		var comID = ds_map_find_first(cache);
+		while comID != undefined
+		{
+			var comType = activeAbility_get_stat(comID,activeAbilityStats.offhandType);
+			var comIndex = activeAbility_get_stat(comID,activeAbilityStats.index);
+
+			if  comType == currentClass
+			{
+				weaponryActiveList[| comIndex] = comID;
+				weaponryActiveIndexList[| comIndex] = scr_player_active_get(comID,ownedActiveStats.enabledIndex);
+			}
+			comID = ds_map_find_next(cache,comID);
+		}		
 	}
 }
 #endregion
@@ -308,13 +407,12 @@ if isMain
 			}
 		}
 	}
-
-	if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
-	{
-		audio_play_sound(snd_menu_navigate,10,0);
-		weaponryDetailsAnimationTimer = 0;
-		weaponryDetailsSelectedHit = 0;
-		weaponryDetailsSelectedHitDisplay = 0;
-	}
+}
+if sX != sXPrev || sY != sYPrev || sExpY != sExpYPrev || weaponryGroundComboSelected != weaponryGroundComboSelectedPrev
+{
+	audio_play_sound(snd_menu_navigate,10,0);
+	weaponryDetailsAnimationTimer = 0;
+	weaponryDetailsSelectedHit = 0;
+	weaponryDetailsSelectedHitDisplay = 0;
 }
 #endregion

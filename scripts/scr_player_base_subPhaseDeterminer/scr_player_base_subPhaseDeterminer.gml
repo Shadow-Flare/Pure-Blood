@@ -8,19 +8,6 @@ with objPlayer
 				subPhase = subState.idle;
 				subPhaseTimer = 0;
 			}
-			else if lockOnType != lockOn.hard
-			{
-				if abs(moveH) <= 0.8
-				{
-					subPhase = subState.walking;
-					subPhaseTimer = 0;
-				}
-				else 
-				{
-					subPhase = subState.running;
-					subPhaseTimer = 0;
-				}
-			}
 			else
 			{
 				if sign(moveH) = facing

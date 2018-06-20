@@ -12,7 +12,7 @@ enum equipmentSlot {rune,head,chest,legs,hands,main1,main2,off1,off2,item};
 InputManager.startInput = false;
 
 //shut down all object in room save technicals
-instance_deactivate_all(1);
+instance_deactivate_all(true);
 	//Data stores
 instance_activate_object(objCacheParent);
 	//Controllers
@@ -72,6 +72,7 @@ menu_settings[0, 4] = "V-Sync"
 menu_settings[0, 5] = "Music Enabled"
 menu_settings[0, 6] = "Attack Hit Boxes"
 menu_settings[0, 7] = "Actor Hit Boxes"
+menu_settings[0, 8] = "Cutscene Messages"
 
 //initialize
 menu = menuCurrent.main;
@@ -343,7 +344,9 @@ inventoryItemDescriptionWidth = (inventoryTextbox2X2-inventoryTextbox2X1)-(40*4)
 weaponryGroundComboSelected = true;
 weaponryComboList = ds_list_create();
 weaponrySubtypeList = ds_list_create();
+weaponrySubtypeIndexList = ds_list_create();
 weaponryActiveList = ds_list_create();
+weaponryActiveIndexList = ds_list_create();
 weaponryExpandValue = 0;
 weaponryExpandDuration = 0.25;	//seconds
 weaponryClassDisplaySy = 0;
@@ -353,11 +356,11 @@ weaponryBoundEffectSim = noone;
 	//class textbox Text data
 weaponryMaxSY = 0;
 weaponryClassDetailSurfBorderWidth = (4+sprite_get_height(spr_textbox_1))*4;
-weaponryClassNameFont = fnt_menu;
-draw_set_font(fnt_menu);
+weaponryClassNameFont = fnt_alagard;
+draw_set_font(weaponryClassNameFont);
 weaponryClassNameHeight = string_height(" ");
 weaponryComboNameFont = fnt_dialog;
-draw_set_font(fnt_menu);
+draw_set_font(weaponryClassNameFont);
 weaponryComboNameHeight = string_height(" ");
 	//class Text boxes
 weaponryClassTextboxSelectionColour = c_red;
@@ -374,8 +377,8 @@ weaponryClassTextboxScale = 4;
 weaponryClassTextboxType = 1;		//metal chains
 	//surfaces
 weaponryMainSurf = surface_create(surfW-sprite_get_width(spr_textbox_3)*4*2,surfH-sprite_get_height(spr_textbox_3)*4*2);
-weaponryClassDetailSurf = surface_create(weaponryClassTextboxWidth*surfW,(weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight)*surfH);
-weaponryClassDetailSurfStencil = surface_create(weaponryClassTextboxWidth*surfW,(weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight)*surfH);
+weaponryClassDetailSurf = surface_create(weaponryClassTextboxWidth*surfW,(weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight*2)*surfH);
+weaponryClassDetailSurfStencil = surface_create(weaponryClassTextboxWidth*surfW,(weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight*2)*surfH);
 weaponryMainSurfXOffset = (sprite_get_width(spr_textbox_3)*4)/surfW;
 weaponryMainSurfYOffset = (sprite_get_height(spr_textbox_3)*4)/surfH;
 	//scroll bar
@@ -396,6 +399,9 @@ weaponryComboXSep = weaponryClassTextboxWidth/7;
 weaponryComboYSep = (weaponryClassTextboxHeight+weaponryClassTextboxExpandedHeight-weaponryClassDetailSurfBorderWidth/surfH-weaponryComboNameHeight/surfH)/3;		//switch class name height for some combo name height if using different fonts
 weaponryComboYExpSep = weaponryComboNameHeight/surfH*1.2;
 		//offhand
+weaponrySubtypeMemoryUsage = 0;
+weaponryActiveMemoryUsage = 0;
+weaponryMaxMemory = 0;
 			//subtype
 weaponrySubtypeTitleX = (4*4)/surfW;
 weaponrySubtypeTitleY = ((8+weaponryClassTextboxHeight)*4+weaponryClassNameHeight)/surfH;
@@ -432,25 +438,25 @@ weaponryDetailsNameY = weaponryDetailsY1 + (20*4)/surfH;
 weaponryDetailsAnimationX = (weaponryDetailsX1+weaponryDetailsX2)/2;
 weaponryDetailsAnimationY = weaponryDetailsY1 + (58*4)/surfH;
 weaponryDetailsAnimationScale = 4;
-weaponryDetailsAnimationOffScale = 6;
+weaponryDetailsAnimationOffScale = 8;
 weaponryDetailsAnimationTimer = 0;
 		//description
 weaponryDetailsDescriptionFont = fnt_small_pixel;
 draw_set_font(weaponryDetailsDescriptionFont);
 var descLineHeight = string_height(" ")
-weaponryDetailsDescriptionX = weaponryDetailsX1+(20*4)/surfW;
+weaponryDetailsDescriptionX = weaponryDetailsX1+(12*4)/surfW;
 weaponryDetailsDescriptionY = weaponryDetailsY1+(78*4)/surfH;
 weaponryDetailsDescriptionSep = ((weaponryDetailsY2-weaponryDetailsY1)-((80*4)-descLineHeight)/surfW)/maxDescLines;
-weaponryDetailsDescriptionWidth = (weaponryDetailsX2-weaponryDetailsX1)-(40*4)/surfW;
+weaponryDetailsDescriptionWidth = (weaponryDetailsX2-weaponryDetailsX1)-(24*4)/surfW;
 		//data
 weaponryDetailsDataList = ds_list_create();
 weaponryDetailsDataValuesList = ds_list_create();
 weaponryDetailsDataFont = fnt_small_pixel;
 draw_set_font(weaponryDetailsDataFont);
 var descLineHeight = string_height(" ")
-weaponryDetailsDataX = weaponryDetailsX1+(20*4)/surfW;
-weaponryDetailsDataValuesX = weaponryDetailsX2-(20*4)/surfW;
-weaponryDetailsDataY = weaponryDetailsY2-(20*4)/surfH;
+weaponryDetailsDataX = weaponryDetailsDescriptionX
+weaponryDetailsDataValuesX = weaponryDetailsX2-(12*4)/surfW;
+weaponryDetailsDataY = weaponryDetailsY2-(12*4)/surfH;
 weaponryDetailsDataSep = -((weaponryDetailsY2-weaponryDetailsY1)-((80*4)-descLineHeight)/surfW)/maxDescLines;
 weaponryDetailsSelectedHitFont = fnt_small_pixel;
 weaponryDetailsSelectedHit = 0;
@@ -809,6 +815,27 @@ statusPage1DataNameFont = fnt_small_pixel;
 statusPage1DataNameColour = c_white;
 statusPage1DataValueFont = fnt_small_pixel;
 statusPage1DataValueColour = c_white;
+		//Page 2: defense
+draw_set_font(fnt_alagard);
+var strHeight = string_height(" ");
+statusPage2DataXMargin = (8*4)/surfW;
+statusPage2DataYMargin = (8*4)/surfH;
+statusPage2DataXSep = (statusTextbox4X2-statusTextbox4X1-statusPage2DataXMargin*2)/2;
+statusPage2DataYSep = (1*4+strHeight)/surfH;
+		//Page 3: equipment and abilities
+draw_set_font(fnt_alagard);
+var strHeight = string_height(" ");
+statusPage3EquipTitleX = (32*4)/surfW
+statusPage3EquipTitleY = (8*4)/surfH;
+statusPage3AbilityTitleX = statusPage3EquipTitleX+(121*4)/surfW;
+statusPage3AbilityTitleY = statusPage3EquipTitleY;
+statusPage3DataXMargin = (24*4)/surfW;
+statusPage3DataYMargin = (8*4*2+strHeight)/surfH;
+statusPage3EquipIconX = (6*4)/surfH;
+statusPage3EquipIconY = statusPage3DataYMargin;
+statusPage3EquipIconScale = 2;
+statusPage3DataXSep = (statusTextbox4X2-statusTextbox4X1-statusPage3DataXMargin*2)/2+(8*4)/surfW;
+statusPage3DataYSep = (strHeight)/surfH;
 #endregion
 #region Map Data
 mapCursorX = 0;

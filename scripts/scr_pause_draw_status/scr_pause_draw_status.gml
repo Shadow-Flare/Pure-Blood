@@ -340,10 +340,240 @@ switch statusPage
 			#endregion
 		break; #endregion
 	case 1: #region Defensive and misc stats
-	
+		draw_set_font(fnt_alagard);
+		draw_set_colour(c_white);
+			#region names
+				//Phys Defence
+		var xPos = 0;
+		var yPos = 0;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Physical Defense:");
+				//slash	
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Slash Defense:");
+				//pierce
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Pierce Defense:");
+				//blunt
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Blunt Defense:");
+				//fire (skip 1)
+		yPos++;
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Fire Resistance:");
+				//ice
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Ice Resistance:");
+				//lightning
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Lightning Resistance:");
+				//arcane
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Arcane Resistance:");
+				//light
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Light Resistance:");
+				//dark
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Dark Resistance:");
+				//bleed (skip 1)
+		yPos++;
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Bleed Resistance:");
+				//poison
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Poison Resistance:");
+				//toughness	(next column, reset y)
+		xPos++
+		yPos = 0;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Toughness:");
+				//alacrity
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Alacrity:");
+				//memory
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin+statusPage2DataXSep*xPos)*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,"Memory:");
+			#endregion
+			#region Data
+		draw_set_font(fnt_alagard);
+		draw_set_colour(c_white);
+		draw_set_halign(fa_right);
+				//physical defense
+		var xPos = 0;
+		var yPos = 0;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.physicalDefense));
+				//slash
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.slash]));
+				//pierce
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.pierce]));
+				//blunt
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.blunt]));
+				//fire (skip 1)
+		yPos++;
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.fire]));
+				//ice
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.ice]));
+				//lightning
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.lightning]));
+				//arcane
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.arcane]));
+				//light
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.light]));
+				//dark
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.damageResistances[damageType.dark]));
+				//bleed (skip 1)
+		yPos++;
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.specialResistances[specialType.bleed]));
+				//poison
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.specialResistances[specialType.poison]));
+				//toughness (new collumn, reset yPos)
+		yPos = 0;
+		xPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.toughness));
+				//alacrity
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.alacrity));
+				//memory
+		yPos++;
+		draw_text((statusTextbox4X1+statusPage2DataXMargin/2+statusPage2DataXSep*(xPos+1))*surfW,(statusTextbox4Y1+statusPage2DataYMargin+statusPage2DataYSep*yPos)*surfH,string(PlayerStats.memory));
+		
+				//reset
+		draw_set_halign(fa_left);
+			#endregion
 		break; #endregion
 	case 2: #region Equipment + abilities + combos/subtypes/actives
-	
+			#region Equipment
+		draw_set_font(fnt_alagard);
+				//Title
+		draw_text((statusTextbox4X1+statusPage3EquipTitleX)*surfW,(statusTextbox4Y1+statusPage3EquipTitleY)*surfH,"Equipment");
+				//setup array
+		var nameArray = [];
+		var iconArray = [];
+		var equipCache = ItemCache.equipment;
+					//head
+		var ind = 0;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.head],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.head],itemStats.icon);
+					//chest
+		ind++;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.chest],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.chest],itemStats.icon);
+					//hands
+		ind++;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.hands],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.hands],itemStats.icon);
+					//legs
+		ind++;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.legs],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.legs],itemStats.icon);
+					//weapon skip
+		ind++;
+		nameArray[ind] = "";
+		iconArray[ind] = noone;
+					//main 1
+		ind++;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.main1],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.main1],itemStats.icon);
+					//main 2
+		ind++;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.main2],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.main2],itemStats.icon);
+					//off 1
+		ind++;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.off1],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.off1],itemStats.icon);
+					//off 2
+		ind++;
+		nameArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.off2],itemStats.name);
+		iconArray[ind] = item_get_data(itemType.equipment, equipCache[? equipmentSlot.off2],itemStats.icon);
+					//rune skip
+		ind++;
+		nameArray[ind] = "";
+		iconArray[ind] = noone;
+					//runes
+		var runeCache = equipCache[? equipmentSlot.rune];
+		for(var i = 0; i < ds_list_size(runeCache); i++)
+		{
+			ind++
+			nameArray[ind] = item_get_data(itemType.rune, runeCache[| i],itemStats.name);
+			iconArray[ind] = item_get_data(itemType.rune, runeCache[| i],itemStats.icon);
+		}
+					//item skip
+		ind++;
+		nameArray[ind] = "";
+		iconArray[ind] = noone;
+					//items
+		var itemCache = equipCache[? equipmentSlot.item];
+		for(var i = 0; i < ds_list_size(itemCache); i++)
+		{
+			ind++
+			nameArray[ind] = item_get_data(itemType.item, itemCache[| i],itemStats.name);
+			iconArray[ind] = item_get_data(itemType.item, itemCache[| i],itemStats.icon);
+		}
+		
+		for(var i = 0; i < array_length_1d(nameArray); i++)
+		{
+			draw_text((statusTextbox4X1+statusPage3DataXMargin)*surfW,(statusTextbox4Y1+statusPage3DataYMargin+statusPage3DataYSep*i)*surfH,nameArray[i]);
+			if iconArray[i] != noone && iconArray[i] != undefined draw_sprite_ext(iconArray[i],0,(statusTextbox4X1+statusPage3EquipIconX)*surfW,(statusTextbox4Y1+statusPage3EquipIconY+statusPage3DataYSep*i)*surfH,statusPage3EquipIconScale,statusPage3EquipIconScale,0,c_white,1.0);
+		}
+		
+			#endregion
+			#region Abilities
+		draw_set_font(fnt_alagard);
+				//Title
+		draw_text((statusTextbox4X1+statusPage3AbilityTitleX)*surfW,(statusTextbox4Y1+statusPage3AbilityTitleY)*surfH,"Abilities");
+				//setup array
+		var nameArray = [];
+		var iconArray = [];
+		var abilityCache = AbilityCache.playerAbilities;
+					//combat
+		var ind = -1;	//to fix first loop starting ahead, done just to keep format consistent
+		for (var i = ds_map_find_first(abilityCache); i != undefined; i = ds_map_find_next(abilityCache,i))
+		{
+			var subCache = abilityCache[? i];
+			var added = false;
+			for (var j = ds_map_find_first(subCache); j != undefined; j = ds_map_find_next(subCache,j))
+			{
+				var abilityID = j;
+			    var numActivated = scr_player_ability_get(i,abilityID,playerAbilityStats.numberActivated);
+				var name = ability_get_data(i,abilityID,abilityStats.name);
+				var icon = ability_get_data(i,abilityID,abilityStats.icon);
+				repeat(numActivated)
+				{
+					ind++;
+					nameArray[ind] = name;
+					iconArray[ind] = icon;
+				}
+				var added = true;
+			}
+			if added
+			{
+					//skip 1 per category
+				ind++
+				nameArray[ind] = "";
+				iconArray[ind] = noone;
+			}
+		}
+		//ind--;		//fixes the last category draw along with this vv
+		//nameArray = array_copy(nameArray,0,nameArray,0,ind);
+		
+		for(var i = 0; i < array_length_1d(nameArray); i++)
+		{
+			draw_text((statusTextbox4X1+statusPage3DataXMargin+statusPage3DataXSep)*surfW,(statusTextbox4Y1+statusPage3DataYMargin+statusPage3DataYSep*i)*surfH,nameArray[i]);
+			if iconArray[i] != noone && iconArray[i] != undefined draw_sprite_ext(iconArray[i],0,(statusTextbox4X1+statusPage3EquipIconX+statusPage3DataXSep)*surfW,(statusTextbox4Y1+statusPage3EquipIconY+statusPage3DataYSep*i)*surfH,statusPage3EquipIconScale,statusPage3EquipIconScale,0,c_white,1.0);
+			else if nameArray[i] != "" draw_sprite_ext(spr_icon_item_TEMPLATE,0,(statusTextbox4X1+statusPage3EquipIconX+statusPage3DataXSep)*surfW,(statusTextbox4Y1+statusPage3EquipIconY+statusPage3DataYSep*i)*surfH,statusPage3EquipIconScale,statusPage3EquipIconScale,0,c_white,1.0);
+		}
+			#endregion
 		break; #endregion
 }
 #endregion

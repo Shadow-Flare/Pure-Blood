@@ -1,3 +1,8 @@
+scr_actor_ground_vStateMachine();
+
+var dataMap = zoneData;
+
+#region State Machine (based only on vPhase
 switch vPhase
 {
 	case vState.grounded:
@@ -8,26 +13,9 @@ switch vPhase
 			instance_destroy(zoneTouchID);
 			zoneTouchID = noone;
 		}
-			//transition
-		var isGrounded = false;
-		with objBlockParent
-		{
-			if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
-			{
-				isGrounded = true;
-				if object_is_ancestor(object_index,objPlatformParent) other.onPlatform = true;
-				else other.onPlatform = false;
-				break;
-			}
-		}
-		if !isGrounded
-		{
-			vPhase = vState.midAir;
-			onPlatform = false
-		}
 			//xSpd
 		xSpd-=xSpd/4;
-			//no ySpd change
+		//no ySpd change
 			//sprite
 		update_sprite_enemy(sprBloodHoundCorpseBodyIdle,0);
 		#endregion
@@ -38,33 +26,18 @@ switch vPhase
 		if zoneTouchID == noone
 		{
 			actorType = actorTypes.enemy;
-			zoneTouchID = scr_enemy_attack(zoneTouchFrameData,zoneTouchFollow,zoneTouchDuration,zoneTouchDamageData,statCache.damagePower,statCache.staggerPower,zoneTouchPierce,zoneTouchAnimation,zoneTouchHitSoundID,noone);
+			zoneTouchID = scr_enemy_attack(dataMap,statCache.damagePower,statCache.staggerPower);
 			actorType = actorTypes.corpse;
 		}
-			//transition
-		var isGrounded = false;
-		if sign(ySpd) != -1
-		{
-			with objBlockParent
-			{
-				if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
-				{
-					isGrounded = true;
-					other.vPhase = vState.grounded;
-					if object_is_ancestor(object_index,objPlatformParent) other.onPlatform = true;
-					else other.onPlatform = false;
-					break;
-				}
-			}
-		}
-			//ySpd
-		if !isGrounded ySpd += GameManager.grav;
-		if ySpd > maxFallSpeed ySpd = maxFallSpeed;
+			//xSpd
+		xSpd-=xSpd/60;
+		//no ySpd change
 			//sprite
 		update_sprite_enemy(sprBloodHoundCorpseBodyAirborne,0)
 		#endregion
 		break;
 }
+#endregion
 
 	//addional properties
 image_xscale = facing;

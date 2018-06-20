@@ -1,5 +1,7 @@
 event_inherited();
 
+forceInvert = false; //for simulation
+
 particleSurfFinal = noone;
 particleSurfSim = noone;
 
@@ -10,8 +12,11 @@ pSysLightning = noone;
 pSysArcane = noone
 pSysLight = noone;
 pSysDark = noone;
+
 pSysOveride = noone;
 pSysOveride2 = noone;
+
+pSysWeaponSummon = noone;
 
 icePixSurf = noone;
 firePixBackSurf = noone
@@ -23,3 +28,5 @@ lightPixSurf = noone;
 darkPixSurf = noone;
 
 overidePixSurf = noone;
+
+weaponSummonPixSurf = noone;

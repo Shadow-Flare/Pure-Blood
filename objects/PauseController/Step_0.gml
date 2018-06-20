@@ -26,7 +26,7 @@ switch menu
 		break;
 }
 
-#region endPause
+#region end Pause
 if endingPause
 {
 	ini_open("settings");
@@ -46,7 +46,7 @@ if endingPause
 }
 #endregion
 
-#region end game
+#region end Game
 if endingGame
 {
 	instance_destroy(AmbienceController);

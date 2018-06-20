@@ -58,25 +58,23 @@ if !click with instance_create_depth(projectileXStrt,projectileYStrt,depth,obj_g
 				//initializer
 		//hitData[? damageData.stagger] = 0;		//set later
 		//hitData[? damageData.knockback] = 0;		//set later
-		hitData[? damageData.slash] = 0;			//set later
-		hitData[? damageData.pierce] = 0;			//set later
-		hitData[? damageData.blunt] = 0;			//set later
-		hitData[? damageData.fire] = 0	//cache[? weaponDamageDetails.fire];
-		hitData[? damageData.ice] = 0	//cache[? weaponDamageDetails.ice];
-		hitData[? damageData.lightning] = 0	//cache[? weaponDamageDetails.lightning];
-		hitData[? damageData.arcane] = 0	//cache[? weaponDamageDetails.arcane];
-		hitData[? damageData.light] = 0	//cache[? weaponDamageDetails.light];
-		hitData[? damageData.dark] = 0	//cache[? weaponDamageDetails.dark];
+		hitData[? damageData.slash] = cache[? weaponDamageDetails.physical]/3;
+		hitData[? damageData.pierce] = 0;
+		hitData[? damageData.blunt] = 0;
+		hitData[? damageData.fire] = cache[? weaponDamageDetails.fire]/3;
+		hitData[? damageData.ice] = cache[? weaponDamageDetails.ice]/3;
+		hitData[? damageData.lightning] = cache[? weaponDamageDetails.lightning]/3;
+		hitData[? damageData.arcane] = cache[? weaponDamageDetails.arcane]/3;
+		hitData[? damageData.light] = cache[? weaponDamageDetails.light]/3;
+		hitData[? damageData.dark] = cache[? weaponDamageDetails.dark]/3;
 				//pure
-		hitData[? damageData.pure] = 0	//cache[? weaponDamageDetails.pure];
+		hitData[? damageData.pure] = cache[? weaponDamageDetails.pure]/3;
 				//status
-		hitData[? damageData.bleed] = cache[? weaponDamageDetails.bleed];
-		hitData[? damageData.poison] = cache[? weaponDamageDetails.poison];
+		hitData[? damageData.bleed] = cache[? weaponDamageDetails.bleed]/3;
+		hitData[? damageData.poison] = cache[? weaponDamageDetails.poison]/3;
 				//stagger & knockback
 		hitData[? damageData.stagger] = cache[? weaponDamageDetails.stagger] * subtype_get_stat(subID,offhandSubtypeStats.forMod);
 		hitData[? damageData.knockback] = cache[? weaponDamageDetails.stagger] * subtype_get_stat(subID,offhandSubtypeStats.forMod) * 0.55;	//May need tweaking
-			//get main type - initializer
-		mainType = noone;
 			//change all undefined to 0
 		var index = ds_map_find_first(hitData);
 		while (index != undefined)
@@ -85,31 +83,22 @@ if !click with instance_create_depth(projectileXStrt,projectileYStrt,depth,obj_g
 			index = ds_map_find_next(hitData,index);
 		}
 			//physical setup
-		var baseDam = cache[? weaponDamageDetails.arcane] * subtype_get_stat(subID,offhandSubtypeStats.damMod);
+		var baseDam = cache[? weaponDamageDetails.arcane] * subtype_get_stat(subID,offhandSubtypeStats.damMod)*(2/3);
 		var damType = subtype_get_stat(subID,offhandSubtypeStats.damType);
-		var highest = 0;
 		switch damType
 		{
-			case damageType.slash: hitData[? damageData.slash] = baseDam; break;
-			case damageType.pierce: hitData[? damageData.pierce] = baseDam; break;
-			case damageType.blunt: hitData[? damageData.blunt] = baseDam; break;
-			case damageType.fire: hitData[? damageData.fire] = baseDam; break;
-			case damageType.ice: hitData[? damageData.ice] = baseDam; break;
-			case damageType.lightning: hitData[? damageData.lightning] = baseDam; break;
-			case damageType.arcane: hitData[? damageData.arcane] = baseDam; break;
-			case damageType.light: hitData[? damageData.light] = baseDam; break;
-			case damageType.dark: hitData[? damageData.dark] = baseDam; break;
+			case damageType.slash: hitData[? damageData.slash] += baseDam; break;
+			case damageType.pierce: hitData[? damageData.pierce] += baseDam; break;
+			case damageType.blunt: hitData[? damageData.blunt] += baseDam; break;
+			case damageType.fire: hitData[? damageData.fire] += baseDam; break;
+			case damageType.ice: hitData[? damageData.ice] += baseDam; break;
+			case damageType.lightning: hitData[? damageData.lightning] += baseDam; break;
+			case damageType.arcane: hitData[? damageData.arcane] += baseDam; break;
+			case damageType.light: hitData[? damageData.light] += baseDam; break;
+			case damageType.dark: hitData[? damageData.dark] += baseDam; break;
 		}
 			//main type setup
-		if hitData[? damageData.slash] > highest {mainType = damageType.slash; highest = hitData[? damageData.slash];};
-		if hitData[? damageData.pierce] > highest {mainType = damageType.pierce; highest = hitData[? damageData.pierce];};
-		if hitData[? damageData.blunt] > highest {mainType = damageType.blunt; highest = hitData[? damageData.blunt];};
-		if hitData[? damageData.fire] > highest {mainType = damageType.fire; highest = hitData[? damageData.fire];};
-		if hitData[? damageData.ice] > highest {mainType = damageType.ice; highest = hitData[? damageData.ice];};
-		if hitData[? damageData.lightning] > highest {mainType = damageType.lightning; highest = hitData[? damageData.lightning];};
-		if hitData[? damageData.arcane] > highest {mainType = damageType.arcane; highest = hitData[? damageData.arcane];};
-		if hitData[? damageData.light] > highest {mainType = damageType.light; highest = hitData[? damageData.light];};
-		if hitData[? damageData.dark] > highest {mainType = damageType.dark; highest = hitData[? damageData.dark];};
+		mainType = scr_damageCache_get_mainType(hitData);
 	
 			//sfx
 		//audio_play_sound(snd_crossbow_fire,10,0);

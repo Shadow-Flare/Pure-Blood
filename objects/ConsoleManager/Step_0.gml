@@ -1,4 +1,58 @@
-//TYPER
+#region GAME STATE
+var gameStatePrev = gamePhase;
+gamePhase = GameManager.gameState;
+#endregion
+#region RESET HELP TEXT
+if gameStatePrev != gamePhase
+{
+	helpText = [];
+	helpTextM = [];
+	if gamePhase == GameState.mainMenu
+	{
+			//help text
+		helpText[ 0] = "Developer Commands:"
+		helpText[ 1] = "altStart <index or '?' for help>"
+			//messages
+		helpTextM[ 0] = "Details:"
+		helpTextM[ 1] = "Alternative start in a different location with different starting data, '?' gives a small summary of all available."
+	}
+	else
+	{
+			//help text
+		helpText[ 0] = "Developer Commands:"
+		helpText[ 1] = "goto <room Name>"
+		helpText[ 2] = "setroomspeed <integer > 0>"
+		helpText[ 3] = "clickhack"
+		helpText[ 4] = "shutdown"
+		helpText[ 5] = "purefps"
+		helpText[ 6] = "lightTester"
+		helpText[ 7] = "ambienceTester"
+		helpText[ 8] = "help   /   ?"
+		helpText[ 9] = ""
+		helpText[10] = "Cheats:"
+		helpText[11] = "giveallsubtypes"
+		helpText[12] = "giveallactives"
+		helpText[13] = "thereisnospoon"
+			//Messages
+		helpTextM[ 0] = "Details:"
+		helpTextM[ 1] = "Transfers you to <room Name>, likely will cause progression related bugs."
+		helpTextM[ 2] = "Changes room speed to <integer > 0>, likely will cause many timing related bugs, dont do this."
+		helpTextM[ 3] = "Enables/disables the ability to move character to the clicked location, likely will cause progression/collision related bugs."
+		helpTextM[ 4] = "Hard shutdown of the game, will not save, will not do anything"
+		helpTextM[ 5] = "Limit console text to only show the current fps, gives a more accurate impression since it disables other console background behaviours."
+		helpTextM[ 6] = "Toggle Light Tester object and interface"
+		helpTextM[ 7] = "Toggle Ambience Tester interface"
+		helpTextM[ 8] = "Enable/disable help menu"
+		helpTextM[ 9] = ""
+		helpTextM[10] = "Details:"
+		helpTextM[11] = "Player obtains all offhand subtypes."
+		helpTextM[12] = "Player obtains all offhand actives."
+		helpTextM[13] = "Spells have 0 cost, ammo is not needed or consumed"
+	}
+}
+#endregion
+
+#region TYPER
 key = keyboard_lastchar;
 if (key == "~" || key == "½" || key == "`" || key == "¡" || key == "/" )
 {
@@ -6,8 +60,8 @@ if (key == "~" || key == "½" || key == "`" || key == "¡" || key == "/" )
 	keyboard_string = "";
 	keyboard_lastchar = "";
 }
-
-//DO-ER
+#endregion
+#region DO-ER
 if consoleEnabled
 {	
 	if string_length(keyboard_string)>25 keyboard_string = string_delete(keyboard_string,26,20);
@@ -23,191 +77,279 @@ if consoleEnabled
 		else keyboard_string = "";
 	}
 	
-	if keyboard_lastkey == vk_enter
+	if keyboard_check_pressed(vk_enter)
 	{
 		commandStr = keyboard_string;
-		commandRes = "";	
-	//POTENTIAL COMMANDS GO HERE
-		//Dev Commands
-		#region GOTO ROOM
-		tmp = string_delete(keyboard_string,6,string_length(keyboard_string)-5)
-		if tmp == "goto " || tmp == "goto"
-		{
-			extra = string_delete(commandStr,1,5)
-			if commandStr == "goto " || commandStr == "goto"
-			{
-				commandRes = "please enter a room. (goto <roomName>)";
-			}
-			else if room_exists(asset_get_index(extra))
-			{
-				with instance_create_depth(objPlayer.x,objPlayer.y,0,objRoomTransition)
-				{
-					roomFrom = room;
-					roomTo = asset_get_index(other.extra)
-				}
-				commandRes = "moved to "+extra+" boss.";
-			}
-			else
-			{
-				commandRes = "'"+string(extra)+"' isnt a room boss.";
-			}
-		}
-		#endregion
-		#region SET ROOM SPEED
-		tmp = string_delete(commandStr,13,string_length(commandStr)-12)
-		if tmp == "setroomspeed " || tmp == "setroomspeed"
-		{
-			extra = string_digits(string_delete(commandStr,1,12))
-			if commandStr == "setroomspeed " || commandStr == "setroomspeed"
-			{
-				commandRes = "please enter a number. (greater than 0)";
-			}
-			else if extra == "default"
-			{
-				room_speed = defaultRoomSpeed
-				commandRes = "room speed changed to default ("+string(defaultRoomSpeed)+") boss.";
-			}
-			else if int64(extra) > 0
-			{
-				room_speed = int64(extra)
-				commandRes = "room speed changed to "+extra+" boss.";
-			}
-			else
-			{
-				commandRes = "not a valid input boss.";
-			}
-		}
-		#endregion
-		#region SET MOVE SPEED
-		tmp = string_delete(commandStr,13,string_length(commandStr)-12)
-		if tmp == "setmovespeed " || tmp == "setmovespeed"
-		{
-			extra = string_digits(string_delete(commandStr,1,12))
-			if commandStr == "setmovespeed " || commandStr == "setmovespeed"
-			{
-				commandRes = "please enter a number. (greater than 0 or 'default')";
-			}
-			else if extra == "default"
-			{
-				PlayerStats.moveSpeed = PlayerStats.defaultMoveSpeed
-				commandRes = "move speed changed to default ("+string(PlayerStats.defaultMoveSpeed)+") boss.";
-			}
-			else if int64(extra) > 0
-			{
-				PlayerStats.moveSpeed = int64(extra)
-				commandRes = "move speed changed to "+extra+" boss.";
-			}
-			else
-			{
-				commandRes = "not a valid input boss.";
-			}
-		}
-		#endregion
-		#region VSYNC TOGGLE
-		if commandStr == "purefps"
-		{
-			conPureFps = !conPureFps;
-			if conPureFps commandRes = "Pure Fps mode enabled."
-			else commandRes = "Pure Fps disabled."
-		}
-		#endregion
-		#region CLICK HACK TOGGLE
-		if commandStr == "clickhack"
-		{
-			conClickHack = !conClickHack;
-			if conClickHack commandRes = "click hack turned on. (UNSTABLE)";
-			else commandRes = "click hack turned off boss.";
-		}
-		#endregion
+		keyboard_string = "";
+		commandRes = "This is not a valid command, enter '?' for a list of all commands.";	
+		var altStartHelp = false;
+		//POTENTIAL COMMANDS GO HERE
 		#region HELP TOGGLE
 		if commandStr == "help" || commandStr == "?"
 		{
 			conHelpMenu = !conHelpMenu;
-			if conHelpMenu commandRes = "help menu enabled boss.";
-			else commandRes = "help menu disabled boss.";
+			if conHelpMenu commandRes = "help menu enabled.";
+			else commandRes = "help menu disabled.";
 		}
 		#endregion
-		#region LIGHT TESTER TOGGLE
-		if commandStr == "lightTester"
+		if gamePhase == GameState.mainMenu
 		{
-			if ambienceTester ambienceTester = false;
-			
-			if lightTester == noone || !instance_exists(lightTester)
+			//Dev Commands
+			#region ALTSTART
+			tmp = string_delete(commandStr,9,string_length(commandStr)-8)
+			if tmp == "altStart " || tmp == "altStart"
 			{
-				lightTester = instance_create_layer(0,0,"lay_lights",obj_light_test)
-				commandRes = "light tester enabled boss";
+				extra = string_delete(commandStr,1,9)
+				if commandStr == "altStart " || commandStr == "altStart"
+				{
+					commandRes = "please enter an index to start with. (altStart <index>)";
+				}
+				else if extra == "?"
+				{
+					altStartHelp = true;
+					commandRes = "Generating alternative start info.";
+				}
+				else if int64(extra) <= conAltStartMaxNum && int64(extra) >= 0
+				{
+					MainMenu.conAltStart = int64(extra);
+					commandRes = "Initialting alternative start "+extra+".";
+				}
+				else
+				{
+					commandRes = "'"+extra+"' isnt a valid alternative start.";
+				}
 			}
-			else
+			#endregion
+			//Cheats
+		}
+		else
+		{
+			//Dev Commands
+			#region GOTO ROOM
+			tmp = string_delete(commandStr,6,string_length(commandStr)-5)
+			if tmp == "goto " || tmp == "goto"
 			{
-				instance_destroy(lightTester);
-				lightTester = noone;
-				commandRes = "light tester disabled boss";
+				extra = string_delete(commandStr,1,5)
+				if commandStr == "goto " || commandStr == "goto"
+				{
+					commandRes = "please enter a room. (goto <roomName>)";
+				}
+				else if room_exists(asset_get_index(extra))
+				{
+					with instance_create_depth(objPlayer.x,objPlayer.y,0,objRoomTransition)
+					{
+						roomFrom = room;
+						roomTo = asset_get_index(other.extra)
+					}
+					commandRes = "moved to "+extra+".";
+				}
+				else
+				{
+					commandRes = "'"+string(extra)+"' isnt a room.";
+				}
 			}
-			
-			selection = 0;
-		}
-		#endregion
-		#region AMBIENCE TESTER TOGGLE
-		if commandStr == "ambienceTester"
-		{
-			if instance_exists(lightTester)
+			#endregion
+			#region SET ROOM SPEED
+			tmp = string_delete(commandStr,13,string_length(commandStr)-12)
+			if tmp == "setroomspeed " || tmp == "setroomspeed"
 			{
-				instance_destroy(lightTester);
-				lightTester = noone;
+				extra = string_digits(string_delete(commandStr,1,12))
+				if commandStr == "setroomspeed " || commandStr == "setroomspeed"
+				{
+					commandRes = "please enter a number. (greater than 0)";
+				}
+				else if extra == "default"
+				{
+					room_speed = defaultRoomSpeed
+					commandRes = "room speed changed to default ("+string(defaultRoomSpeed)+").";
+				}
+				else if int64(extra) > 0
+				{
+					room_speed = int64(extra)
+					commandRes = "room speed changed to "+extra+".";
+				}
+				else
+				{
+					commandRes = "not a valid input.";
+				}
 			}
-			ambienceTester = !ambienceTester;
-			if ambienceTester commandRes = "ambience tester enabled boss";
-			else commandRes = "ambience tester disabled boss";
+			#endregion
+			#region SET MOVE SPEED
+			tmp = string_delete(commandStr,13,string_length(commandStr)-12)
+			if tmp == "setmovespeed " || tmp == "setmovespeed"
+			{
+				extra = string_digits(string_delete(commandStr,1,12))
+				if commandStr == "setmovespeed " || commandStr == "setmovespeed"
+				{
+					commandRes = "please enter a number. (greater than 0 or 'default')";
+				}
+				else if extra == "default"
+				{
+					PlayerStats.moveSpeed = PlayerStats.defaultMoveSpeed
+					commandRes = "move speed changed to default ("+string(PlayerStats.defaultMoveSpeed)+").";
+				}
+				else if int64(extra) > 0
+				{
+					PlayerStats.moveSpeed = int64(extra)
+					commandRes = "move speed changed to "+extra+".";
+				}
+				else
+				{
+					commandRes = "not a valid input.";
+				}
+			}
+			#endregion
+			#region VSYNC TOGGLE
+			if commandStr == "purefps"
+			{
+				conPureFps = !conPureFps;
+				if conPureFps commandRes = "Pure Fps mode enabled."
+				else commandRes = "Pure Fps disabled."
+			}
+			#endregion
+			#region CLICK HACK TOGGLE
+			if commandStr == "clickhack"
+			{
+				conClickHack = !conClickHack;
+				if conClickHack commandRes = "click hack turned on. (UNSTABLE)";
+				else commandRes = "click hack turned off.";
+			}
+			#endregion
+			#region LIGHT TESTER TOGGLE
+			if commandStr == "lightTester"
+			{
+				if ambienceTester ambienceTester = false;
 			
-			selection = 1;
-			selectedPage = 0;
+				if lightTester == noone || !instance_exists(lightTester)
+				{
+					lightTester = instance_create_layer(0,0,"lay_lights",obj_light_test)
+					commandRes = "light tester enabled.";
+				}
+				else
+				{
+					instance_destroy(lightTester);
+					lightTester = noone;
+					commandRes = "light tester disabled.";
+				}
+			
+				selection = 0;
+			}
+			#endregion
+			#region AMBIENCE TESTER TOGGLE
+			if commandStr == "ambienceTester"
+			{
+				if instance_exists(lightTester)
+				{
+					instance_destroy(lightTester);
+					lightTester = noone;
+				}
+				ambienceTester = !ambienceTester;
+				if ambienceTester commandRes = "ambience tester enabled.";
+				else commandRes = "ambience tester disabled.";
+			
+				selection = 1;
+				selectedPage = 0;
+			}
+			#endregion
+			#region SHUTDOWN
+			if commandStr == "hardshutdown"
+			{
+				game_end()
+			}
+			//Round-up
+			keyboard_string = "";
+			keyboard_lastkey = "";
+			selectIndex = 0;
+			if commandRes == "" commandRes = string(tmp)+"?";
+			#endregion
+			//Cheats
+			#region GIVE ALL SUBTYPES
+			if commandStr == "giveallsubtypes"
+			{
+				scr_player_givealloffhandsubtypes();
+				commandRes = "All offhands given."
+			}
+			#endregion
+			#region GIVE ALL ACTIVES
+			if commandStr == "giveallactives"
+			{
+				scr_player_giveallactiveabilities();
+				commandRes = "All actives given."
+			}
+			#endregion
+			#region KILL ALL ENEMIES
+			if commandStr == "iambecomedeath"
+			{
+				var hitData = ds_map_create();
+				scr_create_damageCache(hitData,0,0,0,0,0,0,0,0,0,0,0,0);
+				hitData[? damageData.pure] = 999;
+				with objEnemyParent scr_hit(noone,noone,hitData,noone,noone,noone);
+				ds_map_destroy(hitData);
+				commandRes = "destroyer of worlds."
+			}
+			#endregion
+			#region NO SPELL COST
+			if commandStr == "thereisnospoon"
+			{
+				GameManager.thereisnospoon = !GameManager.thereisnospoon;
+				if GameManager.thereisnospoon commandRes = "No spell cost mode enabled."
+				else commandRes = "No spell cost mode disabled."
+			}
+			#endregion
 		}
-		#endregion
-		#region SHUTDOWN
-		if commandStr == "hardshutdown"
-		{
-			game_end()
-		}
-		//Round-up
-		keyboard_string = "";
-		keyboard_lastkey = "";
-		selectIndex = 0;
-		if commandRes == "" commandRes = string(tmp)+"?";
-		#endregion
-		//Cheats
-		#region NO SPELL COST
-		if commandStr == "thereisnospoon"
-		{
-			GameManager.thereisnospoon = !GameManager.thereisnospoon;
-			if GameManager.thereisnospoon commandRes = "No spell cost mode enabled."
-			else commandRes = "No spell cost mode disabled."
-		}
-		#endregion
 	//HISTORY LOGGER
-		for(var i=0; i<7;i++)
+		for(var i=0; i<maxHistory;i++)
 		{
-			if i!= 6 history[6-i] = history[5-i];
+			if i!= maxHistory-1 history[maxHistory-1-i] = history[maxHistory-2-i];
 			else history[0] = commandStr;
-			if i!= 6 historyM[6-i] = historyM[5-i];
+			if i!= maxHistory-1 historyM[maxHistory-1-i] = historyM[maxHistory-2-i];
 			else historyM[0] = commandRes;
 		}
+	//ALTSTART HELP GENERATION
+		if altStartHelp
+		{
+			skipNum = ceil((conAltStartMaxNum+1)/2)+1;
+			repeat skipNum for(var i=0; i<maxHistory;i++)
+			{
+				if i!= maxHistory-1 history[maxHistory-1-i] = history[maxHistory-2-i];
+				else history[0] = "";
+				if i!= maxHistory-1 historyM[maxHistory-1-i] = historyM[maxHistory-2-i];
+				else historyM[0] = "";
+			}
+			history[0] =		"0: New game";
+			historyM[0] =		"1: Arena";
+			history[1] =		"2: Horde Mode";
+			historyM[1] =		"3: New game 2, alternative area";
+			history[2] =		"4: New game 3, alternative area";
+			historyM[2] =		"5: New game 4, Main game, start at town with max gear";
+		}
+		#region command log
+		ini_open("settings");
+			for(var i = 0; i < array_length_1d(history); i++)
+			{
+				ini_write_string("consoleHistory","commandHistory"+string(i),history[i]);
+				ini_write_string("consoleHistory","messageHistory"+string(i),historyM[i]);
+			}
+		ini_close();
+		#endregion
 	}
 }
+#endregion
 
-//SHUTDOWN KEY
+#region SHUTDOWN KEY
 if keyboard_check_pressed(vk_end)
 {
 	game_end();
 }
-
-//CLICK HACK CODE
+#endregion
+#region CLICK HACK CODE
 if conClickHack == 1 && mouse_check_button_pressed(mb_left)
 {
 	objPlayer.x = mouse_x;
 	objPlayer.y = mouse_y;
 }
-
-//LIGHT TESTER CODE
+#endregion
+#region LIGHT TESTER CODE
 if lightTester != noone
 {
 	if instance_exists(lightTester)
@@ -291,8 +433,8 @@ if lightTester != noone
 	}
 	else lightTester = noone;
 }
-
-//AMBIENCE TESTER
+#endregion
+#region AMBIENCE TESTER
 if ambienceTester
 {
 	var shiftV = keyboard_check_pressed(vk_numpad8)-keyboard_check_pressed(vk_numpad2);
@@ -401,8 +543,8 @@ if ambienceTester
 		}
 	}
 }
-
-//EXTRAS
+#endregion
+#region MANAGE LOCKON DATA
 if instance_exists(objPlayer)
 {
 	switch objPlayer.lockOnType
@@ -424,3 +566,4 @@ if instance_exists(objPlayer)
 		with objPlayer.lockOnTarget other.conLockOnTarget = object_index
 	}
 }
+#endregion

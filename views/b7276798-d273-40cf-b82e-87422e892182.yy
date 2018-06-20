@@ -10,7 +10,7 @@
         "e2daab02-764d-428f-8ef4-59ecaa4d0239"
     ],
     "filterType": "GMTileSet",
-    "folderName": "Forest Trees Base",
+    "folderName": "Forest Trees",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

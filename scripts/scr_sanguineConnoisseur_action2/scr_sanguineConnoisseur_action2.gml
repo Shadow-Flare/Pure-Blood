@@ -61,7 +61,7 @@ switch subPhase
 		{
 			phase = state.base;
 			phaseTimer = 0;
-			scr_enemy_ground_base_subPhaseDeterminer();
+			scr_actor_ground_base_subPhaseDeterminer();
 		}
 			//xSpd
 		xSpd -= xSpd/4;

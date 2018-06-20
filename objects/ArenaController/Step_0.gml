@@ -28,7 +28,11 @@ if !instance_exists(ArenaSettingsManager) && !instance_exists(PauseController)
 			if room == rmArena1 || room == rmArena4 {var spawnX = 160+random_range(-25,25); var spawnY = -32;}
 	   else if room == rmArena2 || room == rmArena3 {var spawnX = 272+random_range(-50,50); var spawnY = -32;}
 	   else {var spawnX = 0; var spawnY = 0;}
-			instance_create_layer(spawnX,spawnY,layer_get_id("lay_entities"),enemy);
+	   
+			with instance_create_layer(spawnX,spawnY,layer_get_id("lay_entities"),enemy)
+			{
+				if variable_instance_exists(id,"aiIdleHeight") aiIdleHeight = aiIdleHeightMin;
+			}
 			spawnTimer = 0;
 		}
 		if spawnTimer != -1 spawnTimer++;

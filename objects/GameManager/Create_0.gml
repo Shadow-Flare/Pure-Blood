@@ -19,6 +19,8 @@ enum groundTypes {stone, grass};
 
 enum battleState {peace, battle};
 
+enum interactableVariant {none, worldID, worldIDand}
+
 // Initialize Game
 gameState = GameState.mainMenu;
 pauseState = PauseState.normal;
@@ -32,13 +34,13 @@ checkpointMap = ds_map_create();
 	checkpointMap[? 1] = rmRoomX107Y500;
 pauseSplash = noone;
 
-//screen
+//screen & misc
 ini_open("settings");
-	vSyncToggle = ini_read_real("effects","vsync",true);
+	vSyncToggle = ini_read_real("effects","vsync",false);
+	cutsceneDebug = ini_read_real("debug","cutsceneDebug",false);
 	display_reset(0,vSyncToggle);
 ini_close();
 application_surface_draw_enable(0);
-window_set_fullscreen(1);
 window_set_cursor(cr_none);
 
 monitorW = display_get_width();
@@ -50,7 +52,13 @@ GuiRY = displayResolutionY/100;
 
 appSurfYBorder = 12;
 
-surface_resize(application_surface,displayResolutionX,displayResolutionY)
+if surface_get_width(application_surface) != displayResolutionX || surface_get_height(application_surface) != displayResolutionY
+{
+	surface_resize(application_surface,displayResolutionX,displayResolutionY);
+	show_debug_message("Application Surface Size Reset:");
+	show_debug_message("Width: "+string(displayResolutionX));
+	show_debug_message("Height: "+string(displayResolutionY));
+}
 appSurfModX = monitorW/displayResolutionX;
 appSurfModY = (monitorH-appSurfYBorder*2)/displayResolutionY;
 

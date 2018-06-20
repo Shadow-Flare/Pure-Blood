@@ -1,6 +1,6 @@
 if zoneID == noone
 {
-	zoneID = scr_enemy_attack(zoneFrameData,zoneFollow,zoneDuration,zoneDamageData,1,1,zonePierce,sprite_index,zoneHitSoundID,noone);
+	zoneID = scr_enemy_attack(zoneData,1,1);
 	with zoneID
 	{
 		image_xscale = other.image_xscale;

@@ -1,5 +1,4 @@
-var tmpID = 17;
-tmpID--; controllers[tmpID] = ConsoleManager;
+var tmpID = 16;
 tmpID--; controllers[tmpID] = HudManager;
 tmpID--; controllers[tmpID] = TargetManager;
 tmpID--; controllers[tmpID] = PlayerStats;

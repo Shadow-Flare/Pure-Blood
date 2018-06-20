@@ -2,6 +2,8 @@ event_inherited();
 
 timer = 0;
 
+hasBeenHit = false;
+
 	//absorb data
 //absorbSound = ReflectAbsorbSound;
 //absorbSprite = ReflectAbsorbSprite;

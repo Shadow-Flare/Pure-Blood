@@ -6,12 +6,6 @@ switch subPhase
 	case subState.actionSub1:
 			//blocking
 		hitPhase = hitState.blocking;
-			//damage zone
-		if action2ZoneID == noone
-		{
-			action2ZoneID = scr_enemy_attack(action2ZoneFrameData,action2ZoneFollow,action2ZoneDuration,action2ZoneDamageData,statCache.damagePower,statCache.staggerPower,action2ZonePierce,action2ZoneAnimation,action2ZoneHitSoundID,noone);
-			if action2ZoneAttackSoundID != noone audio_play_sound(action2ZoneAttackSoundID,10,0);
-		}
 			//transtitions
 				//transition to sub2 before attacking
 		if hasBlocked
@@ -21,6 +15,17 @@ switch subPhase
 			subPhase = subState.actionSub2;
 			subPhaseTimer = 0;
 		}
+				//attack if close
+		else if instance_exists(target) && abs(target.x-x) < action2AttackRangeSub1
+		{
+			lastAttackHasHit = false;
+			phase = state.base;
+			scr_actor_ground_base_subPhaseDeterminer();
+			subPhaseTimer = 0;
+			phaseTimer = 0;
+			actionHardCooldownTimer = -1;
+			if abs(target.y-y) < 32	driveAction = 1;
+		}
 				//reset to base
 		else if subPhaseTimer >= round(action2DurationSub1*room_speed) || sign(target.x-x) != facing
 		{
@@ -28,7 +33,7 @@ switch subPhase
 			hasBlocked = false;
 			hitPhase = hitState.normal;
 			phase = state.base;
-			scr_enemy_ground_base_subPhaseDeterminer();
+			scr_actor_ground_base_subPhaseDeterminer();
 			subPhaseTimer = 0;
 			phaseTimer = 0;
 		}
@@ -49,9 +54,8 @@ switch subPhase
 		if subPhaseTimer >= round(action2DurationSub2*room_speed)
 		{
 			lastAttackHasHit = false;
-			hitPhase = hitState.normal;
 			phase = state.base;
-			scr_enemy_ground_base_subPhaseDeterminer();
+			scr_actor_ground_base_subPhaseDeterminer();
 			subPhaseTimer = 0;
 			phaseTimer = 0;
 			actionHardCooldownTimer = -1;

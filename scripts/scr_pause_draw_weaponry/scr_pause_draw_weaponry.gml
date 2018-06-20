@@ -53,7 +53,7 @@ if abs(weaponryClassDisplaySy-sY) <= 0.005 weaponryClassDisplaySy = sY
 			surface_set_target(weaponryClassDetailSurfStencil);
 				draw_clear(c_white);
 				gpu_set_blendmode(bm_subtract)
-					draw_rectangle(weaponryClassDetailSurfBorderWidth,weaponryClassDetailSurfBorderWidth,weaponryClassTextboxWidth*surfW-weaponryClassDetailSurfBorderWidth,weaponryClassTextboxHeight*surfH+y2Mod-weaponryClassDetailSurfBorderWidth,false);
+					draw_rectangle(weaponryClassDetailSurfBorderWidth,weaponryClassDetailSurfBorderWidth,weaponryClassTextboxWidth*surfW-weaponryClassDetailSurfBorderWidth,weaponryClassTextboxHeight*surfH+y2Mod-weaponryClassDetailSurfBorderWidth/4,false);
 				gpu_set_blendmode(bm_normal);
 			surface_reset_target();
 				
@@ -65,7 +65,7 @@ if abs(weaponryClassDisplaySy-sY) <= 0.005 weaponryClassDisplaySy = sY
 	#region Main Weapons	
 				if tempIsMain
 				{
-					draw_set_font(fnt_menu);
+					draw_set_font(weaponryClassNameFont);
 					draw_text(weaponryClassDetailSurfBorderWidth,weaponryClassDetailSurfBorderWidth,class_get_stat(class,weaponClassStats.name));
 					draw_text((weaponryClassTextboxWidth*surfW-weaponryClassDetailSurfBorderWidth)*0.6,weaponryClassDetailSurfBorderWidth,"Exp: "+string(classCache[? playerClassStats.xp])+"/"+string(classCache[? playerClassStats.xpNeeded]));
 					draw_set_halign(fa_right);
@@ -119,7 +119,8 @@ if abs(weaponryClassDisplaySy-sY) <= 0.005 weaponryClassDisplaySy = sY
 	#region Offhand Weapons
 				else
 				{
-					draw_set_font(fnt_menu);
+						//surfaces
+					draw_set_font(weaponryClassNameFont);
 					draw_text(weaponryClassDetailSurfBorderWidth,weaponryClassDetailSurfBorderWidth,class_get_stat(class,weaponClassStats.name));
 					draw_text((weaponryClassTextboxWidth*surfW-weaponryClassDetailSurfBorderWidth)*0.6,weaponryClassDetailSurfBorderWidth,"Exp: "+string(classCache[? playerClassStats.xp])+"/"+string(classCache[? playerClassStats.xpNeeded]));
 					draw_set_halign(fa_right);
@@ -129,10 +130,48 @@ if abs(weaponryClassDisplaySy-sY) <= 0.005 weaponryClassDisplaySy = sY
 				
 					if slotExpanded && sY == i
 					{
+						//draw slots
+							//subtypes
+								//initials
+						var initialX = weaponryClassDetailSurfBorderWidth+weaponrySubtypeX*surfW;
+						var initialY = weaponryClassDetailSurfBorderWidth+weaponrySubtypeY*surfH;
+						var sepX = weaponrySubtypeXSep*surfW;
+						var sepY = weaponrySubtypeYSep*surfH;
+						
+						for (var j = 0; j < 12; j++)
+						{
+							var xInd = j%weaponrySubtypeIconRowSize;
+							var yInd = floor(j/weaponrySubtypeIconRowSize);
+							
+							var blend = c_gray;
+							if j == sExpX && weaponryGroundComboSelected blend = c_white;
+							draw_sprite_ext(spr_weaponry_slot,0,initialX+sepX*xInd,initialY+sepY*yInd,weaponrySubtypeIconScale,weaponrySubtypeIconScale,0,blend,1.0);
+						}
+							//actives
+								//initials
+						var initialX = weaponryClassDetailSurfBorderWidth+weaponryActiveX*surfW;
+						var initialY = weaponryClassDetailSurfBorderWidth+weaponryActiveY*surfH;
+						var sepX = weaponryActiveXSep*surfW;
+						var sepY = weaponryActiveYSep*surfH;
+						
+						for (var j = 0; j < 12; j++)
+						{
+							var xInd = j%weaponryActiveIconRowSize;
+							var yInd = floor(j/weaponryActiveIconRowSize);
+							
+							var blend = c_gray;
+							if j == sExpX && !weaponryGroundComboSelected blend = c_white;
+							draw_sprite_ext(spr_weaponry_slot,0,initialX+sepX*xInd,initialY+sepY*yInd,weaponryActiveIconScale,weaponryActiveIconScale,0,blend,1.0);
+						}
+						
 						//subtypes
 							//title
 						var strH = string_height(" ");
+						draw_set_font(fnt_alagard);
 						draw_text(weaponryClassDetailSurfBorderWidth+weaponrySubtypeTitleX*surfW,weaponryClassDetailSurfBorderWidth+weaponrySubtypeTitleY*surfH,"Subtype");
+						draw_set_halign(fa_right);
+							draw_text((weaponryClassTextboxWidth-weaponrySubtypeTitleX)*surfW-weaponryClassDetailSurfBorderWidth,weaponryClassDetailSurfBorderWidth+weaponrySubtypeTitleY*surfH,"Memory: "+string(weaponrySubtypeMemoryUsage)+"/"+string(weaponryMaxMemory));
+						draw_set_halign(fa_left);
 							//slots
 								//initials
 						var initialX = weaponryClassDetailSurfBorderWidth+weaponrySubtypeX*surfW;
@@ -142,25 +181,41 @@ if abs(weaponryClassDisplaySy-sY) <= 0.005 weaponryClassDisplaySy = sY
 						
 						var count = 0;
 								//get data and draw
-						for(var i = 0; i < ds_list_size(weaponryComboList); i++)
+						for(var j = 0; j < ds_list_size(weaponrySubtypeList); j++)
 						{
 							var xInd = count%weaponrySubtypeIconRowSize;
 							var yInd = floor(count/weaponrySubtypeIconRowSize);
+							var subtypeID = weaponrySubtypeList[| j];
+							var indexNum = weaponrySubtypeIndexList[| j];
 							//var selectX = sExpX%weaponrySubtypeIconRowSize;
 							//var selectY = floor(sExpX/weaponrySubtypeIconRowSize);
 							
 							var blend = c_gray;
-							if count == sExpX && weaponryGroundComboSelected blend = c_white;
-							if weaponryComboList[| i] != noone var subIcon = subtype_get_stat(weaponryComboList[| i],offhandSubtypeStats.icon);
+							if indexNum != -1 blend = c_white;
+							if subtypeID != noone var subIcon = subtype_get_stat(subtypeID,offhandSubtypeStats.icon);
 							else var subIcon = spr_icon_unknown;
+							
 							draw_sprite_ext(subIcon,0,initialX+sepX*xInd,initialY+sepY*yInd,weaponrySubtypeIconScale,weaponrySubtypeIconScale,0,blend,1.0);
+							if count == sExpX && weaponryGroundComboSelected draw_sprite_ext(spr_icon_select_2,0,initialX+sepX*xInd,initialY+sepY*yInd,weaponrySubtypeIconScale,weaponrySubtypeIconScale,0,c_white,1.0);
+							draw_set_font(fnt_small_pixel);
+							draw_set_halign(fa_right);
+								if indexNum != -1 draw_text(initialX+sprite_get_width(spr_icon_template_2)*weaponrySubtypeIconScale+sepX*xInd,initialY+sepY*yInd,string(indexNum+1));
+							draw_set_valign(fa_bottom);
+								if subtypeID != noone draw_text(initialX+sprite_get_width(spr_icon_template_2)*weaponrySubtypeIconScale+sepX*xInd,initialY+sprite_get_height(spr_icon_template_2)*weaponrySubtypeIconScale+sepY*yInd,string(subtype_get_stat(subtypeID,offhandSubtypeStats.memoryUsage)));		//change this
+							draw_set_halign(fa_left);
+							draw_set_valign(fa_top);
+							
 							count++;
 						}
 						
 						//Actives
 							//title
 						var strH = string_height(" ");
+						draw_set_font(fnt_alagard);
 						draw_text(weaponryClassDetailSurfBorderWidth+weaponryActiveTitleX*surfW,weaponryClassDetailSurfBorderWidth+weaponryActiveTitleY*surfH,"Active Abilities");
+						draw_set_halign(fa_right);
+							draw_text((weaponryClassTextboxWidth-weaponryActiveTitleX)*surfW-weaponryClassDetailSurfBorderWidth,weaponryClassDetailSurfBorderWidth+weaponryActiveTitleY*surfH,"Memory: "+string(weaponryActiveMemoryUsage)+"/"+string(weaponryMaxMemory));
+						draw_set_halign(fa_left);
 							//slots
 								//initials
 						var initialX = weaponryClassDetailSurfBorderWidth+weaponryActiveX*surfW;
@@ -170,18 +225,30 @@ if abs(weaponryClassDisplaySy-sY) <= 0.005 weaponryClassDisplaySy = sY
 						
 						var count = 0;
 								//get data and draw
-						for(var i = 0; i < ds_list_size(weaponryComboList); i++)
+						for(var j = 0; j < ds_list_size(weaponryActiveList); j++)
 						{
 							var xInd = count%weaponryActiveIconRowSize;
 							var yInd = floor(count/weaponryActiveIconRowSize);
+							var activeID = weaponryActiveList[| j];
+							var indexNum = weaponryActiveIndexList[| j];
 							//var selectX = sExpX%weaponryActiveIconRowSize;
 							//var selectY = floor(sExpX/weaponryActiveIconRowSize);
 							
 							var blend = c_gray;
-							if count == sExpX && !weaponryGroundComboSelected blend = c_white;
-							if weaponryComboList[| i] != noone var subIcon = activeAbility_get_stat(weaponryComboList[| i],activeAbilityStats.icon);
+							if indexNum != -1 blend = c_white;
+							if activeID != noone var subIcon = activeAbility_get_stat(activeID,activeAbilityStats.icon);
 							else var subIcon = spr_icon_unknown;
+							
 							draw_sprite_ext(subIcon,0,initialX+sepX*xInd,initialY+sepY*yInd,weaponryActiveIconScale,weaponryActiveIconScale,0,blend,1.0);
+							if count == sExpX && !weaponryGroundComboSelected draw_sprite_ext(spr_icon_select_2,0,initialX+sepX*xInd,initialY+sepY*yInd,weaponryActiveIconScale,weaponryActiveIconScale,0,c_white,1.0);
+							draw_set_font(fnt_small_pixel);
+							draw_set_halign(fa_right);
+								if indexNum != -1 draw_text(initialX+sprite_get_width(spr_icon_template_2)*weaponryActiveIconScale+sepX*xInd,initialY+sepY*yInd,string(indexNum+1));
+							draw_set_valign(fa_bottom);
+								if activeID != noone draw_text(initialX+sprite_get_width(spr_icon_template_2)*weaponryActiveIconScale+sepX*xInd,initialY+sprite_get_height(spr_icon_template_2)*weaponryActiveIconScale+sepY*yInd,string(activeAbility_get_stat(activeID,activeAbilityStats.memoryUsage)));		//change this
+							draw_set_halign(fa_left);
+							draw_set_valign(fa_top);
+							
 							count++;
 						}
 					}
@@ -362,7 +429,8 @@ if slotExpanded
 	{
 		#region Offhands
 				//initial
-			var targetID = weaponryComboList[| sExpX];
+			if weaponryGroundComboSelected var targetID = weaponrySubtypeList[| sExpX];
+			else var targetID = weaponryActiveList[| sExpX];
 		
 			if targetID != noone && targetID != undefined
 			{
@@ -395,15 +463,17 @@ if slotExpanded
 						part_system_clear(ParticleController.pSysOveride); part_system_clear(ParticleController.pSysOveride2);
 						instance_destroy(weaponryBoundEffectSim);
 						instance_activate_object(Camera);
-						weaponryBoundEffectSim = instance_create_depth(camera_get_view_x(Camera.cam)+animX/6,camera_get_view_y(Camera.cam)+animY/6,0,obj_effect_persistent_simulation);
+						weaponryBoundEffectSim = instance_create_depth(animX/4,animY/4,ParticleController.depth+1,obj_effect_persistent_simulation);
+						
 						with weaponryBoundEffectSim
 						{
 							boundEffect = targetEffect;
 							switch class
 							{
 								case weaponClass.crossbow:
-									radius = 1.2;
-									intensity = 0.3;
+									x+=other.weaponryDetailsAnimationOffScale/4/2;
+									radius = 2.4;
+									intensity = 0.6;
 									break;
 								case weaponClass.grimoire:
 									radius = 4;
@@ -418,45 +488,10 @@ if slotExpanded
 					with ParticleController 
 					{
 						var effectID = other.weaponryBoundEffectSim;
-						surface_set_target(overidePixSurf);
-							draw_clear_alpha(c_black,0);
-							part_system_drawit(pSysOveride2);
-						surface_reset_target();
-						surface_set_target(particleSurfSim);
-							draw_clear_alpha(c_black,0);
-								if !effectID.forceInvert
-								{
-									if surface_exists(overidePixSurf) draw_surface(overidePixSurf,0,0);
-								}
-								else
-								{
-									shader_set(shd_invert);
-
-										if surface_exists(overidePixSurf) draw_surface(overidePixSurf,0,0);
-									shader_reset();
-								}
-						surface_reset_target();
+						var toForce = effectID.forceInvert;
+						forceInvert = !toForce;
 				
-						surface_set_target(overidePixSurf);
-							draw_clear_alpha(c_black,0);
-							part_system_drawit(pSysOveride);
-						surface_reset_target();
-						surface_set_target(particleSurfSim);
-							//draw_clear_alpha(c_black,0);
-								if !effectID.forceInvert
-								{
-									if surface_exists(overidePixSurf) draw_surface(overidePixSurf,0,0);
-								}
-								else
-								{
-									shader_set(shd_invert);
-
-										if surface_exists(overidePixSurf) draw_surface(overidePixSurf,0,0);
-									shader_reset();
-								}
-						surface_reset_target();
-				
-						draw_surface_ext(particleSurfSim,0,0,6,6,0,c_white,1.0);
+						draw_surface_ext(particleSurfSim,0,0,4,4,0,c_white,1.0);
 					}
 				}
 						//base sprite
@@ -466,14 +501,63 @@ if slotExpanded
 					weaponryDetailsAnimationTimer++;
 					var frameTimer = weaponryDetailsAnimationTimer%((animDuration)*room_speed);
 					var frameStep = round(animDuration*room_speed/sprite_get_number(targetAnim));
+					
+					if weaponryGroundComboSelected var scale = weaponryDetailsAnimationOffScale;
+					else var scale = weaponryDetailsAnimationOffScale;
+					
 					draw_sprite_ext(targetAnim,floor(frameTimer/frameStep),animX,animY,weaponryDetailsAnimationOffScale,weaponryDetailsAnimationOffScale,0,c_white,1.0);
 				}
 					//description
-		
+				if weaponryGroundComboSelected var desc = subtype_get_stat(targetID,offhandSubtypeStats.description);
+				else var desc = activeAbility_get_stat(targetID,activeAbilityStats.description);
+				draw_set_font(weaponryDetailsDescriptionFont);
+				draw_text_ext(weaponryDetailsDescriptionX*surfW,weaponryDetailsDescriptionY*surfH,desc,weaponryDetailsDescriptionSep*surfH,weaponryDetailsDescriptionWidth*surfW);	
 					//stats
-						//mana and/or ammo cost
-			
-						//power mod
+				ds_list_clear(weaponryDetailsDataList);
+				ds_list_clear(weaponryDetailsDataValuesList);
+				if weaponryGroundComboSelected
+				{
+					ds_list_add(weaponryDetailsDataList,"Damage Modifier:");
+					ds_list_add(weaponryDetailsDataList,"Damage Type:");
+					ds_list_add(weaponryDetailsDataList,"Force Modifier:");
+					ds_list_add(weaponryDetailsDataList,"Knockback:");
+	
+					ds_list_add(weaponryDetailsDataValuesList,subtype_get_stat(targetID,offhandSubtypeStats.damMod));
+					ds_list_add(weaponryDetailsDataValuesList,subtype_get_stat(targetID,offhandSubtypeStats.damType));
+					ds_list_add(weaponryDetailsDataValuesList,subtype_get_stat(targetID,offhandSubtypeStats.forMod));
+					ds_list_add(weaponryDetailsDataValuesList,subtype_get_stat(targetID,offhandSubtypeStats.knockback));
+					
+					if subtype_get_stat(targetID,offhandSubtypeStats.manaCost) != 0
+					{
+						ds_list_add(weaponryDetailsDataList,"Mana Cost:");
+						ds_list_add(weaponryDetailsDataValuesList,subtype_get_stat(targetID,offhandSubtypeStats.manaCost));
+					}
+					if subtype_get_stat(targetID,offhandSubtypeStats.ammoItem) != noone
+					{
+						ds_list_add(weaponryDetailsDataList,"Ammunition:");
+						ds_list_add(weaponryDetailsDataValuesList,item_get_data(itemType.item,subtype_get_stat(targetID,offhandSubtypeStats.ammoItem),itemStats.name));
+					}
+				}
+				else
+				{
+					if subtype_get_stat(targetID,offhandSubtypeStats.manaCost) != 0
+					{
+						ds_list_add(weaponryDetailsDataList,"Mana Cost:");
+						ds_list_add(weaponryDetailsDataValuesList,subtype_get_stat(targetID,offhandSubtypeStats.manaCost));
+					}
+				}
+						//draw
+				draw_set_valign(fa_bottom);
+				for(var i = ds_list_size(weaponryDetailsDataList)-1; i >= 0; i--)
+				{
+					var iValue = (ds_list_size(weaponryDetailsDataList)-1)-i;
+					draw_set_halign(fa_left);
+					draw_text(weaponryDetailsDataX*surfW,(weaponryDetailsDataY+weaponryDetailsDataSep*i)*surfH,weaponryDetailsDataList[| iValue]);
+					draw_set_halign(fa_right);
+					if weaponryDetailsDataValuesList[| iValue] != noone draw_text(weaponryDetailsDataValuesX*surfW,(weaponryDetailsDataY+weaponryDetailsDataSep*i)*surfH,weaponryDetailsDataValuesList[| iValue]);
+				}
+				draw_set_valign(fa_top);
+				draw_set_halign(fa_left);
 			}
 		#endregion
 	}

@@ -1,47 +1,53 @@
 #region enum Initialisers
 	//Class Enumerators
-enum weaponClass {sword, spear, crossbow, grimoire};
-enum weaponClassStats {name, numOfSubtypes, numOfActives, isMain, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards};
+enum weaponClass {sword, spear, greatHammer, crossbow, grimoire};
+enum weaponClassStats {name, ID, isMain, groundComboLength, groundFinisherLength, aerialComboLength, aerialFinisherLength, groundComboDefault, groundFinisherDefault, aerialComboDefault, aerialFinisherDefault, counter, downwards, forwards, backwards, numOfSubtypes, numOfActives, defaultSubtype, defaultActive};
 enum playerClassStats {level, xp, xpNeeded};
 
 	//Main Weapon Enumerators
-enum weaponStats {type, weight, range, uniqueAttack, strMod, dexMod, intMod, cunMod, physicalDam, fireDam, iceDam, lightningDam, arcaneDam, lightDam, darkDam, bleedDam, poisonDam};
+enum weaponStats {type, particleVolume, weight, range, uniqueAttack, strMod, dexMod, intMod, cunMod, physicalDam, fireDam, iceDam, lightningDam, arcaneDam, lightDam, darkDam, bleedDam, poisonDam};
 enum weaponComboTypes {groundCombo, groundFinisher, aerialCombo, aerialFinisher, technical, unique};
 enum comboSpecial {none, blink, thunderbolt};
 enum hitEffect {uppercut, drainHpBase, drainHpScale, drainMpBase, drainMpScale};		//add base + scale factors later on
 enum damageData {stagger, knockback, slash, pierce, blunt, fire, ice, lightning, arcane, light, dark, pure, bleed, poison};
 enum extraComboTypes {upwards};
-enum comboStats {name, description, class, type, sound, desiredXDist, desiredYDist, specials, animation, frameData, duration, cooldown, hitSoundType, hitStart, hitDuration, moveStart, moveDuration, moveDistX, moveDistY, damType, damMod, forMod, knockback, specType, specDam, effects};
+enum comboStats {name, description, class, type, sound, desiredXDist, desiredYDist, specials, animation, frameData, duration, cooldown, hitSoundType, hitAngle, hitStart, hitDuration, moveStart, moveDuration, moveDistX, moveDistY, damType, damMod, forMod, knockback, specType, specDam, effects};
 enum comboID 
 {
-/* Sword */	sword_counter, sword_lightning_strike, sword_burst, sword_shove, sword_slice, sword_blinkstrike, sword_smash, sword_gut, sword_skyward_slice, sword_slash, sword_slam,
-/* Spear */	spear_counter, spear_spin, spear_skewer, spear_vault, spear_stab, spear_juggle, spear_drill, spear_drive, spear_poke, spear_crash,
-/* misc  */ misc_uppercut
+/*     Sword    */	sword_counter, sword_lightning_strike, sword_burst, sword_shove, sword_slice, sword_slice_alt, sword_blinkstrike, sword_smash, sword_gut, sword_skyward_slice, sword_slash, sword_slam,
+/*     Spear    */	spear_counter, spear_spin, spear_skewer, spear_vault, spear_stab, spear_stab_alt, spear_juggle, spear_sweep, spear_drive, spear_poke, spear_crash,
+/* Great Hammer */	greatHammer_swing, greatHammer_swing_alt, greatHammer_shatter, greatHammer_lift, greatHammer_crash, greatHammer_counter, greatHammer_earthShatter, greatHammer_ram, greatHammer_bash, greatHammer_divineJudgement,
+/*     misc     */	misc_uppercut
 }
 
 	//Offhand Weapon Enumerators
-enum offhandSubtypeStats {name, index, baseAnimation, icon, ammoItem, manaCost, offhandType, damType, damMod, forMod, knockback, specType, specVal, boundEffect, projectileSpeed, explodeDuration, explodeScale, effect};
+enum offhandSubtypeStats {name, description, index, baseAnimation, icon, memoryUsage, ammoItem, manaCost, offhandType, damType, damMod, forMod, knockback, specType, specVal, boundEffect, projectileSpeed, explodeDuration, explodeScale, effect};
 enum offhandSubtypeID
 {
 /* crossbow */		crossbow_normal, crossbow_fire, crossbow_ice, crossbow_lightning, crossbow_serrated,
 /* grimoire */		grimoire_blaze, grimoire_frost, grimoire_spark, grimoire_drain, grimoire_osmose
 }
 	//Offhand Active Ability Enumerators
-enum activeAbilityStats {name, index, baseAnimation, boundEffect, icon, manaCost, offhandType};
+enum activeAbilityStats {name, description, index, baseAnimation, icon, memoryUsage, boundEffect, manaCost, offhandType};
 enum activeAbilityID
 {
-/* crossbow */		crossbow_rope_shot, crossbow_shrapnel_burst,
+/* crossbow */		crossbow_shrapnel_burst, crossbow_rope_shot,
 /* grimoire */		grimoire_reflect, grimoire_heal
 }
+
+enum ownedSubtypeStats {owned, enabled, enabledIndex};
+enum ownedActiveStats {owned, enabled, enabledIndex};
 #endregion
 
 #region All Weapon Classes
 class = ds_map_create();
 	#region Main hand
 		#region Sword
+	var tmp = 0;
 	class[? weaponClass.sword] = ds_map_create();
 	var cache = class[? weaponClass.sword];
 	cache[? weaponClassStats.name] = "Sword";
+	cache[? weaponClassStats.ID] = tmp;
 	cache[? weaponClassStats.isMain] = true;
 	cache[? weaponClassStats.groundComboLength] = 3;
 	cache[? weaponClassStats.groundFinisherLength] = 1;
@@ -57,16 +63,18 @@ class = ds_map_create();
 	cache[? weaponClassStats.backwards] = comboID.sword_shove;
 		#endregion
 		#region Spear
+	tmp++;
 	class[? weaponClass.spear] = ds_map_create();
 	var cache = class[? weaponClass.spear];
 	cache[? weaponClassStats.name] = "Spear";
+	cache[? weaponClassStats.ID] = tmp;
 	cache[? weaponClassStats.isMain] = true;
 	cache[? weaponClassStats.groundComboLength] = 2;
 	cache[? weaponClassStats.groundFinisherLength] = 1;
 	cache[? weaponClassStats.aerialComboLength] = 4;
 	cache[? weaponClassStats.aerialFinisherLength] = 1;
 	cache[? weaponClassStats.groundComboDefault] = comboID.spear_stab;
-	cache[? weaponClassStats.groundFinisherDefault] = comboID.spear_drill;
+	cache[? weaponClassStats.groundFinisherDefault] = comboID.spear_sweep;
 	cache[? weaponClassStats.aerialComboDefault] = comboID.spear_poke;
 	cache[? weaponClassStats.aerialFinisherDefault] = comboID.spear_crash;
 	cache[? weaponClassStats.counter] = comboID.spear_counter;
@@ -74,21 +82,49 @@ class = ds_map_create();
 	cache[? weaponClassStats.forwards] = comboID.spear_skewer;
 	cache[? weaponClassStats.backwards] = comboID.spear_vault;
 		#endregion
+		#region Great Hammer
+	tmp++;
+	class[? weaponClass.greatHammer] = ds_map_create();
+	var cache = class[? weaponClass.greatHammer];
+	cache[? weaponClassStats.name] = "Great Hammer";
+	cache[? weaponClassStats.ID] = tmp;
+	cache[? weaponClassStats.isMain] = true;
+	cache[? weaponClassStats.groundComboLength] = 2;
+	cache[? weaponClassStats.groundFinisherLength] = 1;
+	cache[? weaponClassStats.aerialComboLength] = 1;
+	cache[? weaponClassStats.aerialFinisherLength] = 1;
+	cache[? weaponClassStats.groundComboDefault] = comboID.greatHammer_swing;
+	cache[? weaponClassStats.groundFinisherDefault] = comboID.greatHammer_shatter;
+	cache[? weaponClassStats.aerialComboDefault] = comboID.greatHammer_lift;
+	cache[? weaponClassStats.aerialFinisherDefault] = comboID.greatHammer_crash;
+	cache[? weaponClassStats.counter] = comboID.greatHammer_counter;
+	cache[? weaponClassStats.downwards] = comboID.greatHammer_earthShatter;
+	cache[? weaponClassStats.forwards] = comboID.greatHammer_ram;
+	cache[? weaponClassStats.backwards] = comboID.greatHammer_bash;
+		#endregion
 	#endregion
 	#region Offhand
 		#region Crossbow
+	tmp = 0;
 	class[? weaponClass.crossbow] = ds_map_create();
 	var cache = class[? weaponClass.crossbow];
 	cache[? weaponClassStats.name] = "Crossbow";
+	cache[? weaponClassStats.ID] = tmp;
 	cache[? weaponClassStats.isMain] = false;
+	cache[? weaponClassStats.defaultSubtype] = offhandSubtypeID.crossbow_normal;
+	cache[? weaponClassStats.defaultActive] = activeAbilityID.crossbow_shrapnel_burst;
 	cache[? weaponClassStats.numOfSubtypes] = 0;		//Set properly in end of ComboCache creat event
 	cache[? weaponClassStats.numOfActives] = 0;			//Set properly in end of ComboCache creat event
 		#endregion
 		#region Grimoire
+	tmp++;
 	class[? weaponClass.grimoire] = ds_map_create();
 	var cache = class[? weaponClass.grimoire];
 	cache[? weaponClassStats.name] = "Grimoire";
+	cache[? weaponClassStats.ID] = tmp;
 	cache[? weaponClassStats.isMain] = false;
+	cache[? weaponClassStats.defaultSubtype] = offhandSubtypeID.grimoire_blaze;
+	cache[? weaponClassStats.defaultActive] = activeAbilityID.grimoire_reflect;
 	cache[? weaponClassStats.numOfSubtypes] = 0;		//Set properly in end of ComboCache creat event
 	cache[? weaponClassStats.numOfActives] = 0;			//Set properly in end of ComboCache creat event
 		#endregion
@@ -114,6 +150,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordCounter;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],0);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -144,6 +181,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordLightningStrike;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 1.0;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],0);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/16/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/8/**//sprite_get_number(cache[? comboStats.animation])));
@@ -174,6 +212,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordBurst;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.7;
 cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],0);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -204,6 +243,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordShove;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.6;
 cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],0);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -235,6 +275,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordSkywardSlice;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.6;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],90);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
@@ -266,6 +307,38 @@ cache[? comboStats.animation] = sprPlayerBodySwordSlice;		//not used in script, 
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.3;
 cache[? comboStats.cooldown] = 0.4;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],135);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 10;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],2);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],noone);
+		#endregion
+		#region Slice Alt
+combo[? comboID.sword_slice_alt] = ds_map_create();
+var cache = combo[? comboID.sword_slice_alt];
+cache[? comboStats.name] = "Slice Alt";
+cache[? comboStats.description] = "Basic slashing attack. ALT";
+cache[? comboStats.class] = weaponClass.sword;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = snd_sword_swing_2;
+cache[? comboStats.desiredXDist] = 20;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySwordSliceAlt;		//not used in script, just used as a base for hitstart + hitduration + movestart + moveduratio
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.3;
+cache[? comboStats.cooldown] = 0.4;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],310);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -297,6 +370,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordSmash;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.7;
 cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],285);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -327,6 +401,8 @@ cache[? comboStats.animation] = sprPlayerBodySwordGut;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1,-1);
 cache[? comboStats.duration] = 1.3;
 cache[? comboStats.cooldown] = 0;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],0,
+																						  0);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined,
 																								  undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])),
@@ -370,6 +446,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordAerialSlash;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.35;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],235);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
@@ -378,7 +455,7 @@ cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboSt
 cache[? comboStats.moveDistX] = 6;
 cache[? comboStats.moveDistY] = 0;
 cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
-cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],0.8);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.0);
 cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.25);
 cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0.6);
 cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
@@ -400,6 +477,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordAerialSlash;		//not used in sc
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.3;
 cache[? comboStats.cooldown] = 0.15;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],235);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -431,6 +509,7 @@ cache[? comboStats.animation] = sprPlayerBodySwordAerialSlam;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.6;
 cache[? comboStats.cooldown] = 0.3;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
@@ -464,6 +543,7 @@ cache[? comboStats.animation] = sprPlayerBodySpearCounter;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -493,6 +573,7 @@ cache[? comboStats.animation] = sprPlayerBodySpearSpin;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -522,6 +603,7 @@ cache[? comboStats.animation] = sprPlayerBodySpearSkewer;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -551,6 +633,7 @@ cache[? comboStats.animation] = sprPlayerBodySpearVault;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -581,6 +664,7 @@ cache[? comboStats.animation] = sprPlayerBodySpearDrive;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -604,54 +688,86 @@ cache[? comboStats.name] = "Stab";
 cache[? comboStats.class] = weaponClass.spear;
 cache[? comboStats.type] = weaponComboTypes.groundCombo;
 cache[? comboStats.sound] = noone;
-cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredXDist] = 24;
 cache[? comboStats.desiredYDist] = -1;
 cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
 cache[? comboStats.animation] = sprPlayerBodySpearStab;
-cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],[0,1]);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],0);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
-cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
-cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
-cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation]));
 cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
-cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistX] = 10;
 cache[? comboStats.moveDistY] = 0;
-cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
-cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.pierce);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1);
 cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
-cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0.7);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+		#endregion
+		#region Stab Alt
+combo[? comboID.spear_stab_alt] = ds_map_create();
+var cache = combo[? comboID.spear_stab_alt];
+cache[? comboStats.name] = "Stab Alt";
+cache[? comboStats.class] = weaponClass.spear;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = 24;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodySpearStabAlt;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],[0,1]);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],0);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 10;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.pierce);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0.7);
 cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
 cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
 cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
 		#endregion
 			//Finisher
-		#region Drill
-combo[? comboID.spear_drill] = ds_map_create();
-var cache = combo[? comboID.spear_drill];
-cache[? comboStats.name] = "Drill";
+		#region Sweep
+combo[? comboID.spear_sweep] = ds_map_create();
+var cache = combo[? comboID.spear_sweep];
+cache[? comboStats.name] = "Sweep";
 cache[? comboStats.class] = weaponClass.spear;
 cache[? comboStats.type] = weaponComboTypes.groundFinisher;
 cache[? comboStats.sound] = noone;
-cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredXDist] = 12;
 cache[? comboStats.desiredYDist] = -1;
 cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
-cache[? comboStats.animation] = sprPlayerBodySpearDrill;
-cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
-cache[? comboStats.duration] = 0.4;
+cache[? comboStats.animation] = sprPlayerBodySpearSweep;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],[0,1]);
+cache[? comboStats.duration] = 0.7;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],300);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
-cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
-cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
-cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation]));
 cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
-cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistX] = 8;
 cache[? comboStats.moveDistY] = 0;
 cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
-cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
-cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
-cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],2.5);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],7.8);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],4.5);
 cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
 cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
 cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
@@ -670,6 +786,7 @@ cache[? comboStats.animation] = sprPlayerBodySpearJuggle;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -702,6 +819,7 @@ cache[? comboStats.animation] = sprPlayerBodySpearAerialPoke;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -732,6 +850,318 @@ cache[? comboStats.animation] = sprPlayerBodySpearAerialCrash;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.4;
 cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+		#endregion
+	#endregion
+	#region Great Hammer
+		//Ground
+			//Tech
+		#region Counter
+combo[? comboID.greatHammer_counter] = ds_map_create();
+var cache = combo[? comboID.greatHammer_counter];
+cache[? comboStats.name] = "Counter";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerCounter;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+	#endregion
+		#region Earth Shatter
+combo[? comboID.greatHammer_earthShatter] = ds_map_create();
+var cache = combo[? comboID.greatHammer_earthShatter];
+cache[? comboStats.name] = "Earth Shatter";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerEarthShatter;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+	#endregion
+		#region Ram
+combo[? comboID.greatHammer_ram] = ds_map_create();
+var cache = combo[? comboID.greatHammer_ram];
+cache[? comboStats.name] = "Ram";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerRam;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+	#endregion
+		#region Bash
+combo[? comboID.greatHammer_bash] = ds_map_create();
+var cache = combo[? comboID.greatHammer_bash];
+cache[? comboStats.name] = "Bash";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerBash;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+	#endregion
+			//Unique
+		#region Divine Judgement
+combo[? comboID.greatHammer_divineJudgement] = ds_map_create();
+var cache = combo[? comboID.greatHammer_divineJudgement];
+cache[? comboStats.name] = "Divine Judgement";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.unique;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerDivineJudgement;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+	#endregion
+			//Combo
+		#region Swing
+combo[? comboID.greatHammer_swing] = ds_map_create();
+var cache = combo[? comboID.greatHammer_swing];
+cache[? comboStats.name] = "Swing";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.groundCombo;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = 24;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerSwing;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],[0,1]);
+cache[? comboStats.duration] = 1.2;
+cache[? comboStats.cooldown] = 0.4;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/7/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/7/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 15;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.pierce);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0.7);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+		#endregion
+		#region Swing Alt
+combo[? comboID.greatHammer_swing_alt] = ds_map_create();
+var cache = combo[? comboID.greatHammer_swing_alt];
+cache[? comboStats.name] = "Swing Alt";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.technical;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = 24;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerSwingAlt;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],[0,1]);
+cache[? comboStats.duration] = 1.2;
+cache[? comboStats.cooldown] = 0.4;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/8/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/7/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 15;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.pierce);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],0.7);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+		#endregion
+			//Finisher
+		#region Shatter
+combo[? comboID.greatHammer_shatter] = ds_map_create();
+var cache = combo[? comboID.greatHammer_shatter];
+cache[? comboStats.name] = "Shatter";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.groundFinisher;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = 12;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerShatter;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],[0,1]);
+cache[? comboStats.duration] = 0.7;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/4/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 8;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],2.5);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],7.8);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],4.5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+		#endregion
+		//Aerial
+			//Tech
+			//Combo
+		#region Lift
+combo[? comboID.greatHammer_lift] = ds_map_create();
+var cache = combo[? comboID.greatHammer_lift];
+cache[? comboStats.name] = "Lift";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.aerialCombo;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerAerialLift;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
+cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
+cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
+cache[? comboStats.moveStart] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/0/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDuration] = (cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation]));
+cache[? comboStats.moveDistX] = 20;
+cache[? comboStats.moveDistY] = 0;
+cache[? comboStats.damType] = ds_list_create(); ds_list_add(cache[? comboStats.damType],damageType.slash);
+cache[? comboStats.damMod] = ds_list_create(); ds_list_add(cache[? comboStats.damMod],1.3);
+cache[? comboStats.forMod] = ds_list_create(); ds_list_add(cache[? comboStats.forMod],1.3);
+cache[? comboStats.knockback] = ds_list_create(); ds_list_add(cache[? comboStats.knockback],5);
+cache[? comboStats.specType] = ds_list_create(); ds_list_add(cache[? comboStats.specType],specialType.none);
+cache[? comboStats.specDam] = ds_list_create(); ds_list_add(cache[? comboStats.specDam],0);
+cache[? comboStats.effects] = ds_list_create(); ds_list_add(cache[? comboStats.effects],		noone);
+		#endregion
+			//Finisher
+		#region Crash
+combo[? comboID.greatHammer_crash] = ds_map_create();
+var cache = combo[? comboID.greatHammer_crash];
+cache[? comboStats.name] = "Crash";
+cache[? comboStats.class] = weaponClass.greatHammer;
+cache[? comboStats.type] = weaponComboTypes.aerialFinisher;
+cache[? comboStats.sound] = noone;
+cache[? comboStats.desiredXDist] = -1;
+cache[? comboStats.desiredYDist] = -1;
+cache[? comboStats.specials] = ds_list_create(); ds_list_add(cache[? comboStats.specials],comboSpecial.none);
+cache[? comboStats.animation] = sprPlayerBodyGreatHammerAerialCrash;
+cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
+cache[? comboStats.duration] = 0.4;
+cache[? comboStats.cooldown] = 0.2;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/1/**//sprite_get_number(cache[? comboStats.animation])));
@@ -763,6 +1193,7 @@ cache[? comboStats.animation] = sprPlayerBodyDefaultOffhandUppercut;
 cache[? comboStats.frameData] = ds_list_create(); ds_list_add(cache[? comboStats.frameData],-1);
 cache[? comboStats.duration] = 0.5;
 cache[? comboStats.cooldown] = 0.1;
+cache[? comboStats.hitAngle] = ds_list_create(); ds_list_add(cache[? comboStats.hitAngle],275);
 cache[? comboStats.hitSoundType] = ds_list_create(); ds_list_add(cache[? comboStats.hitSoundType],undefined);
 cache[? comboStats.hitStart] = ds_list_create(); ds_list_add(cache[? comboStats.hitStart],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/2/**//sprite_get_number(cache[? comboStats.animation])));
 cache[? comboStats.hitDuration] = ds_list_create(); ds_list_add(cache[? comboStats.hitDuration],(cache[? comboStats.duration]+cache[? comboStats.cooldown])*(/**/3/**//sprite_get_number(cache[? comboStats.animation])));
@@ -788,14 +1219,16 @@ subtype = ds_map_create();
 subtype[? offhandSubtypeID.crossbow_normal] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_normal];
 subCache[? offhandSubtypeStats.name] = "Normal Bolts";
+subCache[? offhandSubtypeStats.description] = "A thin wooden stake tipped with a small, tapered steel nub. The stopping power of these bolts is powerful enough to pierce most forms of flesh, but suffers greatly against armour or any form of carapace.";
 subCache[? offhandSubtypeStats.index] = 0;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_normal_bolt;
 subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.memoryUsage] = 0;
 subCache[? offhandSubtypeStats.boundEffect] = noone;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 0;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
-subCache[? offhandSubtypeStats.damType] = damageType.blunt;
+subCache[? offhandSubtypeStats.damType] = damageType.pierce;
 subCache[? offhandSubtypeStats.damMod] = 1.0;
 subCache[? offhandSubtypeStats.forMod] = 0.3;
 subCache[? offhandSubtypeStats.knockback] = 3;
@@ -806,9 +1239,11 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_fire] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_fire];
 subCache[? offhandSubtypeStats.name] = "Fire Bolts";
+subCache[? offhandSubtypeStats.description] = "Applying sustained mana to a projectile effectively is a very specialized task. With this technique the user is able to impart a flame to a crossbow's bolts.";
 subCache[? offhandSubtypeStats.index] = 1;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_fire_bolt;
 subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.memoryUsage] = 1;
 subCache[? offhandSubtypeStats.boundEffect] = obj_effect_base_fire;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 4;
@@ -824,10 +1259,12 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_ice] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_ice];
 subCache[? offhandSubtypeStats.name] = "Ice Bolts";
+subCache[? offhandSubtypeStats.description] = "Applying sustained mana to a projectile effectively is a very specialized task. With this technique the user is able to impart a localized burst of cold to a crossbow's bolts.";
 subCache[? offhandSubtypeStats.index] = 2;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_ice_bolt;
 subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.memoryUsage] = 1;
 subCache[? offhandSubtypeStats.boundEffect] = obj_effect_base_ice;
 subCache[? offhandSubtypeStats.manaCost] = 5;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.crossbow;
@@ -842,9 +1279,11 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_lightning] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_lightning];
 subCache[? offhandSubtypeStats.name] = "Lightning Bolts";
+subCache[? offhandSubtypeStats.description] = "Applying sustained mana to a projectile effectively is a very specialized task. With this technique the user is able to impart a significant current of energy to a crossbow's bolts.";
 subCache[? offhandSubtypeStats.index] = 3;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_lightning_bolt;
 subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.memoryUsage] = 1;
 subCache[? offhandSubtypeStats.boundEffect] = obj_effect_base_lightning;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 6;
@@ -860,9 +1299,11 @@ subCache[? offhandSubtypeStats.specVal] = 0;
 subtype[? offhandSubtypeID.crossbow_serrated] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.crossbow_serrated];
 subCache[? offhandSubtypeStats.name] = "Serrated Bolts";
+subCache[? offhandSubtypeStats.description] = "A thin wooden stake tipped with a large metal shaft covered in metal spines. The added metal renders the projectile much heavier, but the end result is a bolt which bites through the flesh of it's target and is painful to remove.";
 subCache[? offhandSubtypeStats.index] = 4;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_crossbow_serrated_bolt;
 subCache[? offhandSubtypeStats.baseAnimation] = spr_crossbow_bolt;
+subCache[? offhandSubtypeStats.memoryUsage] = 1;
 subCache[? offhandSubtypeStats.boundEffect] = noone;
 subCache[? offhandSubtypeStats.ammoItem] = itemItem.crossbow_bolt;
 subCache[? offhandSubtypeStats.manaCost] = 3;
@@ -880,8 +1321,10 @@ subCache[? offhandSubtypeStats.specVal] = 20;
 subtype[? offhandSubtypeID.grimoire_blaze] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_blaze];
 subCache[? offhandSubtypeStats.name] = "Blaze";
+subCache[? offhandSubtypeStats.description] = "Mana can be projected and influenced in a myriad of ways. With this technique the user propells a small ball of concentrated mana in the form of concentrated heat. Apon collision this energy is released as an explosion.";
 subCache[? offhandSubtypeStats.index] = 0;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_blaze;
+subCache[? offhandSubtypeStats.memoryUsage] = 1;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 16;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -900,8 +1343,10 @@ subCache[? offhandSubtypeStats.explodeScale] = 4;
 subtype[? offhandSubtypeID.grimoire_frost] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_frost];
 subCache[? offhandSubtypeStats.name] = "Frost";
+subCache[? offhandSubtypeStats.description] = "Mana can be projected and influenced in a myriad of ways. With this technique the user propells a small ball of concentrated mana in the form of concentrated cold. Apon collision this energy is released as an explosion."
 subCache[? offhandSubtypeStats.index] = 1;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_frost;
+subCache[? offhandSubtypeStats.memoryUsage] = 1;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 20;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -920,8 +1365,10 @@ subCache[? offhandSubtypeStats.explodeScale] = 5;
 subtype[? offhandSubtypeID.grimoire_spark] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_spark];
 subCache[? offhandSubtypeStats.name] = "Spark";
+subCache[? offhandSubtypeStats.description] = "Mana can be projected and influenced in a myriad of ways. With this technique the user propells a small ball of concentrated mana in the form of concentrated electrid charge. Apon collision this energy is released as an explosion."
 subCache[? offhandSubtypeStats.index] = 2;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_spark;
+subCache[? offhandSubtypeStats.memoryUsage] = 1;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 24;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -940,8 +1387,10 @@ subCache[? offhandSubtypeStats.explodeScale] = 2.5;
 subtype[? offhandSubtypeID.grimoire_drain] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_drain];
 subCache[? offhandSubtypeStats.name] = "Drain";
+subCache[? offhandSubtypeStats.description] = "By directly tapping into the life force of an enemy the user of this technique is able to release fragments of it into the air, drawing them to the user and adding to their own strength.";
 subCache[? offhandSubtypeStats.index] = 3;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_drain;
+subCache[? offhandSubtypeStats.memoryUsage] = 2;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 32;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -961,8 +1410,10 @@ subCache[? offhandSubtypeStats.explodeScale] = 2.5;
 subtype[? offhandSubtypeID.grimoire_osmose] = ds_map_create();
 var subCache = subtype[? offhandSubtypeID.grimoire_osmose];
 subCache[? offhandSubtypeStats.name] = "Osmose";
+subCache[? offhandSubtypeStats.description] = "By directly tapping into the mana of an enemy, the user of this technique can diphon the energy of another being, releasing and drawing it into the user. If the being has no mana stored within, it will instead tap directly to their life force, converting it to mana. Though to a dimished effect.";
 subCache[? offhandSubtypeStats.index] = 4;
 subCache[? offhandSubtypeStats.icon] = spr_icon_subtype_grimoire_osmose;
+subCache[? offhandSubtypeStats.memoryUsage] = 2;
 subCache[? offhandSubtypeStats.ammoItem] = noone;
 subCache[? offhandSubtypeStats.manaCost] = 2;
 subCache[? offhandSubtypeStats.offhandType] = weaponClass.grimoire;
@@ -983,26 +1434,30 @@ subCache[? offhandSubtypeStats.explodeScale] = 2.5;
 #region All Offhand Active Abilities
 activeAbility = ds_map_create();
 	#region Crossbow
-		#region Rope Shot
-activeAbility[? activeAbilityID.crossbow_rope_shot] = ds_map_create();
-var cache = activeAbility[? activeAbilityID.crossbow_rope_shot];
-cache[? activeAbilityStats.name] = "Rope Shot"
-cache[? activeAbilityStats.index] = 0;
-cache[? activeAbilityStats.icon] = spr_icon_active_crossbow_rope_shot;
-cache[? activeAbilityStats.baseAnimation] = spr_hook;
-cache[? activeAbilityStats.boundEffect] = noone;
-cache[? activeAbilityStats.manaCost] = 0;
-cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
-		#endregion
 		#region Shrapnel Burst
 activeAbility[? activeAbilityID.crossbow_shrapnel_burst] = ds_map_create();
 var cache = activeAbility[? activeAbilityID.crossbow_shrapnel_burst];
 cache[? activeAbilityStats.name] = "Shrapnel Burst"
-cache[? activeAbilityStats.index] = 1;
+cache[? activeAbilityStats.description] = "Through use of an arcane system of sigils inscribed on thr crossbow, mana can be poured into its chamber, creading a concentrated and volatile warhead. Without the proper skill, it cannot be fired as an explosive. However it can still be detonated immediately as it leaves the crossbow, releasing a conicle explosion."
+cache[? activeAbilityStats.index] = 0;
 cache[? activeAbilityStats.icon] = spr_icon_active_crossbow_shrapnel_burst;
 cache[? activeAbilityStats.baseAnimation] = noone;
+cache[? activeAbilityStats.memoryUsage] = 0;
 cache[? activeAbilityStats.boundEffect] = noone;
 cache[? activeAbilityStats.manaCost] = 12;
+cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
+		#endregion
+		#region Rope Shot
+activeAbility[? activeAbilityID.crossbow_rope_shot] = ds_map_create();
+var cache = activeAbility[? activeAbilityID.crossbow_rope_shot];
+cache[? activeAbilityStats.name] = "Rope Shot"
+cache[? activeAbilityStats.description] = "Through this advance system, a grappling hook and rope can be fired from a crossbow, hooking onto distant points and opening avenues for greater movement. By means of a mana infused winch, the rope is able to be extended and retracted with considerable force, propelling the user towards a target or indeed pulling it in."
+cache[? activeAbilityStats.index] = 1;
+cache[? activeAbilityStats.icon] = spr_icon_active_crossbow_rope_shot;
+cache[? activeAbilityStats.baseAnimation] = spr_hook;
+cache[? activeAbilityStats.memoryUsage] = 0;
+cache[? activeAbilityStats.boundEffect] = noone;
+cache[? activeAbilityStats.manaCost] = 0;
 cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
 		#endregion
 	#endregion
@@ -1011,9 +1466,11 @@ cache[? activeAbilityStats.offhandType] = weaponClass.crossbow;
 activeAbility[? activeAbilityID.grimoire_reflect] = ds_map_create();
 var cache = activeAbility[? activeAbilityID.grimoire_reflect];
 cache[? activeAbilityStats.name] = "Reflect"
+cache[? activeAbilityStats.description] = "By erecting a barrier of energy-reactive mana about the user, this technique allows one to absorb the blows of any impact, be it physical or magical. This energy must be released however, fortunately in can be dispersed outward, damaging all those nearby."
 cache[? activeAbilityStats.index] = 0;
 cache[? activeAbilityStats.icon] = spr_icon_active_grimoire_reflect;
 cache[? activeAbilityStats.baseAnimation] = spr_grimoire_reflect;
+cache[? activeAbilityStats.memoryUsage] = 0;
 cache[? activeAbilityStats.boundEffect] = noone;
 cache[? activeAbilityStats.manaCost] = 18;
 cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;
@@ -1022,9 +1479,11 @@ cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;
 activeAbility[? activeAbilityID.grimoire_heal] = ds_map_create();
 var cache = activeAbility[? activeAbilityID.grimoire_heal];
 cache[? activeAbilityStats.name] = "Heal"
+cache[? activeAbilityStats.description] = "Focus mana into a healing spell (non canon usage of magic at this point, this is a tester)."
 cache[? activeAbilityStats.index] = 1;
 cache[? activeAbilityStats.icon] = spr_icon_active_grimoire_heal;
 cache[? activeAbilityStats.baseAnimation] = noone;
+cache[? activeAbilityStats.memoryUsage] = 3;
 cache[? activeAbilityStats.boundEffect] = noone;
 cache[? activeAbilityStats.manaCost] = 24;
 cache[? activeAbilityStats.offhandType] = weaponClass.grimoire;

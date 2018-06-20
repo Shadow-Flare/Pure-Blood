@@ -8,7 +8,8 @@
         "54f9a996-fbf1-4933-9de0-d4f153c41107",
         "836e2f08-a190-4fa2-baa7-f626487dbd00",
         "c6e8e939-dc29-4f69-893a-5ddf2cfd3362",
-        "1bc149d6-d05c-48c5-8caf-6ae585e97c05"
+        "1bc149d6-d05c-48c5-8caf-6ae585e97c05",
+        "3368fc49-1d3b-4654-b9e7-e72ac3c87546"
     ],
     "filterType": "GMObject",
     "folderName": "Platforms",

@@ -1,7 +1,7 @@
 #region level up
 if xp >= xpNeeded
 {
-	message_feed_add("Level Up");
+	message_feed_add("Level Up",noone);
 	scr_levelUp_effect();
 	xp -= xpNeeded;
 	level += 1;
@@ -87,32 +87,7 @@ while equipID != undefined
 }
 #endregion
 #region manage offhand Subtypes and activatables
-	//subtypes
-ds_list_clear(subtypeCache);
-var cache = ComboCache.subtype;
-var subID = ds_map_find_first(cache);
-while subID != undefined
-{
-	if subtype_get_stat(subID,offhandSubtypeStats.offhandType) == weapon_get_stat(currentOffhandID,weaponStats.type)
-	{
-		ds_list_add(subtypeCache,subID);
-	}
-	subID = ds_map_find_next(cache,subID);
-}
-ds_list_sort(subtypeCache,true);
-	//actives
-ds_list_clear(activeCache);
-var cache = ComboCache.activeAbility;
-var subID = ds_map_find_first(cache);
-while subID != undefined
-{
-	if activeAbility_get_stat(subID,activeAbilityStats.offhandType) == weapon_get_stat(currentOffhandID,weaponStats.type)
-	{
-		ds_list_add(activeCache,subID);
-	}
-	subID = ds_map_find_next(cache,subID);
-}
-ds_list_sort(activeCache,true);
+scr_player_update_offhand_caches();
 #endregion
 #region update stats (has a mirror in the equipment menu draw event, translate all changes there too, but using the variables allready there, manage and gather equipment data on line 15 here should be mirrored too)
 var hpMaxPrev = hpMax;	//these dont have to be mirrored, donest really matter either way

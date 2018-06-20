@@ -1,0 +1,1 @@
+spawnFrom = rmRoomX112Y295;

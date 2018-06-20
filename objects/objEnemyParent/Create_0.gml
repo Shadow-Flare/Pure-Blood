@@ -26,8 +26,7 @@ hasDeflected = false;
 canChangeVState = true;
 vChangeBreak = true;
 isDead = false;
-hasBeenHit = false;
-lastHitType = -1;
+lastHitTypes = ds_list_create(); repeat(10) ds_list_add(lastHitTypes,false);
 lastAttackHasHit = false;
 hasBeenUppercut = false;
 hasStaggered = false;
@@ -38,6 +37,7 @@ isHooked = noone;
 pushable = true;
 
 //drives
+canAct = true;
 driveJump = false;
 driveAction = 0;
 driveMove = 0;
@@ -55,6 +55,7 @@ with statCache
 	
 	toughness = 1;
 	breakCooldownDuration = 1;
+	mass = 1;
 	
 	breakHp = 0;
 	
@@ -98,7 +99,7 @@ with statCache
 	hp = hpMax;
 	mp = mpMax;
 	
-	hookWeight = 0;				// 0 = gets pulled, 1 = get pulled to
-	
 	isInvulnerable = false;
 }
+
+actionDataHolder = noone;

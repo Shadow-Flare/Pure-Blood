@@ -17,7 +17,7 @@ switch subPhase
 			lastAttackHasHit = false;
 			driveAction = 2;
 			phase = state.base;
-			scr_enemy_ground_base_subPhaseDeterminer();
+			scr_actor_ground_base_subPhaseDeterminer();
 			phaseTimer = 0;
 			subPhaseTimer = 0;
 			if action5SoundID != noone audio_play_sound(action5SoundID,10,0);

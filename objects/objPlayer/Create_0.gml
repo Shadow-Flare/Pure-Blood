@@ -1,22 +1,27 @@
 event_inherited();
 
 //player enumerators
-enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, itemUse, emote, dying, action1, action2, action3, action4, action5};
+enum state {base, attacking, offhand, ability, blocking, dodging, hitReaction, itemUse, interact, emote, dying, action1, action2, action3, action4, action5};
 enum subState {none, idle, walking, walkingBackwards, running, landing, airborne, performing, post, pre, fire, aim, holding, reaction, recovery, staggered, stunned, aerialStagger, deflected, actionSub1, actionSub2, actionSub3, actionSub4, actionSub5};
 enum vState {grounded, midAir, jumping};
+enum weaponSummonState {unsummoned, summoning, summoned};
 
 statCache = PlayerStats;
 
 canAct = true;
+isPuppet = false;
+driveMove = 0;
+
 interactionInstance = noone;
 
-facing = 1;
 phase = state.base;
-phaseTimer = 0;
 subPhase = subState.idle;
-subPhaseTimer = 0;
 vPhase = vState.grounded;
 hitPhase = hitState.normal;
+
+facing = 1;
+phaseTimer = 0;
+subPhaseTimer = 0;
 actorType = actorTypes.player;
 canChangeVState = true;
 vChangeBreak = true;
@@ -28,7 +33,15 @@ isDead = false;
 dropThroughPlatforms = false;
 onPlatform = noone;
 canStep = true;
-equipmentChange = false;
+mainWeaponEquipmentChange = false;
+flyingDefault = false;
+flying = flyingDefault;
+
+emoteSprite = sprPlayerBodyDefaultIdle;
+emoteAnimSpeed = 0;
+emoteStateDuration = 0;
+
+lastHitTypes = ds_list_create(); repeat(10) ds_list_add(lastHitTypes,false);
 
 bboxDefaultLeft = bbox_left;
 bboxDefaultRight = bbox_right;
@@ -44,7 +57,36 @@ landingDuration = 0.6;
 
 baseSpriteIndex = noone;
 weaponSpriteIndex = noone;
-//effectSpriteIndex = noone;
+weaponSpriteAlpha = 0;
+weaponSpriteEffectIntensity = 0;
+weaponSpriteEffectIntensityBuffer = 0;
+weaponSpriteEffectIntensityGlow = 0;
+equipmentSwitchWeaponIndex = noone;
+
+weaponSummonPhase = weaponSummonState.unsummoned;
+weaponSummonPhaseChange = false;
+weaponSummonTimer = 0;
+weaponSummonDuration = 1.6;
+weaponSummonFadeInDuration = 0.6;
+weaponSummonFadeOutDuration = 0.6;
+weaponSummonFadeList = ds_list_create();
+weaponSummonIntensity = 0;
+#region pAura particle system setup
+	//effects
+if !layer_exists("lay_technicals") layer_create(100,"lay_technicals");
+if !instance_exists(ParticleController) instance_create_layer(0,0,"lay_technicals",ParticleController);
+
+pAura = part_type_create();
+part_type_sprite(pAura,spr_pixel,0,0,0);
+//part_type_orientation(pAura,0,360,0,0,0);
+part_type_direction(pAura,0,360,0,0);
+//part_type_size(pAura,0,2,0.6,0,0);
+part_type_speed(pAura,0.1,0.3,0,0);
+part_type_colour2(pAura,c_white,c_teal);
+part_type_alpha3(pAura,1,1,0);
+part_type_blend(pAura,1);
+part_type_life(pAura,15,25);
+#endregion
 
 auxSpriteIndex = noone;
 auxSpriteXOffset = 0;
@@ -57,8 +99,8 @@ enum lockOn {off, soft, hard}
 lockOnType = lockOn.off;
 lockOnDir = 1;
 lockOnTarget = noone;
-softLockRange = 260;
-hardLockRange = 320;
+softLockRange = 16*8;
+hardLockRange = 16*14.5;
 lockImageTimer = 0;
 canChangeTarget = true;
 
@@ -85,6 +127,16 @@ crossbowDurationAerialFire = 0.25;
 crossbowDurationAerialHolding = 0.2;
 crossbowAerialBounce = -0.3;
 crossbowBoltInitialSpeed = 16;
+
+grimoireDurationPre = 0.3;
+grimoireDurationFire = 0.4;
+grimoireDurationHolding = 0.3;
+grimoireDurationPost = 0.15;
+grimoireDurationAerialPre = 0.3;
+grimoireDurationAerialFire = 0.4;
+grimoireDurationAerialHolding = 0.;
+grimoireAerialBounce = -0.35;
+//grimoireProjectileInitialSpeed = 16;
 
 ropeShotID = noone;
 ropeShotTarget = noone;
@@ -118,9 +170,9 @@ aerialYSpdCap = 0.5;
 aerialTargetX = -4;
 aerialTargetY = -4;
 
-blockingDurationPre = 0.05;
-blockingDurationBlocking = 0.4;
-blockingDurationPost = 0.05;
+blockingDurationPre = 0.1;
+blockingDurationBlocking = 0.5;
+blockingDurationPost = 0.3;
 blockingDurationReaction = 0.4;
 hasBlocked = false;
 

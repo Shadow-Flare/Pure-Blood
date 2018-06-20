@@ -9,28 +9,8 @@ var groundFinisherSize = PlayerStats.GFS[? wepClass];
 var aerialComboSize = PlayerStats.ACS[? wepClass];
 var aerialFinisherSize = PlayerStats.AFS[? wepClass];
 
-	//check if alt, if it is use alternative sprite
-var comboType = noone
-switch vPhase
-{
-	case vState.grounded:
-		comboType = weaponClassStats.groundComboDefault;
-		break;
-	case vState.jumping:
-	case vState.midAir:
-		comboType = weaponClassStats.aerialComboDefault;
-		break;
-}
-var compareID = class_get_stat(wepClass,comboType);
-if vPhase = vState.grounded var comboSizeToCheck = groundComboSize;
-else comboSizeToCheck = aerialComboSize;
-var animToUse = attackAnimation;
-if attackID == compareID && comboSizeToCheck%2 == attackNum%2 && attackNum < comboSizeToCheck
-{
-	animToUse = asset_get_index(sprite_get_name(animToUse)+"Alt");
-}
 	//update sprite
-update_sprite(animToUse,-(attackDuration+attackCooldown));
+update_sprite(attackAnimation,-(attackDuration+attackCooldown));
 
 	//attack Effect
 for(var i = 0; i < ds_list_size(combo_get_stat(attackID,comboStats.hitStart)); i++)

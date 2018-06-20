@@ -1,36 +1,42 @@
+for (var i = 0; i < 10; i++) lastHitTypes[| i] = false;
+
+var entity = self;
 with objAttackEffectParent
 {
 	var attack = id;
-	var enemy = caster;
+	if instance_exists(caster) var enemy = caster;
+	else var enemy = noone;
 	var stats = other.statCache
 	if hitOn && other != caster && is_enemy(other.actorType,casterType) && place_meeting(x,y,other) && ds_list_find_index(hitList,other) == -1
 	{
 		ds_list_add(hitList,other);
-		enemy.lastAttackHasHit = true;
-		with other
+		if instance_exists(enemy) enemy.lastAttackHasHit = true;
+		with entity
 		{
-			hasBeenHit = true;
-			//lastHitType = attack.hitType;	//need editing
+			var stagger = attack.hitData[? damageData.stagger];
+			var knockback = attack.hitData[? damageData.knockback];
 			if attack.attackType == attackTypes.melee && instance_exists(enemy) var dirNum = sign(x-enemy.x);
 			else var dirNum = sign(attack.xSpd);
+			if dirNum == 0 dirNum = -facing;
 			if !attack.pierce && hitPhase == hitState.blocking && dirNum == -facing
 			{
 				hasBlocked = true;
 				if instance_exists(enemy) enemy.hasDeflected = true;
 				other.hasDeflected = true;
 				xSpd = dirNum*max(knockback/2,1);
-				if attack.attackType = attackTypes.melee && instance_exists(enemy) enemy.xSpd = -dirNum*2;
-				instance_destroy(attack);
+				if attack.attackType = attackTypes.melee && instance_exists(enemy) 
+				{
+					enemy.xSpd = -dirNum*2;
+					instance_destroy(attack);
+				}
 			}
 			else if hitPhase != hitState.dodging
 			{
-				var stagger = attack.hitData[? damageData.stagger];
-				var knockback = attack.hitData[? damageData.knockback];
 					//stats
-				if stats.isInvulnerable == false scr_hit(attack,attack.hitSoundID,attack.hitData,enemy,attack.hitEffects);
+				if stats.isInvulnerable == false scr_hit(attack,attack.hitSoundID,attack.hitData,attack.hitAngle,enemy,attack.hitEffects);
 
 				var breakToughness = stats.toughness;
-				if stagger >= 0 stats.breakHp +=stagger;
+				if stagger >= 0 stats.breakHp += stagger;
 				var bHp = stats.breakHp;
 				
 				var hasUppercut = false;
@@ -42,7 +48,7 @@ with objAttackEffectParent
 						//nothing [0]
 				else if bHp <= breakToughness reaction = 0;
 						//stagger [1]
-				else if bHp <= breakToughness*4 reaction = 1;
+				else if bHp <= breakToughness*3.5 reaction = 1;
 						//fling [2]
 				else reaction = 2;
 						//uppercut [3]
@@ -78,13 +84,25 @@ with objAttackEffectParent
 				{
 					case 0:	#region Nothing
 							//effect
-						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),min(depth,enemy.depth)-1,bloodSpr[0],0.28,1,1) image_blend = blend;
+						if instance_exists(enemy) var spawnDepth = min(depth,enemy.depth)-1;
+						else spawnDepth = depth-1;
+						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),spawnDepth,bloodSpr[0],0.28,1,1)
+						{
+							image_blend = blend;
+							image_angle = attack.hitAngle;
+						}
 							//do nothing
-						xSpd = dirNum*max(knockback/2,1);
+						xSpd = dirNum*max(knockback/2,1)/stats.mass;
 						break; #endregion
 					case 1:	#region Stagger
 							//effect
-						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),min(depth,enemy.depth)-1,bloodSpr[1],0.28,1,1) image_blend = blend;
+						if instance_exists(enemy) var spawnDepth = min(depth,enemy.depth)-1;
+						else spawnDepth = depth-1;
+						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),spawnDepth,bloodSpr[1],0.28,1,1)
+						{
+							image_blend = blend;
+							image_angle = attack.hitAngle;
+						}
 							//state change
 						hasStaggered = true;
 						if phase == state.hitReaction && subPhase == subState.aerialStagger
@@ -103,13 +121,19 @@ with objAttackEffectParent
 							subPhase = subState.staggered;
 							subPhaseTimer = 0;
 								//movement
-							xSpd = knockback*dirNum;
+							xSpd = dirNum*max(knockback*0.75,1)/stats.mass;
 						}
 						break; #endregion
 					case 2: #region Flung
 						hasFlung = true;
 								//effect
-						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),min(depth,enemy.depth)-1,bloodSpr[2],0.28,1,1) image_blend = blend;
+						if instance_exists(enemy) var spawnDepth = min(depth,enemy.depth)-1;
+						else spawnDepth = depth-1;
+						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),spawnDepth,bloodSpr[2],0.28,1,1)
+						{
+							image_blend = blend;
+							image_angle = attack.hitAngle;
+						}
 								//screen shake
 						if attack.casterType = actorTypes.player
 						{
@@ -123,15 +147,15 @@ with objAttackEffectParent
 							if knockback <= 4
 							{
 								subPhaseTimer = 0;
-								xSpd = knockback*dirNum;
-								ySpd = -knockback/4;
+								xSpd = knockback*dirNum/stats.mass;
+								ySpd = -knockback/4/stats.mass;
 							}
 							else
 							{
 								subPhaseTimer = room_speed;
 								var reactDir = -30+random_range(-5,5);
-								xSpd = dirNum*knockback*dcos(reactDir);
-								ySpd = -knockback*dsin(reactDir);
+								xSpd = dirNum*knockback*dcos(reactDir)/stats.mass;
+								ySpd = -knockback*dsin(reactDir)/stats.mass;
 							}
 						}
 						else
@@ -144,13 +168,19 @@ with objAttackEffectParent
 							subPhaseTimer = room_speed;
 								//movement
 							var reactDir = 30+random_range(-5,5);
-							xSpd = dirNum*knockback*dcos(reactDir);
-							ySpd = -knockback*dsin(reactDir);
+							xSpd = dirNum*knockback*dcos(reactDir)/stats.mass;
+							ySpd = -knockback*dsin(reactDir)/stats.mass;
 						}
 						break; #endregion
 					case 3: #region Uppercut
 							//effect
-						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),min(depth,enemy.depth)-1,bloodSpr[1],0.28,1,1) image_blend = blend
+						if instance_exists(enemy) var spawnDepth = min(depth,enemy.depth)-1;
+						else spawnDepth = depth-1;
+						with create_effect(false,x+random_range(-4,4),y+random_range(-4,4),spawnDepth,bloodSpr[1],0.28,1,1)
+						{
+							image_blend = blend;
+							image_angle = attack.hitAngle;
+						}
 							//state change
 						phase = state.hitReaction;
 						phaseTimer = 0;
@@ -159,8 +189,8 @@ with objAttackEffectParent
 						hasBeenUppercut = true;
 						stats.breakHp = 0;
 						//movement
-						ySpd = knockback;
-						xSpd = dirNum*1;
+						ySpd = knockback/stats.mass;
+						xSpd = dirNum/stats.mass;
 						break; #endregion
 				}
 			}

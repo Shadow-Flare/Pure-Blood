@@ -2,9 +2,9 @@ with ParticleController
 {
 		//initial
 	var pSysTarget = pSysFire;
-	if other.simOveride var pSysTarget = pSysOveride;
+	if other.simOveride var pSysTarget = pSysOveride2;
 	var pSysTarget2 = pSysFire2;
-	if other.simOveride var pSysTarget2 = pSysOveride2;
+	if other.simOveride var pSysTarget2 = pSysOveride;
 	
 	var radius = other.radius;
 	var intensity = other.intensity;

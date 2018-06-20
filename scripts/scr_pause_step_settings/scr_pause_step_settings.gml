@@ -36,7 +36,7 @@ if (InputManager.aInput == true)
 			ini_write_real("effects","fog",!ini_read_real("effects","fog",true))
 			break;
 		case "V-Sync":
-			ini_write_real("effects","vsync",!ini_read_real("effects","vsync",true))
+			ini_write_real("effects","vsync",!ini_read_real("effects","vsync",false))
 			break;
 		case "Music Enabled":
 			ini_write_real("effects","musicEnabled",!ini_read_real("effects","musicEnabled",true))
@@ -46,6 +46,9 @@ if (InputManager.aInput == true)
 			break;
 		case "Actor Hit Boxes":
 			ini_write_real("effects","actorBoxVisuals",!ini_read_real("effects","actorBoxVisuals",false))					
+			break;
+		case "Cutscene Messages":
+			ini_write_real("debug","cutsceneDebug",!ini_read_real("debug","cutsceneDebug",false))					
 			break;
 	}
 	ini_close();

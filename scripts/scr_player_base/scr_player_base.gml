@@ -3,13 +3,16 @@ phaseTimer++;
 subPhaseTimer++;
 
 	//lock On facing
-if lockOnType == lockOn.hard
+if canAct
 {
-	var facingPrev = facing;
-	facing = lockOnDir;
-	if facing != facingPrev scr_player_base_subPhaseDeterminer();
+	if lockOnType == lockOn.hard
+	{
+		var facingPrev = facing;
+		facing = lockOnDir;
+		if facing != facingPrev scr_player_base_subPhaseDeterminer();
+	}
+	else if sign(moveH) != 0 facing = sign(moveH)
 }
-else if sign(moveH) != 0 facing = sign(moveH)
 
 if facing == 0 facing = 1;
 
@@ -167,7 +170,7 @@ switch subPhase
 		}
 	}
 
-	//to blocking/interaction
+	//to defensive action/interaction
 	else if bInputQueue && vPhase == vState.grounded
 	{
 		reset_queue();
@@ -183,7 +186,6 @@ switch subPhase
 			else if canMoveDefend
 			{
 				facing = sign(moveH);
-				phased = 1;
 				phase = state.dodging;
 				phaseTimer = 0;
 				subPhase = subState.performing;
@@ -192,7 +194,25 @@ switch subPhase
 		}
 		else
 		{
-			interactionInstance.used = true;
+			var TEMPinteractPositionCorrectX = interactionInstance.interactPositionCorrectX;
+			var TEMPinteractPositionCorrectFacing = interactionInstance.interactPositionCorrectFacing;
+			
+			var TEMPcurrentInteractionInstance = interactionInstance;
+			var TEMPinteractSprite = interactionInstance.interactSprite;
+			var TEMPinteractAnimDuration = interactionInstance.interactAnimDuration;
+			var TEMPinteractUseDuration = interactionInstance.interactUseDuration;
+			var TEMPinteractScript = interactionInstance.interactScript;
+			
+			if TEMPinteractPositionCorrectX == noone || TEMPinteractPositionCorrectFacing == noone || TEMPinteractSprite == noone || TEMPinteractAnimDuration == noone || TEMPinteractUseDuration == noone //|| TEMPinteractScript == noone	//script not mandatory, the other variables are
+			{
+				interactionInstance.used = true;
+			}
+			else
+			{
+				isPuppet = true;
+				scr_puppetCommand_add(id,puppetCommand.interact,false,false,TEMPinteractSprite,TEMPinteractAnimDuration,TEMPinteractUseDuration,TEMPinteractScript,TEMPcurrentInteractionInstance);
+				scr_puppetCommand_add(id,puppetCommand.moveTo,false,false,false,TEMPinteractPositionCorrectX,TEMPinteractPositionCorrectFacing,noone,noone);
+			}
 		}
 	}
 	

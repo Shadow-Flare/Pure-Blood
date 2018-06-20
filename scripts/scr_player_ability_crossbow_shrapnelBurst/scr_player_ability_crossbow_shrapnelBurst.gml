@@ -3,12 +3,6 @@ var shrapnelBurstFireTime = 0.3;
 var shrapnelBurstframeData = -1;
 var shrapnelBurstattackDuration = 0.6;
 var shrapnelBursthitEffects = noone;
-var shrapnelBursthitType = damageType.pierce;
-var shrapnelBursthitDamage = 1.2 * PlayerStats.magicalPower;
-var shrapnelBursthitStagger = 2 * PlayerStats.physicalStagger;
-var shrapnelBursthitKnockback = 2.4;
-var shrapnelBurststatusType = specialType.none;
-var shrapnelBurststatusValue = 0;
 var shrapnelBurstpierce = 1;
 var shrapnelBurstFollow = false;
 var shrapnelBurstHitSoundType = undefined;
@@ -33,12 +27,36 @@ switch subPhase
 					frameData = shrapnelBurstframeData;
 					attackDuration = shrapnelBurstattackDuration;
 					hitEffects = shrapnelBursthitEffects;
-					hitType = shrapnelBursthitType;
-					hitDamage = shrapnelBursthitDamage;
-					hitStagger = shrapnelBursthitStagger;
-					hitKnockback = shrapnelBursthitKnockback;
-					statusType = shrapnelBurststatusType;
-					statusValue = shrapnelBurststatusValue;
+					
+						//hitData management
+					if PlayerStats.currentOffhandIndex == 0 var cache = PlayerStats.weaponOff1DamageDetails;
+					else var cache = PlayerStats.weaponOff2DamageDetails;
+					
+					var damageMod = 1.8;
+					var staggerMod = 2;
+					var knockbackMod = 2.4;
+					
+					hitData = ds_map_create();
+					hitData[? damageData.slash] = cache[? weaponDamageDetails.physical]*damageMod*(2/3);
+					hitData[? damageData.pierce] = cache[? weaponDamageDetails.physical]*damageMod*(1/3);
+					hitData[? damageData.blunt] = 0;			//set later
+					hitData[? damageData.fire] = cache[? weaponDamageDetails.fire]*damageMod;
+					hitData[? damageData.ice] = cache[? weaponDamageDetails.ice]*damageMod;
+					hitData[? damageData.lightning] = cache[? weaponDamageDetails.lightning]*damageMod;
+					hitData[? damageData.arcane] = cache[? weaponDamageDetails.arcane]*damageMod;
+					hitData[? damageData.light] = cache[? weaponDamageDetails.light]*damageMod;
+					hitData[? damageData.dark] = cache[? weaponDamageDetails.dark]*damageMod;
+							//pure
+					hitData[? damageData.pure] = cache[? weaponDamageDetails.pure]*damageMod;
+							//status
+					hitData[? damageData.bleed] = cache[? weaponDamageDetails.bleed]*damageMod;
+					hitData[? damageData.poison] = cache[? weaponDamageDetails.poison]*damageMod;
+							//stagger & knockback
+					hitData[? damageData.stagger] = cache[? weaponDamageDetails.stagger] * staggerMod;
+					hitData[? damageData.knockback] = cache[? weaponDamageDetails.stagger] * knockbackMod;
+					
+					mainType = scr_damageCache_get_mainType(hitData);
+					
 					pierce = shrapnelBurstpierce;
 		
 					hitSoundID = noone;
@@ -49,7 +67,7 @@ switch subPhase
 						if attackType = 2 var type = 2;
 						else var type = 1;
 						var wholeCache = AudioCache.audioHitCache[| type];
-						var subtypeCache = wholeCache[| hitType];
+						var subtypeCache = wholeCache[| mainType];
 						var size = ds_list_size(subtypeCache);
 						if size != 0
 						{

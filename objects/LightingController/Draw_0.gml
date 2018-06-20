@@ -74,7 +74,7 @@ if !variable_instance_exists(id,"light") || !surface_exists(light)
 					draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 					if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
 					{
-						draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+						draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),weaponSpriteAlpha);
 					}
 			}
 			with objAttackEffectParent if visible
@@ -433,7 +433,7 @@ if normalMappingEnabled
 				draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 				if variable_instance_exists(id,"weaponSpriteIndex") && weaponSpriteIndex != noone
 				{
-					draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+					draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),weaponSpriteAlpha);
 				}
 		}
 		with objAttackEffectParent if visible
@@ -556,6 +556,8 @@ if normalMappingEnabled
 #endregion
 
 #region glow lighting
+	var glowXShift = (camX)%(glowDownscaleFactor);
+	var glowYShift = (camY)%(glowDownscaleFactor);
 	#region set layers
 var layerNames = ["Tiles_background_a","Tiles_background_b","Tiles_background_c","Tiles_background_d","Tiles_background_e",
 					"Tiles_foreground_a","Tiles_foreground_b","Tiles_foreground_c","Tiles_foreground_d","Tiles_foreground_e"];
@@ -575,81 +577,101 @@ for (var i = 0; i < array_length_1d(layerNames); i++)
 	if (!variable_instance_exists(id,"glowMap") || !surface_exists(glowMap))
 	{
 		glowMap = surface_create(room_width,room_height);
-		surface_set_target(glowMap);
-			draw_clear(c_black);
-			for (var i = 0; i < array_length_1d(tileLayers); i++)
-			{
-				var tilemapID = layer_tilemap_get_id(tileLayers[i]);
-				var tilemapFrame = tilemap_get_frame(tilemapID);
-				var tileW = tilemap_get_tile_width(tilemapID);
-				var tileH = tilemap_get_tile_width(tilemapID);
-				var tilesetID = tilemap_get_tileset(tilemapID);
-				var tilesetNormalID = tilesetID+3;
-				tilemap_tileset(tilemapID,tilesetNormalID);
-				for(var j = 0; j < tilemap_get_width(tilemapID); j++)
-				{
-					for (var k = 0; k < tilemap_get_height(tilemapID); k++)
-					{
-						var tile = tilemap_get(tilemapID,j,k);
-						var tileInd = tile_get_index(tile);
-						draw_tile(tilesetNormalID,tile,tilemapFrame,tileW*j,tileH*k);
-					}
-				}
-				tilemap_tileset(tilemapID,tilesetID);
-			}
-			gpu_set_blendmode_ext(bm_zero,bm_src_color);
-				draw_surface(cutoutTiles,0,0);
-			gpu_set_blendmode(bm_normal);
-		surface_reset_target();
 	}
+	surface_set_target(glowMap);
+		draw_clear(c_black);
+		for (var i = 0; i < array_length_1d(tileLayers); i++)
+		{
+			var tilemapID = layer_tilemap_get_id(tileLayers[i]);
+			var tilemapFrame = tilemap_get_frame(tilemapID);
+			var tilesetID = tilemap_get_tileset(tilemapID);
+			var tilesetNormalID = tilesetID+3;
+			tilemap_tileset(tilemapID,tilesetNormalID);
+				draw_tilemap(tilemapID,0,0);
+			tilemap_tileset(tilemapID,tilesetID);
+		}
+		
+		gpu_set_blendmode_ext(bm_zero,bm_src_color);
+			draw_surface(cutoutTiles,0,0);
+		gpu_set_blendmode(bm_normal);
+	surface_reset_target();
 	if (!variable_instance_exists(id,"glowMap2") || !surface_exists(glowMap2))
 	{
-		glowMap2 = surface_create(surface_get_width(light),surface_get_width(light));
+		var w = surface_get_width(light)+(glowDiameter*glowDownscaleFactor+glowDownscaleFactor)*2;
+		var h = surface_get_height(light)+(glowDiameter*glowDownscaleFactor+glowDownscaleFactor)*2;
+		glowMap2 = surface_create(w,h);
 	}
 	surface_set_target(glowMap);
 	surface_reset_target();
 	surface_set_target(glowMap2);
 		draw_clear(make_color_rgb(0,0,0));
-		draw_surface_ext(glowMap,(1-camX)*lightScale,(1-camY)*lightScale,lightScale,lightScale,0,c_white,1.0);
+		var border = (glowDiameter*glowDownscaleFactor+glowDownscaleFactor)*2;
+		draw_surface_ext(glowMap,(1-camX)*lightScale+border,(1-camY)*lightScale+border,lightScale,lightScale,0,c_white,1.0);
 			shader_set(shd_white);
+				//entity cutouts
 			with all
 			{
-				if visible && sprite_index != -1 draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
+				if visible && sprite_index != -1 draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale+border,(y-camY+1)*other.lightScale+border,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,c_black,image_alpha);
+			}
+				//draw certain effects after entity cut
+			with objPlayer if weaponSummonPhase == weaponSummonState.summoning
+			{
+				if weaponSpriteIndex != noone draw_sprite_ext(weaponSpriteIndex,image_index,(x-camX+1)*other.lightScale+border,(y-camY+1)*other.lightScale+border,facing*other.lightScale,other.lightScale,0,merge_colour(c_white,c_blue,0.2),weaponSpriteEffectIntensityGlow);
+			}
+			for (var i = 0; i < ds_list_size(objPlayer.weaponSummonFadeList); i++)
+			{
+				var effect = objPlayer.weaponSummonFadeList[| i];
+				if instance_exists(effect)
+				{
+					with effect draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale+border,(y-camY+1)*other.lightScale+border,image_xscale*other.lightScale,image_yscale*other.lightScale,0,merge_colour(c_white,c_blue,0.2),weaponSpriteEffectIntensityGlow);
+				}
+				else
+				{
+					ds_list_delete(weaponSummonFadeList,i);
+					i--;
+				}
 			}
 			shader_reset();
 	surface_reset_target();
 	#endregion
 	#region draw light using glow
+			
 	if (!variable_instance_exists(id,"glowMapTemp") || !surface_exists(glowMapTemp))
 	{
-		glowMapTemp = surface_create(surface_get_width(light),surface_get_width(light));
+		var w = (surface_get_width(light))/glowDownscaleFactor+glowDiameter*4+1;
+		var h = (surface_get_height(light))/glowDownscaleFactor+glowDiameter*4+1;
+		glowMapTemp = surface_create(w,h);
 	}
 	if (!variable_instance_exists(id,"glowMapTemp2") || !surface_exists(glowMapTemp2))
 	{
-		glowMapTemp2 = surface_create(surface_get_width(light),surface_get_width(light));
+		glowMapTemp2 = surface_create(surface_get_width(glowMapTemp),surface_get_height(glowMapTemp));
+	}
+	if (!variable_instance_exists(id,"glowMapTemp3") || !surface_exists(glowMapTemp3))
+	{
+		glowMapTemp3 = surface_create(surface_get_width(glowMapTemp),surface_get_height(glowMapTemp));
 	}
 	surface_set_target(glowMapTemp);
-		draw_clear_alpha(c_white,0);
-		shader_set(shd_gaussianGlow_vertical);
-			var shd_radius = shader_get_uniform(shd_gaussianGlow_vertical,"blur_amount");
-			shader_set_uniform_f(shd_radius,glowBlurRadius);
-			var shd_resolution = shader_get_uniform(shd_gaussianGlow_vertical,"resolution");
-			shader_set_uniform_f(shd_resolution,surface_get_width(glowMapTemp),surface_get_height(glowMapTemp));
-			var shd_glowBoost = shader_get_uniform(shd_gaussianGlow_vertical,"glow_boost");
-			shader_set_uniform_f(shd_glowBoost,glowBoost);
-			draw_surface(glowMap2,0,0);
-		shader_reset();
+		draw_clear_alpha(c_black,0);
+		draw_surface_ext(glowMap2,glowXShift,glowYShift,1/glowDownscaleFactor,1/glowDownscaleFactor,0,c_white,1.0);
 	surface_reset_target();
 	surface_set_target(glowMapTemp2);
 		draw_clear_alpha(c_white,0);
-		shader_set(shd_gaussianGlow_horizontal);
-			var shd_radius = shader_get_uniform(shd_gaussianGlow_horizontal,"blur_amount");
-			shader_set_uniform_f(shd_radius,glowBlurRadius);
-			var shd_resolution = shader_get_uniform(shd_gaussianGlow_horizontal,"resolution");
-			shader_set_uniform_f(shd_resolution,surface_get_width(glowMapTemp),surface_get_height(glowMapTemp));
-			var shd_glowBoost = shader_get_uniform(shd_gaussianGlow_horizontal,"glow_boost");
-			shader_set_uniform_f(shd_glowBoost,glowBoost);
+		shader_set(glowShaderH);
+			var shd_reso_x = shader_get_uniform(glowShaderH,"reso_x");
+			shader_set_uniform_f(shd_reso_x,surface_get_width(glowMapTemp2));
+			var shd_bloom_boost = shader_get_uniform(glowShaderH,"bloom_boost");
+			shader_set_uniform_f(shd_bloom_boost,glowBoost);
 			draw_surface(glowMapTemp,0,0);
+		shader_reset();
+	surface_reset_target();
+	surface_set_target(glowMapTemp3);
+		draw_clear_alpha(c_white,0);
+		shader_set(glowShaderV);
+			var shd_reso_y = shader_get_uniform(glowShaderV,"reso_y");
+			shader_set_uniform_f(shd_reso_y,surface_get_height(glowMapTemp3));
+			var shd_bloom_boost = shader_get_uniform(glowShaderV,"bloom_boost");
+			shader_set_uniform_f(shd_bloom_boost,glowBoost);
+			draw_surface(glowMapTemp2,0,0);
 		shader_reset();
 	surface_reset_target();
 	#endregion
@@ -672,7 +694,10 @@ for (var i = 0; i < array_length_1d(layerNames); i++)
 			draw_surface_ext(cutout,0,0,1,1,0,col,1);
 		shader_reset();
 		gpu_set_blendmode_ext_sepalpha(bm_zero,bm_inv_src_color,bm_zero,bm_one);
-			draw_surface(glowMapTemp2,0,0);
+			gpu_set_tex_filter(true);
+			var border = (glowDiameter*glowDownscaleFactor+glowDownscaleFactor)*2;
+			draw_surface_ext(glowMapTemp3,-border-glowXShift*glowDownscaleFactor,-border-glowYShift*glowDownscaleFactor,glowDownscaleFactor,glowDownscaleFactor,0,c_white,1.0);
+			gpu_set_tex_filter(false);
 		gpu_set_blendmode(bm_normal);
 	surface_reset_target();
 #endregion

@@ -10,6 +10,7 @@
 ///@arg arcane
 ///@arg light
 ///@arg dark
+///@arg pure
 var cache = argument0;
 var stagger = argument1;
 var knockback = argument2;
@@ -22,6 +23,7 @@ var lightning = argument8;
 var arcane = argument9;
 var light = argument10;
 var dark = argument11;
+var pure = argument12;
 
 cache[? damageData.stagger] = stagger;
 cache[? damageData.knockback] = knockback;
@@ -34,7 +36,7 @@ cache[? damageData.lightning] = lightning;
 cache[? damageData.arcane] = arcane;
 cache[? damageData.light] = light;
 cache[? damageData.dark] = dark;
-cache[? damageData.pure] = 0;	//define outside since notable
+cache[? damageData.pure] = pure;	//define outside since notable
 
 cache[? damageData.bleed] = 0;
 cache[? damageData.poison] = 0;

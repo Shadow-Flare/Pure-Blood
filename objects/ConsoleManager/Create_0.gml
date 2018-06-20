@@ -1,9 +1,17 @@
+event_inherited();
+
 //console initializer
+gamePhase = noone;
+
 tmp = "";
 consoleEnabled = false;
 commandStr = "";
 commandRes = "";
 selectIndex = 0;
+
+conAltStartMaxNum = 5;	//0 = New Game//1 = Arena//2 = Horde Mode//3 = New Game var 2//4 = new Game ver 3//5 = New Game ver 4//
+conAltStartIndex = noone;
+
 conPureFps = false;
 conClickHack = false;
 conHelpMenu = false;
@@ -22,41 +30,18 @@ ATBoxHeight = 200;
 selectedVariable = 0;
 
 defaultRoomSpeed = room_speed;
-for (var i=0; i<7; i++)
+maxHistory = 14;
+for (var i=0; i<maxHistory; i++)
 {
 	history[i] = "";
 	historyM[i] = "";
 }
-historyM[0] = "enter '?' or 'help' for options"
+historyM[0] = "enter '?' or 'help' for options";
 
-//LIST OF COMMANDS
-	//GOTO
-	//SET ROOM SPEED
-	//CLICK HACK
-	//SHUTDOWN
-	//HELP
-helpText[ 0] = "Developer Commands:"
-helpText[ 1] = "goto <room Name>"
-helpText[ 2] = "setroomspeed <integer > 0>"
-helpText[ 3] = "clickhack"
-helpText[ 4] = "shutdown"
-helpText[ 5] = "purefps"
-helpText[ 6] = "lightTester"
-helpText[ 7] = "ambienceTester"
-helpText[ 8] = "help   /   ?"
-helpText[ 9] = ""
-helpText[10] = "Cheats:"
-helpText[11] = "thereisnospoon"
-//Messages
-helpTextM[ 0] = "Details:"
-helpTextM[ 1] = "Transfers you to <room Name>, likely will cause progression related bugs."
-helpTextM[ 2] = "Changes room speed to <integer > 0>, likely will cause many timing related bugs, dont do this."
-helpTextM[ 3] = "Enables/disables the ability to move character to the clicked location, likely will cause progression/collision related bugs."
-helpTextM[ 4] = "Hard shutdown of the game, will not save, will not do anything"
-helpTextM[ 5] = "Limit console text to only show the current fps, gives a more accurate impression since it disables other console background behaviours."
-helpTextM[ 6] = "Toggle Light Tester object and interface"
-helpTextM[ 7] = "Toggle Ambience Tester interface"
-helpTextM[ 8] = "Enable/disable help menu"
-helpTextM[ 9] = ""
-helpTextM[10] = "Details:"
-helpTextM[11] = "Spells have 0 cost, ammo is not needed or consumed"
+ini_open("settings");
+	for(var i = 0; i < maxHistory; i++)
+	{
+		history[i] = ini_read_string("consoleHistory","commandHistory"+string(i),"");
+		historyM[i] = ini_read_string("consoleHistory","messageHistory"+string(i),"");
+	}
+ini_close();

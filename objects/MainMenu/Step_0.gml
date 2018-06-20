@@ -51,23 +51,48 @@ if transType == mainTransType.none
 	}
 }
 
+if conAltStart != noone
+{
+	switch conAltStart
+	{
+		case 0:		//newGame
+			transType = mainTransType.newGame;
+			break;
+		case 1:		//Arena
+			transType = mainTransType.arena;
+			break;
+		case 2:		//Horde
+			transType = mainTransType.hordeMode;
+			break;
+		case 3:		//newGame2: Alt area
+			transType = mainTransType.newGame2;
+			break;
+		case 4:		//newGame3: Alt Area
+			transType = mainTransType.newGame3;
+			break;
+		case 5:		//newGame4: Start in town, max gear
+			transType = mainTransType.newGame4;
+			break;
+	}
+}
+
 if sX != sXPrev || sY != sYPrev audio_play_sound(snd_menu_navigate,10,0)
 
 switch transType
 {
 	case mainTransType.none:
-		transTimer = 0;
+		transTimer = max(transTimer-1,0);
 		break;
 	case mainTransType.newGame:
-		transTimer++;
+		transTimer = min(transTimer+1,room_speed*transDur);
 		if transTimer >= round(room_speed*transDur)
 		{
-			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX100Y500; type = loadType.newGame; transDur = other.transDur; transTimer = 0;}
+			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX100Y399; type = loadType.newGame; transDur = other.transDur; transTimer = 0;}
 			room_goto(loading);
 		}
 		break;
 	case mainTransType.arena:
-		transTimer++;
+		transTimer = min(transTimer+1,room_speed*transDur);
 		if transTimer >= round(room_speed*transDur)
 		{
 			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmArena1; type = loadType.arena; transDur = other.transDur; transTimer = 0;}
@@ -75,15 +100,39 @@ switch transType
 		}
 		break;
 	case mainTransType.hordeMode:
-		transTimer++;
+		transTimer = min(transTimer+1,room_speed*transDur);
 		if transTimer >= round(room_speed*transDur)
 		{
 			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmHorde1; type = loadType.hordeMode; transDur = other.transDur; transTimer = 0;}
 			room_goto(loading);
 		}
 		break;
+	case mainTransType.newGame2:
+		transTimer = min(transTimer+1,room_speed*transDur);
+		if transTimer >= round(room_speed*transDur)
+		{
+			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX100Y299; type = loadType.newGame2; transDur = other.transDur; transTimer = 0;}
+			room_goto(loading);
+		}
+		break;
+	case mainTransType.newGame3:
+		transTimer = min(transTimer+1,room_speed*transDur);
+		if transTimer >= round(room_speed*transDur)
+		{
+			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX100Y500; type = loadType.newGame3; transDur = other.transDur; transTimer = 0;}
+			room_goto(loading);
+		}
+		break;
+	case mainTransType.newGame4:
+		transTimer = min(transTimer+1,room_speed*transDur);
+		if transTimer >= round(room_speed*transDur)
+		{
+			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX123Y397; type = loadType.newGame4; transDur = other.transDur; transTimer = 0;}
+			room_goto(loading);
+		}
+		break;
 	case mainTransType.ex:
-		transTimer++;
+		transTimer = min(transTimer+1,room_speed*transDur);
 		if transTimer >= round(room_speed*transDur)
 		{
 			game_end();

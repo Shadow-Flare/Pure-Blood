@@ -5,6 +5,7 @@
     "name": "88cfd69a-febb-4007-9b7e-2f851b93a535",
     "children": [
         "2cfbb7fd-e016-46c8-8c75-f88f0487a2bb",
+        "379f48ae-c52e-4baf-89f8-be20174640e4",
         "00e70f51-07a4-4a2b-a845-a910e93a8bdd",
         "bd3d50dd-87dd-4a28-a465-33e9c4503206",
         "1d09457d-f967-493d-9d5b-cd62b91355f2",
@@ -16,7 +17,8 @@
         "a590bfcf-71fb-47b8-8268-d024b62db420",
         "3e985499-439b-4eea-b0da-42a4ccda5b73",
         "f2d58720-e714-4a12-b6bf-db2fdc43e2bc",
-        "143462e5-2382-431d-988b-88936b747d8a"
+        "143462e5-2382-431d-988b-88936b747d8a",
+        "9db25d52-5b0b-4177-a309-a7c4ff49e2e1"
     ],
     "filterType": "GMScript",
     "folderName": "Player",

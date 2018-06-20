@@ -93,3 +93,7 @@ switch phase
 		}
 		break;
 }
+
+	//maintain the X/Yspd simulators
+xSpd = speed*dcos(direction);
+ySpd = -speed*dsin(direction);

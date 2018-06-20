@@ -12,7 +12,7 @@ switch phase
 			enemyNum = 0;
 			cache = waveCache[| currentWave];
 			enemy = ds_map_find_first(cache);
-			message_feed_add("Wave " + string(currentWave));
+			message_feed_add("Wave " + string(currentWave),noone);
 		}
 		break;
 	case hordeModeState.wave:

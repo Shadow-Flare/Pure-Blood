@@ -41,14 +41,31 @@ switch subPhase
 				
 				direction = 90-other.facing*90;
 				speed = other.action1Sub2ProjCreateSpeed;
-				hitType = other.action1Sub2ProjDamageType;
-				hitDamage = other.action1Sub2ProjDamage*stats.damagePower;
-				hitStagger = other.action1Sub2ProjStagger*stats.staggerPower;
-				hitKnockback = other.action1Sub2ProjKnockback;
+				
+					//setup data
+				hitData = ds_map_create();
+				ds_map_copy(hitData,other.action1Sub2ProjDamageData);
+				var hitDamagePower = stats.damagePower;
+				var hitStaggerPower = stats.staggerPower;
+				hitData[? damageData.stagger] *= hitStaggerPower;
+				hitData[? damageData.knockback] *= hitStaggerPower;
+				hitData[? damageData.slash] *= hitDamagePower;
+				hitData[? damageData.pierce] *= hitDamagePower;
+				hitData[? damageData.blunt] *= hitDamagePower;
+				hitData[? damageData.fire] *= hitDamagePower;
+				hitData[? damageData.ice] *= hitDamagePower;
+				hitData[? damageData.lightning] *= hitDamagePower;
+				hitData[? damageData.arcane] *= hitDamagePower;
+				hitData[? damageData.light] *= hitDamagePower;
+				hitData[? damageData.dark] *= hitDamagePower;
+				
+					//get mainType
+				mainType = scr_damageCache_get_mainType(hitData);
+				
+				hitEffects = noone;
+				
 				hitSoundID = noone		//CHANGE//
-
-				statusType = other.action1Sub2ProjStatusType;
-				statusValue = other.action1Sub2ProjStatusValue;
+				
 				pierce = other.action1Sub2ProjPierce;
 			}
 			if action1Sub2AttackSoundID != noone audio_play_sound(action1Sub2AttackSoundID,10,0);
@@ -58,7 +75,7 @@ switch subPhase
 		{
 			phase = state.base;
 			phaseTimer = 0;
-			scr_enemy_ground_base_subPhaseDeterminer();
+			scr_actor_ground_base_subPhaseDeterminer();
 		}
 			//xSpd
 		xSpd -= xSpd/4;

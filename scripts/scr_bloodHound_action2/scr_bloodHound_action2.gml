@@ -1,6 +1,11 @@
 phaseTimer++;
 subPhaseTimer++;
 
+var data1Map = action2Sub2Data;
+var data1PerformSoundId = data1Map[? enemyActionData.performSoundID];
+var data2Map = action2Sub3Data;
+var data2PerformSoundId = data2Map[? enemyActionData.performSoundID];
+
 switch subPhase
 {
 	case subState.actionSub1:
@@ -29,8 +34,8 @@ switch subPhase
 			//damage Zone
 		if action2Sub2ZoneID == noone
 		{
-			action2Sub2ZoneID = scr_enemy_attack(action2Sub2ZoneFrameData,action2Sub2ZoneFollow,action2Sub2ZoneDuration,action2Sub2ZoneDamageData,statCache.damagePower,statCache.staggerPower,action2Sub2ZonePierce,action2Sub2Animation,action2Sub2ZoneHitSoundID,noone);
-			if action2Sub2AttackSoundID != noone audio_play_sound(action2Sub2AttackSoundID,10,0);
+			action2Sub2ZoneID = scr_enemy_attack(data1Map,statCache.damagePower,statCache.staggerPower);
+			if data1PerformSoundId != noone audio_play_sound(data1PerformSoundId,10,0);
 		}
 			//transitions
 		if vPhase = vState.grounded
@@ -38,11 +43,15 @@ switch subPhase
 			lastAttackHasHit = false;
 			canChangeVState = true;
 			vChangeBreak = false;
+			
 			if action2Sub2ZoneID != noone
 			{
 				instance_destroy(action2Sub2ZoneID);
 				action2Sub2ZoneID = noone;
 			}
+			scr_enemy_attack(data2Map,statCache.damagePower,statCache.staggerPower);
+			if data2PerformSoundId != noone audio_play_sound(data2PerformSoundId,10,0);
+			
 			phased = false;
 			subPhase = subState.actionSub3;
 			subPhaseTimer = 0;
@@ -54,21 +63,11 @@ switch subPhase
 		break;
 	case subState.actionSub3:
 			//damage Zone
-		if action2Sub3ZoneID == noone
-		{
-			action2Sub3ZoneID = scr_enemy_attack(action2Sub3ZoneFrameData,action2Sub3ZoneFollow,action2Sub3ZoneDuration,action2Sub3ZoneDamageData,statCache.damagePower,statCache.staggerPower,action2Sub3ZonePierce,action2Sub3Animation,action2Sub3ZoneHitSoundID,noone);
-			if action2Sub3ZoneAttackSoundID != noone audio_play_sound(action2Sub3ZoneAttackSoundID,10,0);
-		}
 		if subPhaseTimer == round(action2Sub3Duration*room_speed)
 		{
 			lastAttackHasHit = false;
-			if action2Sub3ZoneID != noone
-			{
-				instance_destroy(action2Sub3ZoneID);
-				action2Sub3ZoneID = noone;
-			}
 			phase = state.base;
-			scr_enemy_ground_base_subPhaseDeterminer();
+			scr_actor_ground_base_subPhaseDeterminer();
 			subPhaseTimer = 0;
 			phaseTimer = 0;
 		}

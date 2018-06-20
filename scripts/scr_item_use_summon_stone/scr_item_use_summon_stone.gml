@@ -1,6 +1,6 @@
 var entity = objShopkeeperTest
 
-with objShopkeeperTest wantsToLeave = true;;
+with objShopkeeperTest wantsToLeave = true;
 repeat(128)
 {
 	var tempX = round(other.x+32*other.facing+random_range(-4,4));

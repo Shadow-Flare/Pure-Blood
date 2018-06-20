@@ -1,12 +1,13 @@
 	//damage zone
 actorType = actorTypes.wild;
 facing = 1;
-	
-zoneID = noone;														
-zoneHitSoundID = noone;												//$$//
-zoneFrameData = -1;
-zoneFollow = true;
-zoneDuration = -1
-zoneDamageData = ds_map_create();		
-scr_create_damageCache(zoneDamageData,0.3,0,6,0,0,0,0,0,0,0,0);
-zonePierce = true;
+
+	//action2: DamageZone
+zoneID = noone;
+zoneData = ds_map_create();
+scr_enemyActionDataDefaults(zoneData,enemyActionType.damageZone);
+zoneData[? enemyActionData.animation] = sprServantGuardEffectAction2Sub1;;
+zoneData[? enemyActionData.performSoundID] = noone;
+zoneData[? enemyActionData.hitSoundID] = noone;
+zoneData[? enemyActionData.hitAngle] = -1;
+scr_create_damageCache(zoneData[? enemyActionData.damageData],0.3,0,6,0,0,0,0,0,0,0,0,0);

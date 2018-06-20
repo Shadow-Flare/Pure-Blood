@@ -1,0 +1,2 @@
+ds_list_destroy(dialogChoiceOptions);
+ds_map_destroy(puppetStackMap);

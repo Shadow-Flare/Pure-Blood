@@ -471,6 +471,11 @@ draw_surface(damageNumberSurf,0,0);
 	#endregion
 
 #region Messages
+	var mainAlpha = hudAlpha;
+	if GameManager.cutsceneDebug mainAlpha = 1;
+	draw_set_font(messageFont);
+	draw_set_colour(c_white);
+	draw_set_halign(fa_right);
 	if ds_list_size(messageFeed) != 0
 	{
 		var deleteMessage = false;
@@ -481,27 +486,31 @@ draw_surface(damageNumberSurf,0,0);
 			messageTimers[| i]++;			
 			if i != 0 messageTimers[| i] = clamp(messageTimers[| i],0,messageFadeDuration*room_speed);
 			var tim = messageTimers[| i];
-			if tim <= round(messageFadeDuration*room_speed) draw_set_alpha(tim/(messageFadeDuration*room_speed));
-			else if tim >= round((messageFadeDuration+messageShowDuration)*room_speed) draw_set_alpha(1-((tim-((messageShowDuration+messageFadeDuration)*room_speed))/(messageFadeDuration*room_speed)));
-			else draw_set_alpha(1);
-			if i == 0 && messageTimers[| i] = round((messageFadeDuration*2+messageShowDuration)*room_speed)
+			if tim <= round(messageFadeDuration*room_speed) var messageAlpha = (tim/(messageFadeDuration*room_speed));
+			else var messageAlpha = 1-max((tim-((messageShowDuration+messageFadeDuration)*room_speed))/(messageFadeDuration*room_speed),0);
+			if i == 0 && messageTimers[| i] >= round((messageFadeDuration*2+messageShowDuration)*room_speed)
 			{
 				deleteMessage = true;
 			}
-			draw_set_font(fnt_menu);
-			draw_set_colour(c_white);
-			draw_set_halign(fa_right);
-			draw_text_color(GUIWidth-20,20+messageTop+i*messageDivider,messageFeed[| i],c_white,c_white,c_white,c_white,hudAlpha);
-			draw_set_halign(fa_left);
-			draw_set_alpha(1);
+			var imageShiftX = 0;
+			var sprite = messageImages[| i];
+			if sprite != noone
+			{
+				imageShiftX = messageBorder+messageImageSizeX;
+				draw_sprite_ext(sprite,0,GUIWidth-messageBorder+messageImageOffsetX,messageBorder+messageTop+i*messageDivider+messageImageOffsetY,messageImageSizeX/sprite_get_width(sprite),messageImageSizeY/sprite_get_height(sprite),0,c_white,hudAlpha*messageAlpha);
+			}
+			draw_text_color(GUIWidth-messageBorder-imageShiftX,messageBorder+messageTop+i*messageDivider,messageFeed[| i],c_white,c_white,c_white,c_white,mainAlpha*messageAlpha);
 		}
 		if deleteMessage
 		{
 			ds_list_delete(messageFeed,0);
 			ds_list_delete(messageTimers,0);
+			ds_list_delete(messageImages,0);
 			messageTop += messageDivider;
 		}
 	}
+	draw_set_halign(fa_left);
+	draw_set_alpha(1);
 #endregion
 
 //equipment

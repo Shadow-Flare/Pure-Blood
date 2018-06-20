@@ -22,13 +22,13 @@ switch subPhase
 		update_sprite(sprPlayerBodyDefaultBlocking,-(blockingDurationPre+blockingDurationBlocking+blockingDurationPost));
 		if subPhaseTimer >= round(room_speed*blockingDurationPre)
 		{
-			hitPhase = hitState.blocking;
 			subPhase = subState.performing;
 			subPhaseTimer = 0;
 		}
 		break;
 		
 	case subState.performing:
+		hitPhase = hitState.blocking;
 			//Sprite
 		update_sprite(sprPlayerBodyDefaultBlocking,-(blockingDurationPre+blockingDurationBlocking+blockingDurationPost));
 		if hasBlocked
@@ -39,13 +39,13 @@ switch subPhase
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationBlocking)
 		{
-			hitPhase = hitState.normal;
 			subPhase = subState.post;
 			subPhaseTimer = 0;
 		}
 		break;
 		
 	case subState.reaction:
+		hitPhase = hitState.blocking;
 			//Sprite
 		update_sprite(sprPlayerBodyDefaultBlockingReaction,-blockingDurationReaction);
 		if xInputQueue
@@ -53,7 +53,6 @@ switch subPhase
 			attackNum = 0;
 			reset_queue();
 			//initial data & tranistion
-			hitPhase = hitState.normal;
 			phase = state.attacking;
 			phaseTimer = 0;
 			subPhase = subState.performing;
@@ -63,7 +62,6 @@ switch subPhase
 		}
 		else if subPhaseTimer >= round(room_speed*blockingDurationReaction)
 		{
-			hitPhase = hitState.normal;
 			subPhase = subState.post;
 			subPhaseTimer = 0;
 		}

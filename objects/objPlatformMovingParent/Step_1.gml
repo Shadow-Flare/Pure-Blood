@@ -1,24 +1,21 @@
+event_inherited();
+
 if path != noone
 {
-	if ID != noone
+	if enabledPrev != enabled
 	{
-		var enabledPrev = enabled;
-		enabled = WorldCache.environment[| ID];
-		if enabledPrev != enabledPrev
+		if !enabled
 		{
-			if enabled
-			{
-				lastSpeed = path_speed;
-				path_speed = 0;
-			}
-			else
-			{
-				path_speed = lastSpeed;
-			}
+			lastSpeed = path_speed;
+			path_speed = 0;
+		}
+		else
+		{
+			path_speed = lastSpeed;
 		}
 	}
-	else if enabled == noone enabled = true;
-	
+	enabledPrev = enabled;
+
 	if enabled
 	{
 		var len = path_get_length(path);
@@ -26,18 +23,44 @@ if path != noone
 		{
 			if path_position == 0 || path_position == 1
 			{
-				path_speed = 0;
+				if timer == 0
+				{
+					var switchBool = false;
+					if path_position == 1 switchBool = true;
+					path_start(path,0,pathEndAction,true);
+					if switchBool
+					{
+						path_position = 1;
+						x = path_get_x(path,path_position);
+						y = path_get_y(path,path_position);
+					}
+					//path_speed = 0;
+				}
 				timer++;
 				if timer >= round(pauseDuration*room_speed)
 				{
 					timer = 0;
-					path_reverse(path);
-					path_start(path,pathSpeedDefault,pathEndAction,true);
+					if path_position == 0
+					{
+						//path_start(path,pathSpeedDefault,pathEndAction,true);
+						//path_position = 0;
+						path_speed = pathSpeedDefault;
+					}
+					else
+					{
+						//path_start(path,-pathSpeedDefault,pathEndAction,true);
+						//path_position = 1;
+						path_speed = -pathSpeedDefault;
+					}
 				}
 			}
 			if path_position*len+path_speed >= len
 			{
 				path_speed = len-path_position*len;
+			}
+			if path_position*len+path_speed <= 0
+			{
+				path_speed = -path_position*len;
 			}
 		
 			xSpdSim = path_get_x(path,(path_position*len+path_speed)/len)-x;
@@ -79,5 +102,3 @@ else
 		}
 	}
 }
-
-event_inherited();

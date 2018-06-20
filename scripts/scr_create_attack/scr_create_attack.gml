@@ -1,12 +1,7 @@
 ///@arg [startFrame-endframe]or-1
 ///@arg follow
 ///@arg duration
-///@arg damage_type
-///@arg damage
-///@arg stagger
-///@arg knockback
-///@arg status_type
-///@arg status_value
+///@arg hitData
 ///@arg pierce
 ///@arg animation
 ///@arg soundID
@@ -22,23 +17,31 @@ with attackEffect
 	frameData = argument0
 	follow = argument1;
 	attackDuration = argument2;  				//seconds
-		//hit data
-	hitType = argument3;	//Damage Type (-1:None|0:Slash|1:Blunt|2:Pierce|3:Fire|4:Ice|5:Lightning|6:Arcane|7:Light|8:Dark)
-	hitDamage = argument4;
-	hitStagger = argument5;
-	hitKnockback = argument6;
-	statusType = argument7;
-	statusValue = argument8;
-	pierce = argument9;
-	hitEffects = argument12;
+	hitAngle = noone;
+	
+	hitData = ds_map_create();
+	ds_map_copy(hitData,argument3);
+		
+		//change all undefined to 0
+	var index = ds_map_find_first(hitData);
+	while (index != undefined)
+	{
+		if hitData[? index] == undefined hitData[? index] = 0;
+		index = ds_map_find_next(hitData,index);
+	}
+		
+	mainType = scr_damageCache_get_mainType(hitData);
+
+	pierce = argument4;
+	hitEffects = argument7;
 	//Set
 	timer = 0;
 	facing = enemy.facing;
 	
 		//audio
-	hitSoundID = argument11;
+	hitSoundID = argument6;
 		//get sprite
-	var effectSpriteName = string_replace(sprite_get_name(argument10),"Body","Effect");
+	var effectSpriteName = string_replace(sprite_get_name(argument5),"Body","Effect");
 	
 		//set data
 	if asset_get_type(effectSpriteName) == asset_sprite

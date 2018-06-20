@@ -7,10 +7,11 @@ with statCache
 	mpMax = 0;
 	
 	damagePower = 17;
-	staggerPower = 20;
+	staggerPower = 6;
 	
 	toughness = 999;
 	breakCooldownDuration = 1;
+	mass = 6;
 	
 	moveSpeed = 1;										//$$//
 	defaultMoveSpeed = moveSpeed;
@@ -45,13 +46,21 @@ action1Sub1Duration = 0.7;
 action1Sub2Animation = sprServantBoundBodyAction1Sub2;
 action1Sub2Duration = 3;
 
-	//action1: (basic) explosion
-action1Sub3Animation = sprServantBoundEffectAction1Sub3;
-action1FrameData = -1;
-action1Follow = false;
-action1Duration = 0.7;
-action1AttackSoundID = noone;															//$$//
-action1HitSoundID = noone;																//$$//
-action1DamageData = ds_map_create();
-scr_create_damageCache(action1DamageData,1,4,0,0,0,1,0,0,0,0,0);
-action1Pierce = 1;
+	//action1: general attack
+action1Data = ds_map_create();
+scr_enemyActionDataDefaults(action1Data,enemyActionType.damageZone);
+action1Data[? enemyActionData.animation] = sprServantBoundEffectAction1Sub3;
+action1Data[? enemyActionData.duration] = 0.7;
+action1Data[? enemyActionData.follow] = false;
+action1Data[? enemyActionData.performSoundID] = noone;
+action1Data[? enemyActionData.hitSoundID] = noone;
+action1Data[? enemyActionData.hitAngle] = 275;
+action1Data[? enemyActionData.pierce] = true;
+scr_create_damageCache(action1Data[? enemyActionData.damageData],3,1,0,0,0,1,0,0,0,0,0,0);
+
+//Action Data holder
+var tmp = 0;
+actionDataHolder = ds_list_create();
+
+ds_list_add(actionDataHolder,action1Data);
+ds_list_mark_as_map(actionDataHolder,tmp); tmp++;

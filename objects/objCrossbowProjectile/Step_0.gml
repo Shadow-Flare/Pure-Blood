@@ -53,10 +53,11 @@ xPrev = x;
 yPrev = y;
 if hitOn
 {
+	var ang = point_direction(0,0,xSpd,-ySpd);
+	hitAngle = ang;
 	if !place_free(x+xSpd,y+ySpd)
 	{
 		image_index = irandom(sprite_get_number(sprite_index));
-		var ang = point_direction(0,0,xSpd,-ySpd);
 		while place_free(x+dcos(ang),y+dsin(ang)) {x+=dcos(ang); y+=dsin(ang);}
 		xSpd = 0;
 		ySpd = 0;

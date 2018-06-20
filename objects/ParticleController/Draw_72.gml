@@ -40,3 +40,13 @@ surface_set_target(darkPixSurf);
 surface_reset_target();
 
 if !surface_exists(overidePixSurf) overidePixSurf = surface_create(room_width,room_height);
+surface_set_target(overidePixSurf);
+	draw_clear_alpha(c_black,0);
+	part_system_drawit(pSysOveride);
+surface_reset_target();
+
+if !surface_exists(weaponSummonPixSurf) weaponSummonPixSurf = surface_create(room_width,room_height);
+surface_set_target(weaponSummonPixSurf);
+	draw_clear_alpha(c_black,0);
+	part_system_drawit(pSysWeaponSummon);
+surface_reset_target();

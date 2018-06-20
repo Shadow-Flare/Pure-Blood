@@ -1,7 +1,4 @@
-var taken = [];
-taken[0] = 0;
-taken[1] = 0;
-taken[2] = 0;
+for (var i = 0; i < 10; i++) lastHitTypes[| i] = false;
 
 with objAttackEffectParent
 {
@@ -13,18 +10,25 @@ with objAttackEffectParent
 		enemy.lastAttackHasHit = true;
 		with other
 		{
-			hasBeenHit = true;
-			//lastHitType = attack.hitType;
 				//stats
 			if isInvulnerable == false
 			{
-				var damTotal = attack.hitData[? damageData.slash]+attack.hitData[? damageData.pierce]+attack.hitData[? damageData.blunt]+attack.hitData[? damageData.fire]+attack.hitData[? damageData.ice]+attack.hitData[? damageData.lightning]+attack.hitData[? damageData.arcane]+attack.hitData[? damageData.light]+attack.hitData[? damageData.dark];
-				taken[0] = damTotal;
-				taken[1] = attack.hitData[? damageData.stagger];
-				taken[2] = attack.hitData[? damageData.knockback];;
+					//last/has-been hit data
+				lastHitTypes[| damageType.none] = true;		//this is the general hit checker
+				if attack.hitData[? damageData.slash] > 0			lastHitTypes[| damageType.slash] = true;
+				if attack.hitData[? damageData.pierce] > 0			lastHitTypes[| damageType.pierce] = true;
+				if attack.hitData[? damageData.blunt] > 0			lastHitTypes[| damageType.blunt] = true;
+				if attack.hitData[? damageData.fire] > 0			lastHitTypes[| damageType.fire] = true;
+				if attack.hitData[? damageData.ice] > 0				lastHitTypes[| damageType.ice] = true;
+				if attack.hitData[? damageData.lightning] > 0		lastHitTypes[| damageType.lightning] = true;
+				if attack.hitData[? damageData.arcane] > 0			lastHitTypes[| damageType.arcane] = true;
+				if attack.hitData[? damageData.light] > 0			lastHitTypes[| damageType.light] = true;
+				if attack.hitData[? damageData.dark] > 0			lastHitTypes[| damageType.dark] = true;
+				
+				return attack.hitData;
 			}
 		}
 	}
 }
 
-return taken;
+return noone;

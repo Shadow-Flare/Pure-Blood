@@ -1,12 +1,14 @@
 ///@arg offhandSubtype.ENUM
+///@arg ownedSubtypeStats.ENUM
 var subID = argument0;
+var stat = argument1;
 
 with ComboCache
 {
-	var comboOwned = playerOffhandSubtype[? subID];
-	if (comboOwned == undefined)
+	var ownedCache = playerOffhandSubtype[? subID];
+	if ownedCache == undefined return undefined;
+	else
 	{
-		comboOwned = false;
+		return ownedCache[? stat];
 	}
-	return comboOwned;
 }

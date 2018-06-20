@@ -1,3 +1,5 @@
+event_inherited();
+
 var prevState = enabled
 
 if used
@@ -5,19 +7,13 @@ if used
 	used = false;
 	var newValue = !enabled
 	enabled = newValue;
-	WorldCache.environment[| ID] = newValue;
+	WorldCache.environment[? ID] = newValue;
 }
 
 if enabled = noone
 {
 	if ID = noone enabled = false;
-	else enabled = WorldCache.environment[| ID];
-}
-
-playerCanUse = false;
-if instance_exists(objPlayer) && abs(x-objPlayer.x) <= useRange && abs(y-objPlayer.y) <= useRange*2 && objPlayer.canAct
-{
-	playerCanUse = true;
+	else enabled = WorldCache.environment[? ID];
 }
 
 if enabled image_index = 1;
