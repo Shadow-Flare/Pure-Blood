@@ -96,22 +96,34 @@ draw_surface(damageNumberSurf,0,0);
 
 #region Top Left HuD
 		#region setup surfaces
-	if !surface_exists(topLeftSurf) topLeftSurf = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2);
-	if !surface_exists(hpSurf) hpSurf = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2);
-	if !surface_exists(hpSurfA) hpSurfA = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2);
-	if !surface_exists(hpSurfB) hpSurfB = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2);
-	if !surface_exists(hpSurfC) hpSurfC = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2);
-	if !surface_exists(mpSurf) mpSurf = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2);
-	if !surface_exists(mpSurfA) mpSurfA = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2);
+	
+	if !surface_exists(topLeftSurf) {topLeftSurf = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2); resetBars = true;};
+	if !surface_exists(hpSurf) {hpSurf = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2); resetBars = true;}
+	if !surface_exists(hpSurfA) {hpSurfA = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2); resetBars = true;}
+	if !surface_exists(hpSurfB) {hpSurfB = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2); resetBars = true;}
+	if !surface_exists(hpSurfC) {hpSurfC = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2); resetBars = true;}
+	if !surface_exists(mpSurf) {mpSurf = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2); resetBars = true;}
+	if !surface_exists(mpSurfA) {mpSurfA = surface_create(GUIWidth/topLeftResolutionScale,hpRMax*2+topLeftBorder*2); resetBars = true;}
+	
+	if resetBars
+	{
+		hpDamageDisplayPrev = noone;
+		hpMaxPrev = noone;
+		hpPrev = noone;
+		mpMaxPrev = noone;
+		mpPrev = noone;
+	}
+	resetBars = false;
 		#endregion
 		
 		#region Mp
-	surface_set_target(mpSurf);
-	draw_clear_alpha(c_white,0);
-
 	var mp = floor(PlayerStats.mp);
 	var mpMax = PlayerStats.mpMax;
-
+	
+	if mp != mpPrev || mpMax != mpMaxPrev
+	{
+		surface_set_target(mpSurf);
+		draw_clear_alpha(c_white,0);
 			#region Back
 				#region draw bar mp + caps
 	//bar
@@ -146,7 +158,11 @@ draw_surface(damageNumberSurf,0,0);
 	}
 		#endregion
 			#endregion		
-	surface_reset_target();
+		surface_reset_target();
+	}
+	mpPrev = mp;
+	mpMaxPrev = mpMax;
+	
 	surface_set_target(mpSurfA);
 	draw_clear_alpha(c_white,0);
 			#region Animation
@@ -171,93 +187,98 @@ draw_surface(damageNumberSurf,0,0);
 		#region Hp
 	var v = hpPP*pi*(hpR1+hpR1)/2*(4/3);
 	surface_set_target(hpSurfB);
-	draw_clear_alpha(c_white,0);
 			#region Back	
 	var hpMax = PlayerStats.hpMax;
-				#region preliminaries
-	var barHp= max(hpMax-v,0);
-	var curveHp= clamp(hpMax,0,v);
-	var hpd = 270*(curveHp/v);
+	if hpMax != hpMaxPrev
+	{
+		draw_clear_alpha(c_white,0);
+		#region preliminaries
+var barHp= max(hpMax-v,0);
+var curveHp= clamp(hpMax,0,v);
+var hpd = 270*(curveHp/v);
 		
-	draw_set_colour(hpBackColour);
-				#endregion
-				#region draw circle-triangle
-	draw_sprite(spr_hp_base_curve_0,0,hpXI+1,hpYI+1);
-	draw_sprite(spr_hp_base_curve_1,0,hpXI,hpYI+1);
-	draw_sprite(spr_hp_base_curve_2,0,hpXI,hpYI);
-				#endregion
-				#region draw circle-triangle cutout
-	d = 90;
-	gpu_set_blendmode(bm_subtract)
-	for(var i=0; i<hpA; i++;)
-	{
-		var p1x= hpXI;
-		var p1y= hpYI;
-		var p2x= hpXI + dcos(d)*(hpRMax);
-		var p2y= hpYI - dsin(d)*(hpRMax);
-		d += (270-hpd)/hpA;
-		var p3x= hpXI + dcos(d)*(hpRMax);
-		var p3y= hpYI - dsin(d)*(hpRMax);
-		draw_triangle(p1x,p1y,p2x,p2y,p3x,p3y,0);
-	}
-	gpu_set_blendmode(bm_normal)
-				#endregion
-				#region draw bar hp + caps
-	//bar
-	var size = (barHp/hpPP);
-	var sprW = sprite_get_width(spr_hp_base_bar);
-	var sprH = sprite_get_height(spr_hp_base_bar);
-	var n = size/sprW;
-	for(var i = 0; i < n; i++)
-	{
-		var xPart = min(n-i,1);
-		draw_sprite_part(spr_hp_base_bar,0,0,0,sprW*xPart,sprH,hpXI+1+i*sprW,hpYI-34);
-	}
-	//start cap
-	var dst = 25;
-	draw_sprite_ext(spr_hp_base_cap,0,hpXI+1+dst,hpYI,1,1,0,c_white,1.0);
-	//end cap
-	if hpMax < v
-	{
-		var cX = hpXI+1+dcos(hpd)*dst;
-		var cY = hpYI+1+dsin(hpd)*dst;
-		draw_sprite_ext(spr_hp_base_cap,1,cX,cY,1,1,180-hpd,c_white,1.0);
-	}
-	else 
-	{
-		var cX = hpXI+1+barHp/hpPP;
-		var cY = hpYI+1-dst;
-		draw_sprite_ext(spr_hp_base_cap,1,cX,cY,1,1,-90,c_white,1.0);
-	}
+draw_set_colour(hpBackColour);
 		#endregion
+		#region draw circle-triangle
+draw_sprite(spr_hp_base_curve_0,0,hpXI+1,hpYI+1);
+draw_sprite(spr_hp_base_curve_1,0,hpXI,hpYI+1);
+draw_sprite(spr_hp_base_curve_2,0,hpXI,hpYI);
+		#endregion
+		#region draw circle-triangle cutout
+d = 90;
+gpu_set_blendmode(bm_subtract)
+for(var i=0; i<hpA; i++;)
+{
+var p1x= hpXI;
+var p1y= hpYI;
+var p2x= hpXI + dcos(d)*(hpRMax);
+var p2y= hpYI - dsin(d)*(hpRMax);
+d += (270-hpd)/hpA;
+var p3x= hpXI + dcos(d)*(hpRMax);
+var p3y= hpYI - dsin(d)*(hpRMax);
+draw_triangle(p1x,p1y,p2x,p2y,p3x,p3y,0);
+}
+gpu_set_blendmode(bm_normal)
+		#endregion
+		#region draw bar hp + caps
+//bar
+var size = (barHp/hpPP);
+var sprW = sprite_get_width(spr_hp_base_bar);
+var sprH = sprite_get_height(spr_hp_base_bar);
+var n = size/sprW;
+for(var i = 0; i < n; i++)
+{
+var xPart = min(n-i,1);
+draw_sprite_part(spr_hp_base_bar,0,0,0,sprW*xPart,sprH,hpXI+1+i*sprW,hpYI-34);
+}
+//start cap
+var dst = 25;
+draw_sprite_ext(spr_hp_base_cap,0,hpXI+1+dst,hpYI,1,1,0,c_white,1.0);
+//end cap
+if hpMax < v
+{
+var cX = hpXI+1+dcos(hpd)*dst;
+var cY = hpYI+1+dsin(hpd)*dst;
+draw_sprite_ext(spr_hp_base_cap,1,cX,cY,1,1,180-hpd,c_white,1.0);
+}
+else 
+{
+var cX = hpXI+1+barHp/hpPP;
+var cY = hpYI+1-dst;
+draw_sprite_ext(spr_hp_base_cap,1,cX,cY,1,1,-90,c_white,1.0);
+}
+#endregion
+	}
+	hpMaxPrev = hpMax;
 			#endregion
 	surface_reset_target();
 			#region Fill
-				#region preliminaries
+		var hp = PlayerStats.hp;
+		var hpDam = hpDamageDisplay;
+			#region preliminaries
 		if PlayerStats.hpMax < hpDamageDisplay hpDamageDisplay = PlayerStats.hpMax;
 				
-		if PlayerStats.hp > hpDamageDisplay
+		if hp > hpDamageDisplay
 		{
-			hpDamageTarget = PlayerStats.hp;
-			hpDamageDisplay = PlayerStats.hp;
+			hpDamageTarget = hp;
+			hpDamageDisplay = hp;
 		}
-		else if PlayerStats.hp == hpDamageTarget
+		else if hp == hpDamageTarget
 		{
-			hpDamageDisplay += (PlayerStats.hp-hpDamageDisplay)/8;
+			hpDamageDisplay += (hp-hpDamageDisplay)/8;
 		}
 		else
 		{
 			hpDamageDelayTimer++;
 			if hpDamageDelayTimer >= round(hpDamageDelay*room_speed)
 			{
-				hpDamageTarget = PlayerStats.hp;
+				hpDamageTarget = hp;
 				hpDamageDelayTimer = 0;
 			}
 		}
-
-		var hp = PlayerStats.hp;
-		var hpDam = hpDamageDisplay;
-					#endregion
+				#endregion
+		if hpDam != hpDamageDisplayPrev || hp != hpPrev
+		{
 				#region draw damage portion
 					#region preliminaries
 	var barHp= max(hpDam-v,0);
@@ -350,6 +371,9 @@ draw_surface(damageNumberSurf,0,0);
 		#endregion
 					surface_reset_target();
 				#endregion
+		}
+		hpDamageDisplayPrev = hpDam;
+		hpPrev = hp;
 				#region animation
 					#region preliminaries
 	var animHP = max(hpDamageDisplay,hp);
@@ -460,8 +484,10 @@ draw_surface(damageNumberSurf,0,0);
 				var roomW = RoomCache.rmWidths[? room];
 				var roomH = RoomCache.rmHeights[? room];
 				draw_clear_alpha(c_white,0.0);
-				var xM = hudMapWidth/2-(roomX+0.5*roomW)*hudMapPixelScale*MapManager.mapCellW;
-				var yM = hudMapHeight/2-(roomY+0.5*roomH)*hudMapPixelScale*MapManager.mapCellH;
+	//var x1 = round(mapSurfW/2+(MapManager.cellStartX*MapManager.mapCellW+cursorX)*mapViewPixelScale);
+	//var y1 = round(mapSurfH/2+(MapManager.cellStartY*MapManager.mapCellH+cursorY)*mapViewPixelScale);
+				var xM = hudMapWidth/2-(roomX+0.5*roomW-MapManager.cellStartX)*hudMapPixelScale*MapManager.mapCellW;
+				var yM = hudMapHeight/2-(roomY+0.5*roomH-MapManager.cellStartY)*hudMapPixelScale*MapManager.mapCellH;
 				draw_surface_ext(MapManager.mapSurface,xM,yM,hudMapPixelScale,hudMapPixelScale,0,c_white,1.0);
 			surface_reset_target();
 		

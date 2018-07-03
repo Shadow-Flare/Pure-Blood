@@ -61,7 +61,7 @@ newCommand[| puppetCommandData.arg5] = arg5;
 //arg5 = interactable instance
 	//emote (+cyclic):
 //arg1 = sprite
-//arg2 = duration (seconds)
+//arg2 = duration (seconds; if cyclic this is the duration of 1 cycle)
 //arg3 = UNUSED
 //arg4 = UNUSED
 //arg5 = UNUSED

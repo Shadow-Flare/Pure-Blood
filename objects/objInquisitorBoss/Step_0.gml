@@ -21,6 +21,9 @@ scr_actor_actionHardCooldown();
 		//case state.action1:
 		//	scr_ground_actorActionBasic_attack(action1Data);
 		//	break;
+		case state.emote:
+			scr_actor_ground_emote();
+			break;
 		case state.hitReaction:
 			scr_actor_ground_hitReaction();
 			break;

@@ -80,21 +80,30 @@ with PlayerStats
 		var runeList = equipCache[? equipmentSlot.rune];
 		ds_list_clear(runeList);
 		repeat(PlayerStats.runeSize) ds_list_add(runeList,noone);
-		equipCache[? equipmentSlot.head] = equipmentItem.iron_helmet;
-		equipCache[? equipmentSlot.chest] = equipmentItem.iron_chestplate;
-		equipCache[? equipmentSlot.hands] = equipmentItem.rusted_gauntlets;
-		equipCache[? equipmentSlot.legs] = equipmentItem.chainmail_leggings;
+		equipCache[? equipmentSlot.head] = noone;
+		equipCache[? equipmentSlot.chest] = noone;
+		equipCache[? equipmentSlot.hands] = noone;
+		equipCache[? equipmentSlot.legs] = noone;
 		equipCache[? equipmentSlot.main1] = weaponItem.gladius;
 		equipCache[? equipmentSlot.main2] = weaponItem.hastam;
 		equipCache[? equipmentSlot.off1] = weaponItem.crossbow;
 		equipCache[? equipmentSlot.off2] = weaponItem.spell_book;
 
 	//inventory and owned stuff data
+		//initial data
+	currentWeaponIndex = 0;
+	currentOffhandIndex = 0;
+	currentOffhandSubtypeIndex = 0;
+	currentOffhandActivatableIndex = 0;
+	
+	subtypeCache = ds_list_create();
+	activeCache = ds_list_create();
+	
 		//items
 			//items
 		scr_player_inventory_manage(itemType.item,itemItem.crossbow_bolt,30);
 		scr_player_inventory_manage(itemType.item,itemItem.summon_stone,1);
-		scr_player_inventory_manage(itemType.item,itemItem.hearthstone,1);
+		//scr_player_inventory_manage(itemType.item,itemItem.hearthstone,1);
 			//weapons
 		scr_player_inventory_manage(itemType.weapon,weaponItem.gladius,1);
 		scr_player_inventory_manage(itemType.weapon,weaponItem.hastam,1);
@@ -102,29 +111,29 @@ with PlayerStats
 		scr_player_inventory_manage(itemType.weapon,weaponItem.crossbow,1);
 		scr_player_inventory_manage(itemType.weapon,weaponItem.spell_book,1);
 			//equipments
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.iron_helmet,1);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.bassinet,1);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.red_bandanna,1);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.iron_chestplate,1);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.rusted_gauntlets,1);
-		scr_player_inventory_manage(itemType.equipment,equipmentItem.chainmail_leggings,1);
+		//scr_player_inventory_manage(itemType.equipment,equipmentItem.iron_helmet,1);
+		//scr_player_inventory_manage(itemType.equipment,equipmentItem.bassinet,1);
+		//scr_player_inventory_manage(itemType.equipment,equipmentItem.red_bandanna,1);
+		//scr_player_inventory_manage(itemType.equipment,equipmentItem.iron_chestplate,1);
+		//scr_player_inventory_manage(itemType.equipment,equipmentItem.rusted_gauntlets,1);
+		//scr_player_inventory_manage(itemType.equipment,equipmentItem.chainmail_leggings,1);
 			//Runes
-		scr_player_inventory_manage(itemType.rune,runeItem.dagaz,1);
-		scr_player_inventory_manage(itemType.rune,runeItem.lagaz,1);
-		scr_player_inventory_manage(itemType.rune,runeItem.kaunan,1);
+		//scr_player_inventory_manage(itemType.rune,runeItem.dagaz,1);
+		//scr_player_inventory_manage(itemType.rune,runeItem.lagaz,1);
+		//scr_player_inventory_manage(itemType.rune,runeItem.kaunan,1);
 
 			//keys
-		scr_player_inventory_manage(itemType.key,keyItem.wooden_key,1);
+		//scr_player_inventory_manage(itemType.key,keyItem.wooden_key,1);
 			//alchemy
 	
 		//combos
-		scr_player_giveallcombos();
+		//scr_player_giveallcombos();
 
 		//offhand subtypes		//no need to give default here, are auto-given
-		//scr_player_givealloffhandsubtypes();
+		scr_player_givealloffhandsubtypes();
 
 		//active ability		//no need to give default here, are auto-given
-		//scr_player_giveallactiveabilities();
+		scr_player_giveallactiveabilities();
 		
 	//passive ability data
 		scr_player_giveallabilities();
@@ -148,19 +157,11 @@ with PlayerStats
 	scr_resetComboData(weaponClass.spear);
 	scr_resetComboData(weaponClass.greatHammer);
 	
-		//initial data
+		//set degault weapon-equipment data
 	currentWeaponID = ItemCache.equipment[? equipmentSlot.main1];				//gladius
 	currentOffhandID = ItemCache.equipment[? equipmentSlot.off1];				//crossbow
 	currentOffhandSubtypeID = offhandSubtypeID.crossbow_normal;
 	currentOffhandActivatableID = activeAbilityID.crossbow_rope_shot;
-	
-	currentWeaponIndex = 0;
-	currentOffhandIndex = 0;
-	currentOffhandSubtypeIndex = 0;
-	currentOffhandActivatableIndex = 0;
-	
-	subtypeCache = ds_list_create();
-	activeCache = ds_list_create();
 
 	scr_player_update_offhand_caches();
 	

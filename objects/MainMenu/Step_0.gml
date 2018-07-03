@@ -67,12 +67,6 @@ if conAltStart != noone
 		case 3:		//newGame2: Alt area
 			transType = mainTransType.newGame2;
 			break;
-		case 4:		//newGame3: Alt Area
-			transType = mainTransType.newGame3;
-			break;
-		case 5:		//newGame4: Start in town, max gear
-			transType = mainTransType.newGame4;
-			break;
 	}
 }
 
@@ -111,23 +105,7 @@ switch transType
 		transTimer = min(transTimer+1,room_speed*transDur);
 		if transTimer >= round(room_speed*transDur)
 		{
-			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX100Y299; type = loadType.newGame2; transDur = other.transDur; transTimer = 0;}
-			room_goto(loading);
-		}
-		break;
-	case mainTransType.newGame3:
-		transTimer = min(transTimer+1,room_speed*transDur);
-		if transTimer >= round(room_speed*transDur)
-		{
-			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX100Y500; type = loadType.newGame3; transDur = other.transDur; transTimer = 0;}
-			room_goto(loading);
-		}
-		break;
-	case mainTransType.newGame4:
-		transTimer = min(transTimer+1,room_speed*transDur);
-		if transTimer >= round(room_speed*transDur)
-		{
-			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX123Y397; type = loadType.newGame4; transDur = other.transDur; transTimer = 0;}
+			with instance_create_depth(0,0,0,LoadingParser) {roomTo = rmRoomX125Y395; type = loadType.newGame2; transDur = other.transDur; transTimer = 0;}
 			room_goto(loading);
 		}
 		break;

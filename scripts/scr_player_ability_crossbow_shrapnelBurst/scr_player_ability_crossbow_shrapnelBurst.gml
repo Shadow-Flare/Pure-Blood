@@ -27,6 +27,7 @@ switch subPhase
 					frameData = shrapnelBurstframeData;
 					attackDuration = shrapnelBurstattackDuration;
 					hitEffects = shrapnelBursthitEffects;
+					hitAngle = noone;
 					
 						//hitData management
 					if PlayerStats.currentOffhandIndex == 0 var cache = PlayerStats.weaponOff1DamageDetails;

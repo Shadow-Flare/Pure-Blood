@@ -5,6 +5,10 @@ if shiftRoom
 	room_goto(roomTo);
 	draw_texture_flush();
 	shiftRoom = false;
+	
+	var cache = RoomCache.rmRevealData[? roomTo];
+	cache[? noone] = true;
+	redraw_map();
 }
 
 if timer == room_speed

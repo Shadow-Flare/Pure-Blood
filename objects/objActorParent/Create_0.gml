@@ -19,6 +19,7 @@ playerCanUse = false;
 used = false;
 useRange = 16;
 puppetTimer = 0;
+hasGrantedExp = false;
 
 interactPositionCorrectX = noone;
 interactPositionCorrectFacing = noone;
@@ -30,3 +31,6 @@ interactScript = noone;
 
 flying = false;
 flyingDefault = false;
+hasntBeenSpiked = true;
+
+landingDuration = 0.5;		//default

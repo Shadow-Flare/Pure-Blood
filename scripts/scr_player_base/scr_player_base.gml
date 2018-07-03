@@ -79,7 +79,6 @@ switch subPhase
 			subPhase = subState.landing;
 			subPhaseTimer = 0;
 			if moveH != 0 scr_player_base_subPhaseDeterminer();
-			scr_land_effect(groundTypes.stone);
 		}
 			//Sprite
 		update_sprite(sprPlayerBodyDefaultAirborne,0);
@@ -93,6 +92,7 @@ switch subPhase
 		break;
 		
 	case subState.landing:
+		if subPhaseTimer == 1 scr_land_effect(groundTypes.stone);
 		if subPhaseTimer >= round(landingDuration*room_speed)
 		{
 			scr_player_base_subPhaseDeterminer();

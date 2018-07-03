@@ -27,7 +27,8 @@ attack1Range = 16*2.5;
 
 //variables
 staggeredDuration = 0.6;
-stunnedDuration = 1.8;
+stunnedDuration = 1.4;
+stunnedRecoveryDuration = 0.4;
 deflectDuration = 0.7;
 pushable = true;
 flying = flyingDefault;

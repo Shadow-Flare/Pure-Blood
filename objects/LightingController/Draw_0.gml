@@ -444,6 +444,10 @@ if normalMappingEnabled
 		{
 			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
 		}
+		with obj_destructibleExit if visible
+		{
+			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);
+		}
 		with objInteractableParent if visible
 		{
 			draw_sprite_ext(sprite_index,image_index,(x-camX+1)*other.lightScale,(y-camY+1)*other.lightScale,image_xscale*other.lightScale,image_yscale*other.lightScale,image_angle,make_color_rgb(128,128,255),image_alpha);

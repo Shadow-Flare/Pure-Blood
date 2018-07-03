@@ -250,8 +250,8 @@ if !surface_exists(mainMapViewDetails)
 
 surface_set_target(mainMapViewSurface);
 	draw_clear_alpha(c_white,0.0);
-	var x1 = round(mapSurfW/2-cursorX*mapViewPixelScale);
-	var y1 = round(mapSurfH/2-cursorY*mapViewPixelScale);
+	var x1 = round(mapSurfW/2+(MapManager.cellStartX*MapManager.mapCellW-cursorX)*mapViewPixelScale);
+	var y1 = round(mapSurfH/2+(MapManager.cellStartY*MapManager.mapCellH-cursorY)*mapViewPixelScale);
 	draw_surface_ext(MapManager.mapSurface,x1,y1,mapViewPixelScale,mapViewPixelScale,0,c_white,1.0);
 surface_reset_target();
 

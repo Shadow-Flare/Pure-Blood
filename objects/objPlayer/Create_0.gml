@@ -163,6 +163,7 @@ attackGroundTrackDistance = 32;
 attackTrackXDistance = 48;
 attackTrackYDistance = 24;
 attackEffectAlpha = 0.7;
+attackSpecialState = noone;
 hasDeflected = false;
 
 aerialAttackVertBoost = -0.25;

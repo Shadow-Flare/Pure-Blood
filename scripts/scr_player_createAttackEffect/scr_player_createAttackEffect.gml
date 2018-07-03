@@ -11,6 +11,7 @@ with instance_create_depth(x,y,depth-1,objMeleeAttackEffect)
 	caster = other;
 	casterType = other.actorType;
 	pierce = 0;
+	playerWeaponClass = weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type);
 	//get effect properties/collisions
 	attackAnimation = other.attackAnimation;
 	hitAngle = ds_list_find_value(combo_get_stat(attackID,comboStats.hitAngle),hitNum);
@@ -110,8 +111,12 @@ with instance_create_depth(x,y,depth-1,objMeleeAttackEffect)
 		animToUse = asset_get_index(sprite_get_name(animToUse)+"Alt");
 	}
 	#endregion
-		//change to effect string
+		//change to affect string
 	var effectSpriteName = string_replace(sprite_get_name(animToUse),"Body","Effect");
+	if hitNum != 0
+	{
+		effectSpriteName += string(hitNum);
+	}
 		//if uppercut
 	if attackID == -1 
 	{
@@ -197,6 +202,22 @@ if ds_list_find_index(attackSpecials,comboSpecial.thunderbolt) != -1
 	}
 }
 #endregion
+if ds_list_find_index(attackSpecials,comboSpecial.plunge) != -1
+{
+	phase = state.attacking;
+	phaseTimer = 0;
+	subPhase = subState.actionSub1;
+	subPhaseTimer = 0;
+	attackSpecialState = comboSpecial.plunge;
+	var classType = combo_get_stat(attackID,comboStats.class);
+	switch classType
+	{
+		case weaponClass.greatHammer:
+			var newAttackID = comboID.greatHammer_plunge;
+			break;
+	}
+	scr_player_beginAttack(newAttackID);
+}
 
 //audio
 audio_play_sound(combo_get_stat(attackID,comboStats.sound),10,0);

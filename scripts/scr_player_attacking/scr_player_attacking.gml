@@ -224,7 +224,7 @@ switch vPhase
 						}
 							#endregion
 							#region end
-						else if subPhaseTimer >= round(attackCooldown*room_speed)
+						else if subPhaseTimer >= floor(attackCooldown*room_speed)
 						{
 							canChangeVState = true;
 							vChangeBreak = true;
@@ -295,6 +295,31 @@ switch vPhase
 							#endregion
 						#endregion
 						break;
+				}
+				break;
+			case subState.actionSub1:			//special state(+ subs)
+				switch attackSpecialState
+				{
+					case comboSpecial.plunge:	#region Plunge
+						if vPhase == vState.grounded
+						{
+							phase = state.attacking;
+							phaseTimer = 0;
+							subPhase = subState.performing;
+							subPhaseTimer = 0;
+							attackSpecialState = noone;
+							var classType = combo_get_stat(attackID,comboStats.class);
+							switch classType
+							{
+								case weaponClass.greatHammer:
+									var newAttackID = comboID.greatHammer_plungeLand
+									break;
+							}
+							scr_player_beginAttack(newAttackID);
+						}
+							//ySpd
+						ySpd = 4;
+						break;					#endregion
 				}
 				break;
 		}

@@ -9,7 +9,10 @@ var def = argument3;
 
 rmWidths[? rm] = w;
 rmHeights[? rm] = h;
-rmExits[?rm] = ds_list_create();
+rmExits[? rm] = ds_list_create();
+rmRevealData[? rm] = ds_map_create();
+var cache = rmRevealData[? rm];
+cache[? noone] = false;	//revealed status;
 
 switch def
 {

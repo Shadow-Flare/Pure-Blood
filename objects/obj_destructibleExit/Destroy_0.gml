@@ -1,0 +1,1 @@
+event_perform_object(obj_hitable,ev_destroy,0);

@@ -7,11 +7,12 @@ switch phase
 		hitOn = false;
 		image_xscale = normalScale;
 		image_yscale = normalScale;
+		var ang = point_direction(0,0,xSpd,-ySpd);
+		hitAngle = ang;
 		
 		if place_meeting(x+xSpd,y+ySpd,objActorParent) 
 			with objActorParent with other if place_meeting(x+xSpd,y+ySpd,other) && is_enemy(casterType,other.actorType)
 		{
-			var ang = point_direction(0,0,xSpd,-ySpd);
 			while !place_meeting(x+dcos(ang),y+dsin(ang),other) {x+=dcos(ang); y+=dsin(ang);}
 			xSpd = 0;
 			ySpd = 0;
@@ -21,7 +22,6 @@ switch phase
 		}
 		if !place_free(x+xSpd,y+ySpd)
 		{
-			var ang = point_direction(0,0,xSpd,-ySpd);
 			while place_free(x+dcos(ang),y+dsin(ang)) {x+=dcos(ang); y+=dsin(ang);}
 			xSpd = 0;
 			ySpd = 0;

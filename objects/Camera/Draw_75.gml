@@ -31,5 +31,16 @@ switch fadeTypeState
 			fadeTypeState = fadeType.none;
 			fadeTimer = 0;
 		}
+	case fadeType.hold:
+		fadeTimer++;
+		var surfW = surface_get_width(application_surface);
+		var surfH = surface_get_height(application_surface);
+		draw_set_colour(fadeColour);
+		draw_rectangle(0,0,surfW,surfH,0);
+		if fadeTimer > round(fadeDuration*room_speed)
+		{
+			fadeTypeState = fadeType.none;
+			fadeTimer = 0;
+		}
 		break;
 }

@@ -1,0 +1,1 @@
+scr_itemPickup_addItem(itemType.equipment,equipmentItem.iron_helmet,1);

@@ -1,0 +1,1 @@
+scr_itemPickup_addItem(itemType.item,itemItem.summon_stone,1);

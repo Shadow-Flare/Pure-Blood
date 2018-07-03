@@ -1,7 +1,6 @@
 var subtypeCache = PlayerStats.subtypeCache;
 var activeCache = PlayerStats.activeCache;
 	
-	
 	//subtypes
 ds_list_clear(subtypeCache);
 var cache = ComboCache.playerOffhandSubtype;

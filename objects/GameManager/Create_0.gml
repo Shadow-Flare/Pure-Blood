@@ -25,13 +25,14 @@ enum interactableVariant {none, worldID, worldIDand}
 gameState = GameState.mainMenu;
 pauseState = PauseState.normal;
 battlePhase = battleState.peace;
-
 battlePhaseRange = 180;		//pixels
+
+lastSpawner = noone;
 
 currentCheckpointID = noone;
 checkpointMap = ds_map_create();
-	checkpointMap[? 0] = rmRoomX100Y500;
-	checkpointMap[? 1] = rmRoomX107Y500;
+	checkpointMap[? 0] = rmRoomX107Y398;
+	checkpointMap[? 1] = rmRoomX125Y395;
 pauseSplash = noone;
 
 //screen & misc

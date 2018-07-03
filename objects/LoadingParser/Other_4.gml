@@ -4,9 +4,9 @@ if room == loading
 	{
 		case loadType.newGame:
 		case loadType.newGame2:
-		case loadType.newGame3:
-		case loadType.newGame4:
 			instance_create_depth(0,0,0,NewGameLoader);
+			var cache = RoomCache.rmRevealData[? roomTo];
+			cache[? noone] = true;
 			break;
 		case loadType.arena:
 			instance_create_depth(0,0,0,ArenaGameLoader);
@@ -48,23 +48,7 @@ else
 			type = loadType.ending;
 			break;
 		case loadType.newGame2:
-			instance_create_layer(104,289,"lay_player",objPlayer);
-			with Camera phase = cameraState.player;
-
-			instance_destroy(NewGameLoader);
-			GameManager.gameState = GameState.inGame;
-			type = loadType.ending;
-			break;
-		case loadType.newGame3:
-			instance_create_layer(72,145,"lay_player",objPlayer);
-			with Camera phase = cameraState.player;
-
-			instance_destroy(NewGameLoader);
-			GameManager.gameState = GameState.inGame;
-			type = loadType.ending;
-			break;
-		case loadType.newGame4:
-			instance_create_layer(32,321,"lay_player",objPlayer);
+			instance_create_layer(32,657,"lay_player",objPlayer);
 			with Camera phase = cameraState.player;
 
 			instance_destroy(NewGameLoader);
@@ -72,6 +56,7 @@ else
 			scr_player_giveallactiveabilities();
 			scr_player_giveallcombos();
 			scr_player_givealloffhandsubtypes();
+			scr_player_giveallitems();
 			GameManager.gameState = GameState.inGame;
 			type = loadType.ending;
 			break;

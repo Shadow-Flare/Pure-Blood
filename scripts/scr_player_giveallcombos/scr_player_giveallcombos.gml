@@ -1,8 +1,7 @@
 with ComboCache
 {
-	var cache = combo;
-	for (var i = 0; i < ds_map_size(cache); i++)
+	for (var index = ds_map_find_first(combo); index != undefined; index = ds_map_find_next(combo,index))
 	{
-		scr_player_combo_manage(i,true);
+		scr_player_combo_manage(index,true);
 	}
 }

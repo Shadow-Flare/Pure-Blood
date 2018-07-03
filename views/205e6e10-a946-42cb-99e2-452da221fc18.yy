@@ -28,7 +28,7 @@
         "7348a7a9-03cf-4152-b3d2-93a4187ad0d2"
     ],
     "filterType": "GMRoom",
-    "folderName": "Main Rooms (ver 3)",
+    "folderName": "Main Rooms",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

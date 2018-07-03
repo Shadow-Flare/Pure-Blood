@@ -6,7 +6,7 @@ if !flying switch vPhase
 		var isGrounded = false;
 		var block = noone;
 		var lowestYSpd = undefined;
-		with objBlockParent if enabled
+		with objBlockParent if isSolid
 		{
 			if !place_meeting(x,y,other) && place_meeting(x,y-max(1,ySpdSim)-0.1,other)
 			{
@@ -58,7 +58,7 @@ if !flying switch vPhase
 		var isGrounded = false;
 		var block = noone;
 		var lowestYSpd = undefined;
-		with objBlockParent if enabled
+		with objBlockParent if isSolid
 		{
 			if !place_meeting(x,y,other) && place_meeting(x,y-1,other)
 			{

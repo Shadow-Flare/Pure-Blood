@@ -35,23 +35,40 @@ if (InputManager.aInput == true)
 			menu = menuCurrent.weaponry;
 			
 			current_menu_options = menu_weaponry;
+			var main1ID = ItemCache.equipment[? equipmentSlot.main1];
+			var main2ID = ItemCache.equipment[? equipmentSlot.main2];
+			var main1Class = weapon_get_stat(main1ID,weaponStats.type);
+			var main2Class = weapon_get_stat(main2ID,weaponStats.type);
+			var off1ID = ItemCache.equipment[? equipmentSlot.off1];
+			var off2ID = ItemCache.equipment[? equipmentSlot.off2];
+			var off1Class = weapon_get_stat(off1ID,weaponStats.type);
+			var off2Class = weapon_get_stat(off2ID,weaponStats.type);
+
 			var count = 0;
+			if main1Class != undefined {current_menu_options[0, count] = main1Class; count++;};
+			if main2Class != undefined {current_menu_options[0, count] = main2Class; count++;};
+			
 			var classID = ds_map_find_first(ComboCache.playerClass);
 			while classID != undefined
 			{
-				if class_get_stat(classID,weaponClassStats.isMain)
+				if class_get_stat(classID,weaponClassStats.isMain) && classID != main1Class && classID != main2Class
 				{
 					current_menu_options[0, class_get_stat(classID,weaponClassStats.ID)] = classID;
 					count++;
 				}
 				classID = ds_map_find_next(ComboCache.playerClass,classID);
 			}
+			
 			current_menu_options[0, count] = noone;
 			count++;
+			
+			if off1Class != undefined {current_menu_options[0, count] = off1Class; count++;};
+			if off2Class != undefined {current_menu_options[0, count] = off2Class; count++;};
+			
 			var classID = ds_map_find_first(ComboCache.playerClass);
 			while classID != undefined
 			{
-				if !class_get_stat(classID,weaponClassStats.isMain)
+				if !class_get_stat(classID,weaponClassStats.isMain) && classID != off1Class && classID != off2Class
 				{
 					current_menu_options[0, count+class_get_stat(classID,weaponClassStats.ID)] = classID;
 				}

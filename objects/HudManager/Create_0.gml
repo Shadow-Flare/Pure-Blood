@@ -29,6 +29,13 @@ spriteTimer = 0;
 topLeftResolutionScale = 4;
 topLeftBorder = 10;
 
+resetBars = true;
+hpDamageDisplayPrev = noone;
+hpMaxPrev = noone;
+hpPrev = noone;
+mpMaxPrev = noone;
+mpPrev = noone;
+
 hpRMax = 40;
 hpR1 = 30;
 hpR2 = 22;

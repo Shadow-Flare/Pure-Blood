@@ -1,0 +1,1 @@
+scr_itemPickup_addItem(itemType.equipment,equipmentItem.red_bandanna,1);

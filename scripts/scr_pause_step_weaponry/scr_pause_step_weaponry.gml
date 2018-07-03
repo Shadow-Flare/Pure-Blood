@@ -336,12 +336,14 @@ if !exitingWeaponry
 	ds_list_clear(weaponryActiveIndexList);
 	if isMain
 	{
+			//combos
 		var comID = ds_map_find_first(ComboCache.combo);
 		while comID != undefined
 		{
-			var comClass = combo_get_stat(comID,comboStats.class);
-			var comType = combo_get_stat(comID,comboStats.type);
-			if  comClass == currentClass && comType = selectedType
+			var classCheck = combo_get_stat(comID,comboStats.class) == currentClass;
+			var typeCheck = combo_get_stat(comID,comboStats.type) == selectedType;
+			var ownedCheck = scr_player_combo_get(comID) != false;
+			if classCheck && typeCheck && ownedCheck
 			{
 				ds_list_add(weaponryComboList,comID);
 			}

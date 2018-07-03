@@ -1,1 +1,0 @@
-pathEndAction = path_action_restart;

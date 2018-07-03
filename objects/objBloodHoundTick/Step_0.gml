@@ -1,3 +1,5 @@
+event_inherited();
+
 scr_actor_ground_vStateMachine();
 
 phaseTimer++;

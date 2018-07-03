@@ -1,17 +1,3 @@
-#region level up
-if xp >= xpNeeded
-{
-	message_feed_add("Level Up",noone);
-	scr_levelUp_effect();
-	xp -= xpNeeded;
-	level += 1;
-	xpNeeded = 10*power(level+1,2);
-	//newLevels += 1;				//add later
-	statPoints += 3;
-	hp = hpMax;
-	mp = mpMax;
-}
-#endregion
 #region manage & gather equipment data
 	//reset
 ds_map_clear(equipmentStats);

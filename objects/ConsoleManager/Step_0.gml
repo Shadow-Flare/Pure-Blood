@@ -11,7 +11,7 @@ if gameStatePrev != gamePhase
 	{
 			//help text
 		helpText[ 0] = "Developer Commands:"
-		helpText[ 1] = "altStart <index or '?' for help>"
+		helpText[ 1] = "altstart <index or '?' for help>"
 			//messages
 		helpTextM[ 0] = "Details:"
 		helpTextM[ 1] = "Alternative start in a different location with different starting data, '?' gives a small summary of all available."
@@ -33,6 +33,8 @@ if gameStatePrev != gamePhase
 		helpText[11] = "giveallsubtypes"
 		helpText[12] = "giveallactives"
 		helpText[13] = "thereisnospoon"
+		helpText[14] = "iambecomedeath"
+		helpText[15] = "ivehadenough"
 			//Messages
 		helpTextM[ 0] = "Details:"
 		helpTextM[ 1] = "Transfers you to <room Name>, likely will cause progression related bugs."
@@ -48,6 +50,8 @@ if gameStatePrev != gamePhase
 		helpTextM[11] = "Player obtains all offhand subtypes."
 		helpTextM[12] = "Player obtains all offhand actives."
 		helpTextM[13] = "Spells have 0 cost, ammo is not needed or consumed"
+		helpTextM[14] = "Deal 9999 pure damage to all enemies of player"
+		helpTextM[15] = "Deal 9999 pure damage to player"
 	}
 }
 #endregion
@@ -65,12 +69,12 @@ if (key == "~" || key == "½" || key == "`" || key == "¡" || key == "/" )
 if consoleEnabled
 {	
 	if string_length(keyboard_string)>25 keyboard_string = string_delete(keyboard_string,26,20);
-	if keyboard_check_pressed(vk_down)&&selectIndex != 7
+	if keyboard_check_pressed(vk_down) && selectIndex != maxHistory
 	{
 		selectIndex++;
 		keyboard_string = history[selectIndex-1]
 	}
-	if keyboard_check_pressed(vk_up)&&selectIndex != 0
+	if keyboard_check_pressed(vk_up) && selectIndex != 0
 	{
 		selectIndex--;
 		if selectIndex != 0 keyboard_string = history[selectIndex-1]
@@ -97,12 +101,12 @@ if consoleEnabled
 			//Dev Commands
 			#region ALTSTART
 			tmp = string_delete(commandStr,9,string_length(commandStr)-8)
-			if tmp == "altStart " || tmp == "altStart"
+			if tmp == "altstart " || tmp == "altstart"
 			{
 				extra = string_delete(commandStr,1,9)
-				if commandStr == "altStart " || commandStr == "altStart"
+				if commandStr == "altstart " || commandStr == "altstart"
 				{
-					commandRes = "please enter an index to start with. (altStart <index>)";
+					commandRes = "please enter an index to start with. (altstart <index>)";
 				}
 				else if extra == "?"
 				{
@@ -282,10 +286,21 @@ if consoleEnabled
 			{
 				var hitData = ds_map_create();
 				scr_create_damageCache(hitData,0,0,0,0,0,0,0,0,0,0,0,0);
-				hitData[? damageData.pure] = 999;
+				hitData[? damageData.pure] = 9999;
 				with objEnemyParent scr_hit(noone,noone,hitData,noone,noone,noone);
 				ds_map_destroy(hitData);
 				commandRes = "destroyer of worlds."
+			}
+			#endregion
+			#region KILL ALL ENEMIES
+			if commandStr == "ivehadenough"
+			{
+				var hitData = ds_map_create();
+				scr_create_damageCache(hitData,0,0,0,0,0,0,0,0,0,0,0,0);
+				hitData[? damageData.pure] = 9999;
+				with objPlayer scr_hit(noone,noone,hitData,noone,noone,noone);
+				ds_map_destroy(hitData);
+				commandRes = "Player Killed"
 			}
 			#endregion
 			#region NO SPELL COST
@@ -319,9 +334,7 @@ if consoleEnabled
 			history[0] =		"0: New game";
 			historyM[0] =		"1: Arena";
 			history[1] =		"2: Horde Mode";
-			historyM[1] =		"3: New game 2, alternative area";
-			history[2] =		"4: New game 3, alternative area";
-			historyM[2] =		"5: New game 4, Main game, start at town with max gear";
+			historyM[1] =		"3: New game 2, Main game, start at town with max gear";
 		}
 		#region command log
 		ini_open("settings");

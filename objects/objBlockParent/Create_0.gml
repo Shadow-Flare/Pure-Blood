@@ -4,6 +4,7 @@ ySpdSim = 0;
 occlusion = false
 
 enabled = true;
+isSolid = true;
 
 variant = interactableVariant.none;	//set in instance create if want otherwise
 id0 = noone;

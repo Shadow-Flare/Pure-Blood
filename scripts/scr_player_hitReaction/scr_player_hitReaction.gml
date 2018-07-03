@@ -1,5 +1,7 @@
 if subPhaseTimer == 0 baseSpriteIndex = -4;
 
+if !CutsceneManager.playerCanActCutscene scr_puppetCommand_clear(id);
+
 phaseTimer++;
 subPhaseTimer++;
 

@@ -9,7 +9,7 @@ commandStr = "";
 commandRes = "";
 selectIndex = 0;
 
-conAltStartMaxNum = 5;	//0 = New Game//1 = Arena//2 = Horde Mode//3 = New Game var 2//4 = new Game ver 3//5 = New Game ver 4//
+conAltStartMaxNum = 3;	//0 = New Game//1 = Arena//2 = Horde Mode//3 = New Game var 2//
 conAltStartIndex = noone;
 
 conPureFps = false;

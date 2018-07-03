@@ -7,7 +7,7 @@
         "00949a02-19c4-48f7-aa69-beb4daf837a4"
     ],
     "filterType": "GMScript",
-    "folderName": "Path1",
+    "folderName": "Path 1: Player Failure",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

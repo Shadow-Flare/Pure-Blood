@@ -1,1 +1,0 @@
-roomTo = rmRoomX112Y295;

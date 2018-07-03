@@ -21,7 +21,7 @@ switch gameState
 				if (!layer_exists("Controllers")) layer_create(-1, "Controllers");
 				if !instance_exists(TransitionController)
 				{
-					if other.transitionRoomTo != rmMainMenu scr_pauseSplash();
+					if transitionRoomTo != rmMainMenu scr_pauseSplash();
 					with instance_create_depth(0,0,"Controllers",TransitionController)
 					{
 						roomTo = other.transitionRoomTo;

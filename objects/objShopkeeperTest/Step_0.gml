@@ -9,21 +9,13 @@ if instance_exists(objPlayer) && abs(x-objPlayer.x) <= useRange && abs(y-objPlay
 	playerCanUse = true;
 }
 
-if used with CutsceneManager
+if used 
 {
-	other.used = false;
-	
-	dialogCurrentState = dialogState.opening;
-
-	dialogIndex = 0;
-	dialogIndexSub = 0;
-	dialogCurrentType = dialogType.choice;
-
-	var cache = DialogCache.choices[| dialogIndex];
-	ds_list_copy(dialogChoiceOptions,cache[| dialogIndexSub]);
+	used = false;
+	scr_dialog_initiate(0,0,dialogType.choice);
 }
 
-#region State machines
+#region State machine
 var leave = false		
 		//vPhase
 	scr_actor_ground_vStateMachine();

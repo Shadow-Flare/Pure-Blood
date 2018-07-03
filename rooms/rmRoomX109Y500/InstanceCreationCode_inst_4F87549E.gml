@@ -1,1 +1,0 @@
-spawnFrom = rmRoomX108Y499;

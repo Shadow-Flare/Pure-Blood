@@ -282,6 +282,15 @@ scr_draw_textbox(surfW*weaponryDetailsX1,surfH*weaponryDetailsY1,surfW*weaponryD
 
 if slotExpanded
 {
+	var main1ID = ItemCache.equipment[? equipmentSlot.main1];
+	var main2ID = ItemCache.equipment[? equipmentSlot.main2];
+	var main1Class = weapon_get_stat(main1ID,weaponStats.type);
+	var main2Class = weapon_get_stat(main2ID,weaponStats.type);
+	var off1ID = ItemCache.equipment[? equipmentSlot.off1];
+	var off2ID = ItemCache.equipment[? equipmentSlot.off2];
+	var off1Class = weapon_get_stat(off1ID,weaponStats.type);
+	var off2Class = weapon_get_stat(off2ID,weaponStats.type);
+	
 	var class = current_menu_options[0, sY];
 	var isMain = class_get_stat(class,weaponClassStats.isMain);
 	
@@ -312,8 +321,16 @@ if slotExpanded
 			var frameStep = round(comboAnimDuration*room_speed/sprite_get_number(comboAnim));
 			draw_sprite_ext(comboAnim,floor(frameTimer/frameStep),animX,animY,weaponryDetailsAnimationScale,weaponryDetailsAnimationScale,0,c_white,1.0);
 					//weapon
-			var weaponStr = item_get_data(itemType.weapon,PlayerStats.currentWeaponID,itemStats.name);
-			var weaponCatStr = class_get_stat(weapon_get_stat(PlayerStats.currentWeaponID,weaponStats.type),weaponClassStats.name);
+			var weaponID = noone;
+			     if class == main1Class weaponID = ItemCache.equipment[? equipmentSlot.main1];
+			else if class == main2Class weaponID = ItemCache.equipment[? equipmentSlot.main2];
+			else if class == off1Class weaponID = ItemCache.equipment[? equipmentSlot.off1];
+			else if class == off1Class weaponID = ItemCache.equipment[? equipmentSlot.off2];
+			
+			if weaponID == noone weaponID = class_get_stat(class,weaponClassStats.defaultWeaponID);
+			var weaponStr = item_get_data(itemType.weapon,weaponID,itemStats.name);
+			var weaponCatStr = class_get_stat(class,weaponClassStats.name);
+			
 			var weaponSpriteName = string_replace(sprite_get_name(comboAnim),"Body","Weapon");
 			weaponSpriteName = string_replace(weaponSpriteName,weaponCatStr,weaponStr);
 			weaponSpriteName = string_replace(weaponSpriteName,"Default",weaponStr);

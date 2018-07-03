@@ -126,6 +126,7 @@ with objAttackEffectParent
 						break; #endregion
 					case 2: #region Flung
 						hasFlung = true;
+						stunnedDuration = 0.8;
 								//effect
 						if instance_exists(enemy) var spawnDepth = min(depth,enemy.depth)-1;
 						else spawnDepth = depth-1;
@@ -192,6 +193,30 @@ with objAttackEffectParent
 						ySpd = knockback/stats.mass;
 						xSpd = dirNum/stats.mass;
 						break; #endregion
+				}
+				
+				if other.casterType == actorTypes.player
+				{
+					if variable_instance_exists(other,"playerWeaponClass")
+					{
+						var xpToGive = 0;
+						switch reaction
+						{
+							case 0:	//Nothing
+								xpToGive = 1;
+								break;
+							case 1:	//Stagger
+								xpToGive = 3;
+								break;
+							case 2:	//Flung
+								xpToGive = 10;
+								break;
+							case 3:	//Uppercut
+								xpToGive = 5;
+								break;
+						}
+						if xpToGive != 0 scr_player_grantExp_weaponClass(xpToGive, other.playerWeaponClass);
+					}
 				}
 			}
 		}

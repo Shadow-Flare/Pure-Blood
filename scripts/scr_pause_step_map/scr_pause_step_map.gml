@@ -17,8 +17,12 @@ if abs(mapZoomLevelDisplay-mapZoomLevel) <= 0.015 mapZoomLevelDisplay = mapZoomL
 
 var mapCursorSpeed = power(2,mapZoomLevel)*0.75;
 
+//mapCursorX+=hInput*mapCursorSpeed
+//mapCursorY+=vInput*mapCursorSpeed
 mapCursorX = clamp(mapCursorX+hInput*mapCursorSpeed,MapManager.cellStartX*MapManager.mapCellW,MapManager.maxCellsX*MapManager.mapCellW);
-mapCursorY = clamp(mapCursorY+vInput*mapCursorSpeed,MapManager.cellStartY*MapManager.mapCellW,MapManager.maxCellsY*MapManager.mapCellW);
+mapCursorY = clamp(mapCursorY+vInput*mapCursorSpeed,MapManager.cellStartY*MapManager.mapCellH,MapManager.maxCellsY*MapManager.mapCellH);
+//mapCursorX = clamp(mapCursorX+hInput*mapCursorSpeed,MapManager.cellStartX,MapManager.maxCellsX);
+//mapCursorY = clamp(mapCursorY+vInput*mapCursorSpeed,MapManager.cellStartY,MapManager.maxCellsY);
 mapCursorXDisplay += (mapCursorX-mapCursorXDisplay)/4;
 mapCursorYDisplay += (mapCursorY-mapCursorYDisplay)/4;
 if abs(mapCursorXDisplay-mapCursorX) <= 0.05 mapCursorXDisplay = mapCursorX;

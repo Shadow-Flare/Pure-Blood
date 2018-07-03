@@ -9,6 +9,10 @@ if instance_exists(player) && instance_exists(boss)
 		var stats = player.statCache;
 		player.isDead = false;
 		stats.hp = 1;
+		player.phase = state.hitReaction;
+		player.subPhase = subState.stunned;
+		player.phaseTimer = 0;
+		player.subPhaseTimer = 0;
 		scr_event_townFirstEncounter_5();
 		return true;
 	}

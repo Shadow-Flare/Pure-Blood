@@ -1,18 +1,20 @@
 dialog = ds_list_create();
 choices = ds_list_create();
 data = ds_list_create();
+scripts = ds_list_create();
 var cache;
 var cacheSub;
 var tmp = 0;
 var tmp2 = 0;
 
+#region 0: Test dialog with shopkeeper
 //tmp++;
-#region test on new game
 	#region Data
 	data[| tmp] = ds_list_create(); 
 	cache = data[| tmp];
 		cache[| 0] = noone;	//equation answer;
 	#endregion
+	
 	#region Dialog
 	dialog[| tmp] = ds_list_create();
 	cache = dialog[| tmp];
@@ -44,6 +46,7 @@ var tmp2 = 0;
 		cacheSub[| 0] = "WRONG!";
 		#endregion
 	#endregion
+	
 	#region Choices
 	choices[| tmp] = ds_list_create();
 	cache = choices[| tmp];
@@ -63,4 +66,41 @@ var tmp2 = 0;
 		#endregion
 	
 	#endregion
+	
+	scripts[| tmp] = scr_dialog_shopkeeperTest;
+#endregion
+#region 1: Test dialog during end of first town cutscene
+tmp++;
+	#region Data	//none
+	data[| tmp] = ds_list_create(); 
+	#endregion
+	
+	#region Dialog
+	dialog[| tmp] = ds_list_create();
+	cache = dialog[| tmp];
+	
+	tmp2=0;
+		#region 0: Player Failed dialogue
+	//tmp2++;
+	cache[| tmp2] = ds_list_create(); 
+	cacheSub = cache[| tmp2];
+		cacheSub[| 0] = "This one was fighting the beast, matches the description of the man's daughter.";
+		cacheSub[| 1] = "Get the girl off the street. And consecrate that carcass before the rabble get out of their hovels and get themselves killed..";
+		#endregion
+		#region 1: Player Success dialogue
+	tmp2++;
+	cache[| tmp2] = ds_list_create(); 
+	cacheSub = cache[| tmp2];
+		cacheSub[| 0] = "This one seems to have actually given that beast some trouble.";
+		cacheSub[| 1] = "By herself? that cant be right...";
+		cacheSub[| 2] = "Wait, she matches the description of the man's daughter.";
+		cacheSub[| 3] = "Get the girl off the street. And consecrate that carcass before the rabble get out of their hovels and get themselves killed..";
+		#endregion
+	#endregion
+	
+	#region Choices	//none
+	choices[| tmp] = ds_list_create();
+	#endregion
+	
+	scripts[| tmp] = scr_dialog_townFirstEncounter;
 #endregion

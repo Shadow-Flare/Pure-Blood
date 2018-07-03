@@ -1,7 +1,7 @@
 event_inherited();
 
 enum cameraState {idle, player};
-enum fadeType {none, in, out};
+enum fadeType {none, in, out, hold};
 
 xTo = x;
 yTo = y;

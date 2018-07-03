@@ -7,7 +7,7 @@
         "bd2a776d-c8ca-47a9-b28c-09b4c4ba4643"
     ],
     "filterType": "GMScript",
-    "folderName": "Path2",
+    "folderName": "Path 2: Player Succeed",
     "isDefaultView": false,
     "localisedFolderName": ""
 }

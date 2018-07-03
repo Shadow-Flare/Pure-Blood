@@ -8,6 +8,15 @@ if phase != state.dying && statCache.hp <= 0
 	phaseTimer = 0;
 	if subPhase != subState.aerialStagger subPhase = subState.none
 	subPhaseTimer = 0;
+	if !hasGrantedExp && object_index != objPlayer
+	{
+		hasGrantedExp = true;
+		var xpToGrant = statCache.killExp;
+		if xpToGrant > 0
+		{
+			scr_player_grantExp_normal(xpToGrant);
+		}
+	}
 }
 
 //execute death fade then deletion
@@ -16,7 +25,7 @@ if isDead
 	image_speed = 0;
 	image_alpha -= 1/(60*deathFadeDuration);
 	if image_alpha <= 0
-	{
+	{		
 		instance_destroy();
 	}
 }
@@ -56,7 +65,7 @@ with statCache
 					with other
 					{
 						var hitData = ds_map_create();
-						hitData[? damageData.pure] = dam;
+						scr_create_damageCache(hitData,0,0,0,0,0,0,0,0,0,0,0,dam);
 						scr_hit(noone,noone,hitData,noone,noone,noone);
 						scr_hit_effect_blood(id,statCache.hitEffectType,statCache.hitEffectColour,75,noone,2.22);
 						ds_map_destroy(hitData);

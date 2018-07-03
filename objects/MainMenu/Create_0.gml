@@ -1,7 +1,7 @@
 event_inherited();
 
-enum mainTransType {none, ex, newGame, arena, hordeMode, newGame2, newGame3, newGame4}
-enum loadType {none, ending, newGame, arena, hordeMode, newGame2, newGame3, newGame4}
+enum mainTransType {none, ex, newGame, arena, hordeMode, newGame2}
+enum loadType {none, ending, newGame, arena, hordeMode, newGame2}
 
 enum damageType {none,slash,blunt,pierce,fire,ice,lightning,arcane,light,dark,pure};
 enum specialType {none, bleed, poison};

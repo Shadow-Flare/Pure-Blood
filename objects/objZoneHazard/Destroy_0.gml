@@ -1,1 +1,1 @@
-ds_map_destroy(zoneDamageData);
+//ds_map_destroy(zoneDamageData);

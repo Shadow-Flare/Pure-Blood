@@ -7,6 +7,7 @@
 ///@arg arg6
 ///@arg arg7
 ///@arg arg8(ARGUMENT-DETAILS-IN-SCRIPT)
+///@arg debugString
 
 //arg details at bottom
 
@@ -19,6 +20,7 @@ var arg5 = argument5;
 var arg6 = argument6;
 var arg7 = argument7;
 var arg8 = argument8;
+var debugString = argument9;
 
 var newCache = ds_map_create();
 ds_stack_push(CutsceneManager.mainCutsceneStack,newCache);
@@ -32,12 +34,13 @@ newCache[? cutsceneCommandData.arg5] = arg5;
 newCache[? cutsceneCommandData.arg6] = arg6;
 newCache[? cutsceneCommandData.arg7] = arg7;
 newCache[? cutsceneCommandData.arg8] = arg8;
+newCache[? cutsceneCommandData.debugString] = debugString;
 
 //argument details:
-	//fadeIn/fadeOut:
+	//fadeIn/fadeOut/holdFaded:
 //arg1 = colour
 //arg2 = duration (seconds)
-//arg3 = facing
+//arg3 UNUSED
 //arg4 UNUSED
 //arg5 UNUSED
 //arg6 UNUSED
@@ -70,6 +73,24 @@ newCache[? cutsceneCommandData.arg8] = arg8;
 //arg6 = arg3
 //arg7 = arg4
 //arg8 = arg5
+	//dialogInitiate
+//arg1 = index
+//arg2 = indexSub
+//arg3 = dialogState.ENUM
+//arg4 = unused
+//arg5 = unused
+//arg6 = unused
+//arg7 = unused
+//arg8 = unused
+	//dialogWait:
+//arg1 = unused
+//arg2 = unused
+//arg3 = unused
+//arg4 = unused
+//arg5 = unused
+//arg6 = unused
+//arg7 = unused
+//arg8 = unused
 	//commandWorldEvent:
 //arg1 = worldEventCommand.ENUM
 //arg2 = arg1

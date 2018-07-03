@@ -31,3 +31,5 @@ switch phase
 	//vv simulated vv
 xSpd = speed*dsin(direction);
 ySpd = -speed*dcos(direction);
+
+hitAngle = direction;

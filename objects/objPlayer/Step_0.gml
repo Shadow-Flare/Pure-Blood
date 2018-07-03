@@ -1,3 +1,5 @@
+event_inherited();
+
 #region lock-on
 if !canChangeTarget
 {

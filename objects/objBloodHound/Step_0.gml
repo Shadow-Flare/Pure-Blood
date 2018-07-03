@@ -1,3 +1,5 @@
+event_inherited();
+
 #region Pre Passives
 
 	//melee attack cooldown

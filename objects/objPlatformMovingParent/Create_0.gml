@@ -3,7 +3,8 @@ event_inherited();
 path = noone;
 enabled = true;
 enabledPrev = enabled;
-ID = noone;
+
+variant = interactableVariant.worldID;		//default, set in create if otherwise
 
 pathSpeedDefault = 1;
 pathEndAction = path_action_stop;

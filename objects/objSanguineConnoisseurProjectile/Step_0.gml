@@ -85,6 +85,7 @@ switch phase
 		break;
 	case 2:
 		hitOn = true;
+		hitAngle = direction;
 		image_xscale = explodeScale;
 		image_yscale = image_xscale;
 		if timer >= round(explodeDuration*room_speed)

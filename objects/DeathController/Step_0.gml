@@ -22,3 +22,9 @@ else if timer >= room_speed*2.5
 {
 	instance_destroy();
 }
+
+if !objPlayer.isDead
+{
+	GameManager.pauseState = PauseState.normal;
+	instance_destroy();
+}

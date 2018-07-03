@@ -1,0 +1,1 @@
+scr_itemPickup_addItem(itemType.equipment,equipmentItem.chainmail_leggings,1);

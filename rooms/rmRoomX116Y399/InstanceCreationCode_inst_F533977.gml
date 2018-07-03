@@ -1,0 +1,1 @@
+scr_itemPickup_addItem(itemType.equipment,equipmentItem.rusted_gauntlets,1);

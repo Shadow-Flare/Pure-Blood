@@ -27,6 +27,7 @@ deflectDuration = 0.7;									//&&//
 staggeredDuration = 0.5;
 aerialStaggeredDuration = 0.3;
 stunnedDuration = 0.6;
+stunnedRecoveryDuration = 0.3;
 pushable = true;
 flying = false;
 

@@ -1,6 +1,6 @@
 #region enum initializers
 enum itemType {item, weapon, equipment, rune, key, alchemy};
-enum itemStats {icon, name, pluralName, usable, description, equipSlot, effectsCache, weaponData, useAnimation, useDuration};
+enum itemStats {icon, name, pluralName, maxOwned, usable, description, equipSlot, effectsCache, weaponData, useAnimation, useDuration};
 enum itemEffects {hp, mp, ap, str, con, dex, cun, int, wil, toughness, alacrity, memory, slashDef, bluntDef, pierceDef, fireRes, iceRes, lightningRes, arcaneRes, lightRes, darkRes, bleedRes, LENGTH};	//length just for checking enum amount, needed for other areas.
 enum itemItem 
 {
@@ -86,6 +86,7 @@ var weaponCache = item[? itemType.weapon];
 weaponCache[? weaponItem.gladius] = ds_map_create();
 var cache = weaponCache[? weaponItem.gladius];
 cache[? itemStats.name] = "Gladius";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_weapon_gladius;
 cache[? itemStats.description] = "A basic long sword. The very standard of melee combat, the long sword is one of the easier weapons to train in.";
 cache[? itemStats.equipSlot] = equipmentSlot.main1;
@@ -109,6 +110,7 @@ var wepData = cache[? itemStats.weaponData];
 weaponCache[? weaponItem.hastam] = ds_map_create();
 var cache = weaponCache[? weaponItem.hastam];
 cache[? itemStats.name] = "Hastam";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_weapon_hastam;
 cache[? itemStats.description] = "A basic Spear. Often handed to militias, designed for basic hunting and untrained combat. But with training it is capeable of much more. Excels particularly in aerial combat.";
 cache[? itemStats.equipSlot] = equipmentSlot.main1;
@@ -131,6 +133,7 @@ var wepData = cache[? itemStats.weaponData]
 weaponCache[? weaponItem.crucifix] = ds_map_create();
 var cache = weaponCache[? weaponItem.crucifix];
 cache[? itemStats.name] = "Crucifix";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_weapon_crucifix;
 cache[? itemStats.description] = "A sanctified wallpiece used as an improvised hammer. <LORE>";
 cache[? itemStats.equipSlot] = equipmentSlot.main1;
@@ -156,6 +159,7 @@ var wepData = cache[? itemStats.weaponData]
 weaponCache[? weaponItem.crossbow] = ds_map_create();
 var cache = weaponCache[? weaponItem.crossbow];
 cache[? itemStats.name] = "Crossbow";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_weapon_crossbow;
 cache[? itemStats.description] = "A basic one-handed crossbow. Hunters often lack the time to properly handle a bow or even a crossbow in the middle of a fight, as such an easier to wield, one-handed variant of the crossbow was developed.";
 cache[? itemStats.equipSlot] = equipmentSlot.off1;
@@ -175,6 +179,7 @@ var wepData = cache[? itemStats.weaponData]
 weaponCache[? weaponItem.spell_book] = ds_map_create();
 var cache = weaponCache[? weaponItem.spell_book];
 cache[? itemStats.name] = "Spell Book";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_weapon_spell_book;
 cache[? itemStats.description] = "A basic grimoire. The mages college has long studied the ways of magic, this magical tome is one of the fruits of those labours.";
 cache[? itemStats.equipSlot] = equipmentSlot.off1;
@@ -196,6 +201,7 @@ var equipmentCache = item[? itemType.equipment];
 equipmentCache[? equipmentItem.iron_helmet] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.iron_helmet];
 cache[? itemStats.name] = "Iron Helmet";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_equipment_iron_helmet;
 cache[? itemStats.description] = "Protective headgear, a crude design of forged iron.";
 cache[? itemStats.equipSlot] = equipmentSlot.head;
@@ -209,6 +215,7 @@ cache[? itemStats.effectsCache] = ds_map_create();
 equipmentCache[? equipmentItem.bassinet] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.bassinet];
 cache[? itemStats.name] = "Bassinet";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_equipment_bassinet;
 cache[? itemStats.description] = "Ancient medieval headwear. Made of a complex weave of plate and chainmail.";
 cache[? itemStats.equipSlot] = equipmentSlot.head;
@@ -222,6 +229,7 @@ cache[? itemStats.effectsCache] = ds_map_create();
 equipmentCache[? equipmentItem.red_bandanna] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.red_bandanna];
 cache[? itemStats.name] = "Red Bandanna";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_equipment_red_bandanna;
 cache[? itemStats.description] = "A red-dyed cloth wrapped about the head. Offers minimal defensive protection, but it has been said to make the wearer feel bolder.";
 cache[? itemStats.equipSlot] = equipmentSlot.head;
@@ -236,6 +244,7 @@ cache[? itemStats.effectsCache] = ds_map_create();
 equipmentCache[? equipmentItem.iron_chestplate] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.iron_chestplate];
 cache[? itemStats.name] = "Iron Chestplate";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_equipment_iron_chestplate;
 cache[? itemStats.description] = "A crude, battered chestplate of old. Once used in a great battle no doubt, but its ornate decoration has long lost its lustor.";
 cache[? itemStats.equipSlot] = equipmentSlot.chest;
@@ -246,11 +255,12 @@ cache[? itemStats.effectsCache] = ds_map_create();
 	effCache[? itemEffects.pierceDef] = 3;
 			#endregion
 		#endregion
-		#region Legs
+		#region Hands
 			#region Rusted Gauntlets
 equipmentCache[? equipmentItem.rusted_gauntlets] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.rusted_gauntlets];
 cache[? itemStats.name] = "Rusted Gauntlets";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_equipment_rusted_gauntlets;
 cache[? itemStats.description] = "Heavy metal gauntlets, designed for hand protection. Metal plates bound around a tattered leather glove, time has left both the metal and the leather's quality wanting.";
 cache[? itemStats.equipSlot] = equipmentSlot.hands;
@@ -266,6 +276,7 @@ cache[? itemStats.effectsCache] = ds_map_create();
 equipmentCache[? equipmentItem.chainmail_leggings] = ds_map_create();
 var cache = equipmentCache[? equipmentItem.chainmail_leggings];
 cache[? itemStats.name] = "Chainmail Leggings";
+cache[? itemStats.maxOwned] = noone;
 cache[? itemStats.icon] = spr_icon_item_equipment_chainmail_leggings;
 cache[? itemStats.description] = "Chailmail chausses designed to mitigate the slashing and stabbing impacts of a sword. These however are old and rusted, with a large section missing. Still, one could do worse.";
 cache[? itemStats.equipSlot] = equipmentSlot.legs;
@@ -283,6 +294,7 @@ var runeCache = item[? itemType.rune];
 		runeCache[? runeItem.dagaz] = ds_map_create();
 		var cache = runeCache[? runeItem.dagaz];
 		cache[? itemStats.name] = "Dagaz";
+		cache[? itemStats.maxOwned] = 1;
 		cache[? itemStats.icon] = spr_icon_item_rune_dagaz;
 		cache[? itemStats.description] = "Boosts Constitution";
 		cache[? itemStats.effectsCache] = ds_map_create();
@@ -293,6 +305,7 @@ var runeCache = item[? itemType.rune];
 		runeCache[? runeItem.lagaz] = ds_map_create();
 		var cache = runeCache[? runeItem.lagaz];
 		cache[? itemStats.name] = "Lagaz";
+		cache[? itemStats.maxOwned] = 1;
 		cache[? itemStats.icon] = spr_icon_item_rune_lagaz;
 		cache[? itemStats.description] = "Boosts Willpower";
 		cache[? itemStats.effectsCache] = ds_map_create();
@@ -303,6 +316,7 @@ var runeCache = item[? itemType.rune];
 		runeCache[? runeItem.kaunan] = ds_map_create();
 		var cache = runeCache[? runeItem.kaunan];
 		cache[? itemStats.name] = "Kaunan";
+		cache[? itemStats.maxOwned] = 1;
 		cache[? itemStats.icon] = spr_icon_item_rune_kaunan;
 		cache[? itemStats.description] = "Boosts Strength";
 		cache[? itemStats.effectsCache] = ds_map_create();
@@ -316,6 +330,7 @@ var keyCache = item[? itemType.key];
 keyCache[? keyItem.wooden_key] = ds_map_create();
 var cache = keyCache[? keyItem.wooden_key];
 cache[? itemStats.name] = "Wooden Key";
+cache[? itemStats.maxOwned] = 99;
 cache[? itemStats.usable] = false;
 cache[? itemStats.icon] = spr_icon_item_key_wooden_key;
 cache[? itemStats.description] = "might be a simple key but it unlocks a world of wonders";

@@ -5,7 +5,8 @@
     "name": "858ba11e-a83c-4fce-92d3-679aba125d82",
     "children": [
         "2c529827-3c20-4f99-81f8-17af00e6b420",
-        "beec9031-6a37-4c76-be48-1468b1947c4b"
+        "beec9031-6a37-4c76-be48-1468b1947c4b",
+        "d943dbce-d532-43c0-aaeb-4420d12209ab"
     ],
     "filterType": "GMScript",
     "folderName": "Room Data",

@@ -93,21 +93,24 @@ else
 //	x = round(x*6)/6;
 //	y = round(y*6)/6;
 //}
+#endregion
 
 var compiledXSpd = xSpd+envXSpd+pushXSpd;
 var compiledYSpd = ySpd+envYSpd+pushYSpd;
-var sprHeightDif = sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index);
+var sprWidthDifLeft = sprite_get_yoffset(sprite_index)-sprite_get_bbox_left(sprite_index);
+var sprWidthDifRight = sprite_get_bbox_right(sprite_index)-sprite_get_yoffset(sprite_index);
+var sprHeightDifTop = sprite_get_yoffset(sprite_index)-sprite_get_bbox_top(sprite_index);
+var sprHeightDifBottom = sprite_get_bbox_bottom(sprite_index)-sprite_get_yoffset(sprite_index);
 
 xSpdCompPrev = compiledXSpd;
 ySpdCompPrev = compiledYSpd;
-#endregion
 
 #region dropThroughPlatforms code
 if !dropThroughPlatforms && !flying
 {
-	with objPlatformParent if enabled
+	with objPlatformParent if isSolid && y > other.y+sprHeightDifBottom 
 	{
-		if y > other.y+sprHeightDif solid = true;
+		solid = true;
 	}
 }
 else 
@@ -204,5 +207,13 @@ switch sign(compiledXSpd)
 
 compiledXSpd = xSpd+envXSpd+pushXSpd;
 x+=compiledXSpd;
+
+if object_index != objPlayer
+{
+	while x-sprWidthDifLeft < 0     {x = floor(x); x++};
+	while x+sprWidthDifRight < 0    {x = ceil(x);  x--};
+	while y-sprHeightDifTop < 0     {y = floor(y); y++};
+	while y+sprHeightDifBottom < 0  {y = ceil(y);  y--};
+}
 
 with obj_block_nonSolid solid = false;

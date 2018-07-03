@@ -25,10 +25,10 @@ while rm != -1
 mapSurface = noone;
 mapCellColour = c_blue;
 
-maxCellsX = 1000;	//this and the following 3 values should be scaled to the total world size in the end, for now have map show max range possible
-maxCellsY = 1000;
-cellStartX = 0;
-cellStartY = 0;
+maxCellsX = 175;	//this and the following 3 values should be scaled to the total world size in the end, for now have map show max range possible
+maxCellsY = 450;
+cellStartX = 75;
+cellStartY = 350;
 
 mapCellW = 12;
 mapCellH = 8;

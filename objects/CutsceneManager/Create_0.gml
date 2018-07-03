@@ -6,8 +6,8 @@ enum dialogType {choice,speech};
 
 enum puppetCommand {waitTillIdle, moveTo, interact, emote, emoteCyclic};
 enum puppetCommandData {type, interruptible, arg1, arg2, arg3, arg4, arg5};
-enum cutsceneCommand {waitTime, waitPuppet, fadeIn, fadeOut, commandPuppet, commandWorldEvent};
-enum cutsceneCommandData {type, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8};
+enum cutsceneCommand {waitTime, waitPuppet, fadeIn, fadeOut, holdFaded, commandPuppet, commandWorldEvent, dialogInitiate, dialogWait};
+enum cutsceneCommandData {type, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, debugString};
 enum worldEventCommand {enemyKilled, runScript, runScriptRepeat}
 enum worldEventCommandData {type, arg1, arg2, arg3, arg4, arg5}
 	
@@ -35,7 +35,7 @@ showHud = true;
 
 dialogIndex = noone;
 dialogIndexSub = noone;
-dialogTextID = noone;
+dialogTextID = 0;
 dialogCurrentType = noone;
 		
 dialogCrawlCharactersPerSecond = 24; //Characters per second
