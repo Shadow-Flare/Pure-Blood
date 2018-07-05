@@ -26,6 +26,8 @@ with player
 }
 
 	//Create and command inquisitors
+boss.canAct = false;
+boss.driveMove = 0;
 var inquisBoss = instance_create_layer(max(player.x-320,0)+48,656,"lay_entities",objInquisitorBoss);
 var inquis1 = instance_create_layer(max(player.x-320,0)+32,656,"lay_entities",objInquisitorFootman);
 var inquis2 = instance_create_layer(max(player.x-320,0),656,"lay_entities",objInquisitorFootman);

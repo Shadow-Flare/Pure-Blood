@@ -5,14 +5,18 @@ enum movementAbility {double_jump, high_jump, glide};
 enum supportAbility{exp_plus, damage_scan, hp_scan, mp_scan};
 
 enum abilityStats {name, description, icon, cost, maxNum};
+enum talentStats {type, ID, xCoord, yCoord, strReq, conReq, dexReq, cunReq, intReq, wilReq, xConnections, yConnections}
 enum playerAbilityStats {numberOwned, numberActivated};
 #endregion
 #region all abilities
 	#region Initializer
+		//ability data
 ability = ds_map_create();
 ability[? abilityType.combat] = ds_map_create();
 ability[? abilityType.movement] = ds_map_create();
 ability[? abilityType.support] = ds_map_create();
+		//talent data
+talents = ds_list_create();
 	#endregion
 	#region combat
 var combatCache = ability[? abilityType.combat];
@@ -24,15 +28,19 @@ cache[? abilityStats.description] = "Boosts ground combo length by 1. Extra copi
 cache[? abilityStats.icon] = noone;
 cache[? abilityStats.cost] = 1;
 cache[? abilityStats.maxNum] = 3;
+scr_ability_addAsTalent(abilityType.combat,combatAbility.combo_plus,0,-5,10,0,0,0,0,0,[0],[0]);
+scr_ability_addAsTalent(abilityType.combat,combatAbility.combo_plus,0,-10,12,0,0,0,0,0,[0],[-5]);
+scr_ability_addAsTalent(abilityType.combat,combatAbility.combo_plus,5,-13,12,0,0,0,0,0,[0],[-10]);
 		#endregion
 		#region Finisher Plus
 combatCache[? combatAbility.finisher_plus] = ds_map_create();
 var cache = combatCache[? combatAbility.finisher_plus];
 cache[? abilityStats.name] = "Finisher Plus";
-cache[? abilityStats.description] = "Boosts ground finisher combo length by one. Extra copies of this ability further increase the ground finisher length by 1.";
+cache[? abilityStats.description] = "Boosts ground finisher combo length by one. Extra copies of this ability further increase the ground finisher length.";
 cache[? abilityStats.icon] = noone;
 cache[? abilityStats.cost] = 4;
 cache[? abilityStats.maxNum] = 2;
+scr_ability_addAsTalent(abilityType.combat,combatAbility.finisher_plus,-5,-13,15,0,0,0,0,0,[0],[-10]);
 		#endregion
 		#region Aerial Plus
 combatCache[? combatAbility.aerial_plus] = ds_map_create();

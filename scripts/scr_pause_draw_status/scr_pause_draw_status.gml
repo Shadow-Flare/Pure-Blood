@@ -575,6 +575,32 @@ switch statusPage
 		}
 			#endregion
 		break; #endregion
+	case 3: #region Spiral
+			//initialize
+		if !surface_exists(statusPage4Surface) statusPage4Surface = surface_create(statusPage4SurfaceWidth,statusPage4SurfaceHeight);
+			//vortex effect
+		surface_set_target(statusPage4Surface);
+			draw_clear_alpha(c_black,1.0);
+			shader_set(shd_vortex);
+				var sample = statusPage4VortexSampleArray[floor(mouse_x/320*4.9)];
+			
+				var xScale = statusPage4SurfaceWidth/sprite_get_width(sample);
+				var yScale = statusPage4SurfaceHeight/sprite_get_height(sample);
+				
+				var resoX = 1//1/xScale*0.5;//mouse_x/320;
+				var resoY = 1//1/yScale*(2/7);//mouse_y/176;
+				
+				var shd_reso = shader_get_uniform(shd_vortex,"reso");
+				var shd_time = shader_get_uniform(shd_vortex,"time");
+				shader_set_uniform_f(shd_reso,resoX,resoY,1.0);
+				shader_set_uniform_f(shd_time,current_time/1000);
+				draw_sprite_ext(sample,0,0,0,xScale,xScale,0,c_white,1.0);
+			shader_reset();
+		surface_reset_target();
+		
+			//end draw
+		draw_surface(statusPage4Surface,statusTextbox4X1*surfW+3*4,statusTextbox4Y1*surfH+3*4);
+		break; #endregion
 }
 #endregion
 

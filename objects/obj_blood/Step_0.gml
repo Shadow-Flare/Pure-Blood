@@ -35,10 +35,13 @@ if !place_free(x,y) && phase == "falling"
 
 if hasDrawn
 {
-	if random(1) < 1/5
+	if random(1) < 1/15
 	{
-		if BloodStainController.lastBloodSound != noone audio_stop_sound(BloodStainController.lastBloodSound)
-		BloodStainController.lastBloodSound = audio_play_sound(snd_bloodSplat,10,0);
+		if instance_exists(BloodStainController)
+		{
+			if BloodStainController.lastBloodSound != noone audio_stop_sound(BloodStainController.lastBloodSound)
+			BloodStainController.lastBloodSound = audio_play_sound(snd_bloodSplat,10,0);
+		}
 	}
 	instance_destroy();
 }

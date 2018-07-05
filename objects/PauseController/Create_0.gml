@@ -780,7 +780,7 @@ statusPrimaryFont = fnt_alagard;
 statusPrimaryColour = c_white;
 	//Main Pages
 statusPage = 0;
-statusPageNum = 3;
+statusPageNum = 4;
 		//Page 1: offense
 			//texboxes
 _weaponDataList = ds_list_create();
@@ -836,6 +836,12 @@ statusPage3EquipIconY = statusPage3DataYMargin;
 statusPage3EquipIconScale = 2;
 statusPage3DataXSep = (statusTextbox4X2-statusTextbox4X1-statusPage3DataXMargin*2)/2+(8*4)/surfW;
 statusPage3DataYSep = (strHeight)/surfH;
+		//Page 4:
+statusPage4Surface = noone;
+statusPage4VortexSampleArray = [spr_vortex_sample1, spr_vortex_sample2, spr_vortex_sample3, spr_vortex_sample4, spr_vortex_sample5];
+statusPage4SurfaceWidth = (statusTextbox4X2-statusTextbox4X1)*surfW-6*4;
+statusPage4SurfaceHeight = (statusTextbox4Y2-statusTextbox4Y1)*surfH-6*4;
+statusPage4VortexSample = statusPage4VortexSampleArray[1];
 #endregion
 #region Map Data
 mapCursorX = 0;
